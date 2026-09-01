@@ -1,0 +1,8 @@
+[Rigorous proofs of (A) through (E) and (F) through (H)]
+Although the filename claims it is a rigorous proof, I personally feel it is still incomplete.
+
+[ECA - Constructing General Solutions in the Solver Set (A)–(F)]
+I can't shake the feeling that there are still points to consider (and it is likely not just my imagination).
+
+[Theoretical Considerations on the Structure of the ECA Solver]
+I’m writing this down simply as a note (or perhaps an discourse?).
