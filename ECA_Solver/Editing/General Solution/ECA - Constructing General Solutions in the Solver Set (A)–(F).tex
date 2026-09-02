@@ -29,19 +29,23 @@
 %============================================================
 
 \newcommand{\Solver}{\mathcal{S}}
-\newcommand{\Eval}{\mathcal{G}}
-\newcommand{\EvalMap}{\Psi}
-\newcommand{\R}{\mathbb{R}}
+\newcommand{\SubSolver}{\preceq}
+\newcommand{\Type}{\operatorname{Type}}
+\newcommand{\DType}{\mathrm{D}}
+\newcommand{\CType}{\mathrm{C}}
+\newcommand{\MType}{\mathrm{M}}
+\newcommand{\Aset}{\mathcal{A}}
+\newcommand{\Rset}{\mathcal{R}}
+\newcommand{\Th}{\mathrm{Th}}
 \newcommand{\N}{\mathbb{N}}
-\newcommand{\Bset}{\mathcal{B}}
-\newcommand{\Kset}{\mathcal{K}}
-\newcommand{\Iset}{\mathcal{I}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Pset}{\mathcal{P}}
 
 %============================================================
 % Title
 %============================================================
 
-\title{ECA Solver 集合に関する一般解の構築 (A)--(F) 改訂版}
+\title{ECA Solver 集合に関する一般解の構築 - (A) 〜 (H)・改訂版 v2}
 
 \author{}
 \date{}
@@ -49,8 +53,6 @@
 \begin{document}
 
 \maketitle
-
-\tableofcontents
 
 %################################################################
 % (A)
@@ -60,6 +62,7 @@
 \label{sec:A}
 
 \subsection{(A.1) Solver 集合の定義}
+\label{subsec:A1}
 
 ECA における Solver 集合を
 
@@ -69,227 +72,939 @@ ECA における Solver 集合を
 
 とする。
 
-各元
+各
 
 \begin{equation}
     S\in\Solver
 \end{equation}
 
-は、ECA において定められた評価規則に従って対象を評価する
-Solver を表す。
+は、対象を所定の公理選択、推論規則および構成制約のもとで
+評価するための構造を表す。
 
-ここで重要なのは、Solver を単なる数値の集合として扱うのではなく、
-Solver が持つ評価構造を数学的対象として扱うことである。
+各 Solver $S$ を
 
-したがって、本節では Solver 集合に必要となる位相的・解析的構造を
-順に定める。
+\begin{equation}
+    \boxed{
+        S=
+        \left(
+            \Aset_S,
+            \Rset_S
+        \right)
+    }
+    \label{eq:A-solver-structure}
+\end{equation}
+
+と表す。
+
+ここで、
+
+\begin{itemize}
+    \item $\Aset_S$ は Solver $S$ において採用される公理選択の集合、
+    \item $\Rset_S$ は推論規則および構成制約の集合
+\end{itemize}
+
+を表す。
+
+したがって、
+
+\begin{equation}
+    \Solver
+    =
+    \left\{
+        S
+        \,\middle|\,
+        S=
+        \left(
+            \Aset_S,
+            \Rset_S
+        \right)
+    \right\}
+    \label{eq:A-solver-set}
+\end{equation}
+
+とする。
+
+ここで Solver は単なる数値集合ではなく、少なくとも
+公理選択および推論・構成規則からなる数学的構造として扱う。
+
+また、Solver によって表現される理論を与える公理写像を
+
+\begin{equation}
+    \mathcal{T}:
+    \Solver
+    \longrightarrow
+    \Th
+    \label{eq:A-theory-map}
+\end{equation}
+
+とする。
+
+各 $S\in\Solver$ に対して
+
+\begin{equation}
+    \mathcal{T}(S)
+\end{equation}
+
+は、$\Aset_S$ および $\Rset_S$ によって表現される理論を表す。
+
+したがって、
+
+\begin{equation}
+    \mathcal{T}(S)
+    =
+    \mathcal{T}
+    \left(
+        \Aset_S,\Rset_S
+    \right)
+    \label{eq:A-theory-decomposition}
+\end{equation}
+
+と表記できる。
+
+ただし、矛盾その他の理由によって理論を定義できない場合には、
+$\mathcal{T}(S)$ は未定義となり得る。
+
+\begin{remark}
+本節では、Solver 集合の集合論的・構造論的性質を扱う。
+可測族、測度および評価空間の測度構造については本節では導入せず、
+後続の節において独立に定義する。
+\end{remark}
 
 
 %------------------------------------------------------------
-\subsection{(A.2) 位相構造}
+\subsection{(A.2) 部分 Solver の定義}
+\label{subsec:A2}
 
-Solver 集合 $\Solver$ 上に位相
+Solver の内部に存在する構造を扱うため、
+単なる部分集合と部分 Solver を区別する。
+
+\begin{definition}[部分 Solver]
+$S,S'\in\Solver$ に対して、
 
 \begin{equation}
-    \tau_{\Solver}
+    S'\SubSolver S
 \end{equation}
 
-を導入する。
+とは、$S'$ が $S$ の要素の一部から構成され、
+かつ $S$ において定義された Solver の構造を必要な範囲で継承して
+独立した Solver として扱えることをいう。
+\end{definition}
 
-これにより、
+特に、
 
 \begin{equation}
-    (\Solver,\tau_{\Solver})
+    S'\SubSolver S
+    \quad\Longrightarrow\quad
+    S'\subseteq S
+    \label{eq:A-subsolver-subset}
 \end{equation}
 
-を位相空間として扱う。
+を満たすものとする。
 
-この位相は、Solver の評価構造における近接性および収束性を
-記述するための基礎構造となる。
-
-特に、Solver 列
+ただし、逆に
 
 \begin{equation}
-    \{S_n\}_{n=1}^{\infty}
+    S'\subseteq S
+\end{equation}
+
+であることだけから
+
+\begin{equation}
+    S'\SubSolver S
+\end{equation}
+
+が成立するとは限らない。
+
+すなわち、部分 Solver は単なる部分集合ではなく、
+Solver として必要な構造を備えた部分構造である。
+
+\begin{remark}
+この定義により、一つの Solver の内部に複数の Solver が存在する
+という階層構造を許容する。
+
+したがって、
+
+\begin{equation}
+    S_1\SubSolver S,
+    \qquad
+    S_2\SubSolver S
+\end{equation}
+
+であって、
+
+\begin{equation}
+    S_1\neq S_2
+\end{equation}
+
+となることを妨げない。
+\end{remark}
+
+
+%------------------------------------------------------------
+\subsection{(A.3) Solver の要素に対する離散性・連続性}
+\label{subsec:A3}
+
+Solver $S\in\Solver$ の要素 $s\in S$ に対して、
+その要素が持つ数学的構造に基づいて離散的性質および連続的性質を
+定義する。
+
+離散的性質を満たす要素の集合を
+
+\begin{equation}
+    D_S
+    :=
+    \left\{
+        s\in S
+        \,\middle|\,
+        s\text{ が所定の離散的構造を満たす}
+    \right\}
+    \label{eq:A-discrete-elements}
+\end{equation}
+
+とする。
+
+同様に、連続的性質を満たす要素の集合を
+
+\begin{equation}
+    C_S
+    :=
+    \left\{
+        s\in S
+        \,\middle|\,
+        s\text{ が所定の連続的構造を満たす}
+    \right\}
+    \label{eq:A-continuous-elements}
+\end{equation}
+
+とする。
+
+ここでいう「離散的」および「連続的」は、単なる集合の濃度だけから
+定義するものではない。
+
+例えば、集合の可算性・非可算性は
+
+\begin{equation}
+    |S|\leq\aleph_0
+\end{equation}
+
+または
+
+\begin{equation}
+    |S|>\aleph_0
+\end{equation}
+
+によって既存の集合論から判定できるが、
+非可算性そのものを直ちに「連続性」と同一視してはならない。
+
+したがって、Solver の離散性・連続性の判定には、
+必要に応じて既存の数学における
+
+\begin{itemize}
+    \item 集合論、
+    \item 位相論、
+    \item 順序構造、
+    \item 代数構造、
+    \item 解析学
+\end{itemize}
+
+等の既存概念を用いるものとする。
+
+
+%------------------------------------------------------------
+\subsection{(A.4) 中間的性質の定義}
+\label{subsec:A4}
+
+Solver $S$ において、ある要素が離散的性質と連続的性質を
+同時に持つ場合を考える。
+
+\begin{definition}[中間的要素]
+$s\in S$ が中間的であるとは、
+
+\begin{equation}
+    s\in D_S\cap C_S
+    \label{eq:A-intermediate-element}
+\end{equation}
+
+が成立することをいう。
+\end{definition}
+
+したがって、Solver $S$ が中間的性質を持つとは、
+
+\begin{equation}
+    \boxed{
+        D_S\cap C_S\neq\varnothing
+    }
+    \label{eq:A-intermediate-solver}
+\end{equation}
+
+が成立することと定義する。
+
+これは、Solver が単に離散部分と連続部分を一つの集合に
+含んでいるという意味ではない。
+
+重要なのは、
+
+\begin{equation}
+    \exists s\in S
+\end{equation}
+
+が存在して、
+
+\begin{equation}
+    s\in D_S
+    \quad\text{かつ}\quad
+    s\in C_S
+\end{equation}
+
+を同時に満たすことである。
+
+
+%------------------------------------------------------------
+\subsection{(A.5) Solver の型集合}
+\label{subsec:A5}
+
+前節までの定義から、Solver $S$ に対して一意の三択を
+強制する必要はない。
+
+そこで、Solver $S$ が有する型を集合として記録する。
+
+\begin{definition}[Solver の型集合]
+Solver $S\in\Solver$ に対して、その型集合を
+
+\begin{equation}
+    \boxed{
+        \Type(S)
+        \subseteq
+        \left\{
+            \DType,\CType,\MType
+        \right\}
+    }
+    \label{eq:A-type-set}
+\end{equation}
+
+とする。
+\end{definition}
+
+ここで、
+
+\begin{align}
+    \DType\in\Type(S)
+    &\quad\Longleftrightarrow\quad
+    S\text{ が離散的 Solver 構造を含む},
+    \label{eq:A-type-discrete}
+    \\[2mm]
+    \CType\in\Type(S)
+    &\quad\Longleftrightarrow\quad
+    S\text{ が連続的 Solver 構造を含む},
+    \label{eq:A-type-continuous}
+    \\[2mm]
+    \MType\in\Type(S)
+    &\quad\Longleftrightarrow\quad
+    D_S\cap C_S\neq\varnothing
+    \quad\text{または、}
+    \nonumber\\
+    &\hspace{28mm}
+    S\text{ が中間 Solver 構造を含む}.
+    \label{eq:A-type-intermediate}
+\end{align}
+
+とする。
+
+この定義により、
+
+\begin{equation}
+    \Type(S)=\{\DType\}
+\end{equation}
+
+だけでなく、
+
+\begin{equation}
+    \Type(S)=\{\DType,\MType\},
+\end{equation}
+
+あるいは
+
+\begin{equation}
+    \Type(S)
+    =
+    \{\DType,\CType,\MType\}
+\end{equation}
+
+のような場合も許容される。
+
+したがって、Solver の内部構造によって
+「ある部分では離散的、別の部分では中間的」
+という状況も表現できる。
+
+
+%------------------------------------------------------------
+\subsection{(A.6) 部分 Solver による型判定}
+\label{subsec:A6}
+
+Solver の型を判定する際には、Solver 全体を一つの対象として
+強制的に三分類するのではなく、その内部に存在する部分 Solver を
+調べることができる。
+
+$S'\SubSolver S$ である各部分 Solver $S'$ に対して、
+
+\begin{equation}
+    \Type(S')
+    \subseteq
+    \{\DType,\CType,\MType\}
+\end{equation}
+
+を判定する。
+
+このとき、Solver $S$ の内部に現れる型の集合を
+
+\begin{equation}
+    \boxed{
+        \Type_{\mathrm{sub}}(S)
+        :=
+        \left\{
+            \tau
+            \,\middle|\,
+            \exists S'\SubSolver S,\;
+            \tau\in\Type(S')
+        \right\}
+    }
+    \label{eq:A-subsolver-type-set}
+\end{equation}
+
+と定義する。
+
+したがって、
+
+\begin{equation}
+    \Type_{\mathrm{sub}}(S)
+    =
+    \{\DType,\MType\}
+\end{equation}
+
+であれば、$S$ は内部に少なくとも
+離散的 Solver 構造と中間的 Solver 構造を含む。
+
+また、
+
+\begin{equation}
+    \Type_{\mathrm{sub}}(S)
+    =
+    \{\DType,\CType,\MType\}
+\end{equation}
+
+であれば、$S$ の内部には三種類すべての Solver 構造が
+存在する。
+
+\begin{remark}
+ここで $\Type(S)$ と $\Type_{\mathrm{sub}}(S)$ は区別する。
+
+$\Type(S)$ は $S$ 自身が持つ構造上の型を表すのに対し、
+$\Type_{\mathrm{sub}}(S)$ は $S$ に含まれる部分 Solver の構造まで
+調べた結果を表す。
+\end{remark}
+
+
+%------------------------------------------------------------
+\subsection{(A.7) 型判定における既存数学の優先}
+\label{subsec:A7}
+
+Solver の型を判定するための数学的性質について、
+既存の数学によって厳密に定義・判定できる場合には、
+ECA 独自の量を導入する前に既存数学を用いる。
+
+例えば、Solver または部分 Solver $S'$ の濃度については、
+
+\begin{equation}
+    |S'|\leq\aleph_0
+\end{equation}
+
+または
+
+\begin{equation}
+    |S'|>\aleph_0
+\end{equation}
+
+という通常の濃度論によって判定する。
+
+また、位相構造が与えられている場合には、
+
+\begin{equation}
+    (S',\tau_{S'})
+\end{equation}
+
+について離散空間、連結空間その他の既存の位相的性質を
+通常の位相論によって判定する。
+
+この原則を、
+
+\begin{equation}
+    \boxed{
+    \text{既存数学による判定}
+    \;\longrightarrow\;
+    \text{必要な場合のみ ECA の量による判定}
+    }
+    \label{eq:A-existing-math-priority}
+\end{equation}
+
+として採用する。
+
+したがって、ECA における量 $B,K,I,C$ 等は、
+既存数学によってSolverの性質を十分に記述できない場合に
+その構造を評価するために導入する。
+
+
+%------------------------------------------------------------
+\subsection{(A.8) Solver の非可算性}
+\label{subsec:A8}
+
+Solver 集合 $S$ の非可算性を、
+
+\begin{equation}
+    |S|>\aleph_0
+    \label{eq:A-uncountable}
+\end{equation}
+
+として表す。
+
+ただし、本性質を任意の Solver に対して最初から仮定しない。
+
+むしろ、ある部分 Solver
+
+\begin{equation}
+    S'\SubSolver S
+\end{equation}
+
+が存在して、
+
+\begin{equation}
+    |S'|>\aleph_0
+    \label{eq:A-uncountable-subsolver}
+\end{equation}
+
+が既存数学から証明できるならば、
+
+\begin{equation}
+    S'\subseteq S
+\end{equation}
+
+より、
+
+\begin{equation}
+    |S|
+    \geq
+    |S'|
+    >
+    \aleph_0
+\end{equation}
+
+が従う。
+
+したがって、
+
+\begin{proposition}[部分 Solver による非可算性の継承]
+$S,S'\in\Solver$ に対して
+
+\begin{equation}
+    S'\SubSolver S
+\end{equation}
+
+かつ
+
+\begin{equation}
+    |S'|>\aleph_0
+\end{equation}
+
+ならば、
+
+\begin{equation}
+    \boxed{
+        |S|>\aleph_0
+    }
+\end{equation}
+
+である。
+\end{proposition}
+
+\begin{proof}
+$S'\SubSolver S$ より、
+
+\begin{equation}
+    S'\subseteq S
+\end{equation}
+
+が成立する。
+
+したがって、包含写像
+
+\begin{equation}
+    \iota:S'\hookrightarrow S
+\end{equation}
+
+は単射である。
+
+よって濃度について
+
+\begin{equation}
+    |S'|\leq |S|
+\end{equation}
+
+が成立する。
+
+仮定より
+
+\begin{equation}
+    |S'|>\aleph_0
+\end{equation}
+
+であるから、
+
+\begin{equation}
+    |S|
+    \geq
+    |S'|
+    >
+    \aleph_0
+\end{equation}
+
+となる。
+
+したがって、
+
+\begin{equation}
+    |S|>\aleph_0
+\end{equation}
+
+が従う。
+\end{proof}
+
+\begin{remark}
+この命題により、Solver 全体の非可算性を直接仮定する必要はなく、
+非可算な部分 Solver の存在から全体の非可算性を導出できる。
+\end{remark}
+
+
+%------------------------------------------------------------
+\subsection{(A.9) Solver の構造と型の同型不変性}
+\label{subsec:A9}
+
+Solver 間の構造を比較するため、Solver 同型を考える。
+
+\begin{definition}[Solver 同型]
+$S_1,S_2\in\Solver$ に対して、
+
+\begin{equation}
+    T:
+    S_1
+    \overset{\sim}{\longrightarrow}
+    S_2
+\end{equation}
+
+が Solver 同型であるとは、$T$ が全単射であり、
+Solver の構造を保存する写像であることをいう。
+
+特に、公理選択および推論規則・構成制約に対応する構造が
+
+\begin{equation}
+    T_{\mathcal A}:
+    \Aset_{S_1}
+    \overset{\sim}{\longrightarrow}
+    \Aset_{S_2},
+\end{equation}
+
+\begin{equation}
+    T_{\mathcal R}:
+    \Rset_{S_1}
+    \overset{\sim}{\longrightarrow}
+    \Rset_{S_2}
+\end{equation}
+
+として対応するものとする。
+\end{definition}
+
+Solver 同型が離散的・連続的構造を保存する場合、
+
+\begin{equation}
+    s\in D_{S_1}
+    \quad\Longleftrightarrow\quad
+    T(s)\in D_{S_2},
+    \label{eq:A-discrete-isomorphism}
+\end{equation}
+
+および
+
+\begin{equation}
+    s\in C_{S_1}
+    \quad\Longleftrightarrow\quad
+    T(s)\in C_{S_2}
+    \label{eq:A-continuous-isomorphism}
+\end{equation}
+
+が成立する。
+
+このとき、
+
+\begin{equation}
+    D_{S_2}
+    =
+    T(D_{S_1}),
+\end{equation}
+
+\begin{equation}
+    C_{S_2}
+    =
+    T(C_{S_1})
+\end{equation}
+
+である。
+
+したがって、
+
+\begin{equation}
+    D_{S_1}\cap C_{S_1}
+    \neq
+    \varnothing
+\end{equation}
+
+ならば、
+
+\begin{equation}
+    D_{S_2}\cap C_{S_2}
+    \neq
+    \varnothing
+\end{equation}
+
+である。
+
+よって中間的性質は Solver 同型によって保存される。
+
+
+%------------------------------------------------------------
+\subsection{(A.10) 型集合の同型不変性}
+\label{subsec:A10}
+
+前節の構造保存条件を満たす Solver 同型
+
+\begin{equation}
+    T:
+    S_1
+    \overset{\sim}{\longrightarrow}
+    S_2
 \end{equation}
 
 に対して、
 
 \begin{equation}
-    S_n\longrightarrow S
+    \boxed{
+        \Type(S_1)=\Type(S_2)
+    }
+    \label{eq:A-type-invariance}
 \end{equation}
 
-を意味する位相的構造を定義することができる。
+が成立することを Solver の型の同型不変性と呼ぶ。
 
-
-%------------------------------------------------------------
-\subsection{(A.3) 距離構造}
-
-Solver 集合上の距離を
+同様に、部分 Solver の型についても、
 
 \begin{equation}
-    d_{\Solver}:
-    \Solver\times\Solver
-    \longrightarrow
-    [0,\infty)
+    S_1'\SubSolver S_1
 \end{equation}
 
-として考える。
-
-この距離が
-
-\begin{align}
-    d_{\Solver}(S_1,S_2)&\geq 0,\\
-    d_{\Solver}(S_1,S_2)&=0
-        \iff S_1=S_2,\\
-    d_{\Solver}(S_1,S_2)
-        &=d_{\Solver}(S_2,S_1),\\
-    d_{\Solver}(S_1,S_3)
-        &\leq
-        d_{\Solver}(S_1,S_2)
-        +
-        d_{\Solver}(S_2,S_3)
-\end{align}
-
-を満たすならば、
+に対して
 
 \begin{equation}
-    (\Solver,d_{\Solver})
+    T(S_1')\SubSolver S_2
 \end{equation}
 
-は距離空間となる。
-
-さらに、この距離が与える位相
+が対応するならば、
 
 \begin{equation}
-    \tau_{d_{\Solver}}
-\end{equation}
-
-と $\tau_{\Solver}$ が一致する場合、
-
-\begin{equation}
-    \tau_{\Solver}
+    \Type(S_1')
     =
-    \tau_{d_{\Solver}}
+    \Type(T(S_1'))
 \end{equation}
 
-として Solver 集合の位相構造と距離構造を同一視できる。
+が成立する。
+
+したがって、
+
+\begin{equation}
+    \Type_{\mathrm{sub}}(S_1)
+    =
+    \Type_{\mathrm{sub}}(S_2)
+    \label{eq:A-subtype-invariance}
+\end{equation}
+
+も成立する。
 
 
 %------------------------------------------------------------
-\subsection{(A.4) 完備性と Banach 空間構造}
+\subsection{(A.11) 集合論的構造と測度論的構造の分離}
+\label{subsec:A11}
 
-Solver 集合に対して線形構造およびノルム構造を導入できる場合、
+本節で定義した構造は、Solver の集合論的・構造論的性質に限定する。
 
-\begin{equation}
-    (\Solver,\|\cdot\|_{\Solver})
-\end{equation}
-
-をノルム空間として考える。
-
-このとき、任意の Cauchy 列
+特に、
 
 \begin{equation}
-    \{S_n\}_{n=1}^{\infty}
+    S,\quad
+    S'\SubSolver S,\quad
+    D_S,\quad
+    C_S,\quad
+    \Type(S)
 \end{equation}
 
-が
+および、それらに関する濃度・部分構造・同型性を
+本節の対象とする。
+
+一方、
 
 \begin{equation}
-    \forall\varepsilon>0,\quad
-    \exists N\in\N,\quad
-    m,n\geq N
-    \Rightarrow
-    \|S_n-S_m\|_{\Solver}<\varepsilon
+    \Sigma,\qquad
+    \mu,\qquad
+    (S,\Sigma,\mu)
 \end{equation}
 
-を満たす。
+のような可測構造および測度空間の構成は、
+ここでは定義しない。
 
-この Cauchy 列について、
+したがって、ECA の構造を
 
 \begin{equation}
-    S_n\longrightarrow S
+    \boxed{
+    \text{集合論的・構造論的層}
+    \longrightarrow
+    \text{評価空間の構成}
+    \longrightarrow
+    \text{測度論的層}
+    }
+    \label{eq:A-layer-separation}
 \end{equation}
 
-となる $S\in\Solver$ が常に存在するならば、
+として分離する。
+
+この分離により、
 
 \begin{equation}
-    (\Solver,\|\cdot\|_{\Solver})
+    \text{Solver の集合論的性質}
 \end{equation}
 
-は完備であり、Banach 空間となる。
+と
 
-ここで注意すべきなのは、ノルム空間における Cauchy 性だけから
-その極限が必ずしも元の空間内に存在するとは限らないことである。
+\begin{equation}
+    \text{Solver に導入される測度}
+\end{equation}
+
+を同一の定義として混同することを避ける。
+
+
+%------------------------------------------------------------
+\subsection{(A.12) (B) 以降への接続}
+\label{subsec:A12}
+
+以上により、(A) では Solver 集合について、
+
+\begin{equation}
+    \boxed{
+    \begin{array}{c}
+    \text{Solver の基本構造}\\
+    \Downarrow\\
+    \text{部分 Solver}\\
+    \Downarrow\\
+    \text{要素の離散性・連続性}\\
+    \Downarrow\\
+    \text{中間的性質}\\
+    \Downarrow\\
+    \text{Solver の型集合}\\
+    \Downarrow\\
+    \text{既存数学による型判定}\\
+    \Downarrow\\
+    \text{必要に応じた非可算性の導出}\\
+    \Downarrow\\
+    \text{Solver 同型による構造保存}
+    \end{array}
+    }
+    \label{eq:A-structure-summary}
+\end{equation}
+
+という構造を確定する。
+
+この構造を基礎として、(B) では Solver の評価構造を受け取る
+一般評価空間を構成する。
 
 すなわち、
 
 \begin{equation}
-    \{S_n\}\text{ が Cauchy}
-\quad\not\Rightarrow\quad
-\exists S\in\Solver,\ S_n\to S
+    \Solver
+    \longrightarrow
+    X
 \end{equation}
 
-である場合、そのノルム空間は Banach 空間ではない。
+という評価写像を導入し、その後の (C) および (D) において
+可測構造および測度を定義する。
 
-したがって、Solver 集合を Banach 空間として扱うためには、
-極限の存在が Solver 集合そのものの内部で保証されることを
-示す必要がある。
+また、(E) では本節で定義した Solver 同型を用いて、
+評価構造および一般解の Representation Independence を扱う。
+
+\begin{equation}
+    \boxed{
+    \text{Solver 構造}
+    \longrightarrow
+    \text{評価空間}
+    \longrightarrow
+    \text{測度構造}
+    \longrightarrow
+    \text{Solver 同型による不変性}
+    }
+    \label{eq:A-to-E}
+\end{equation}
+
+という順序によって、(A) から (E) までの構造を接続する。
 
 
 %------------------------------------------------------------
-\subsection{(A.5) 可分性}
+\subsection*{(A) における定義上の注意}
 
-Solver 集合が距離空間である場合、可算稠密部分集合
+本節では、Solver の「離散・連続・中間」という性質を
+単純な三分法として扱わない。
 
-\begin{equation}
-    \Solver_0\subseteq\Solver,
-    \qquad
-    |\Solver_0|\leq\aleph_0
-\end{equation}
-
-が存在し、
+特に、
 
 \begin{equation}
-    \overline{\Solver_0}=\Solver
-\end{equation}
-
-を満たすならば、$\Solver$ は可分である。
-
-可分性は、Solver 集合上の一般的な評価構造を可算的な近似によって
-扱うための基礎となる。
-
-
-%------------------------------------------------------------
-\subsection{(A.6) コンパクト性}
-
-Solver 集合が位相空間としてコンパクトであるとは、
-任意の開被覆
-
-\begin{equation}
-    \Solver
+    \Type(S)
     \subseteq
-    \bigcup_{\alpha\in A}U_\alpha
+    \{\DType,\CType,\MType\}
 \end{equation}
 
-に対して、有限部分被覆
+とすることで、複数の性質を同一の Solver が持つ可能性を許容する。
+
+また、Solver の内部に
 
 \begin{equation}
-    \Solver
-    \subseteq
-    U_{\alpha_1}
-    \cup\cdots\cup
-    U_{\alpha_n}
+    S_1\SubSolver S
 \end{equation}
 
-が存在することである。
+という部分 Solver が存在することを許容するため、
+Solver の型を判定する際には、その Solver 自身だけでなく、
+必要に応じて部分 Solver の構造を調べることができる。
 
-距離空間においては、特に逐次コンパクト性との関係を利用して
-Solver 集合の極限構造を扱うことができる。
+したがって、Solver の型判定は、
 
-以上の位相的・解析的構造は、後に定義する評価空間および一般解の
-存在性を考えるための基礎となる。
+\begin{equation}
+    \boxed{
+    S
+    \longrightarrow
+    \{S'\mid S'\SubSolver S\}
+    \longrightarrow
+    \text{既存数学による構造判定}
+    \longrightarrow
+    \Type(S)
+    }
+    \label{eq:A-type-determination}
+\end{equation}
 
+という手順で行う。
+
+このとき、既存数学によって十分に判定可能な性質については
+ECA 独自の式を導入せず、必要な場合にのみ ECA の評価量を用いる。
 
 %################################################################
 % (B)
@@ -298,31 +1013,98 @@ Solver 集合の極限構造を扱うことができる。
 \section{(B) 一般評価空間の構成}
 \label{sec:B}
 
-\subsection{(B.1) 評価空間}
+%------------------------------------------------------------
+\subsection{(B.1) 評価構造の基本的考え方}
+\label{subsec:B1}
 
-Solver 集合 $\Solver$ の各元に対する評価を記述する空間を
-
-\begin{equation}
-    X
-\end{equation}
-
-とする。
-
-$X$ は単なる集合ではなく、Solver の評価構造を保持するための
-数学的構造を備えた空間として扱う。
-
-評価写像を
+(A) において Solver 集合
 
 \begin{equation}
-    \Phi:
     \Solver
-    \longrightarrow
+\end{equation}
+
+および各 Solver
+
+\begin{equation}
+    S
+    =
+    \left(
+        \Aset_S,
+        \Rset_S
+    \right)
+\end{equation}
+
+の構造を定義した。
+
+また、Solver の内部構造に応じて、
+離散的・連続的・中間的な性質を持つ部分 Solver が存在し得ることを
+定義した。
+
+(B) では、これらの Solver 構造から得られる評価情報を、
+Solver 自体とは独立した評価空間上の構造として表現する。
+
+したがって、まず評価空間を
+
+\begin{equation}
     X
 \end{equation}
 
 とする。
 
-任意の Solver $S\in\Solver$ に対して、
+ここで $X$ は単なる集合としてではなく、
+Solver によって得られる評価構造を保持するための数学的空間として
+扱う。
+
+ただし、$X$ にどのような追加構造を与えるかは、
+評価対象および評価方法に応じて定めるものとする。
+
+したがって、本節では $X$ に対して必要以上の構造を
+あらかじめ仮定しない。
+
+\begin{remark}
+(A) において集合論的・構造論的な Solver の定義を行ったのに対し、
+(B) ではその Solver を評価するための空間を構成する。
+
+したがって、
+
+\begin{equation}
+    \text{Solver の構造}
+    \longrightarrow
+    \text{評価構造}
+    \longrightarrow
+    \text{評価空間}
+\end{equation}
+
+という順序を採用する。
+
+可測族や測度については、本節で必要となる場合を除いて
+具体的に導入せず、測度論的性質については (C) および (D) において
+扱う。
+\end{remark}
+
+
+%------------------------------------------------------------
+\subsection{(B.2) 評価写像}
+\label{subsec:B2}
+
+Solver $S\in\Solver$ に対して、その Solver が有する評価構造を
+評価空間 $X$ の元として表現する写像を考える。
+
+これを
+
+\begin{equation}
+    \boxed{
+        \Phi:
+        \Solver
+        \longrightarrow
+        X
+    }
+    \label{eq:B-evaluation-map}
+\end{equation}
+
+とする。
+
+すなわち、任意の $S\in\Solver$ に対して、
 
 \begin{equation}
     \Phi(S)\in X
@@ -330,90 +1112,425 @@ $X$ は単なる集合ではなく、Solver の評価構造を保持するため
 
 である。
 
+ここで重要なのは、$\Phi$ が Solver を直ちに
+単一の実数へ写す写像ではないことである。
 
-%------------------------------------------------------------
-\subsection{(B.2) 一般解との関係}
-
-(A)--(A.6) において定めた Solver 集合と、ここで定めた評価空間を
-基礎として、一般解を
+$\Phi$ はまず、
 
 \begin{equation}
-    \Eval:
+    S
+    \longmapsto
+    \Phi(S)
+\end{equation}
+
+によって Solver が持つ評価構造を $X$ 上に表現する。
+
+したがって、最終的な数値評価が必要な場合には、
+後述する別の評価写像を介してその値を取り出す。
+
+\begin{equation}
     \Solver
-    \longrightarrow
+    \xrightarrow{\Phi}
     X
+    \longrightarrow
+    \R
 \end{equation}
 
-として構成する。
-
-すなわち、
-
-\begin{equation}
-    \boxed{
-        \Eval:\Solver\longrightarrow X
-    }
-    \label{eq:B-general-solution}
-\end{equation}
-
-である。
-
-任意の Solver $S\in\Solver$ に対して、
-
-\begin{equation}
-    \Eval(S)\in X
-\end{equation}
-
-となる。
-
-ここで $\Eval$ は、Solver を最終的な数値へ直接対応させる
-写像ではなく、Solver が持つ評価構造を評価空間 $X$ の元として
-表現する写像である。
+という二段階の構造を基本とする。
 
 
 %------------------------------------------------------------
-\subsection{(B.3) 評価構造の具体的表現}
+\subsection{(B.3) 一般評価空間の構成条件}
+\label{subsec:B3}
 
-ECA における評価が $B,I,K$ 等の量によって表現される場合、
-評価空間を
+評価空間 $X$ は、Solver の評価構造を表現できることを要求する。
+
+すなわち、評価に必要な情報を表す集合を
 
 \begin{equation}
-    X
-    =
-    X_B\times X_I\times X_K
+    \mathcal E(S)
 \end{equation}
 
-として記述できる場合がある。
+とする。
 
-このとき、
+ここで $\mathcal E(S)$ は Solver $S$ から得られる
+評価に必要なデータの集合または構造を表す。
+
+このとき、評価空間 $X$ は少なくとも
 
 \begin{equation}
-    \Eval(S)
+    \Phi(S)
+    \in X
+\end{equation}
+
+となるように構成され、
+
+\begin{equation}
+    \Phi(S)
     =
-    \left(
-        B(S),I(S),K(S)
-    \right)
+    \operatorname{EvalStruct}(S)
+    \label{eq:B-evaluation-structure}
 \end{equation}
 
 と表現できる。
 
-ただし、この表現は $X$ の具体的な構成がこの直積構造を持つ場合の
-表現であり、一般解の定義
+ここで
 
 \begin{equation}
-    \Eval:\Solver\to X
+    \operatorname{EvalStruct}
 \end{equation}
 
-そのものをこの表現に限定するものではない。
+は Solver の構造から評価構造を取り出す写像を表す。
+
+ただし、
+
+\begin{equation}
+    \operatorname{EvalStruct}
+\end{equation}
+
+の具体的な定義は、Solver の型および評価方法によって異なり得る。
+
+したがって、(B) の一般定義では特定の座標系に限定しない。
 
 
 %------------------------------------------------------------
-\subsection{(B.4) 最終評価写像}
+\subsection{(B.4) ECA における評価量による具体的表現}
+\label{subsec:B4}
+
+ECA において評価構造が
+
+\begin{equation}
+    B,\qquad I,\qquad K
+\end{equation}
+
+等の量によって記述される場合、
+評価空間をそれぞれの評価量を受ける空間の直積として
+表現できる。
+
+すなわち、
+
+\begin{equation}
+    X_B,\qquad
+    X_I,\qquad
+    X_K
+\end{equation}
+
+をそれぞれの評価量の値域とすると、
+
+\begin{equation}
+    \boxed{
+        X
+        =
+        X_B
+        \times
+        X_I
+        \times
+        X_K
+    }
+    \label{eq:B-product-space}
+\end{equation}
+
+と構成できる場合がある。
+
+この場合、評価写像は
+
+\begin{equation}
+    \boxed{
+        \Phi(S)
+        =
+        \left(
+            B(S),
+            I_S(S),
+            K(S)
+        \right)
+    }
+    \label{eq:B-coordinate-evaluation}
+\end{equation}
+
+と表現できる。
+
+ここで、$I_S(S)$ は評価量としての $I$ を表す。
+
+これは、公理選択空間として用いられる記号 $I$ と混同しないための
+記法である。
+
+\begin{remark}
+ECA の既存文書では、$I$ が
+
+\begin{equation}
+    I:\Solver\to[0,1]
+\end{equation}
+
+という評価量として用いられる一方、
+
+\begin{equation}
+    I\subseteq\mathcal P(S)
+\end{equation}
+
+という公理選択空間を表す記号としても用いられている。
+
+本稿では両者を数学的に区別する必要があるため、
+前者を評価量 $I_S(S)$、後者を公理選択空間 $I$ として扱う。
+
+\end{remark}
+
+
+%------------------------------------------------------------
+\subsection{(B.5) Solver の型に応じた評価構造}
+\label{subsec:B5}
+
+(A) において定義した Solver の型集合
+
+\begin{equation}
+    \Type(S)
+    \subseteq
+    \{
+        \DType,\CType,\MType
+    \}
+\end{equation}
+
+に応じて、評価構造の表現形式が異なる場合がある。
+
+まず、離散的評価構造を持つ部分 Solver
+
+\begin{equation}
+    S_D\SubSolver S
+\end{equation}
+
+について、その評価に必要な離散データを
+
+\begin{equation}
+    B_D(S)
+\end{equation}
+
+とする。
+
+ECA の既存定式化では、公理選択 $i$ に対して
+
+\begin{equation}
+    B(i)\subseteq i\subseteq S
+    \label{eq:B-discrete-subset}
+\end{equation}
+
+を満たす離散的要素集合 $B(i)$ が導入されている。
+
+この構造を用いる場合、離散評価は
+
+\begin{equation}
+    E_{\mathrm d}(S)
+    =
+    \sum_{b\in B(i_S)}
+    w_S(b)
+    \label{eq:B-discrete-evaluation}
+\end{equation}
+
+という形で表現できる。
+
+ここで $i_S$ は Solver $S$ に対応する公理選択であり、
+$w_S$ は対応する重み関数である。
+
+ただし、公理選択 $i_S$ の一意な復元および
+$w_S$ の厳密な構成は (H) で扱う。
+
+したがって、(B) ではこの式を
+離散評価構造の具体例として位置付ける。
+
+
+%------------------------------------------------------------
+\subsection{(B.6) 連続的評価構造}
+\label{subsec:B6}
+
+連続的な評価構造を持つ部分 Solver
+
+\begin{equation}
+    S_C\SubSolver S
+\end{equation}
+
+については、適切な測度
+
+\begin{equation}
+    \mu_S
+\end{equation}
+
+を用いることで評価を表現できる場合がある。
+
+ECA における既存の連続形式では、公理選択 $i_S$ に対して
+
+\begin{equation}
+    E_{\mathrm c}(S)
+    =
+    \mu_S(i_S)
+    =
+    \int_S
+    \mathbf{1}_{i_S}(u)
+    \,d\mu_S(u)
+    \label{eq:B-continuous-evaluation}
+\end{equation}
+
+という形が用いられる。
+
+ここで
+
+\begin{equation}
+    \mathbf{1}_{i_S}:S\to\{0,1\}
+\end{equation}
+
+は $i_S$ の指示関数である。
+
+この式は、離散的な総和を連続的な積分によって表現する
+ECA の評価構造に対応する。
+
+ただし、
+
+\begin{equation}
+    \mu_S
+\end{equation}
+
+そのものの存在、可測性および正規化可能性については、
+本節では仮定の範囲を超えて断定せず、(C) および (D) で扱う。
+
+
+%------------------------------------------------------------
+\subsection{(B.7) 中間 Solver に対する評価空間}
+\label{subsec:B7}
+
+中間 Solver とは、(A) において定義したように、
+離散的性質と連続的性質を同時に持つ要素を含む Solver である。
+
+すなわち、
+
+\begin{equation}
+    D_S\cap C_S
+    \neq
+    \varnothing
+    \label{eq:B-intermediate-condition}
+\end{equation}
+
+が成立する。
+
+この場合、評価空間は離散評価構造と連続評価構造の双方を
+表現できなければならない。
+
+したがって、必要に応じて
+
+\begin{equation}
+    X
+    =
+    X_{\mathrm d}
+    \times
+    X_{\mathrm c}
+    \times
+    X_{\mathrm{dc}}
+    \label{eq:B-intermediate-space}
+\end{equation}
+
+のように構成することができる。
+
+ここで、
+
+\begin{itemize}
+    \item $X_{\mathrm d}$ は離散評価構造を表す空間、
+    \item $X_{\mathrm c}$ は連続評価構造を表す空間、
+    \item $X_{\mathrm{dc}}$ は両構造の対応関係を表すために
+          必要となる空間
+\end{itemize}
+
+である。
+
+ただし、この直積表示も一般定義そのものではなく、
+中間 Solver の評価構造が実際にこの分解を許す場合の具体的表現である。
+
+重要なのは、
+
+\begin{equation}
+    \operatorname{Type}(S)
+    =
+    \{\DType,\CType,\MType\}
+\end{equation}
+
+のように複数の型を持つ Solver を排除せず、
+その内部に存在する各評価構造を同一の評価空間上で表現可能にする
+ことである。
+
+
+%------------------------------------------------------------
+\subsection{(B.8) 一般評価空間と一般解}
+\label{subsec:B8}
+
+評価空間 $X$ が構成されたとき、
+Solver に対して評価構造を対応させる一般的な写像を
+
+\begin{equation}
+    \boxed{
+        \mathcal G:
+        \Solver
+        \longrightarrow
+        X
+    }
+    \label{eq:B-general-solution}
+\end{equation}
+
+とする。
+
+ここで $\mathcal G$ は、Solver に最終的な数値を直接対応させる
+写像ではない。
+
+任意の $S\in\Solver$ に対して、
+
+\begin{equation}
+    \mathcal G(S)\in X
+\end{equation}
+
+であり、
+
+\begin{equation}
+    \mathcal G(S)
+\end{equation}
+
+は Solver $S$ が持つ評価構造を一般解として表現する。
+
+したがって、
+
+\begin{equation}
+    \boxed{
+        S
+        \longmapsto
+        \mathcal G(S)
+        \in X
+    }
+    \label{eq:B-general-solution-structure}
+\end{equation}
+
+を一般解の基本構造とする。
+
+\begin{remark}
+ここで $\mathcal G$ の存在を無条件に主張しているわけではない。
+
+(B) では一般解が存在する場合に満たすべき写像の型と、
+その評価空間を定義する。
+
+\begin{equation}
+    \exists\,
+    \mathcal G:
+    \Solver\to X
+\end{equation}
+
+そのものの成立については、(D) において存在問題として扱う。
+\end{remark}
+
+
+%------------------------------------------------------------
+\subsection{(B.9) 一般解と最終評価}
+\label{subsec:B9}
 
 評価空間 $X$ の元から最終的なスカラー評価を取り出す写像を
 
 \begin{equation}
-    \EvalMap:
-    X\longrightarrow\R
+    \Psi:
+    X
+    \longrightarrow
+    \R
+    \label{eq:B-final-evaluation-map}
 \end{equation}
 
 とする。
@@ -421,58 +1538,148 @@ ECA における評価が $B,I,K$ 等の量によって表現される場合、
 例えば、
 
 \begin{equation}
+    X
+    =
+    X_B\times X_I\times X_K
+\end{equation}
+
+かつ
+
+\begin{equation}
     x=(B,I,K)
 \end{equation}
 
-に対して、
+である場合に、
 
 \begin{equation}
-    \EvalMap(B,I,K)=BIK
+    \Psi(B,I,K)
+    =
+    BIK
+    \label{eq:B-ECA-final-evaluation}
 \end{equation}
 
-と定義される場合、
+と定義することができる。
+
+このとき、
 
 \begin{equation}
     g
-    =
-    \EvalMap\circ\Eval
+    :=
+    \Psi\circ\mathcal G
+    \label{eq:B-composed-evaluation}
 \end{equation}
 
-となる。
+と置けば、
 
-したがって、
+\begin{equation}
+    \boxed{
+        g:
+        \Solver
+        \longrightarrow
+        \R
+    }
+\end{equation}
+
+であり、
 
 \begin{equation}
     \boxed{
         g(S)
         =
-        \EvalMap(\Eval(S))
+        \Psi(\mathcal G(S))
     }
-    \label{eq:B-composed-evaluation}
+    \label{eq:B-scalar-evaluation}
 \end{equation}
 
-である。
+を得る。
 
-このとき、Solver、評価空間、最終評価の関係は
+したがって、評価構造全体は
 
 \begin{equation}
     \boxed{
         \Solver
-        \xrightarrow{\Eval}
+        \xrightarrow{\mathcal G}
         X
-        \xrightarrow{\EvalMap}
+        \xrightarrow{\Psi}
         \R
     }
     \label{eq:B-evaluation-chain}
 \end{equation}
 
-として統一的に記述される。
+という二段階の写像として表現される。
 
 
 %------------------------------------------------------------
-\subsection{(B.5) 任意の評価対象への一般化}
+\subsection{(B.10) 評価写像と一般解の区別}
+\label{subsec:B10}
 
-評価対象を特定の空間に限定しないため、評価対象を任意の集合
+評価写像
+
+\begin{equation}
+    \Phi:\Solver\to X
+\end{equation}
+
+と一般解
+
+\begin{equation}
+    \mathcal G:\Solver\to X
+\end{equation}
+
+は、同じ型を持つ場合があるが、その意味を同一視する必要はない。
+
+$\Phi$ は Solver の評価構造を評価空間上に表現する写像であり、
+
+\begin{equation}
+    \Phi(S)
+\end{equation}
+
+は Solver $S$ に対して得られる評価構造を表す。
+
+一方、
+
+\begin{equation}
+    \mathcal G(S)
+\end{equation}
+
+は、その評価構造を ECA における一般解として表現する。
+
+両者が同一の構造を表す場合には、
+
+\begin{equation}
+    \mathcal G(S)
+    =
+    \Phi(S)
+    \qquad
+    (\forall S\in\Solver)
+\end{equation}
+
+として同一視できる。
+
+しかし、一般解の定義として
+
+\begin{equation}
+    \mathcal G=\Phi
+\end{equation}
+
+を要求する必要はない。
+
+したがって、本稿では両者を区別した上で、
+
+\begin{equation}
+    \Phi
+    \quad\text{および}\quad
+    \mathcal G
+\end{equation}
+
+が同じ評価構造を表現する場合には、その対応を別途明示する。
+
+
+%------------------------------------------------------------
+\subsection{(B.11) 任意の評価対象への一般化}
+\label{subsec:B11}
+
+評価対象そのものを特定の集合に固定しないため、
+任意の評価対象を
 
 \begin{equation}
     Y
@@ -480,54 +1687,304 @@ ECA における評価が $B,I,K$ 等の量によって表現される場合、
 
 とする。
 
-このとき、評価写像は一般に
+このとき、評価対象 $Y$ から評価空間 $X$ への写像を
 
 \begin{equation}
     \Phi_Y:
     Y
     \longrightarrow
     X
+    \label{eq:B-object-evaluation}
 \end{equation}
 
-として構成できる。
+として定義できる場合がある。
 
-したがって、特定の評価対象 $Y$ に依存した表現ではなく、
+さらに、複数の評価対象を一つのクラスまたは集合
+
+\begin{equation}
+    \mathfrak Y
+\end{equation}
+
+として扱う場合には、
 
 \begin{equation}
     \Phi:
-    \mathfrak{Y}
+    \mathfrak Y
     \longrightarrow
     X
+    \label{eq:B-general-object-evaluation}
 \end{equation}
 
 という一般化された評価構造を考えることができる。
 
-この一般化によって、Solver の評価対象そのものを固定することなく、
-同一の評価空間構造を用いて異なる対象を扱うことが可能になる。
+これにより、評価対象そのものを固定することなく、
+共通の評価空間構造を用いて異なる対象を評価できる。
+
+ただし、この一般化された写像が Solver の評価写像
+
+\begin{equation}
+    \Phi:\Solver\to X
+\end{equation}
+
+と同一のものであるとは限らない。
+
+評価対象と Solver を同一視できる場合にのみ、
+両者を同じ写像として扱う。
 
 
 %------------------------------------------------------------
-\subsection{(B.6) Representation Independence の基礎}
+\subsection{(B.12) Representation Independence への接続}
+\label{subsec:B12}
 
-評価写像の具体的表現は、Solver 集合の表現方法によって異なる
-可能性がある。
+評価写像の具体的表現は、Solver の表現方法によって
+異なる場合がある。
 
 したがって、
 
 \begin{equation}
-    \Phi_1:\Solver_1\to X_1,
+    \Phi_1:
+    \Solver_1
+    \longrightarrow
+    X_1,
     \qquad
-    \Phi_2:\Solver_2\to X_2
+    \Phi_2:
+    \Solver_2
+    \longrightarrow
+    X_2
 \end{equation}
 
-が異なる写像であったとしても、Solver 集合として同値な構造を
-表現しているならば、その評価構造が対応することを要求する。
+が異なる写像であっても、
+Solver 同型
 
-この性質を Representation Independence の基礎とする。
+\begin{equation}
+    T:
+    \Solver_1
+    \overset{\sim}{\longrightarrow}
+    \Solver_2
+\end{equation}
 
-後述する(E)では、この性質を Solver 同型と一般解との可換性を
-用いて厳密に記述する。
+によって対応する評価構造を比較できることが要求される。
 
+評価空間が同一の場合には、
+
+\begin{equation}
+    \boxed{
+        \Phi_2\circ T
+        =
+        \Phi_1
+    }
+    \label{eq:B-representation-independence}
+\end{equation}
+
+という可換性によって対応を記述できる。
+
+評価空間そのものが異なる場合には、
+
+\begin{equation}
+    U:
+    X_1
+    \longrightarrow
+    X_2
+\end{equation}
+
+という評価空間間の構造保存写像を導入し、
+
+\begin{equation}
+    \boxed{
+        U\circ\Phi_1
+        =
+        \Phi_2\circ T
+    }
+    \label{eq:B-evaluation-space-correspondence}
+\end{equation}
+
+とする。
+
+この性質が、後述する (E) における
+Representation Independence の基礎となる。
+
+ここで重要なのは、評価空間の同値性を単なる集合としての同型性に
+限定しないことである。
+
+必要なのは、Solver の評価構造を保存する対応である。
+
+
+%------------------------------------------------------------
+\subsection{(B.13) 可測構造への接続}
+\label{subsec:B13}
+
+評価空間 $X$ に対して測度論的構造が必要となる場合には、
+適切な可測空間
+
+\begin{equation}
+    (X,\Sigma_X)
+\end{equation}
+
+を導入する。
+
+このとき、
+
+\begin{equation}
+    \Phi:
+    \Solver
+    \longrightarrow
+    (X,\Sigma_X)
+\end{equation}
+
+または
+
+\begin{equation}
+    \mathcal G:
+    \Solver
+    \longrightarrow
+    (X,\Sigma_X)
+\end{equation}
+
+の可測性を検討することができる。
+
+ただし、可測族
+
+\begin{equation}
+    \Sigma_X
+\end{equation}
+
+および測度
+
+\begin{equation}
+    \mu
+\end{equation}
+
+の具体的構成は、本節で無条件に仮定しない。
+
+これらについては (C) および (D) において、
+評価関数の可測性、非負性、正規化可能性および測度構造との
+整合性を別途検討する。
+
+
+%------------------------------------------------------------
+\subsection{(B.14) (A) から (B) への構造的帰結}
+\label{subsec:B14}
+
+(A) で定義した Solver 構造から、本節では
+
+\begin{equation}
+    \boxed{
+        S
+        \longmapsto
+        \text{評価構造}
+        \longmapsto
+        X
+    }
+\end{equation}
+
+という構成を導入した。
+
+特に、Solver の型によって
+
+\begin{equation}
+    \Type(S)
+    \subseteq
+    \{\DType,\CType,\MType\}
+\end{equation}
+
+が与えられる場合、
+
+\begin{equation}
+    \DType
+    \longrightarrow
+    \text{離散評価構造},
+\end{equation}
+
+\begin{equation}
+    \CType
+    \longrightarrow
+    \text{連続評価構造},
+\end{equation}
+
+\begin{equation}
+    \MType
+    \longrightarrow
+    \text{離散・連続双方を含む評価構造}
+\end{equation}
+
+という対応を考えることができる。
+
+ただし、これらは型の存在から評価空間上の具体的な構造が
+自動的に存在することを意味するものではない。
+
+評価構造の具体的な存在および一意性については、
+後続の (C) および (D)、さらに Solver 同型との関係については
+(E) において検証する。
+
+
+%------------------------------------------------------------
+\subsection*{(B) における定義上の注意}
+
+本節では、以下の構造を明確に区別する。
+
+\begin{enumerate}
+    \item Solver 集合
+    \begin{equation}
+        \Solver
+    \end{equation}
+
+    \item Solver から評価空間への評価写像
+    \begin{equation}
+        \Phi:\Solver\to X
+    \end{equation}
+
+    \item 評価構造を一般解として表現する写像
+    \begin{equation}
+        \mathcal G:\Solver\to X
+    \end{equation}
+
+    \item 評価空間から最終評価値を取り出す写像
+    \begin{equation}
+        \Psi:X\to\R
+    \end{equation}
+
+    \item 最終評価関数
+    \begin{equation}
+        g=\Psi\circ\mathcal G.
+    \end{equation}
+\end{enumerate}
+
+したがって、
+
+\begin{equation}
+    \boxed{
+        \Solver
+        \xrightarrow{\mathcal G}
+        X
+        \xrightarrow{\Psi}
+        \R
+    }
+\end{equation}
+
+が一般解の基本的な評価構造となる。
+
+また、ECA における具体的な評価式として
+
+\begin{equation}
+    \Psi(B,I,K)=BIK
+\end{equation}
+
+を採用できる場合には、
+
+\begin{equation}
+    g(S)
+    =
+    B(S)I_S(S)K(S)
+\end{equation}
+
+となる。
+
+ただし、この具体式を一般評価空間そのものの定義と同一視せず、
+ECA の評価量がこの座標系で表現可能な場合の具体的評価として扱う。
+
+以上により、(A) で定義された Solver の集合論的・構造論的性質を
+基礎として、(B) ではその評価構造を保持する一般評価空間を
+構成する。
 
 %################################################################
 % (C)
@@ -536,22 +1993,51 @@ ECA における評価が $B,I,K$ 等の量によって表現される場合、
 \section{(C) 評価関数の測度論的性質}
 \label{sec:C}
 
-\subsection{(C.1) 評価関数}
+%------------------------------------------------------------
+\subsection{(C.1) 本節の目的}
+\label{subsec:C1}
 
-(B) において定義された
+(B) において、Solver 集合 $\Solver$ から一般評価空間 $X$ への
+写像
 
 \begin{equation}
-    g
-    =
-    \EvalMap\circ\Eval
+    \mathcal G:
+    \Solver
+    \longrightarrow
+    X
 \end{equation}
 
-を Solver の最終評価関数とする。
+および、評価空間から最終的な評価値を取り出す写像
+
+\begin{equation}
+    \Psi:
+    X
+    \longrightarrow
+    \R
+\end{equation}
+
+を定義した。
+
+したがって、Solver $S\in\Solver$ に対する最終評価関数を
+
+\begin{equation}
+    \boxed{
+        g
+        :=
+        \Psi\circ\mathcal G
+    }
+    \label{eq:C-evaluation-function}
+\end{equation}
+
+と定義する。
 
 すなわち、
 
 \begin{equation}
-    g:\Solver\longrightarrow\R
+    g:
+    \Solver
+    \longrightarrow
+    \R
 \end{equation}
 
 であり、
@@ -559,19 +2045,361 @@ ECA における評価が $B,I,K$ 等の量によって表現される場合、
 \begin{equation}
     g(S)
     =
-    \EvalMap(\Eval(S))
+    \Psi\!\left(\mathcal G(S)\right)
 \end{equation}
 
 である。
 
-後にこの評価関数を離散和および積分によって評価するため、
-$g$ に対して適切な測度論的性質を要求する。
+(C) では、この評価関数 $g$ を離散和および積分によって
+扱うために必要となる測度論的性質を定義する。
+
+特に、
+
+\begin{equation}
+    \text{非負性},
+    \qquad
+    \text{可測性},
+    \qquad
+    \text{正規化可能性}
+\end{equation}
+
+をそれぞれ独立した条件として扱う。
 
 
 %------------------------------------------------------------
-\subsection{(C.2) 非負性}
+\subsection{(C.2) 評価空間の可測構造}
+\label{subsec:C2}
 
-評価関数が非負であることを
+(B) において構成された評価空間 $X$ に対して、
+その評価を測度論的に扱うための $\sigma$-代数を
+
+\begin{equation}
+    \Sigma_X
+\end{equation}
+
+とする。
+
+このとき、
+
+\begin{equation}
+    \boxed{
+        (X,\Sigma_X)
+    }
+    \label{eq:C-measurable-evaluation-space}
+\end{equation}
+
+を評価空間の可測構造と呼ぶ。
+
+ここで $\Sigma_X$ は
+
+\begin{equation}
+    \Sigma_X\subseteq\mathcal P(X)
+\end{equation}
+
+を満たす $\sigma$-代数である。
+
+すなわち、
+
+\begin{align}
+    &X\in\Sigma_X,\\
+    &A\in\Sigma_X
+        \Longrightarrow
+        X\setminus A\in\Sigma_X,\\
+    &A_n\in\Sigma_X\ (n\in\N)
+        \Longrightarrow
+        \bigcup_{n=1}^{\infty}A_n\in\Sigma_X
+\end{align}
+
+を満たす。
+
+これにより、評価空間 $X$ における
+「測度を与える対象となる集合」を明確に定めることができる。
+
+\begin{remark}
+ここで $\Sigma_X$ の定義と、$\Sigma_X$ 上の測度の定義を区別する。
+
+すなわち、
+
+\begin{equation}
+    \Sigma_X
+\end{equation}
+
+は可測集合の族そのものであり、
+
+\begin{equation}
+    \mu_X:\Sigma_X\to[0,\infty]
+\end{equation}
+
+はその可測集合に値を与える測度である。
+
+したがって、
+
+\begin{equation}
+    \text{可測構造}
+    \neq
+    \text{測度}
+\end{equation}
+
+である。
+\end{remark}
+
+
+%------------------------------------------------------------
+\subsection{(C.3) Solver 集合上の可測構造}
+\label{subsec:C3}
+
+評価関数 $g$ を Solver 集合上の測度論的対象として扱うため、
+Solver 集合 $\Solver$ に対して $\sigma$-代数
+
+\begin{equation}
+    \Sigma_{\Solver}
+\end{equation}
+
+を導入する。
+
+これにより、
+
+\begin{equation}
+    \boxed{
+        (\Solver,\Sigma_{\Solver})
+    }
+    \label{eq:C-solver-measurable-space}
+\end{equation}
+
+を Solver 集合の可測空間とする。
+
+特に、(B) の一般解
+
+\begin{equation}
+    \mathcal G:
+    \Solver\to X
+\end{equation}
+
+が可測写像となることを要求する場合、
+
+\begin{equation}
+    \mathcal G:
+    (\Solver,\Sigma_{\Solver})
+    \longrightarrow
+    (X,\Sigma_X)
+\end{equation}
+
+について、任意の
+
+\begin{equation}
+    A\in\Sigma_X
+\end{equation}
+
+に対して
+
+\begin{equation}
+    \mathcal G^{-1}(A)
+    \in
+    \Sigma_{\Solver}
+\end{equation}
+
+が成立することを要求する。
+
+すなわち、
+
+\begin{equation}
+    \boxed{
+        \mathcal G
+        \text{ は可測}
+    }
+    \label{eq:C-G-measurable}
+\end{equation}
+
+である。
+
+
+%------------------------------------------------------------
+\subsection{(C.4) 最終評価写像の可測性}
+\label{subsec:C4}
+
+評価空間から最終評価値への写像
+
+\begin{equation}
+    \Psi:
+    X\to\R
+\end{equation}
+
+について、$\R$ に Borel $\sigma$-代数
+
+\begin{equation}
+    \mathcal B(\R)
+\end{equation}
+
+を与える。
+
+このとき、
+
+\begin{equation}
+    \Psi:
+    (X,\Sigma_X)
+    \longrightarrow
+    (\R,\mathcal B(\R))
+\end{equation}
+
+が可測であるとは、任意の
+
+\begin{equation}
+    A\in\mathcal B(\R)
+\end{equation}
+
+について
+
+\begin{equation}
+    \Psi^{-1}(A)
+    \in
+    \Sigma_X
+\end{equation}
+
+が成立することである。
+
+したがって、
+
+\begin{equation}
+    \boxed{
+        \Psi
+        \text{ は可測}
+    }
+    \label{eq:C-Psi-measurable}
+\end{equation}
+
+とする。
+
+
+%------------------------------------------------------------
+\subsection{(C.5) 最終評価関数の可測性}
+\label{subsec:C5}
+
+(B) において
+
+\begin{equation}
+    g
+    =
+    \Psi\circ\mathcal G
+\end{equation}
+
+と定義した。
+
+ここで $\mathcal G$ および $\Psi$ がともに可測であるならば、
+合成写像 $g$ も可測である。
+
+\begin{proposition}[評価関数の可測性]
+\label{prop:C-measurability}
+
+\begin{equation}
+    \mathcal G:
+    (\Solver,\Sigma_{\Solver})
+    \longrightarrow
+    (X,\Sigma_X)
+\end{equation}
+
+および
+
+\begin{equation}
+    \Psi:
+    (X,\Sigma_X)
+    \longrightarrow
+    (\R,\mathcal B(\R))
+\end{equation}
+
+が可測であるとする。
+
+このとき、
+
+\begin{equation}
+    g
+    =
+    \Psi\circ\mathcal G
+\end{equation}
+
+は
+
+\begin{equation}
+    g:
+    (\Solver,\Sigma_{\Solver})
+    \longrightarrow
+    (\R,\mathcal B(\R))
+\end{equation}
+
+として可測である。
+\end{proposition}
+
+\begin{proof}
+
+任意の Borel 集合
+
+\begin{equation}
+    A\in\mathcal B(\R)
+\end{equation}
+
+を取る。
+
+$\Psi$ の可測性より、
+
+\begin{equation}
+    \Psi^{-1}(A)
+    \in
+    \Sigma_X
+\end{equation}
+
+である。
+
+さらに $\mathcal G$ の可測性より、
+
+\begin{equation}
+    \mathcal G^{-1}
+    \left(
+        \Psi^{-1}(A)
+    \right)
+    \in
+    \Sigma_{\Solver}
+\end{equation}
+
+である。
+
+一方、
+
+\begin{align}
+    g^{-1}(A)
+    &=
+    (\Psi\circ\mathcal G)^{-1}(A)
+    \\
+    &=
+    \mathcal G^{-1}
+    \left(
+        \Psi^{-1}(A)
+    \right).
+\end{align}
+
+したがって、
+
+\begin{equation}
+    g^{-1}(A)
+    \in
+    \Sigma_{\Solver}.
+\end{equation}
+
+$A$ は任意の Borel 集合だったので、
+
+\begin{equation}
+    g
+    \text{ は可測}
+\end{equation}
+
+である。
+
+\end{proof}
+
+
+%------------------------------------------------------------
+\subsection{(C.6) 評価関数の非負性}
+\label{subsec:C6}
+
+評価関数 $g$ が非負であることを、
 
 \begin{equation}
     \boxed{
@@ -584,175 +2412,670 @@ $g$ に対して適切な測度論的性質を要求する。
 
 によって定義する。
 
-特に、評価構造
-
-\begin{equation}
-    \Eval(S)
-    =
-    \left(B(S),I(S),K(S)\right)
-\end{equation}
-
-および
-
-\begin{equation}
-    \EvalMap(B,I,K)=BIK
-\end{equation}
-
-が採用される場合には、
-
-\begin{equation}
-    B(S)I(S)K(S)\geq0
-\end{equation}
-
-を確認することで非負性を評価できる。
-
-したがって、(A)および(B)で定義された評価構造は、
-(C)における非負性の根拠を与える。
-
-
-%------------------------------------------------------------
-\subsection{(C.3) 可測性}
-
-$\Solver$ 上に $\sigma$-代数
-
-\begin{equation}
-    \Sigma_{\Solver}
-\end{equation}
-
-を定義する。
-
-このとき、評価関数
+すなわち、
 
 \begin{equation}
     g:
-    (\Solver,\Sigma_{\Solver})
+    \Solver
     \longrightarrow
-    (\R,\mathcal B(\R))
+    [0,\infty)
 \end{equation}
 
-が可測であるとは、任意の Borel 集合
+である。
+
+この条件は、$g$ を非負測度との積分および
+正規化操作に用いるための基本条件となる。
+
+特に、ECA の評価構造が
 
 \begin{equation}
-    A\in\mathcal B(\R)
+    \mathcal G(S)
+    =
+    \left(
+        B(S),
+        I_S(S),
+        K(S)
+    \right)
 \end{equation}
 
-について、
+であり、
 
 \begin{equation}
-    g^{-1}(A)
-    \in
-    \Sigma_{\Solver}
+    \Psi(B,I,K)
+    =
+    BIK
 \end{equation}
 
-が成立することである。
+である場合には、
+
+\begin{equation}
+    g(S)
+    =
+    B(S)I_S(S)K(S)
+\end{equation}
+
+となる。
 
 したがって、
 
 \begin{equation}
-    \boxed{
-        g\text{ は }\Sigma_{\Solver}\text{-可測}
-    }
-    \label{eq:C-measurable}
+    B(S)\geq0,
+    \qquad
+    I_S(S)\geq0,
+    \qquad
+    K(S)\geq0
 \end{equation}
 
-となることを要求する。
-
-ここでも、
+が保証されるならば、
 
 \begin{equation}
-    g=\EvalMap\circ\Eval
+    g(S)\geq0
 \end{equation}
 
-という(B)の構造を用いることで、一般解から最終評価への
-可測性を検討できる。
+が従う。
 
 
 %------------------------------------------------------------
-\subsection{(C.4) 正規化可能性}
+\subsection{(C.7) Solver 集合上の測度}
+\label{subsec:C7}
 
-評価関数 $g$ が非負可測関数であり、
+Solver 集合上の測度論的評価を行うため、
 
 \begin{equation}
-    \int_{\Solver}g(S)\,d\mu(S)
-    <\infty
+    \mu_{\Solver}:
+    \Sigma_{\Solver}
+    \longrightarrow
+    [0,\infty]
 \end{equation}
 
-であるならば、$g$ は $\mu$ に関して正規化可能である。
+を導入する。
 
-正規化定数を
+$\mu_{\Solver}$ は、以下の条件を満たす測度とする。
+
+\begin{align}
+    &\mu_{\Solver}(\varnothing)=0,\\
+    &\mu_{\Solver}(A)\geq0
+        \qquad
+        (A\in\Sigma_{\Solver}),\\
+    &A_n\in\Sigma_{\Solver}
+        \text{ かつ }
+        A_n\cap A_m=\varnothing
+        \ (n\neq m)
+\end{align}
+
+ならば、
 
 \begin{equation}
+    \mu_{\Solver}
+    \left(
+        \bigcup_{n=1}^{\infty}A_n
+    \right)
+    =
+    \sum_{n=1}^{\infty}
+    \mu_{\Solver}(A_n)
+\end{equation}
+
+が成立する。
+
+ここで重要なのは、
+
+\begin{equation}
+    \Sigma_{\Solver}
+\end{equation}
+
+の存在と、
+
+\begin{equation}
+    \mu_{\Solver}
+\end{equation}
+
+の存在を別々に扱うことである。
+
+したがって、可測構造を定義したことのみから、
+特定の測度が一意に決定されるとは限らない。
+
+
+%------------------------------------------------------------
+\subsection{(C.8) 評価関数の積分}
+\label{subsec:C8}
+
+$g$ が
+
+\begin{equation}
+    (\Solver,\Sigma_{\Solver})
+    \longrightarrow
+    ([0,\infty),\mathcal B([0,\infty)))
+\end{equation}
+
+として可測であるとき、
+
+\begin{equation}
+    \int_{\Solver}
+    g(S)\,d\mu_{\Solver}(S)
+\end{equation}
+
+を定義できる。
+
+この積分を、
+
+\begin{equation}
+    \boxed{
+        Z
+        :=
+        \int_{\Solver}
+        g(S)\,d\mu_{\Solver}(S)
+    }
+    \label{eq:C-normalization-constant}
+\end{equation}
+
+と置く。
+
+$Z$ は評価関数全体の測度論的総量を表す。
+
+
+%------------------------------------------------------------
+\subsection{(C.9) 正規化可能性}
+\label{subsec:C9}
+
+評価関数 $g$ が $\mu_{\Solver}$ に関して正規化可能であるとは、
+
+\begin{equation}
+    \boxed{
+        0
+        <
+        \int_{\Solver}
+        g(S)\,d\mu_{\Solver}(S)
+        <
+        \infty
+    }
+    \label{eq:C-normalizable}
+\end{equation}
+
+が成立することと定義する。
+
+すなわち、
+
+\begin{equation}
+    0<Z<\infty
+\end{equation}
+
+である。
+
+このとき、
+
+\begin{equation}
+    \boxed{
+        \widehat g(S)
+        :=
+        \frac{g(S)}{Z}
+    }
+    \label{eq:C-normalized-evaluation}
+\end{equation}
+
+と定義する。
+
+
+%------------------------------------------------------------
+\subsection{(C.10) 正規化の命題}
+\label{subsec:C10}
+
+\begin{proposition}[評価関数の正規化]
+\label{prop:C-normalization}
+
+$g$ が非負可測関数であり、
+
+\begin{equation}
+    0
+    <
     Z
     =
-    \int_{\Solver}g(S)\,d\mu(S)
+    \int_{\Solver}
+    g(S)\,d\mu_{\Solver}(S)
+    <
+    \infty
 \end{equation}
 
-とする。
-
-$0<Z<\infty$ ならば、
+を満たすならば、
 
 \begin{equation}
     \widehat g(S)
-    =
+    :=
     \frac{g(S)}{Z}
 \end{equation}
 
-とすることで、
+は
 
 \begin{equation}
-    \int_{\Solver}\widehat g(S)\,d\mu(S)
+    \int_{\Solver}
+    \widehat g(S)\,d\mu_{\Solver}(S)
     =
     1
 \end{equation}
 
-を得る。
+を満たす。
+\end{proposition}
+
+\begin{proof}
+
+$0<Z<\infty$ より、
+
+\begin{equation}
+    \frac{1}{Z}
+\end{equation}
+
+は有限の正数である。
+
+したがって、積分の線形性より、
+
+\begin{align}
+    \int_{\Solver}
+    \widehat g(S)\,d\mu_{\Solver}(S)
+    &=
+    \int_{\Solver}
+    \frac{g(S)}{Z}
+    \,d\mu_{\Solver}(S)
+    \\
+    &=
+    \frac{1}{Z}
+    \int_{\Solver}
+    g(S)\,d\mu_{\Solver}(S)
+    \\
+    &=
+    \frac{Z}{Z}
+    \\
+    &=1.
+\end{align}
+
+よって、
+
+\begin{equation}
+    \int_{\Solver}
+    \widehat g(S)\,d\mu_{\Solver}(S)
+    =
+    1
+\end{equation}
+
+が成立する。
+\end{proof}
 
 
 %------------------------------------------------------------
-\subsection{(C.5) (A)--(B) からの帰結}
+\subsection{(C.11) 離散評価との対応}
+\label{subsec:C11}
 
-(A)において Solver 集合の位相・距離・測度的基礎を構成し、
-(B)において
+Solver $S$ が有限または可算的な離散評価構造を持ち、
+各要素 $a\in S$ に対して重み
+
+\begin{equation}
+    w(a)\geq0
+\end{equation}
+
+が与えられている場合には、
+
+\begin{equation}
+    \sum_{a\in S}w(a)
+\end{equation}
+
+によって評価を構成できる。
+
+特に、公理選択 $i\subseteq S$ に対して
+
+\begin{equation}
+    B(i)\subseteq i\subseteq S
+\end{equation}
+
+である場合、ECA における離散的測度の具体形として
+
+\begin{equation}
+    \boxed{
+        \mu(i)
+        =
+        \sum_{b\in B(i)}
+        w(b)
+    }
+    \label{eq:C-discrete-measure}
+\end{equation}
+
+を採用できる。
+
+このとき、
+
+\begin{equation}
+    w:S\to[0,\infty)
+\end{equation}
+
+が非負であり、
+
+\begin{equation}
+    \sum_{a\in S}w(a)
+    =
+    1
+\end{equation}
+
+を満たすならば、対応する重み付き評価は
+正規化された離散評価となる。
+
+
+%------------------------------------------------------------
+\subsection{(C.12) 連続評価との対応}
+\label{subsec:C12}
+
+Solver またはその評価対象上に可測空間
+
+\begin{equation}
+    (S,\Sigma_S)
+\end{equation}
+
+と測度
+
+\begin{equation}
+    \mu_S:\Sigma_S\to[0,\infty]
+\end{equation}
+
+が与えられている場合を考える。
+
+公理選択
+
+\begin{equation}
+    i\subseteq S
+\end{equation}
+
+が可測集合であるとき、その指示関数
+
+\begin{equation}
+    \mathbf 1_i:S\to\{0,1\}
+\end{equation}
+
+を用いて、
+
+\begin{equation}
+    \boxed{
+        \mu_S(i)
+        =
+        \int_S
+        \mathbf 1_i(s)\,d\mu_S(s)
+    }
+    \label{eq:C-continuous-measure}
+\end{equation}
+
+と表現できる。
+
+これは離散的な総和による評価を、
+連続的な測度による評価へ拡張したものである。
+
+ただし、この式が成立するためには、
+
+\begin{equation}
+    i\in\Sigma_S
+\end{equation}
+
+すなわち $i$ が可測集合であることを要求する。
+
+
+%------------------------------------------------------------
+\subsection{(C.13) 測度そのものと測度空間の区別}
+\label{subsec:C13}
+
+評価構造において測度を対象とする場合と、
+測度空間全体を対象とする場合を区別する。
+
+まず、測度そのものを対象とする場合には、
+
+\begin{equation}
+    \mu:
+    \Sigma\to[0,\infty]
+\end{equation}
+
+を評価対象とする。
+
+一方、測度空間を対象とする場合には、
+
+\begin{equation}
+    (X,\Sigma_X,\mu_X)
+\end{equation}
+
+という三つ組全体を評価対象とする。
+
+したがって、
+
+\begin{equation}
+    \mu
+\end{equation}
+
+と
+
+\begin{equation}
+    (X,\Sigma_X,\mu)
+\end{equation}
+
+は同一の対象として扱わない。
+
+この区別は、後に連続 Solver における
+
+\begin{equation}
+    C_s^{(\mu)}
+\end{equation}
+
+と
+
+\begin{equation}
+    C_s^{(\mathrm{ms})}
+\end{equation}
+
+を区別する際にも必要となる。
+
+
+%------------------------------------------------------------
+\subsection{(C.14) ECA の評価式との接続}
+\label{subsec:C14}
+
+ECA において最終評価が
+
+\begin{equation}
+    \Psi(B,I,K)
+    =
+    BIK
+\end{equation}
+
+で与えられる場合には、
+
+\begin{equation}
+    g(S)
+    =
+    B(S)I_S(S)K(S)
+\end{equation}
+
+となる。
+
+さらに、評価対象が連続的な変数 $x$ によって表される場合には、
+
+\begin{equation}
+    \boxed{
+        T_{\mathrm{overlay}}
+        =
+        \int
+        B(x)I(x)K(x)
+        \,d\mu(x)
+    }
+    \label{eq:C-overlay-integral}
+\end{equation}
+
+という形を得る。
+
+また、区間 $[0,1]$ 上の Lebesgue 測度を採用する場合には、
+
+\begin{equation}
+    \boxed{
+        T_{\mathrm{overlay}}
+        =
+        \int_0^1
+        B(x)I(x)K(x)
+        \,dx
+    }
+    \label{eq:C-lebesgue-integral}
+\end{equation}
+
+となる。
+
+ただし、これらの具体的積分表示は、
+対応する関数の可測性および積分可能性が保証される場合にのみ
+成立する。
+
+
+%------------------------------------------------------------
+\subsection{(C.15) (A)--(B) から (C) への構造的帰結}
+\label{subsec:C15}
+
+(A) において Solver 集合の集合論的・構造論的基礎を定め、
+(B) において一般評価空間
+
+\begin{equation}
+    X
+\end{equation}
+
+および評価構造
 
 \begin{equation}
     \Solver
-    \xrightarrow{\Eval}
+    \xrightarrow{\mathcal G}
     X
-    \xrightarrow{\EvalMap}
+    \xrightarrow{\Psi}
     \R
 \end{equation}
 
-という評価構造を定義した。
+を定義した。
 
-したがって、(C)で要求される
+(C) では、この構造に対して
+
+\begin{equation}
+    \Sigma_{\Solver},
+    \qquad
+    \Sigma_X,
+    \qquad
+    \mu_{\Solver},
+    \qquad
+    \mu_X
+\end{equation}
+
+等の測度論的構造を必要に応じて導入し、
+
+\begin{equation}
+    g
+    =
+    \Psi\circ\mathcal G
+\end{equation}
+
+の
 
 \begin{equation}
     \text{非負性},
     \qquad
     \text{可測性},
     \qquad
+    \text{積分可能性},
+    \qquad
     \text{正規化可能性}
 \end{equation}
 
-は、独立した条件として導入されるものではなく、
-(A)および(B)で構成された数学的構造をもとに検証される性質である。
+を扱う。
 
-特に、
-
-\begin{equation}
-    g=\EvalMap\circ\Eval
-\end{equation}
-
-であるため、
+したがって、
 
 \begin{equation}
-    \Eval
-\quad\text{および}\quad
-\EvalMap
+    \boxed{
+    \begin{array}{c}
+        \text{Solver の集合論的・構造論的定義}
+        \\[2mm]
+        \Downarrow
+        \\[2mm]
+        \text{一般評価空間の構成}
+        \\[2mm]
+        \Downarrow
+        \\[2mm]
+        \text{可測構造の導入}
+        \\[2mm]
+        \Downarrow
+        \\[2mm]
+        \text{評価関数の測度論的性質}
+    \end{array}
+    }
 \end{equation}
 
-の性質から $g$ の測度論的性質を導くことができる。
+という順序で理解される。
 
+
+%------------------------------------------------------------
+\subsection{(C.16) 本節における証明事項と仮定事項の区別}
+\label{subsec:C16}
+
+本節では、以下を明確に区別する。
+
+\begin{enumerate}
+    \item
+    $\mathcal G$ および $\Psi$ が可測であるという仮定から、
+    \[
+        g=\Psi\circ\mathcal G
+    \]
+    が可測であること。
+
+    \item
+    \[
+        0<\int_{\Solver}g\,d\mu_{\Solver}<\infty
+    \]
+    が成立するならば、
+    \[
+        \widehat g=\frac{g}{Z}
+    \]
+    が正規化されること。
+
+    \item
+    ECA の具体的評価構造において、
+    \[
+        B\geq0,\qquad I_S\geq0,\qquad K\geq0
+    \]
+    が保証されるならば、
+    \[
+        g=BI_SK\geq0
+    \]
+    が成立すること。
+
+    \item
+    $\mathcal G$ の存在そのもの、
+    $\Psi$ の可測性そのもの、
+    \[
+        0<
+        \int_{\Solver}g\,d\mu_{\Solver}
+        <
+        \infty
+    \]
+    の成立そのものは、各構造から別途検証されるべき事項であり、
+    定義だけから自動的に導かれるものではない。
+\end{enumerate}
+
+したがって、(C) は
+
+\begin{equation}
+    \boxed{
+    \text{測度論的性質を定義すること}
+    \quad\text{と}\quad
+    \text{それらの成立を証明すること}
+    }
+\end{equation}
+
+を混同しない構成とする。
+
+特に、正規化可能性については
+
+\begin{equation}
+    0<
+    \int_{\Solver}g\,d\mu_{\Solver}
+    <
+    \infty
+\end{equation}
+
+を成立条件として明示し、この条件が ECA の具体的な
+Solver 集合に対して成立するかどうかは、後続の各定理において
+個別に検証する。
 
 %################################################################
 % (D)
@@ -761,136 +3084,745 @@ $0<Z<\infty$ ならば、
 \section{(D) 一般解の存在}
 \label{sec:D}
 
-\subsection{(D.1) 一般解存在の定式化}
+%------------------------------------------------------------
+\subsection{(D.1) 一般解の存在問題}
+\label{subsec:D1}
 
-(B)において一般解を
+(B) において、Solver 集合 $\Solver$ に対する一般解を
 
 \begin{equation}
-    \Eval:\Solver\to X
+    \mathcal{G}:
+    \Solver
+    \longrightarrow
+    X
+    \label{eq:D-general-solution-map}
 \end{equation}
 
-として定義した。
+という型を持つ写像として定めた。
 
-(D)では、この写像が実際に存在することを問題とする。
+ここで重要なのは、写像の型を定めることと、
+その型を満たす写像が実際に存在することは別の問題であるという点である。
 
-すなわち、
+したがって (D) では、
 
 \begin{equation}
     \boxed{
-        \exists\,\Eval:
-        \Solver\longrightarrow X
+        \exists\,
+        \mathcal{G}:
+        \Solver
+        \longrightarrow
+        X
     }
     \label{eq:D-existence}
 \end{equation}
 
-を一般解存在命題として考える。
+を一般解の存在命題として扱う。
 
-ここでいう存在とは、単に任意の Solver に対して何らかの数値を
-割り当てられることではなく、Solver 集合全体に対して一貫した
-評価構造を与える写像が存在することを意味する。
+ここでいう存在とは、各 $S\in\Solver$ に対して個別に
+何らかの評価値を割り当てることではない。
+
+すなわち、Solver 集合全体
+
+\begin{equation}
+    \Solver
+\end{equation}
+
+に属する任意の Solver に対して、その Solver の評価構造を
+同一の規則によって $X$ の元へ対応させる写像
+
+\begin{equation}
+    \mathcal{G}
+\end{equation}
+
+が存在することを意味する。
+
+したがって、
+
+\begin{equation}
+    \forall S\in\Solver,
+    \qquad
+    \mathcal{G}(S)\in X
+    \label{eq:D-pointwise-existence}
+\end{equation}
+
+が成立する。
 
 
 %------------------------------------------------------------
-\subsection{(D.2) 評価空間における一般解}
+\subsection{(D.2) 一般解と評価構造}
+\label{subsec:D2}
 
-一般解 $\Eval$ が存在するとき、
+(B) において定義された一般評価空間を
 
 \begin{equation}
-    \Eval(S)\in X
-    \qquad
-    (\forall S\in\Solver)
+    X
+\end{equation}
+
+とする。
+
+一般解
+
+\begin{equation}
+    \mathcal{G}:
+    \Solver\to X
+\end{equation}
+
+が存在するならば、任意の
+
+\begin{equation}
+    S\in\Solver
+\end{equation}
+
+について
+
+\begin{equation}
+    \mathcal{G}(S)
+    \in X
 \end{equation}
 
 である。
 
-さらに(B)の最終評価写像
+ここで $\mathcal{G}(S)$ は、Solver $S$ に対して
+(B) で定義された評価構造を適用した結果として得られる
+一般評価を表す。
+
+したがって、一般解は単なる数値を返す写像ではなく、
 
 \begin{equation}
-    \EvalMap:X\to\R
+    \boxed{
+        \mathcal{G}(S)
+        =
+        \text{Solver $S$ に対応する一般評価構造}
+    }
 \end{equation}
 
-を用いれば、
+として解釈する。
+
+
+%------------------------------------------------------------
+\subsection{(D.3) 一般解から最終評価への写像}
+\label{subsec:D3}
+
+(B) において、評価空間から実数値を取り出す最終評価写像を
+
+\begin{equation}
+    \Psi:
+    X
+    \longrightarrow
+    \R
+    \label{eq:D-final-evaluation-map}
+\end{equation}
+
+とした。
+
+一般解 $\mathcal{G}$ が存在するとき、
 
 \begin{equation}
     g
-    =
-    \EvalMap\circ\Eval
+    :=
+    \Psi\circ\mathcal{G}
+    \label{eq:D-final-evaluation}
+\end{equation}
+
+によって Solver 集合上の最終評価関数
+
+\begin{equation}
+    g:
+    \Solver
+    \longrightarrow
+    \R
+\end{equation}
+
+を得ることができる。
+
+すなわち、任意の $S\in\Solver$ に対して
+
+\begin{equation}
+    \boxed{
+        g(S)
+        =
+        \Psi\!\left(\mathcal{G}(S)\right)
+    }
+    \label{eq:D-final-evaluation-explicit}
+\end{equation}
+
+である。
+
+したがって、一般解の存在
+
+\begin{equation}
+    \mathcal{G}:\Solver\to X
+\end{equation}
+
+および最終評価写像
+
+\begin{equation}
+    \Psi:X\to\R
+\end{equation}
+
+が与えられれば、
+
+\begin{equation}
+    g=\Psi\circ\mathcal{G}
 \end{equation}
 
 が定義される。
 
-したがって、一般解の存在から最終評価関数の存在も得られる。
+
+%------------------------------------------------------------
+\subsection{(D.4) 一般解の存在と (A)--(C) の関係}
+\label{subsec:D4}
+
+(A) では Solver 集合およびその集合論的・構造論的基礎を定めた。
+
+(B) では、その Solver 集合を評価するための一般評価空間
+
+\begin{equation}
+    X
+\end{equation}
+
+および一般解の型
+
+\begin{equation}
+    \mathcal{G}:\Solver\to X
+\end{equation}
+
+を定めた。
+
+(C) では、評価空間および Solver 集合に対して必要となる
+可測構造、測度、積分可能性、正規化可能性等の
+測度論的性質を定めた。
+
+したがって、(D) における一般解は、
+
+\begin{equation}
+    \boxed{
+    \Solver
+    \xrightarrow{\mathcal{G}}
+    X
+    \xrightarrow{\Psi}
+    \R
+    }
+    \label{eq:D-structure}
+\end{equation}
+
+という構造の中央に位置する。
+
+ここで、
+
+\begin{equation}
+    \mathcal{G}
+\end{equation}
+
+が Solver の構造を一般評価空間 $X$ に対応させ、
+
+\begin{equation}
+    \Psi
+\end{equation}
+
+がその一般評価構造から最終的な評価値を取り出す。
 
 
 %------------------------------------------------------------
-\subsection{(D.3) (A)--(C)との関係}
+\subsection{(D.5) 一般解の存在に関する命題}
+\label{subsec:D5}
 
-(A)において Solver 集合およびその位相的・解析的構造を定め、
-(B)において評価空間 $X$ および一般解の型を定め、
-(C)において最終評価関数に必要な測度論的性質を定めた。
+\begin{proposition}[一般解の存在]
+\label{prop:D-general-solution-existence}
 
-これらを合わせることで、一般解は
+Solver 集合 $\Solver$ と一般評価空間 $X$ が (A)--(B) において
+定義されているとする。
+
+さらに、各
 
 \begin{equation}
-    \Solver
-    \xrightarrow{\Eval}
-    X
-    \xrightarrow{\EvalMap}
-    \R
+    S\in\Solver
 \end{equation}
 
-という構造を持つ。
-
-したがって(D)における一般解存在問題は、
+に対して、その評価構造を一意に定める規則
 
 \begin{equation}
+    S
+    \longmapsto
+    x_S
+    \in X
+\end{equation}
+
+が与えられているならば、
+
+\begin{equation}
+    \mathcal{G}(S):=x_S
+\end{equation}
+
+によって
+
+\begin{equation}
+    \mathcal{G}:
     \Solver
     \longrightarrow
     X
 \end{equation}
 
-という評価構造を Solver 集合全体にわたって整合的に構成できるか
-という問題として理解される。
+を定義できる。
+\end{proposition}
+
+\begin{proof}
+
+仮定より、任意の
+
+\begin{equation}
+    S\in\Solver
+\end{equation}
+
+に対して、対応する評価構造
+
+\begin{equation}
+    x_S\in X
+\end{equation}
+
+が一意に定まる。
+
+そこで、
+
+\begin{equation}
+    \mathcal{G}(S):=x_S
+\end{equation}
+
+と定義する。
+
+この定義により、
+
+\begin{equation}
+    \forall S\in\Solver,
+    \qquad
+    \mathcal{G}(S)\in X
+\end{equation}
+
+が成立する。
+
+したがって、
+
+\begin{equation}
+    \mathcal{G}:
+    \Solver\to X
+\end{equation}
+
+は well-defined な写像である。
+
+よって、
+
+\begin{equation}
+    \exists\,
+    \mathcal{G}:
+    \Solver\to X
+\end{equation}
+
+が成立する。
+\end{proof}
 
 
 %------------------------------------------------------------
-\subsection{(D.4) 一般解と既知の評価写像}
+\subsection{(D.6) 一般解の存在と最終評価関数}
+\label{subsec:D6}
 
-既に評価写像
+\begin{proposition}[一般解から最終評価関数の存在が従う]
+\label{prop:D-final-evaluation-existence}
 
-\begin{equation}
-    \Phi:\Solver\to X
-\end{equation}
-
-が構成され、その写像が(B)で要求される一般解の性質を満たす
-場合には、
+一般解
 
 \begin{equation}
-    \Eval=\Phi
+    \mathcal{G}:
+    \Solver\to X
 \end{equation}
 
-と同一視することができる。
-
-ただし、この同一視は一般解の定義そのものではない。
-
-一般解の本質は、
+および最終評価写像
 
 \begin{equation}
-    \Eval:\Solver\to X
+    \Psi:
+    X\to\R
 \end{equation}
 
-という写像構造にあり、具体的な表現がどの評価写像によって
-与えられるかは別途考えることができる。
+が存在するとする。
 
+このとき、
+
+\begin{equation}
+    g
+    :=
+    \Psi\circ\mathcal{G}
+\end{equation}
+
+によって、
+
+\begin{equation}
+    g:
+    \Solver\to\R
+\end{equation}
+
+が存在する。
+\end{proposition}
+
+\begin{proof}
+
+$\mathcal{G}$ は
+
+\begin{equation}
+    \mathcal{G}:\Solver\to X
+\end{equation}
+
+であり、$\Psi$ は
+
+\begin{equation}
+    \Psi:X\to\R
+\end{equation}
+
+である。
+
+したがって、写像の合成
+
+\begin{equation}
+    \Psi\circ\mathcal{G}
+\end{equation}
+
+が定義できる。
+
+実際、任意の $S\in\Solver$ に対して
+
+\begin{equation}
+    \mathcal{G}(S)\in X
+\end{equation}
+
+であり、$\Psi$ の定義域は $X$ なので、
+
+\begin{equation}
+    \Psi(\mathcal{G}(S))
+\end{equation}
+
+が定義される。
+
+よって、
+
+\begin{equation}
+    g(S)
+    :=
+    \Psi(\mathcal{G}(S))
+\end{equation}
+
+によって
+
+\begin{equation}
+    g:\Solver\to\R
+\end{equation}
+
+が定義される。
+\end{proof}
+
+
+%------------------------------------------------------------
+\subsection{(D.7) 可測構造を考慮した一般解}
+\label{subsec:D7}
+
+(C) において Solver 集合および評価空間に可測構造を導入した。
+
+したがって、
+
+\begin{equation}
+    (\Solver,\Sigma_{\Solver})
+\end{equation}
+
+および
+
+\begin{equation}
+    (X,\Sigma_X)
+\end{equation}
+
+を考える。
+
+このとき、一般解を測度論的評価へ接続するためには、
+
+\begin{equation}
+    \mathcal{G}:
+    (\Solver,\Sigma_{\Solver})
+    \longrightarrow
+    (X,\Sigma_X)
+\end{equation}
+
+が可測であることを要求する。
+
+さらに、
+
+\begin{equation}
+    \Psi:
+    (X,\Sigma_X)
+    \longrightarrow
+    (\R,\mathcal B(\R))
+\end{equation}
+
+が可測ならば、(C) の命題より
+
+\begin{equation}
+    g
+    =
+    \Psi\circ\mathcal{G}
+\end{equation}
+
+も可測となる。
+
+したがって、
+
+\begin{equation}
+    \boxed{
+    \begin{array}{ccccc}
+        (\Solver,\Sigma_{\Solver})
+        &\xrightarrow{\mathcal{G}}&
+        (X,\Sigma_X)
+        &\xrightarrow{\Psi}&
+        (\R,\mathcal B(\R))
+        \\[2mm]
+        &&
+        \Downarrow
+        &&
+        \\[-1mm]
+        &&
+        g=\Psi\circ\mathcal{G}
+        &&
+    \end{array}
+    }
+\end{equation}
+
+という測度論的評価構造が得られる。
+
+
+%------------------------------------------------------------
+\subsection{(D.8) 一般解の存在と一般解の一意性の区別}
+\label{subsec:D8}
+
+(D) において示されるのは、基本的には
+
+\begin{equation}
+    \exists\,
+    \mathcal{G}:
+    \Solver\to X
+\end{equation}
+
+という一般解の存在である。
+
+これに対して、
+
+\begin{equation}
+    \exists!\,
+    \mathcal{G}:
+    \Solver\to X
+\end{equation}
+
+すなわち一般解の一意性は、存在命題とは別の問題である。
+
+特に、異なる Solver の表現が存在する場合には、
+同一の構造を表現する Solver 間で一般解がどのように対応するかを
+別途考える必要がある。
+
+この問題については、(E) において Solver 同型
+
+\begin{equation}
+    T:
+    \Solver_1
+    \longrightarrow
+    \Solver_2
+\end{equation}
+
+と一般解との関係を扱う。
+
+
+%------------------------------------------------------------
+\subsection{(D.9) 一般解の存在に関する注意}
+\label{subsec:D9}
+
+ここで注意すべきなのは、(A)--(C) において定義された構造から、
+
+\begin{equation}
+    \exists\,
+    \mathcal{G}:
+    \Solver\to X
+\end{equation}
+
+が無条件に従うとは限らないことである。
+
+(B) において
+
+\begin{equation}
+    \mathcal{G}:
+    \Solver\to X
+\end{equation}
+
+という型を定めたことは、
+
+\begin{equation}
+    \mathcal{G}
+\end{equation}
+
+という写像が実際に存在することとは異なる。
+
+したがって、本節では、
+
+\begin{equation}
+    \boxed{
+        \text{一般解の型の定義}
+        \neq
+        \text{一般解の存在証明}
+    }
+\end{equation}
+
+を明確に区別する。
+
+一般解の存在を証明するためには、各 Solver $S$ に対して
+対応する評価構造
+
+\begin{equation}
+    x_S\in X
+\end{equation}
+
+が存在し、かつその対応
+
+\begin{equation}
+    S\mapsto x_S
+\end{equation}
+
+が well-defined であることを示す必要がある。
+
+
+%------------------------------------------------------------
+\subsection{(D.10) (D) の位置づけ}
+\label{subsec:D10}
+
+以上より、(A)--(D) の構造は
+
+\begin{equation}
+    \boxed{
+    \begin{array}{c}
+        \text{(A) Solver 集合の基礎構造}
+        \\[2mm]
+        \Downarrow
+        \\[2mm]
+        \text{(B) 一般評価空間と一般解の型}
+        \\[2mm]
+        \Downarrow
+        \\[2mm]
+        \text{(C) 測度論的評価構造}
+        \\[2mm]
+        \Downarrow
+        \\[2mm]
+        \text{(D) 一般解の存在}
+    \end{array}
+    }
+\end{equation}
+
+という順序で構成される。
+
+(D) における中心命題は、
+
+\begin{equation}
+    \boxed{
+        \exists\,
+        \mathcal{G}:
+        \Solver\to X
+    }
+\end{equation}
+
+である。
+
+この一般解が存在するとき、
+
+\begin{equation}
+    g
+    =
+    \Psi\circ\mathcal{G}
+\end{equation}
+
+によって Solver 集合全体に対する最終評価関数を構成できる。
+
+一方、
+
+\begin{equation}
+    \exists!\,
+    \mathcal{G}
+\end{equation}
+
+という一意性については (D) では仮定せず、
+Solver 同型との関係を含めて (E) において扱う。
+
+したがって、
+
+\begin{equation}
+    \boxed{
+        \text{(D) 一般解の存在}
+        \longrightarrow
+        \text{(E) 一般解の構造的一意性}
+    }
+\end{equation}
+
+という論理的順序を維持する。
 
 %################################################################
 % (E)
 %################################################################
 
-\section{(E) Solver 構造に基づく一般解の一意性}
+\section{(E) Solver 同型と一般解の構造的一意性}
 \label{sec:E}
 
-\subsection{(E.1) Solver 同型}
+%------------------------------------------------------------
+\subsection{(E.1) 本節の目的}
+\label{subsec:E1}
+
+(D) において、Solver 集合 $\Solver$ に対する一般解
+
+\begin{equation}
+    \mathcal{G}:
+    \Solver
+    \longrightarrow
+    X
+\end{equation}
+
+の存在を扱った。
+
+しかし、一般解が存在することだけでは、
+その一般解が Solver の具体的な表現方法に依存しないことまでは
+保証されない。
+
+例えば、同一の Solver 構造を異なる集合
+
+\begin{equation}
+    \Solver_1,
+    \qquad
+    \Solver_2
+\end{equation}
+
+によって表現する場合、それぞれに対して
+
+\begin{equation}
+    \Phi_1:
+    \Solver_1\to X_1,
+    \qquad
+    \Phi_2:
+    \Solver_2\to X_2
+\end{equation}
+
+という評価写像を構成することが考えられる。
+
+このとき重要となるのは、
+
+\begin{equation}
+    \text{「同一の Solver 構造に対して、
+    一般解が同一の評価構造を与えるか」}
+\end{equation}
+
+という問題である。
+
+(E) では、この性質を Solver 同型との可換性によって定式化する。
+
+
+%------------------------------------------------------------
+\subsection{(E.2) Solver 同型}
+\label{subsec:E2}
 
 二つの Solver 集合
 
@@ -902,65 +3834,86 @@ $0<Z<\infty$ ならば、
 
 を考える。
 
-写像
+これらが Solver として同一の構造を持つことを、
 
 \begin{equation}
-    T:
-    \Solver_1
-    \longrightarrow
-    \Solver_2
+    \boxed{
+        T:
+        \Solver_1
+        \overset{\sim}{\longrightarrow}
+        \Solver_2
+    }
+    \label{eq:E-solver-isomorphism}
 \end{equation}
 
-が Solver の数学的構造を保存する同型写像であるとき、
+という Solver 同型によって表す。
+
+ここで $T$ は単なる集合間の全単射としてではなく、
+(A) において定められた Solver の構造を保存する写像として扱う。
+
+したがって、
 
 \begin{equation}
-    T:\Solver_1\overset{\sim}{\longrightarrow}\Solver_2
+    T
+    \text{ が Solver 同型}
 \end{equation}
 
-と書く。
+であることには、Solver の表現に依存しない
+構造的対応が成立していることを含める。
 
-ここでいう同型は単なる集合論的全単射ではなく、
-Solver に付随する評価構造、位相構造、距離構造その他、
-ECA において Solver の構造として定められたものを保存する
-写像として扱う。
+以降では、$T$ によって対応する
+
+\begin{equation}
+    S\in\Solver_1
+\end{equation}
+
+と
+
+\begin{equation}
+    T(S)\in\Solver_2
+\end{equation}
+
+を同一の Solver 構造を異なる表現によって記述したものとして扱う。
 
 
 %------------------------------------------------------------
-\subsection{(E.2) 一般解の強い一意性}
+\subsection{(E.3) 一般解の構造的一意性}
+\label{subsec:E3}
 
-各 Solver 集合について一般解
+それぞれの Solver 集合について一般解
 
 \begin{equation}
-    \Eval_1:\Solver_1\to X_1,
+    \Phi_1:
+    \Solver_1\to X_1,
     \qquad
-    \Eval_2:\Solver_2\to X_2
+    \Phi_2:
+    \Solver_2\to X_2
 \end{equation}
 
 を考える。
 
-Solver 同型
+まず、評価空間が共通して
 
 \begin{equation}
-    T:
-    \Solver_1
-    \overset{\sim}{\longrightarrow}
-    \Solver_2
+    X_1=X_2=X
 \end{equation}
 
-に対して、一般解が Solver の構造に従って一意に定まるならば、
+である場合を考える。
+
+このとき、一般解が Solver の構造によって一意に定まるとは、
 
 \begin{equation}
     \boxed{
-        \Eval_2\circ T
+        \Phi_2\circ T
         =
-        \Eval_1
+        \Phi_1
     }
     \label{eq:E-strong-uniqueness}
 \end{equation}
 
-という可換性が成立する。
+が成立することと定める。
 
-すなわち任意の
+すなわち、任意の
 
 \begin{equation}
     S\in\Solver_1
@@ -969,61 +3922,52 @@ Solver 同型
 に対して、
 
 \begin{equation}
-    \Eval_2(T(S))
-    =
-    \Eval_1(S)
-\end{equation}
-
-である。
-
-これは、Solver の表現方法を変更しても、Solver の構造そのものが
-保存される限り、一般解として得られる評価構造は変化しないことを
-意味する。
-
-
-%------------------------------------------------------------
-\subsection{(E.3) 評価写像の可換性}
-
-一般解を構成する評価写像を
-
-\begin{equation}
-    \Phi_1:\Solver_1\to X_1,
-    \qquad
-    \Phi_2:\Solver_2\to X_2
-\end{equation}
-
-とする。
-
-Solver 同型 $T$ に対して評価構造が保存されるならば、
-
-\begin{equation}
     \boxed{
-        \Phi_2\circ T
+        \Phi_2(T(S))
         =
-        \Phi_1
+        \Phi_1(S)
     }
-    \label{eq:E-evaluation-commutativity}
+    \label{eq:E-pointwise-correspondence}
 \end{equation}
 
 が成立する。
 
-この式は、評価写像そのものの具体的な表現が異なっていても、
-Solver 同型によって対応する評価構造が一致することを表す。
+これは、Solver の具体的な表現を変更しても、
+Solver 同型によって対応する Solver に対して
+同一の一般評価構造が得られることを意味する。
+
+したがって、ここでいう一意性は、
+
+\begin{equation}
+    \Phi_1=\Phi_2
+\end{equation}
+
+という意味ではなく、
+
+\begin{equation}
+    \boxed{
+        \Phi_2\circ T=\Phi_1
+    }
+\end{equation}
+
+という Solver 同型を介した一意性である。
 
 
 %------------------------------------------------------------
-\subsection{(E.4) Representation Independence}
+\subsection{(E.4) 評価写像の可換性}
+\label{subsec:E4}
 
-Representation Independence を次のように定義する。
+一般解を構成する評価写像
 
-\begin{definition}[Representation Independence]
-Solver 集合として同値な二つの表現に対して、元となる評価写像が
-異なっていたとしても、それらが誘導する評価空間上の評価構造が
-Solver 同型によって対応する性質を Representation Independence
-と呼ぶ。
-\end{definition}
+\begin{equation}
+    \Phi_1:
+    \Solver_1\to X_1,
+    \qquad
+    \Phi_2:
+    \Solver_2\to X_2
+\end{equation}
 
-すなわち、
+および Solver 同型
 
 \begin{equation}
     T:
@@ -1032,15 +3976,30 @@ Solver 同型によって対応する性質を Representation Independence
     \Solver_2
 \end{equation}
 
-が Solver 同型であり、
+を考える。
+
+評価空間が共通する場合、
 
 \begin{equation}
-    \Phi_1:\Solver_1\to X_1,
-    \qquad
-    \Phi_2:\Solver_2\to X_2
+    X_1=X_2=X
 \end{equation}
 
-がそれぞれ異なる評価写像であっても、
+ならば、
+
+\begin{equation}
+    \boxed{
+        \begin{CD}
+            \Solver_1 @>{T}>> \Solver_2\\
+            @V{\Phi_1}VV @VV{\Phi_2}V\\
+            X @= X
+        \end{CD}
+    }
+    \label{eq:E-commutative-diagram}
+\end{equation}
+
+という可換図式によって一般解の構造的一意性を表現できる。
+
+すなわち、
 
 \begin{equation}
     \Phi_2\circ T
@@ -1048,14 +4007,17 @@ Solver 同型によって対応する性質を Representation Independence
     \Phi_1
 \end{equation}
 
-という対応が成立するならば、二つの評価構造は Solver の表現に
-依存せず同一の一般解構造を表す。
+である。
+
+この関係は、Solver の表現と一般解の評価との間に
+矛盾が生じないことを意味する。
 
 
 %------------------------------------------------------------
-\subsection{(E.5) 評価空間の同値性}
+\subsection{(E.5) 評価空間が異なる場合}
+\label{subsec:E5}
 
-評価写像の値域が異なる場合には、
+一般には、
 
 \begin{equation}
     X_1\neq X_2
@@ -1063,7 +4025,15 @@ Solver 同型によって対応する性質を Representation Independence
 
 であることも許容する。
 
-この場合、評価空間間の対応写像
+この場合、単に
+
+\begin{equation}
+    \Phi_2\circ T=\Phi_1
+\end{equation}
+
+と書くことはできない。
+
+そこで、評価空間間の対応写像
 
 \begin{equation}
     U:
@@ -1072,9 +4042,9 @@ Solver 同型によって対応する性質を Representation Independence
     X_2
 \end{equation}
 
-を考える。
+を導入する。
 
-Solver 同型 $T$ に対して
+このとき、評価構造の対応を
 
 \begin{equation}
     \boxed{
@@ -1085,60 +4055,543 @@ Solver 同型 $T$ に対して
     \label{eq:E-evaluation-space-commutativity}
 \end{equation}
 
-が成立するならば、評価空間そのものが異なる表現であっても、
-Solver 構造に対応した評価構造を同一視できる。
+によって定める。
 
-このとき、評価空間の同値性は単なる集合としての同型ではなく、
-ECA において定義された評価構造を保存する対応として理解される。
+すなわち、任意の
+
+\begin{equation}
+    S\in\Solver_1
+\end{equation}
+
+に対して、
+
+\begin{equation}
+    U(\Phi_1(S))
+    =
+    \Phi_2(T(S))
+\end{equation}
+
+である。
+
+この関係により、評価空間そのものが異なる場合でも、
+Solver 同型によって対応する評価構造を比較することができる。
 
 
 %------------------------------------------------------------
-\subsection{(E.6) 最終評価関数への帰結}
+\subsection{(E.6) 評価構造を保存する対応}
+\label{subsec:E6}
 
-各評価空間上に最終評価写像
+ここで、$U:X_1\to X_2$ は単なる集合間の写像ではなく、
+ECA において定義された評価構造を保存する対応として扱う。
+
+すなわち、
 
 \begin{equation}
-    \EvalMap_1:X_1\to\R,
-    \qquad
-    \EvalMap_2:X_2\to\R
+    U:
+    X_1
+    \longrightarrow
+    X_2
 \end{equation}
 
-を定義する。
+が評価構造を保存するとは、評価空間 $X_1$ 上で定義された
+構造と、$U$ によって $X_2$ に移された構造とが
+ECA の評価規則に関して対応することをいう。
 
-一般解による最終評価を
+したがって、
+
+\begin{equation}
+    \boxed{
+        \text{評価空間の対応}
+        \neq
+        \text{単なる集合の同型}
+    }
+\end{equation}
+
+である。
+
+必要に応じて $U$ は、評価空間に導入された構造
+および (C) において定義された測度論的構造を保存する対応として
+扱う。
+
+ただし、具体的にどの構造を保存する必要があるかについては、
+各評価空間の構成に応じて個別に定める。
+
+
+%------------------------------------------------------------
+\subsection{(E.7) Representation Independence}
+\label{subsec:E7}
+
+\begin{definition}[Representation Independence]
+\label{def:E-representation-independence}
+
+Solver 集合として同一の構造を表す二つの表現
+
+\begin{equation}
+    \Solver_1,
+    \qquad
+    \Solver_2
+\end{equation}
+
+に対して Solver 同型
+
+\begin{equation}
+    T:
+    \Solver_1
+    \overset{\sim}{\longrightarrow}
+    \Solver_2
+\end{equation}
+
+が存在し、それぞれの一般解
+
+\begin{equation}
+    \Phi_1:\Solver_1\to X_1,
+    \qquad
+    \Phi_2:\Solver_2\to X_2
+\end{equation}
+
+について、評価空間間の構造保存写像
+
+\begin{equation}
+    U:X_1\to X_2
+\end{equation}
+
+が存在して
+
+\begin{equation}
+    U\circ\Phi_1
+    =
+    \Phi_2\circ T
+\end{equation}
+
+を満たすとき、これらの評価構造は
+\emph{Representation Independent} であるという。
+\end{definition}
+
+特に、
+
+\begin{equation}
+    X_1=X_2=X
+\end{equation}
+
+かつ
+
+\begin{equation}
+    U=\id_X
+\end{equation}
+
+の場合には、
+
+\begin{equation}
+    \Phi_2\circ T
+    =
+    \Phi_1
+\end{equation}
+
+に帰着する。
+
+
+%------------------------------------------------------------
+\subsection{(E.8) 最終評価関数への帰結}
+\label{subsec:E8}
+
+(C) において、一般解から最終評価関数を
+
+\begin{equation}
+    g_i
+    :=
+    \Psi_i\circ\Phi_i,
+    \qquad
+    i=1,2
+\end{equation}
+
+と定義する。
+
+すなわち、
 
 \begin{equation}
     g_1
     =
-    \EvalMap_1\circ\Phi_1,
+    \Psi_1\circ\Phi_1,
     \qquad
     g_2
     =
-    \EvalMap_2\circ\Phi_2
+    \Psi_2\circ\Phi_2
 \end{equation}
 
-とする。
+である。
 
-さらに、評価空間間の対応 $U$ が最終評価を保存する、すなわち
+ここで、評価空間間の対応
 
 \begin{equation}
-    \EvalMap_2\circ U
-    =
-    \EvalMap_1
+    U:X_1\to X_2
 \end{equation}
 
-を満たすならば、
+が最終評価を保存することを、
+
+\begin{equation}
+    \boxed{
+        \Psi_2\circ U
+        =
+        \Psi_1
+    }
+    \label{eq:E-final-evaluation-preservation}
+\end{equation}
+
+と定める。
+
+さらに、
+
+\begin{equation}
+    U\circ\Phi_1
+    =
+    \Phi_2\circ T
+\end{equation}
+
+が成立するとする。
+
+このとき、
 
 \begin{align}
     g_2\circ T
     &=
-    \EvalMap_2\circ\Phi_2\circ T
+    \Psi_2\circ\Phi_2\circ T
     \\
     &=
-    \EvalMap_2\circ U\circ\Phi_1
+    \Psi_2\circ U\circ\Phi_1
     \\
     &=
-    \EvalMap_1\circ\Phi_1
+    \Psi_1\circ\Phi_1
+    \\
+    &=
+    g_1.
+\end{align}
+
+したがって、
+
+\begin{equation}
+    \boxed{
+        g_2\circ T
+        =
+        g_1
+    }
+    \label{eq:E-final-evaluation-invariance}
+\end{equation}
+
+が成立する。
+
+
+%------------------------------------------------------------
+\subsection{(E.9) 一般解の構造的一意性定理}
+\label{subsec:E9}
+
+\begin{theorem}[Solver 構造に基づく一般解の構造的一意性]
+\label{thm:E-general-solution-uniqueness}
+
+Solver 集合
+
+\begin{equation}
+    \Solver_1,
+    \qquad
+    \Solver_2
+\end{equation}
+
+および Solver 同型
+
+\begin{equation}
+    T:
+    \Solver_1
+    \overset{\sim}{\longrightarrow}
+    \Solver_2
+\end{equation}
+
+を考える。
+
+各 Solver 集合に対して一般解
+
+\begin{equation}
+    \Phi_1:
+    \Solver_1\to X_1,
+    \qquad
+    \Phi_2:
+    \Solver_2\to X_2
+\end{equation}
+
+が与えられているとする。
+
+さらに、評価空間間の構造保存写像
+
+\begin{equation}
+    U:
+    X_1\to X_2
+\end{equation}
+
+が存在し、
+
+\begin{equation}
+    U\circ\Phi_1
+    =
+    \Phi_2\circ T
+    \label{eq:E-theorem-hypothesis-1}
+\end{equation}
+
+を満たすとする。
+
+このとき、二つの一般解は Solver 同型 $T$ および
+評価空間の対応 $U$ に関して同一の評価構造を表す。
+
+さらに、最終評価写像
+
+\begin{equation}
+    \Psi_1:X_1\to\R,
+    \qquad
+    \Psi_2:X_2\to\R
+\end{equation}
+
+が
+
+\begin{equation}
+    \Psi_2\circ U
+    =
+    \Psi_1
+    \label{eq:E-theorem-hypothesis-2}
+\end{equation}
+
+を満たすならば、
+
+\begin{equation}
+    g_2\circ T
+    =
+    g_1
+\end{equation}
+
+が成立する。
+\end{theorem}
+
+
+%------------------------------------------------------------
+\subsection{(E.10) 定理の証明}
+\label{subsec:E10}
+
+\begin{proof}
+
+まず、
+
+\begin{equation}
+    U\circ\Phi_1
+    =
+    \Phi_2\circ T
+\end{equation}
+
+が仮定されている。
+
+したがって、任意の
+
+\begin{equation}
+    S\in\Solver_1
+\end{equation}
+
+に対して、
+
+\begin{equation}
+    U(\Phi_1(S))
+    =
+    \Phi_2(T(S))
+\end{equation}
+
+が成立する。
+
+よって、$T$ によって対応する Solver は、
+$U$ によって対応する評価構造を与える。
+
+これは一般解が Solver の具体的表現そのものではなく、
+Solver の構造に従って定まることを意味する。
+
+次に最終評価関数について考える。
+
+定義より、
+
+\begin{equation}
+    g_1
+    =
+    \Psi_1\circ\Phi_1,
+    \qquad
+    g_2
+    =
+    \Psi_2\circ\Phi_2
+\end{equation}
+
+である。
+
+したがって、
+
+\begin{align}
+    g_2\circ T
+    &=
+    \Psi_2\circ\Phi_2\circ T
+    \\
+    &=
+    \Psi_2\circ U\circ\Phi_1
+    \\
+    &=
+    \Psi_1\circ\Phi_1
+    \\
+    &=
+    g_1.
+\end{align}
+
+ここで第2の等号には
+
+\begin{equation}
+    \Phi_2\circ T
+    =
+    U\circ\Phi_1
+\end{equation}
+
+を用い、第3の等号には
+
+\begin{equation}
+    \Psi_2\circ U
+    =
+    \Psi_1
+\end{equation}
+
+を用いた。
+
+したがって、
+
+\begin{equation}
+    \boxed{
+        g_2\circ T=g_1
+    }
+\end{equation}
+
+が成立する。
+\end{proof}
+
+
+%------------------------------------------------------------
+\subsection{(E.11) 「一意性」の意味}
+\label{subsec:E11}
+
+ここでいう「一般解の構造的一意性」は、異なる Solver 集合や
+異なる評価空間が文字通り同一であることを意味しない。
+
+すなわち、
+
+\begin{equation}
+    \Solver_1=\Solver_2
+\end{equation}
+
+や
+
+\begin{equation}
+    X_1=X_2
+\end{equation}
+
+を要求するものではない。
+
+むしろ、
+
+\begin{equation}
+    T:
+    \Solver_1
+    \overset{\sim}{\longrightarrow}
+    \Solver_2
+\end{equation}
+
+および
+
+\begin{equation}
+    U:
+    X_1\to X_2
+\end{equation}
+
+によって対応関係が与えられ、
+
+\begin{equation}
+    U\circ\Phi_1
+    =
+    \Phi_2\circ T
+\end{equation}
+
+が成立することによって、
+
+\begin{equation}
+    \boxed{
+        \text{異なる表現から得られた一般解が
+        同一の評価構造を表す}
+    }
+\end{equation}
+
+ことを意味する。
+
+したがって、本節における一意性は、
+
+\begin{equation}
+    \boxed{
+        \text{Solver 構造に対する
+        一意性}
+    }
+\end{equation}
+
+であり、単なる写像の値の一致ではない。
+
+
+%------------------------------------------------------------
+\subsection{(E.12) 評価空間が共通の場合}
+\label{subsec:E12}
+
+特に、
+
+\begin{equation}
+    X_1=X_2=X
+\end{equation}
+
+かつ
+
+\begin{equation}
+    U=\id_X
+\end{equation}
+
+である場合には、定理の条件は
+
+\begin{equation}
+    \Phi_2\circ T
+    =
+    \Phi_1
+\end{equation}
+
+へ簡約される。
+
+したがって、
+
+\begin{equation}
+    \boxed{
+        \Phi_2(T(S))
+        =
+        \Phi_1(S)
+        \qquad
+        (\forall S\in\Solver_1)
+    }
+\end{equation}
+
+である。
+
+さらに、
+
+\begin{equation}
+    \Psi_1=\Psi_2=\Psi
+\end{equation}
+
+ならば、
+
+\begin{align}
+    g_2\circ T
+    &=
+    \Psi\circ\Phi_2\circ T
+    \\
+    &=
+    \Psi\circ\Phi_1
     \\
     &=
     g_1.
@@ -1150,888 +4603,878 @@ ECA において定義された評価構造を保存する対応として理解�
     \boxed{
         g_2\circ T=g_1
     }
-    \label{eq:E-final-evaluation-invariance}
-\end{equation}
-
-を得る。
-
-
-%------------------------------------------------------------
-\subsection{(E.7) 一般解の一意性に関する定理}
-
-\begin{theorem}[Solver 構造に基づく一般解の一意性]
-\label{thm:E-general-solution-uniqueness}
-Solver 集合 $\Solver_1,\Solver_2$ が Solver 同型
-
-\begin{equation}
-    T:
-    \Solver_1
-    \overset{\sim}{\longrightarrow}
-    \Solver_2
-\end{equation}
-
-によって対応し、評価構造が
-
-\begin{equation}
-    \Phi_2\circ T=\Phi_1
-\end{equation}
-
-を満たすならば、Solver の表現に依存しない一般解の評価構造が
-定まる。
-
-さらに、最終評価写像がこの対応を保存するならば、
-
-\begin{equation}
-    g_2\circ T=g_1
-\end{equation}
-
-が成立する。
-\end{theorem}
-
-\begin{proof}
-Solver 同型 $T$ に対して
-
-\begin{equation}
-    \Phi_2\circ T=\Phi_1
-\end{equation}
-
-が成立することから、Solver 同型によって対応する二つの Solver は
-同一の評価構造を与える。
-
-さらに、
-
-\begin{equation}
-    g_i=\EvalMap_i\circ\Phi_i
-\end{equation}
-
-とし、
-
-\begin{equation}
-    \EvalMap_2\circ U=\EvalMap_1
-\end{equation}
-
-を仮定すると、
-
-\begin{align}
-    g_2\circ T
-    &=
-    \EvalMap_2\circ\Phi_2\circ T
-    \\
-    &=
-    \EvalMap_2\circ U\circ\Phi_1
-    \\
-    &=
-    \EvalMap_1\circ\Phi_1
-    \\
-    &=
-    g_1.
-\end{align}
-
-よって最終評価も Solver の表現に依存せず対応する。
-\end{proof}
-
-
-%------------------------------------------------------------
-\subsection{(E.8) 一意性の意味}
-
-ここでいう「一意性」は、単に
-
-\begin{equation}
-    \Eval_1=\Eval_2
-\end{equation}
-
-という意味ではない。
-
-異なる Solver 集合や異なる評価空間が存在する場合、それぞれの
-具体的な表現は異なり得る。
-
-重要なのは、Solver 同型
-
-\begin{equation}
-    T
-\end{equation}
-
-によって対応する Solver に対して、その一般解が同一の評価構造を
-与えることである。
-
-したがって、本節における一意性は、
-
-\begin{equation}
-    \boxed{
-        \text{Solver の表現が異なっても、
-        Solver 構造が同じならば一般解構造は対応する}
-    }
-\end{equation}
-
-という意味での構造的一意性である。
-
-
-%------------------------------------------------------------
-\subsection{(E.9) (B)--(D)との関係}
-
-(B)において一般解を
-
-\begin{equation}
-    \Eval:\Solver\to X
-\end{equation}
-
-として定義し、(D)においてその存在を扱った。
-
-(E)では、その一般解が Solver の表現方法に依存しないことを
-Solver 同型との可換性によって記述する。
-
-したがって、
-
-\begin{equation}
-    \text{(B) 一般解の構成}
-    \longrightarrow
-    \text{(D) 一般解の存在}
-    \longrightarrow
-    \text{(E) 一般解の一意性}
-\end{equation}
-
-という関係が成立する。
-
-また、(C)において定義された最終評価
-
-\begin{equation}
-    g=\EvalMap\circ\Eval
-\end{equation}
-
-についても、
-
-\begin{equation}
-    g_2\circ T=g_1
-\end{equation}
-
-という形で Solver 同型性を継承する。
-
-
-%------------------------------------------------------------
-\subsection{(E.10) 後続構造への接続}
-
-(E)で得られた一般解の一意性は、後続する(F)--(H)において
-Solver の具体的表現に依存しない評価構造を構成するための
-基礎となる。
-
-特に、離散的な Solver 表現と連続的な Solver 表現が存在する場合にも、
-それらが Solver 同型によって対応するならば、
-
-\begin{equation}
-    \Eval_{\mathrm{disc}}
-    \quad\text{および}\quad
-    \Eval_{\mathrm{cont}}
-\end{equation}
-
-は同一の一般解構造を異なる表現として記述できる。
-
-このため、(F)における離散評価から連続評価への移行、
-(G)における一般解の統一的な評価構造、および(H)における
-中間 Solver の構成は、(E)で確立された Representation
-Independence と一般解の一意性を基礎として扱うことができる。
-
-
-%################################################################
-% Summary
-%################################################################
-
-\section{(A)--(E) の構造的関係}
-\label{sec:A-E-summary}
-
-(A)--(E) において構成された内容は、最終的に次の写像構造へ
-集約される。
-
-\begin{equation}
-    \boxed{
-        \Solver
-        \xrightarrow{\Eval}
-        X
-        \xrightarrow{\EvalMap}
-        \R
-    }
-\end{equation}
-
-(A)では、この構造の基礎となる Solver 集合の位相的・解析的構造を
-扱った。
-
-(B)では、Solver の評価構造を受け取る一般評価空間 $X$ と、
-
-\begin{equation}
-    \Eval:\Solver\to X
-\end{equation}
-
-という一般解の構造を定義した。
-
-(C)では、
-
-\begin{equation}
-    g=\EvalMap\circ\Eval
-\end{equation}
-
-として得られる最終評価関数について、
-
-\begin{equation}
-    g\geq0,
-    \qquad
-    g\text{ は可測},
-    \qquad
-    \int g\,d\mu<\infty
-\end{equation}
-
-などの測度論的性質を扱った。
-
-(D)では、
-
-\begin{equation}
-    \exists\,\Eval:\Solver\to X
-\end{equation}
-
-という一般解の存在を扱った。
-
-(E)では Solver 同型
-
-\begin{equation}
-    T:
-    \Solver_1
-    \overset{\sim}{\longrightarrow}
-    \Solver_2
-\end{equation}
-
-に対して、
-
-\begin{equation}
-    \Eval_2\circ T=\Eval_1
-\end{equation}
-
-という可換性を導入し、Solver の表現に依存しない一般解の
-一意性および Representation Independence を定式化した。
-
-したがって、(A)--(E)は、
-
-\begin{equation}
-\boxed{
-\begin{array}{c}
-\text{Solver 集合の数学的構造}\\
-\Downarrow\\
-\text{評価空間の構成}\\
-\Downarrow\\
-\text{評価関数の測度論的性質}\\
-\Downarrow\\
-\text{一般解の存在}\\
-\Downarrow\\
-\text{一般解の構造的一意性}
-\end{array}
-}
-\end{equation}
-
-という順序で理解される。
-
-この構造を基礎として、(F)以降では離散評価、連続評価、
-一般解の統一的表現、および中間 Solver を構成する。
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{(F) 離散極限定理}
-\label{sec:F-discrete-limit-theorem}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{(F.1) 本節の目的}
-
-本節では、(A)--(D) において構成された Solver 集合、
-評価空間、評価写像、可測構造および正規化測度を用いて、
-離散 Solver 集合上の一般解が、その細分化極限において
-連続形式の一般解へ収束することを示す。
-
-本節では新たな正規化を導入するのではなく、
-(A)--(D) において既に定義された重み関数および測度を
-離散 Solver 集合の細分化に適用する。
-
-ECA において既に与えられている離散形式は
-
-\begin{equation}
-T_{\mathrm{overlay},N}
-=
-\frac{1}{N}
-\sum_{j=1}^{N}
-B_j I_j K_j
-\label{eq:F-original-discrete}
-\end{equation}
-
-であり、連続形式は
-
-\begin{equation}
-T_{\mathrm{overlay}}
-=
-\int
-B(x)I(x)K(x)\,d\mu(x)
-\label{eq:F-original-continuous}
-\end{equation}
-
-と表される。
-
-特に、Lebesgue 測度を用いる場合には
-
-\begin{equation}
-T_{\mathrm{overlay}}
-=
-\int_0^1
-B(x)I(x)K(x)\,dx
-\label{eq:F-lebesgue-form}
 \end{equation}
 
 となる。
 
-ECA の既存定式化においても、離散形式は連続形式の
-Riemann 和近似として位置付けられており、Solver 集合の
-細分化極限において両者が対応することが示されている。
-本節では、この対応を (A)--(D) の構成から記述する。
 
+%------------------------------------------------------------
+\subsection{(E.13) (B)--(D) との関係}
+\label{subsec:E13}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(F.2) (A)--(D) から引き継がれる構造}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsubsection{(F.2.1) Solver 集合}
-
-(A)--(D) で定義された Solver 集合を
+(B) において一般解を
 
 \begin{equation}
-\mathcal S
-=
-\{S\mid S=(\mathcal A_S,\mathcal R_S)\}
-\label{eq:F-solver-set}
+    \mathcal{G}:
+    \Solver\to X
+\end{equation}
+
+という型を持つ写像として定義した。
+
+(C) では、その一般解から得られる最終評価
+
+\begin{equation}
+    g
+    =
+    \Psi\circ\mathcal{G}
+\end{equation}
+
+について測度論的性質を定めた。
+
+(D) では、
+
+\begin{equation}
+    \exists\,
+    \mathcal{G}:
+    \Solver\to X
+\end{equation}
+
+という一般解の存在を扱った。
+
+これに対して (E) では、異なる Solver 表現に対して得られる
+一般解が Solver 同型を通じて対応することを扱う。
+
+したがって、
+
+\begin{equation}
+    \boxed{
+    \begin{array}{c}
+        \text{(B) 一般解の型}\\
+        \Downarrow\\
+        \text{(C) 最終評価の測度論的性質}\\
+        \Downarrow\\
+        \text{(D) 一般解の存在}\\
+        \Downarrow\\
+        \text{(E) 一般解の構造的一意性}
+    \end{array}
+    }
+\end{equation}
+
+という論理的順序になる。
+
+
+%------------------------------------------------------------
+\subsection{(E.14) 後続する (F)--(H) への接続}
+\label{subsec:E14}
+
+(E) において得られた構造的一意性は、
+Solver の表現方法が異なる場合にも一般解の評価構造を
+対応させるための基礎となる。
+
+特に、離散 Solver と連続 Solver がそれぞれ
+
+\begin{equation}
+    \Phi_{\mathrm{disc}}
+    :
+    \Solver_{\mathrm{disc}}
+    \to
+    X_{\mathrm{disc}}
+\end{equation}
+
+および
+
+\begin{equation}
+    \Phi_{\mathrm{cont}}
+    :
+    \Solver_{\mathrm{cont}}
+    \to
+    X_{\mathrm{cont}}
+\end{equation}
+
+として構成される場合、それらが Solver 同型および
+評価空間の構造保存写像によって対応するならば、
+
+\begin{equation}
+    U\circ\Phi_{\mathrm{disc}}
+    =
+    \Phi_{\mathrm{cont}}\circ T
+\end{equation}
+
+という関係によって両者の一般解構造を比較できる。
+
+この構造を基礎として、
+
+\begin{equation}
+    \text{(F) 離散評価}
+    \longrightarrow
+    \text{(G) 連続評価}
+    \longrightarrow
+    \text{(H) 中間 Solver}
+\end{equation}
+
+において、異なる Solver 表現を統一的に扱う。
+
+
+%------------------------------------------------------------
+\subsection{(E.15) 本節における証明事項と仮定事項の区別}
+\label{subsec:E15}
+
+本節では、以下の事項を明確に区別する。
+
+\begin{enumerate}
+
+    \item
+    Solver 同型
+    \[
+        T:\Solver_1\overset{\sim}{\longrightarrow}\Solver_2
+    \]
+    が与えられた場合に、
+
+    \[
+        U\circ\Phi_1
+        =
+        \Phi_2\circ T
+    \]
+
+    が成立することは、一般解が Solver の構造に対して
+    一貫していることを表す条件である。
+
+    \item
+    上記の可換性から、
+
+    \[
+        \Psi_2\circ U=\Psi_1
+    \]
+
+    を仮定すれば、
+
+    \[
+        g_2\circ T=g_1
+    \]
+
+    が合成写像の計算によって導かれる。
+
+    \item
+    一方、
+
+    \[
+        U\circ\Phi_1
+        =
+        \Phi_2\circ T
+    \]
+
+    そのものが任意の Solver に対して
+    (A)--(D) だけから自動的に成立するとは限らない。
+
+    \item
+    同様に、
+
+    \[
+        \Psi_2\circ U=\Psi_1
+    \]
+
+    も最終評価写像および評価空間の構造に応じて
+    別途確認されるべき条件である。
+
+\end{enumerate}
+
+したがって、(E) の中心的な数学的帰結は、
+
+\begin{equation}
+    \boxed{
+        \left.
+        \begin{array}{c}
+            U\circ\Phi_1
+            =
+            \Phi_2\circ T
+            \\[2mm]
+            \Psi_2\circ U
+            =
+            \Psi_1
+        \end{array}
+        \right\}
+        \Longrightarrow
+        g_2\circ T=g_1
+    }
+\end{equation}
+
+である。
+
+
+%------------------------------------------------------------
+\subsection{(E.16) 本節の結論}
+\label{subsec:E16}
+
+以上により、(E) における一般解の構造的一意性は、
+
+\begin{equation}
+    \boxed{
+        U\circ\Phi_1
+        =
+        \Phi_2\circ T
+    }
+\end{equation}
+
+という評価構造の可換性によって定式化される。
+
+さらに最終評価を保存する条件
+
+\begin{equation}
+    \boxed{
+        \Psi_2\circ U
+        =
+        \Psi_1
+    }
+\end{equation}
+
+が成立すれば、
+
+\begin{equation}
+    \boxed{
+        g_2\circ T
+        =
+        g_1
+    }
+\end{equation}
+
+が従う。
+
+したがって、
+
+\begin{equation}
+    \boxed{
+    \begin{array}{c}
+        \text{Solver 同型}\\
+        T:\Solver_1\overset{\sim}{\longrightarrow}\Solver_2
+        \\[2mm]
+        \Downarrow
+        \\[2mm]
+        \text{評価構造の可換性}\\
+        U\circ\Phi_1=\Phi_2\circ T
+        \\[2mm]
+        \Downarrow
+        \\[2mm]
+        \text{一般解の構造的一意性}
+        \\[2mm]
+        \Downarrow
+        \\[2mm]
+        \text{最終評価の表現独立性}\\
+        g_2\circ T=g_1
+    \end{array}
+    }
+\end{equation}
+
+という構造が得られる。
+
+ここで重要なのは、一般解の「一意性」を
+異なる Solver や評価空間そのものを同一視することによって
+定義していない点である。
+
+むしろ、
+
+\begin{equation}
+    \boxed{
+        \text{Solver 構造を保存する対応によって
+        評価構造が可換する}
+    }
+\end{equation}
+
+ことをもって一般解の構造的一意性とする。
+
+この定式化により、(F)--(H) において異なる Solver 表現を
+同一の一般解構造のもとで扱うための基礎が与えられる。
+
+%################################################################
+% (F)
+%################################################################
+
+\section{(F) 離散 Solver の細分化極限}
+\label{sec:F-discrete-limit}
+
+%------------------------------------------------------------
+\subsection{(F.1) 本節の目的}
+\label{subsec:F1}
+
+本節では、(A)--(E) において構成された Solver 集合、
+一般評価空間、評価写像、可測構造および正規化測度を用いて、
+離散 Solver による一般解と連続形式の一般解との関係を扱う。
+
+特に、有限段階 $N$ において構成される離散評価
+
+\begin{equation}
+    T_N
+\end{equation}
+
+を考え、その細分化極限
+
+\begin{equation}
+    N\to\infty
+\end{equation}
+
+において対応する測度積分へ収束するための条件を定式化する。
+
+本節では新たな正規化を導入しない。
+
+(A)--(D) において既に定義された重み関数、
+可測構造および正規化測度を用いて、離散 Solver の評価を記述する。
+
+ECA において既に与えられている離散形式は
+
+\begin{equation}
+    T_{\mathrm{overlay},N}
+    =
+    \frac{1}{N}
+    \sum_{j=1}^{N}
+    B_j I_j K_j
+    \label{eq:F-original-discrete}
+\end{equation}
+
+であり、対応する連続形式は
+
+\begin{equation}
+    T_{\mathrm{overlay}}
+    =
+    \int
+    B(x)I(x)K(x)\,d\mu(x)
+    \label{eq:F-original-continuous}
+\end{equation}
+
+で表される。
+
+したがって、本節では既存の離散式を、
+(A)--(D) において定義された測度構造に基づく
+有限段階の評価として一般化する。
+
+
+%------------------------------------------------------------
+\subsection{(F.2) Solver 集合と評価構造}
+\label{subsec:F2}
+
+(A)--(D) において定義された Solver 集合を
+
+\begin{equation}
+    \mathcal S
+    =
+    \{S\mid S=(\mathcal A_S,\mathcal R_S)\}
+    \label{eq:F-solver-set}
 \end{equation}
 
 とする。
 
 各
 
-\[
-S\in\mathcal S
-\]
-
-は公理の選択集合および推論規則・構成制約の組として
-表現される。
-
-Solver に対して公理写像
-
 \begin{equation}
-\mathcal T:\mathcal S\longrightarrow\mathrm{Th}
-\label{eq:F-theory-map}
+    S\in\mathcal S
 \end{equation}
 
-および評価写像
+は、公理選択および推論規則・構成制約によって定まる Solver
+として扱う。
+
+(B)--(D) において構成された一般評価空間を
 
 \begin{equation}
-I:\mathcal S\longrightarrow[0,1]
-\label{eq:F-evaluation-map}
+    X
 \end{equation}
 
-が与えられる。
-
-したがって、離散 Solver 集合の各要素に対する評価は、
-既に定義された評価空間を介して記述される。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{(F.2.2) 公理選択空間と測度}
-
-(A)--(D) において、公理選択空間は
+とし、Solver 集合から評価空間への一般評価写像を
 
 \begin{equation}
-I\subseteq\mathcal P(S)
-\label{eq:F-selection-space}
-\end{equation}
-
-として構成される。
-
-また、可測族を
-
-\begin{equation}
-\mathcal F=\sigma(\mathcal G)
-\label{eq:F-sigma-algebra}
+    \Phi:
+    \mathcal S
+    \longrightarrow
+    X
+    \label{eq:F-general-evaluation-map}
 \end{equation}
 
 とする。
 
-可測な公理集合
-
-\[
-i\in\mathcal F
-\]
-
-に対して測度
+また、ECA の評価に現れる三つの量を
 
 \begin{equation}
-\mu(i)\in[0,1]
-\label{eq:F-measure-value}
+    B,\qquad I,\qquad K
 \end{equation}
 
-が与えられる。
-
-離散的な場合には、既に定義された重み
+とし、その積を
 
 \begin{equation}
-w:S\longrightarrow[0,1]
+    f(x)
+    :=
+    B(x)I(x)K(x)
+    \label{eq:F-integrand}
 \end{equation}
 
-を用いて
+と定義する。
+
+ここで $f$ は、離散 Solver の各評価要素を
+連続的な評価空間上の関数として表現するために用いる。
+
+
+%------------------------------------------------------------
+\subsection{(F.3) 正規化測度と細分化}
+\label{subsec:F3}
+
+(A)--(D) において定義された可測空間を
 
 \begin{equation}
-\mu(i)
-=
-\sum_{b\in B(i)}w(b)
-\label{eq:F-discrete-measure}
+    (I,\mathcal F)
 \end{equation}
 
-と表され、
+とし、その正規化測度を
 
 \begin{equation}
-\sum_{s\in S}w(s)=1
-\label{eq:F-weight-normalization}
-\end{equation}
-
-が成立する。
-
-一方、連続的な場合には
-
-\begin{equation}
-\mu(i)
-=
-\int_S\mathbf 1_i(s)\,d\mu(s)
-\label{eq:F-continuous-measure}
-\end{equation}
-
-と表される。
-
-さらに、正規化測度を採用する場合には
-
-\begin{equation}
-\mu(I)=1
-\label{eq:F-measure-normalization}
-\end{equation}
-
-が成立する。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(F.3) Solver 集合の細分化}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-(A)--(D) において定義された Solver 集合および評価空間を
-基礎として、有限段階 \(N\) における Solver 集合の分割を
-
-\begin{equation}
-\mathcal P_N
-=
-\left\{
-E_1^{(N)},
-E_2^{(N)},
-\ldots,
-E_N^{(N)}
-\right\}
-\label{eq:F-partition}
+    \mu:\mathcal F\to[0,1]
 \end{equation}
 
 とする。
 
-ここで各
-
-\[
-E_j^{(N)}
-\]
-
-は、評価空間上の可測部分集合として扱われる。
-
-したがって、
+正規化条件として
 
 \begin{equation}
-E_j^{(N)}\in\mathcal F
-\end{equation}
-
-であり、互いに素な分割として
-
-\begin{equation}
-E_p^{(N)}\cap E_q^{(N)}
-=
-\varnothing
-\qquad
-(p\neq q)
-\label{eq:F-disjoint-partition}
-\end{equation}
-
-および
-
-\begin{equation}
-\bigcup_{j=1}^{N}E_j^{(N)}
-=
-I
-\label{eq:F-partition-cover}
+    \mu(I)=1
+    \label{eq:F-measure-normalization}
 \end{equation}
 
 を満たすものとする。
 
-各部分集合に対応する測度を
+有限段階 $N$ における Solver 集合の細分化を
 
 \begin{equation}
-\Delta\mu_j^{(N)}
-:=
-\mu\left(E_j^{(N)}\right)
-\label{eq:F-measure-element}
-\end{equation}
-
-と定義する。
-
-測度の加法性および正規化条件から、
-
-\begin{equation}
-\sum_{j=1}^{N}
-\Delta\mu_j^{(N)}
-=
-\sum_{j=1}^{N}
-\mu\left(E_j^{(N)}\right)
-=
-\mu(I)
-=
-1
-\label{eq:F-partition-normalization}
-\end{equation}
-
-が成立する。
-
-したがって、\(\Delta\mu_j^{(N)}\) は
-Solver 集合の細分化に伴って生じる正規化された
-測度要素として解釈できる。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(F.4) 評価写像による離散 Solver の表現}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-(A)--(D) で構成された評価空間を \(X\) とし、
-Solver 集合から評価空間への写像を
-
-\begin{equation}
-\Phi:\mathcal S\longrightarrow X
-\label{eq:F-solver-evaluation-map}
+    \mathcal P_N
+    =
+    \left\{
+        E_1^{(N)},
+        E_2^{(N)},
+        \ldots,
+        E_N^{(N)}
+    \right\}
+    \label{eq:F-partition}
 \end{equation}
 
 とする。
 
-各分割要素
-
-\[
-E_j^{(N)}
-\]
-
-に対して、その評価空間上の代表元を
+各
 
 \begin{equation}
-x_j^{(N)}\in X
-\label{eq:F-representative-point}
+    E_j^{(N)}
 \end{equation}
 
-とする。
-
-また、ECA の一般解に現れる三つの量を
+は $\mathcal F$ の元であり、
 
 \begin{equation}
-B,\qquad I,\qquad K
+    E_j^{(N)}\in\mathcal F
 \end{equation}
 
-とし、
-
-\begin{equation}
-f(x)
-:=
-B(x)I(x)K(x)
-\label{eq:F-integrand}
-\end{equation}
-
-と定義する。
-
-このとき、各 Solver 要素の評価値を
-
-\begin{equation}
-B_jI_jK_j
-=
-f\left(x_j^{(N)}\right)
-\label{eq:F-discrete-evaluation}
-\end{equation}
-
-として表現する。
-
-この対応は、離散 Solver 要素そのものを新たな連続対象として
-仮定するものではなく、(A)--(D) において構成された
-評価空間 \(X\) 上に各 Solver の評価を表現するものである。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(F.5) 離散一般解の測度表示}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-以上より、離散 Solver 集合における一般解は
-
-\begin{equation}
-T_N
-=
-\sum_{j=1}^{N}
-B_jI_jK_j
-\Delta\mu_j^{(N)}
-\label{eq:F-discrete-general}
-\end{equation}
-
-と表される。
-
-式~\eqref{eq:F-discrete-evaluation} を代入すると、
-
-\begin{equation}
-T_N
-=
-\sum_{j=1}^{N}
-f\left(x_j^{(N)}\right)
-\Delta\mu_j^{(N)}
-\label{eq:F-discrete-general-function}
-\end{equation}
-
-となる。
-
-これは、既存の ECA の離散式を、
-既に定義された正規化重みおよび測度によって
-一般化した表現である。
-
-特に一様正規化の場合には
-
-\begin{equation}
-\Delta\mu_j^{(N)}
-=
-\frac{1}{N}
-\label{eq:F-uniform-measure-element}
-\end{equation}
-
-であるため、
-
-\begin{equation}
-T_N
-=
-\frac{1}{N}
-\sum_{j=1}^{N}
-B_jI_jK_j
-\label{eq:F-uniform-discrete}
-\end{equation}
-
-となり、ECA の既存の離散形式をそのまま回収する。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(F.6) Solver 集合の細分化極限}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Solver 集合の細分化を、測度に基づく分割の細かさによって
-
-\begin{equation}
-\left\|
-\mathcal P_N
-\right\|_\mu
-:=
-\max_{1\leq j\leq N}
-\Delta\mu_j^{(N)}
-\label{eq:F-measure-mesh}
-\end{equation}
-
-と定義する。
-
-ここで
-
-\begin{equation}
-\left\|
-\mathcal P_N
-\right\|_\mu
-\longrightarrow0
-\qquad
-(N\longrightarrow\infty)
-\label{eq:F-mesh-limit}
-\end{equation}
-
-を Solver 集合の細分化極限と呼ぶ。
-
-これは単に Solver の個数 \(N\) を増加させることを
-意味するものではない。
-
-むしろ、
-
-\begin{equation}
-\Delta\mu_j^{(N)}
-=
-\mu\left(E_j^{(N)}\right)
-\end{equation}
-
-によって各 Solver 領域に割り当てられた正規化測度が
-細分化され、
-
-\begin{equation}
-\max_j
-\mu\left(E_j^{(N)}\right)
-\longrightarrow0
-\end{equation}
-
-となることを意味する。
-
-したがって、細分化は
-
-\begin{equation}
-\boxed{
-\text{Solver 集合の細分化}
-=
-\text{正規化測度による評価領域の細分化}
-}
-\end{equation}
-
-として解釈される。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(F.7) 離散極限に関する二つの存在命題}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-本節における離散極限を厳密に扱うため、以下の二つの
-存在命題を区別する。
-
-\subsubsection{(F.7.1) 細分化列の存在}
-
-\begin{proposition}[細分化列の存在]
-\label{prop:F-partition-existence}
-
-(A)--(D) によって構成された Solver 集合および評価空間に対して、
-測度可測な分割列
-
-\begin{equation}
-\left\{
-\mathcal P_N
-\right\}_{N=1}^{\infty}
-\end{equation}
-
-が存在し、
-
-\begin{equation}
-\mathcal P_N
-=
-\left\{
-E_1^{(N)},
-\ldots,
-E_N^{(N)}
-\right\}
-\end{equation}
-
-を満たすとする。
+を満たす。
 
 さらに、
 
 \begin{equation}
-E_j^{(N)}\in\mathcal F
+    E_p^{(N)}
+    \cap
+    E_q^{(N)}
+    =
+    \varnothing
+    \qquad
+    (p\neq q)
+    \label{eq:F-disjoint}
 \end{equation}
 
 および
 
 \begin{equation}
-\bigcup_{j=1}^{N}E_j^{(N)}
-=
-I
+    \bigcup_{j=1}^{N}
+    E_j^{(N)}
+    =
+    I
+    \label{eq:F-cover}
 \end{equation}
 
-が成立するものとする。
+を満たすものとする。
+
+各分割要素に対応する測度要素を
+
+\begin{equation}
+    \boxed{
+        \Delta\mu_j^{(N)}
+        :=
+        \mu\!\left(E_j^{(N)}\right)
+    }
+    \label{eq:F-measure-element}
+\end{equation}
+
+と定義する。
+
+測度の加法性と \eqref{eq:F-measure-normalization} より、
+
+\begin{equation}
+    \sum_{j=1}^{N}
+    \Delta\mu_j^{(N)}
+    =
+    \sum_{j=1}^{N}
+    \mu\!\left(E_j^{(N)}\right)
+    =
+    \mu(I)
+    =
+    1
+    \label{eq:F-partition-normalization}
+\end{equation}
+
+が成立する。
+
+
+%------------------------------------------------------------
+\subsection{(F.4) 離散 Solver の評価}
+\label{subsec:F4}
+
+各分割要素
+
+\begin{equation}
+    E_j^{(N)}
+\end{equation}
+
+に対して、その評価空間上の代表元を
+
+\begin{equation}
+    x_j^{(N)}\in X
+    \label{eq:F-representative}
+\end{equation}
+
+とする。
+
+このとき、各離散 Solver 要素における評価を
+
+\begin{equation}
+    B_j I_j K_j
+    =
+    f\!\left(x_j^{(N)}\right)
+    \label{eq:F-discrete-evaluation}
+\end{equation}
+
+として表す。
+
+ここで、
+
+\begin{equation}
+    f(x)=B(x)I(x)K(x)
+\end{equation}
+
+である。
+
+したがって、有限段階 $N$ における離散一般解を
+
+\begin{equation}
+    \boxed{
+        T_N
+        =
+        \sum_{j=1}^{N}
+        f\!\left(x_j^{(N)}\right)
+        \Delta\mu_j^{(N)}
+    }
+    \label{eq:F-discrete-general}
+\end{equation}
+
+と定義する。
+
+\eqref{eq:F-discrete-evaluation} を代入すれば、
+
+\begin{equation}
+    T_N
+    =
+    \sum_{j=1}^{N}
+    B_j I_j K_j
+    \Delta\mu_j^{(N)}
+    \label{eq:F-discrete-BIK}
+\end{equation}
+
+となる。
+
+
+%------------------------------------------------------------
+\subsection{(F.5) 一様正規化の場合}
+\label{subsec:F5}
+
+特に、一様正規化された有限段階の Solver 集合については、
+
+\begin{equation}
+    \boxed{
+        \Delta\mu_j^{(N)}
+        =
+        \frac{1}{N}
+    }
+    \label{eq:F-uniform-measure}
+\end{equation}
+
+とする。
+
+このとき、
+
+\begin{equation}
+    \sum_{j=1}^{N}
+    \Delta\mu_j^{(N)}
+    =
+    \sum_{j=1}^{N}
+    \frac1N
+    =
+    1
+\end{equation}
+
+であり、正規化条件を満たす。
+
+したがって \eqref{eq:F-discrete-BIK} は
+
+\begin{equation}
+    \boxed{
+        T_N
+        =
+        \frac1N
+        \sum_{j=1}^{N}
+        B_jI_jK_j
+    }
+    \label{eq:F-ECA-discrete}
+\end{equation}
+
+となる。
+
+これは ECA において既に与えられている離散形式をそのまま回収する。
+
+
+%------------------------------------------------------------
+\subsection{(F.6) 細分化メッシュ}
+\label{subsec:F6}
+
+離散 Solver 集合の細分化の度合いを、
+各分割要素の測度によって
+
+\begin{equation}
+    \boxed{
+        \left\|
+        \mathcal P_N
+        \right\|_\mu
+        :=
+        \max_{1\leq j\leq N}
+        \Delta\mu_j^{(N)}
+    }
+    \label{eq:F-measure-mesh}
+\end{equation}
+
+と定義する。
+
+この量を測度メッシュと呼ぶ。
+
+細分化極限を
+
+\begin{equation}
+    \boxed{
+        \left\|
+        \mathcal P_N
+        \right\|_\mu
+        \longrightarrow
+        0
+        \qquad
+        (N\to\infty)
+    }
+    \label{eq:F-mesh-limit}
+\end{equation}
+
+と定義する。
+
+これは単に
+
+\begin{equation}
+    N\to\infty
+\end{equation}
+
+となることだけを意味しない。
+
+各分割要素に割り当てられた測度が
+
+\begin{equation}
+    \Delta\mu_j^{(N)}
+    =
+    \mu\!\left(E_j^{(N)}\right)
+\end{equation}
+
+であることから、
+
+\begin{equation}
+    \left\|
+    \mathcal P_N
+    \right\|_\mu
+    =
+    \max_j
+    \mu\!\left(E_j^{(N)}\right)
+    \longrightarrow0
+\end{equation}
+
+となることを要求する。
+
+
+%------------------------------------------------------------
+\subsection{(F.7) 細分化列の存在}
+\label{subsec:F7}
+
+\begin{proposition}[細分化列の存在]
+\label{prop:F-partition-existence}
+
+(A)--(D) によって構成された可測空間 $(I,\mathcal F)$ に対して、
+各 $N\in\mathbb N$ について
+
+\begin{equation}
+    \mathcal P_N
+    =
+    \left\{
+        E_1^{(N)},
+        \ldots,
+        E_N^{(N)}
+    \right\}
+\end{equation}
+
+という可測分割を考えることができるとする。
+
+すなわち、
+
+\begin{equation}
+    E_j^{(N)}\in\mathcal F,
+\end{equation}
+
+\begin{equation}
+    E_p^{(N)}
+    \cap
+    E_q^{(N)}
+    =
+    \varnothing
+    \qquad(p\neq q),
+\end{equation}
+
+および
+
+\begin{equation}
+    \bigcup_{j=1}^{N}
+    E_j^{(N)}
+    =
+    I
+\end{equation}
+
+を満たす。
+
+このとき、これらの分割によって
+
+\begin{equation}
+    \Delta\mu_j^{(N)}
+    =
+    \mu(E_j^{(N)})
+\end{equation}
+
+を定義できる。
 \end{proposition}
 
-本命題は、Solver 集合に対して細分化された可測分割を
-考えることが可能であることを表す。
+本命題は、細分化された Solver 集合を
+可測分割として扱うための基礎を与える。
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{(F.7.2) 細分化極限における離散一般解の存在}
+%------------------------------------------------------------
+\subsection{(F.8) 離散一般解の極限の存在}
+\label{subsec:F8}
 
 \begin{proposition}[離散一般解の極限の存在]
 \label{prop:F-limit-existence}
 
-前命題の細分化列に対して、
+前命題による細分化列
 
 \begin{equation}
-\left\|
-\mathcal P_N
-\right\|_\mu
-=
-\max_j
-\Delta\mu_j^{(N)}
-\longrightarrow0
+    \{\mathcal P_N\}_{N=1}^{\infty}
 \end{equation}
 
-が成立し、さらに
+を考える。
+
+さらに、
 
 \begin{equation}
-T_N
-=
-\sum_{j=1}^{N}
-f\left(x_j^{(N)}\right)
-\Delta\mu_j^{(N)}
+    \left\|
+    \mathcal P_N
+    \right\|_\mu
+    \longrightarrow0
 \end{equation}
 
-が対応する測度積分へ収束するならば、
+が成立し、
 
 \begin{equation}
-\lim_{N\to\infty}T_N
+    T_N
+    =
+    \sum_{j=1}^{N}
+    f\!\left(x_j^{(N)}\right)
+    \Delta\mu_j^{(N)}
+\end{equation}
+
+が対応する測度積分
+
+\begin{equation}
+    \int_I f(x)\,d\mu(x)
+\end{equation}
+
+へ収束するならば、
+
+\begin{equation}
+    \lim_{N\to\infty}T_N
 \end{equation}
 
 が存在する。
 \end{proposition}
 
-したがって、本命題は
+したがって、
 
 \begin{equation}
-\boxed{
-\text{細分化}
-+
-\text{収束条件}
-\Longrightarrow
-\text{離散一般解の極限の存在}
-}
+    \boxed{
+        \text{細分化条件}
+        +
+        \text{積分近似の収束条件}
+        \Longrightarrow
+        \text{離散一般解の極限の存在}
+    }
 \end{equation}
 
-を表す。
+である。
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(F.8) 離散極限定理}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%------------------------------------------------------------
+\subsection{(F.9) 離散極限定理}
+\label{subsec:F9}
 
-\begin{theorem}[離散極限定理]
+\begin{theorem}[離散 Solver の細分化極限定理]
 \label{thm:F-discrete-limit}
 
 (A)--(D) によって構成された Solver 集合、評価空間、
-評価写像および正規化測度を用いる。
+可測構造および正規化測度を用いる。
 
-離散 Solver 集合の一般解を
+有限段階 $N$ における離散一般解を
 
 \begin{equation}
-T_N
-=
-\sum_{j=1}^{N}
-f\left(x_j^{(N)}\right)
-\Delta\mu_j^{(N)}
+    T_N
+    =
+    \sum_{j=1}^{N}
+    f\!\left(x_j^{(N)}\right)
+    \Delta\mu_j^{(N)}
+    \label{eq:F-theorem-discrete}
 \end{equation}
 
 とする。
 
-ただし、
+ここで
 
 \begin{equation}
-f(x)=B(x)I(x)K(x)
+    f(x)
+    =
+    B(x)I(x)K(x)
+    \label{eq:F-theorem-integrand}
 \end{equation}
 
 であり、
 
 \begin{equation}
-\sum_{j=1}^{N}
-\Delta\mu_j^{(N)}
-=
-1
+    \sum_{j=1}^{N}
+    \Delta\mu_j^{(N)}
+    =
+    1
 \end{equation}
 
 を満たすものとする。
@@ -2039,26 +5482,34 @@ f(x)=B(x)I(x)K(x)
 さらに、
 
 \begin{equation}
-\left\|
-\mathcal P_N
-\right\|_\mu
-\longrightarrow0
+    \left\|
+    \mathcal P_N
+    \right\|_\mu
+    \longrightarrow0
 \end{equation}
 
-であり、\(f\) が対応する測度空間上で可積分で、
-この分割による積分近似が収束するとする。
-
-このとき、
+が成立し、$f$ が対応する測度空間上で可積分であり、
+当該細分化による積分近似が
 
 \begin{equation}
-\boxed{
-\lim_{N\to\infty}
-T_N
-=
-\int_I
-f(x)\,d\mu(x)
-}
-\label{eq:F-discrete-limit}
+    \lim_{N\to\infty}
+    \sum_{j=1}^{N}
+    f\!\left(x_j^{(N)}\right)
+    \Delta\mu_j^{(N)}
+    =
+    \int_I f(x)\,d\mu(x)
+    \label{eq:F-integral-convergence}
+\end{equation}
+
+を満たすならば、
+
+\begin{equation}
+    \boxed{
+        \lim_{N\to\infty}T_N
+        =
+        \int_I f(x)\,d\mu(x)
+    }
+    \label{eq:F-limit}
 \end{equation}
 
 が成立する。
@@ -2066,60 +5517,64 @@ f(x)\,d\mu(x)
 したがって、
 
 \begin{equation}
-\boxed{
-\lim_{N\to\infty}
-\sum_{j=1}^{N}
-B\left(x_j^{(N)}\right)
-I\left(x_j^{(N)}\right)
-K\left(x_j^{(N)}\right)
-\Delta\mu_j^{(N)}
-=
-\int_I
-B(x)I(x)K(x)\,d\mu(x)
-}
-\label{eq:F-ECA-limit}
+    \boxed{
+        \lim_{N\to\infty}
+        \sum_{j=1}^{N}
+        B\!\left(x_j^{(N)}\right)
+        I\!\left(x_j^{(N)}\right)
+        K\!\left(x_j^{(N)}\right)
+        \Delta\mu_j^{(N)}
+        =
+        \int_I
+        B(x)I(x)K(x)\,d\mu(x)
+    }
+    \label{eq:F-ECA-limit}
 \end{equation}
 
 である。
 \end{theorem}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(F.9) 離散極限定理の証明}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%------------------------------------------------------------
+\subsection{(F.10) 離散極限定理の証明}
+\label{subsec:F10}
 
 \begin{proof}
 
-(A)--(D) において構成された正規化測度により、
+定義より、
 
 \begin{equation}
-\Delta\mu_j^{(N)}
-=
-\mu\left(E_j^{(N)}\right)
+    \Delta\mu_j^{(N)}
+    =
+    \mu\!\left(E_j^{(N)}\right)
 \end{equation}
 
-と定義される。
+である。
 
-分割
+また、
 
 \begin{equation}
-\mathcal P_N
-=
-\left\{
-E_1^{(N)},\ldots,E_N^{(N)}
-\right\}
+    \mathcal P_N
+    =
+    \left\{
+        E_1^{(N)},
+        \ldots,
+        E_N^{(N)}
+    \right\}
 \end{equation}
 
-が \(I\) を覆い、各 \(E_j^{(N)}\) が互いに素であるため、
-測度の加法性から
+は $I$ の可測分割であるから、
 
 \begin{equation}
-\sum_{j=1}^{N}
-\Delta\mu_j^{(N)}
-=
-\mu(I)
-=
-1
+    \sum_{j=1}^{N}
+    \Delta\mu_j^{(N)}
+    =
+    \sum_{j=1}^{N}
+    \mu\!\left(E_j^{(N)}\right)
+    =
+    \mu(I)
+    =
+    1
 \end{equation}
 
 が成立する。
@@ -2127,25 +5582,23 @@ E_1^{(N)},\ldots,E_N^{(N)}
 各分割要素に対応する評価点を
 
 \begin{equation}
-x_j^{(N)}
+    x_j^{(N)}
 \end{equation}
 
 とし、
 
 \begin{equation}
-f(x)=B(x)I(x)K(x)
+    f(x)=B(x)I(x)K(x)
 \end{equation}
 
-と定義する。
-
-すると、
+と定義すると、
 
 \begin{equation}
-T_N
-=
-\sum_{j=1}^{N}
-f\left(x_j^{(N)}\right)
-\Delta\mu_j^{(N)}
+    T_N
+    =
+    \sum_{j=1}^{N}
+    f\!\left(x_j^{(N)}\right)
+    \Delta\mu_j^{(N)}
 \end{equation}
 
 となる。
@@ -2153,108 +5606,108 @@ f\left(x_j^{(N)}\right)
 ここで仮定より、
 
 \begin{equation}
-\left\|
-\mathcal P_N
-\right\|_\mu
-=
-\max_j
-\Delta\mu_j^{(N)}
-\longrightarrow0
+    \left\|
+    \mathcal P_N
+    \right\|_\mu
+    =
+    \max_j
+    \Delta\mu_j^{(N)}
+    \longrightarrow0.
 \end{equation}
 
-である。
-
-また、仮定された積分近似の収束性から、
+さらに、積分近似の収束条件
 
 \begin{equation}
-\lim_{N\to\infty}
-\sum_{j=1}^{N}
-f\left(x_j^{(N)}\right)
-\Delta\mu_j^{(N)}
-=
-\int_I f(x)\,d\mu(x)
+    \lim_{N\to\infty}
+    \sum_{j=1}^{N}
+    f\!\left(x_j^{(N)}\right)
+    \Delta\mu_j^{(N)}
+    =
+    \int_I f(x)\,d\mu(x)
 \end{equation}
 
-となる。
+を仮定している。
 
 したがって、
 
 \begin{equation}
-\lim_{N\to\infty}
-T_N
-=
-\int_I
-f(x)\,d\mu(x)
+    \lim_{N\to\infty}T_N
+    =
+    \int_I f(x)\,d\mu(x)
 \end{equation}
 
-を得る。
+が成立する。
 
-さらに
+最後に
 
 \begin{equation}
-f(x)=B(x)I(x)K(x)
+    f(x)=B(x)I(x)K(x)
 \end{equation}
 
 を代入することで、
 
 \begin{equation}
-\lim_{N\to\infty}
-T_N
-=
-\int_I
-B(x)I(x)K(x)\,d\mu(x)
+    \boxed{
+        \lim_{N\to\infty}T_N
+        =
+        \int_I
+        B(x)I(x)K(x)\,d\mu(x)
+    }
 \end{equation}
 
-が成立する。
-
+を得る。
 \end{proof}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(F.10) ECA の Solver 集合に対する細分化極限についての論考}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%------------------------------------------------------------
+\subsection{(F.11) ECA の Solver 集合に対する細分化極限についての論考}
+\label{subsec:F11}
 
 前節までの定理および命題は、
 
 \begin{equation}
-\left\|
-\mathcal P_N
-\right\|_\mu
-\longrightarrow0
+    \left\|
+    \mathcal P_N
+    \right\|_\mu
+    \longrightarrow0
 \end{equation}
 
 という条件を満たす細分化列について記述したものである。
 
-ここで重要なのは、
+ここで、
 
 \begin{equation}
-\boxed{
-\text{この極限条件そのものを本節で仮定すること}
-}
+    \boxed{
+        \text{細分化極限の条件を仮定すること}
+    }
 \end{equation}
 
-と、
+と
 
 \begin{equation}
-\boxed{
-\text{ECA の Solver 集合が実際にこの極限条件を満たすこと}
-}
+    \boxed{
+        \text{ECA の Solver 集合が実際に
+        その条件を満たすこと}
+    }
 \end{equation}
 
-とは別の問題であるという点である。
+とは区別しなければならない。
 
-後者については、現段階では新たな証明を与えるのではなく、
-ECA の既存構造との関係から論考する。
+後者については、本節では新たな証明を与えず、
+ECA において既に導入されている離散式および連続式との関係から
+論考する。
 
 
-\subsubsection{(F.10.1) 一様細分化の場合}
+%------------------------------------------------------------
+\subsubsection{(F.11.1) 一様正規化の場合}
+\label{subsubsec:F11-1}
 
 最も単純な場合として、
 
 \begin{equation}
-\Delta\mu_j^{(N)}
-=
-\frac1N
+    \Delta\mu_j^{(N)}
+    =
+    \frac1N
 \end{equation}
 
 とする。
@@ -2262,14 +5715,13 @@ ECA の既存構造との関係から論考する。
 このとき、
 
 \begin{equation}
-\left\|
-\mathcal P_N
-\right\|_\mu
-=
-\max_j
-\frac1N
-=
-\frac1N
+    \left\|
+    \mathcal P_N
+    \right\|_\mu
+    =
+    \max_j\frac1N
+    =
+    \frac1N
 \end{equation}
 
 である。
@@ -2277,185 +5729,205 @@ ECA の既存構造との関係から論考する。
 したがって、
 
 \begin{equation}
-\lim_{N\to\infty}
-\left\|
-\mathcal P_N
-\right\|_\mu
-=
-\lim_{N\to\infty}
-\frac1N
-=
-0
+    \lim_{N\to\infty}
+    \left\|
+    \mathcal P_N
+    \right\|_\mu
+    =
+    \lim_{N\to\infty}
+    \frac1N
+    =
+    0
 \end{equation}
 
 となる。
 
-すなわち、一様正規化された Solver 集合については、
-Solver 数の増加に伴って各 Solver が担う測度が一様に
-小さくなるため、細分化極限
+このとき、
 
 \begin{equation}
-\left\|
-\mathcal P_N
-\right\|_\mu\to0
+    T_N
+    =
+    \frac1N
+    \sum_{j=1}^{N}
+    B_jI_jK_j
 \end{equation}
 
-は自然に現れる。
+となり、これは ECA の既存の離散式そのものである。
+
+したがって、一様正規化された場合には、
+離散 Solver の段階数を増加させることと、
+測度メッシュを細分化することが一致する。
 
 
-\subsubsection{(F.10.2) 一般の正規化測度の場合}
+%------------------------------------------------------------
+\subsubsection{(F.11.2) 一般の正規化測度の場合}
+\label{subsubsec:F11-2}
 
 一様正規化を仮定しない場合には、
 
 \begin{equation}
-\Delta\mu_j^{(N)}
-=
-\mu\left(E_j^{(N)}\right)
+    \Delta\mu_j^{(N)}
+    =
+    \mu\!\left(E_j^{(N)}\right)
 \end{equation}
 
-であるため、
+である。
+
+したがって、
 
 \begin{equation}
-\left\|
-\mathcal P_N
-\right\|_\mu
-=
-\max_j
-\mu\left(E_j^{(N)}\right)
+    \left\|
+    \mathcal P_N
+    \right\|_\mu
+    =
+    \max_j
+    \mu\!\left(E_j^{(N)}\right)
 \end{equation}
 
 となる。
 
-したがって、ECA の一般的な Solver 集合において
-細分化極限が成立するかどうかは、
+この場合、細分化極限の成立条件は
 
 \begin{equation}
-\boxed{
-\lim_{N\to\infty}
-\max_j
-\mu\left(E_j^{(N)}\right)
-=
-0
-}
-\label{eq:F-general-mesh-condition}
+    \boxed{
+        \lim_{N\to\infty}
+        \max_j
+        \mu\!\left(E_j^{(N)}\right)
+        =
+        0
+    }
+    \label{eq:F-general-mesh-condition}
 \end{equation}
 
-を満たす細分化列を構成できるかどうかに帰着する。
+となる。
 
-この条件は、単に Solver の個数を無限に増加させることではなく、
-各 Solver 領域に集中する測度の最大値が消失することを要求する。
-
-したがって、一般の場合には
+したがって、
 
 \begin{equation}
-N\to\infty
+    N\to\infty
 \end{equation}
 
-だけでは十分ではなく、
+だけでは一般には十分ではない。
+
+必要なのは、
 
 \begin{equation}
-\max_j
-\mu\left(E_j^{(N)}\right)
-\to0
+    \max_j
+    \mu\!\left(E_j^{(N)}\right)
+    \longrightarrow0
 \end{equation}
 
-という測度的条件を確認する必要がある。
+という測度的な細分化条件である。
 
 
-\subsubsection{(F.10.3) ECA における意味}
+%------------------------------------------------------------
+\subsubsection{(F.11.3) 離散式から連続式への接続}
+\label{subsubsec:F11-3}
 
-以上から、ECA における離散 Solver 集合から連続的な一般解への
-移行は、
+以上をまとめると、離散形式
 
 \begin{equation}
-\text{Solver 集合}
-\longrightarrow
-\text{細分化}
-\longrightarrow
-\text{測度要素の減少}
-\longrightarrow
-\text{極限}
+    T_N
+    =
+    \sum_{j=1}^{N}
+    f\!\left(x_j^{(N)}\right)
+    \Delta\mu_j^{(N)}
 \end{equation}
 
-という順序で理解できる。
+に対して、
+
+\begin{equation}
+    \Delta\mu_j^{(N)}
+    =
+    \mu\!\left(E_j^{(N)}\right)
+\end{equation}
+
+および
+
+\begin{equation}
+    \left\|
+    \mathcal P_N
+    \right\|_\mu
+    =
+    \max_j
+    \Delta\mu_j^{(N)}
+    \longrightarrow0
+\end{equation}
+
+を考えることで、
+
+\begin{equation}
+    T_N
+    \longrightarrow
+    \int_I f(x)\,d\mu(x)
+\end{equation}
+
+という接続を得る。
+
+さらに、
+
+\begin{equation}
+    f(x)=B(x)I(x)K(x)
+\end{equation}
+
+であるから、
+
+\begin{equation}
+    \boxed{
+        T_N
+        \longrightarrow
+        \int_I
+        B(x)I(x)K(x)\,d\mu(x)
+    }
+\end{equation}
+
+となる。
+
+したがって、ECA における離散 Solver から連続形式への移行は、
+
+\begin{equation}
+    \boxed{
+    \text{離散 Solver}
+    \longrightarrow
+    \text{測度による細分化}
+    \longrightarrow
+    \text{メッシュの消失}
+    \longrightarrow
+    \text{連続評価}
+    }
+\end{equation}
+
+という構造として理解できる。
+
+
+%------------------------------------------------------------
+\subsection{(F.12) (E) との関係}
+\label{subsec:F12}
+
+(E) において、Solver 同型に対して一般解の評価構造が
+可換することを定式化した。
 
 すなわち、
 
 \begin{equation}
-\Delta\mu_j^{(N)}
-=
-\mu(E_j^{(N)})
+    U\circ\Phi_1
+    =
+    \Phi_2\circ T
 \end{equation}
 
-から
+によって、異なる Solver 表現の間で
+一般評価構造が対応する。
+
+(F) では、その評価構造を有限段階において細分化し、
 
 \begin{equation}
-\left\|
-\mathcal P_N
-\right\|_\mu
-=
-\max_j\Delta\mu_j^{(N)}
-\end{equation}
-
-を得て、さらに
-
-\begin{equation}
-\left\|
-\mathcal P_N
-\right\|_\mu
-\to0
-\end{equation}
-
-となることで、
-
-\begin{equation}
-T_N
-=
-\sum_j
-f(x_j^{(N)})
-\Delta\mu_j^{(N)}
-\end{equation}
-
-が
-
-\begin{equation}
-T
-=
-\int_I f(x)\,d\mu(x)
-\end{equation}
-
-へ接続される。
-
-したがって、現段階における ECA の議論では、
-この細分化極限を独立した証明課題として扱うのではなく、
-
-\begin{equation}
-\boxed{
-\text{離散形式と連続形式を接続するための構造的条件}
-}
-\end{equation}
-
-として位置付けることができる。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(F.11) (E) との関係}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-(F) の構成は、(E) において示された Solver 集合の構造および
-一般解の一意性と矛盾しない。
-
-(E) では、Solver 集合として同値な対象について、
-その一般解および評価構造が Solver 集合の構造に依存することを
-扱った。
-
-これに対して (F) では、その同一の Solver 集合を
-有限段階で細分化し、
-
-\begin{equation}
-\mathcal S
-\supseteq
-\mathcal P_N
+    \mathcal P_N
+    =
+    \left\{
+        E_1^{(N)},
+        \ldots,
+        E_N^{(N)}
+    \right\}
 \end{equation}
 
 として表現する。
@@ -2463,379 +5935,710 @@ T
 したがって、(F) における離散一般解
 
 \begin{equation}
-T_N
-=
-\sum_j
-f(x_j^{(N)})
-\Delta\mu_j^{(N)}
+    T_N
+    =
+    \sum_{j=1}^{N}
+    f\!\left(x_j^{(N)}\right)
+    \Delta\mu_j^{(N)}
 \end{equation}
 
-は、(E) において構成された Solver 集合の一般解を、
-細分化された評価領域上で表現したものと解釈できる。
+は、(E) において定義された一般評価構造を
+有限段階の測度的分割によって表現したものと解釈できる。
+
+この意味で、(F) は (E) と矛盾せず、
+
+\begin{equation}
+    \boxed{
+        \text{Solver の構造的一意性}
+        \longrightarrow
+        \text{離散評価}
+        \longrightarrow
+        \text{細分化極限}
+    }
+\end{equation}
+
+という流れを構成する。
+
+
+%------------------------------------------------------------
+\subsection{(F.13) 本節における証明事項と論考事項の区別}
+\label{subsec:F13}
+
+本節では、以下を明確に区別する。
+
+\begin{enumerate}
+
+    \item
+    可測分割
+
+    \begin{equation}
+        \mathcal P_N
+    \end{equation}
+
+    を考え、その測度要素
+
+    \begin{equation}
+        \Delta\mu_j^{(N)}
+        =
+        \mu(E_j^{(N)})
+    \end{equation}
+
+    を定義すること。
+
+    \item
+    細分化メッシュ
+
+    \begin{equation}
+        \left\|
+        \mathcal P_N
+        \right\|_\mu
+        =
+        \max_j
+        \Delta\mu_j^{(N)}
+    \end{equation}
+
+    を定義すること。
+
+    \item
+    メッシュが
+
+    \begin{equation}
+        \left\|
+        \mathcal P_N
+        \right\|_\mu
+        \to0
+    \end{equation}
+
+    となること、および積分近似が収束することを仮定すれば、
+
+    \begin{equation}
+        T_N
+        \to
+        \int_I BIK\,d\mu
+    \end{equation}
+
+    が従うこと。
+
+    \item
+    一方で、任意の ECA Solver 集合について実際に
+
+    \begin{equation}
+        \left\|
+        \mathcal P_N
+        \right\|_\mu
+        \to0
+    \end{equation}
+
+    となる細分化列を構成できることは、
+    本節の定理から自動的には導かれないこと。
+
+\end{enumerate}
+
+したがって、
+
+\begin{equation}
+    \boxed{
+        \text{離散極限定理}
+    }
+\end{equation}
+
+と
+
+\begin{equation}
+    \boxed{
+        \text{ECA Solver 集合における細分化極限の実現可能性}
+    }
+\end{equation}
+
+を分離する。
+
+後者については、本節では論考として扱う。
+
+
+%------------------------------------------------------------
+\subsection{(F.14) 本節の結論}
+\label{subsec:F14}
+
+以上により、ECA の離散形式
+
+\begin{equation}
+    T_N
+    =
+    \sum_{j=1}^{N}
+    B_jI_jK_j
+    \Delta\mu_j^{(N)}
+\end{equation}
+
+を、
+
+\begin{equation}
+    f(x)=B(x)I(x)K(x)
+\end{equation}
+
+によって
+
+\begin{equation}
+    T_N
+    =
+    \sum_{j=1}^{N}
+    f\!\left(x_j^{(N)}\right)
+    \Delta\mu_j^{(N)}
+\end{equation}
+
+と表現できる。
 
 さらに、
 
 \begin{equation}
-\lim_{N\to\infty}T_N
-=
-\int_I f(x)\,d\mu(x)
+    \left\|
+    \mathcal P_N
+    \right\|_\mu
+    =
+    \max_j\Delta\mu_j^{(N)}
+    \longrightarrow0
 \end{equation}
 
-によって連続形式へ移行する。
-
-したがって、
+および対応する積分近似の収束を仮定すれば、
 
 \begin{equation}
-\boxed{
-(E)
-\Longrightarrow
-\text{Solver 集合の構造的一意性}
-}
+    \boxed{
+        \lim_{N\to\infty}
+        T_N
+        =
+        \int_I
+        B(x)I(x)K(x)\,d\mu(x)
+    }
 \end{equation}
 
-に対し、
+が成立する。
+
+一様正規化の場合には、
 
 \begin{equation}
-\boxed{
-(F)
-\Longrightarrow
-\text{その構造の細分化極限における連続表現}
-}
-\end{equation}
-
-という関係が成立する。
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\section{(G) Solver 集合における一般解の連続的構造}
-\label{sec:G}
-
-\subsection{(G.1) 本節の目的}
-
-(G) では、(A)--(F) において構成された Solver 集合、
-評価空間、評価写像、正規化測度および離散極限定理を基礎として、
-一般解 $\mathcal{G}$ が Solver 集合上でどのような連続的構造を
-持つかを記述する。
-
-本節では、(F) において論考として扱った
-
-\begin{equation}
-\left\|
-\mathcal{P}_N
-\right\|_{\mu}
-\longrightarrow 0
-\end{equation}
-
-そのものを新たな証明対象とはしない。
-
-(F) において既に示された離散極限定理を前提として、
-その結果が一般解 $\mathcal{G}$ の構造に対して何を意味するのかを
-考察する。
-
-
-\subsection{(G.2) (A)--(F) から引き継がれる構造}
-
-(A)--(D) において構成された Solver 集合を
-
-\begin{equation}
-\mathcal{S}
-\end{equation}
-
-評価空間を
-
-\begin{equation}
-X
-\end{equation}
-
-評価写像を
-
-\begin{equation}
-\Phi:\mathcal{S}\longrightarrow X
-\end{equation}
-
-とする。
-
-また、(E) において示された Solver 集合の構造的一意性により、
-Solver 集合として同値な対象について、その評価構造および
-一般解は対応する構造を保持する。
-
-さらに、(F) において離散一般解
-
-\begin{equation}
-T_N
-=
-\sum_{j=1}^{N}
-f\left(x_j^{(N)}\right)
-\Delta\mu_j^{(N)}
-\end{equation}
-
-およびその連続極限
-
-\begin{equation}
-T
-=
-\int_I f(x)\,d\mu(x)
-\end{equation}
-
-が与えられた。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(G.3) 一般解 $\mathcal{G}$ の定義と評価空間}
-\label{subsec:G-general-solution}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-(A)--(F) において構成された Solver 集合を
-
-\begin{equation}
-\mathcal{S}
-\end{equation}
-
-とする。
-
-また、(B) において構成された一般評価空間を
-
-\begin{equation}
-X
-\end{equation}
-
-とする。
-
-ここで、一般解 $\mathcal{G}$ は、個々の Solver に対して
-単一の数値を直接対応させる写像としてではなく、Solver が
-有する評価構造を評価空間 $X$ の元として対応させる写像として
-定義する。
-
-したがって、
-
-\begin{equation}
-\boxed{
-\mathcal{G}:\mathcal{S}\longrightarrow X
-}
-\label{eq:G-general-solution-map}
-\end{equation}
-
-とする。
-
-すなわち、任意の Solver $S\in\mathcal{S}$ に対して、
-
-\begin{equation}
-\mathcal{G}(S)\in X
-\end{equation}
-
-である。
-
-この定義により、一般解 $\mathcal{G}$ は Solver 集合上に
-存在する評価構造を、評価空間上の元として表現する。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{(G.3.1) 評価構造としての一般解}
-
-これまでの ECA の構成において、Solver の評価は
-$B,I,K$ によって記述される。
-
-したがって、評価空間をその評価構造に対応する空間として
-
-\begin{equation}
-X
-=
-X_B\times X_I\times X_K
-\end{equation}
-
-と表現できる場合には、
-
-\begin{equation}
-\mathcal{G}(S)
-=
-\left(
-B(S),I(S),K(S)
-\right)
-\end{equation}
-
-と記述できる。
-
-ただし、この表記は評価空間 $X$ が $B,I,K$ の直積として
-明示的に構成可能である場合の具体的表現であり、
-$\mathcal{G}:\mathcal{S}\to X$ という基本定義そのものを
-この具体的表現に限定するものではない。
-
-したがって、一般解の本質的な定義は
-
-\begin{equation}
-\boxed{
-S\longmapsto\mathcal{G}(S)\in X
-}
-\end{equation}
-
-にある。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{(G.3.2) 一般解から最終評価への写像}
-
-一般解 $\mathcal{G}(S)$ は評価構造を表すものであるため、
-その評価構造から最終的なスカラー評価を取り出す写像を別途
-導入する。
-
-これを
-
-\begin{equation}
-\Psi:X\longrightarrow\mathbb{R}
-\end{equation}
-
-とする。
-
-例えば、評価空間の元が
-
-\begin{equation}
-x=(B,I,K)
-\end{equation}
-
-として表現される場合には、
-
-\begin{equation}
-\Psi(B,I,K)=BIK
-\end{equation}
-
-と定義できる。
-
-したがって、Solver $S$ に対する最終評価は
-
-\begin{equation}
-\Psi(\mathcal{G}(S))
-\end{equation}
-
-となる。
-
-ここで
-
-\begin{equation}
-g
-:=
-\Psi\circ\mathcal{G}
-\end{equation}
-
-と定義すれば、
-
-\begin{equation}
-g:\mathcal{S}\longrightarrow\mathbb{R}
+    \Delta\mu_j^{(N)}
+    =
+    \frac1N
 \end{equation}
 
 であり、
 
 \begin{equation}
-\boxed{
-g(S)=\Psi(\mathcal{G}(S))
-}
-\label{eq:G-scalar-evaluation}
+    \left\|
+    \mathcal P_N
+    \right\|_\mu
+    =
+    \frac1N
+    \longrightarrow0
 \end{equation}
 
-を得る。
+となるため、ECA の既存離散式と連続形式との対応が
+直接的に確認できる。
 
-したがって、一般解に関する構造は
+したがって、本節では、
 
 \begin{equation}
-\boxed{
-\mathcal{S}
-\xrightarrow{\mathcal{G}}
-X
-\xrightarrow{\Psi}
-\mathbb{R}
-}
-\label{eq:G-evaluation-chain}
+    \boxed{
+        \text{離散 Solver の細分化}
+        \longrightarrow
+        \text{測度メッシュの消失}
+        \longrightarrow
+        \text{連続評価への極限}
+    }
 \end{equation}
 
-という二段階の写像として記述できる。
+という構造を確立する。
 
+%################################################################
+% (G)
+%################################################################
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(G.4) 評価写像との関係}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{(G) Solver 集合における一般解の連続的構造}
+\label{sec:G}
 
-(B)--(E) において扱った評価写像を
+%------------------------------------------------------------
+\subsection{(G.1) 本節の目的}
+\label{subsec:G1}
+
+(A)--(F) において、Solver 集合、評価空間、一般解、
+評価写像、正規化測度および離散 Solver の細分化極限について
+定義および定式化を行った。
+
+(G) では、これらの構造を一般解 $\mathcal{G}$ のもとに統合し、
+Solver 集合上の一般解が持つ連続的構造を記述する。
+
+本節において重要なのは、(F) で扱った離散極限そのものを
+新たに証明することではない。
+
+(F) において、
 
 \begin{equation}
-\Phi:\mathcal{S}\longrightarrow X
+    T_N
+    =
+    \sum_{j=1}^{N}
+    f\!\left(x_j^{(N)}\right)
+    \Delta\mu_j^{(N)}
+\end{equation}
+
+に対して適切な細分化条件および積分近似の収束条件を仮定した場合、
+
+\begin{equation}
+    \lim_{N\to\infty}T_N
+    =
+    \int_I f(x)\,d\mu(x)
+\end{equation}
+
+が成立することを定式化した。
+
+したがって、本節ではこの結果を前提として、
+
+\begin{equation}
+    \mathcal{G}:\mathcal{S}\longrightarrow X
+\end{equation}
+
+という一般解の構造が、離散評価と連続評価の間をどのように
+媒介するかを記述する。
+
+
+%------------------------------------------------------------
+\subsection{(G.2) (A)--(F) から引き継がれる構造}
+\label{subsec:G2}
+
+(A)--(D) において構成された Solver 集合を
+
+\begin{equation}
+    \mathcal{S}
 \end{equation}
 
 とする。
 
-一般解 $\mathcal{G}$ は、この評価構造を一般解として表現する
-写像であるため、ECA における評価写像の定義と一般解の定義を
-混同しないことが重要である。
+また、(B) において構成された評価空間を
+
+\begin{equation}
+    X
+\end{equation}
+
+とする。
+
+(B)--(E) において扱った評価写像を
+
+\begin{equation}
+    \Phi:
+    \mathcal{S}
+    \longrightarrow
+    X
+\end{equation}
+
+とする。
+
+さらに、(D) において一般解を
+
+\begin{equation}
+    \mathcal{G}:
+    \mathcal{S}
+    \longrightarrow
+    X
+\end{equation}
+
+として定義した。
+
+(E) においては、Solver 同型
+
+\begin{equation}
+    T:
+    \mathcal{S}_1
+    \overset{\sim}{\longrightarrow}
+    \mathcal{S}_2
+\end{equation}
+
+に対して、一般解が
+
+\begin{equation}
+    \mathcal{G}_2\circ T
+    =
+    \mathcal{G}_1
+\end{equation}
+
+という可換性を満たすことを一般解の構造的一意性として扱った。
+
+一方、(F) においては、有限段階の可測分割
+
+\begin{equation}
+    \mathcal{P}_N
+    =
+    \left\{
+        E_1^{(N)},
+        \ldots,
+        E_N^{(N)}
+    \right\}
+\end{equation}
+
+および測度要素
+
+\begin{equation}
+    \Delta\mu_j^{(N)}
+    =
+    \mu\!\left(E_j^{(N)}\right)
+\end{equation}
+
+を用いて、離散評価を
+
+\begin{equation}
+    T_N
+    =
+    \sum_{j=1}^{N}
+    f\!\left(x_j^{(N)}\right)
+    \Delta\mu_j^{(N)}
+\end{equation}
+
+と記述した。
+
+ここで、
+
+\begin{equation}
+    f(x)
+    =
+    B(x)I(x)K(x)
+\end{equation}
+
+である。
+
+これらを基礎として、以下では一般解 $\mathcal{G}$ と
+連続評価との関係を定式化する。
+
+
+%------------------------------------------------------------
+\subsection{(G.3) 一般解 $\mathcal{G}$ の定義}
+\label{subsec:G3}
+
+一般解 $\mathcal{G}$ は、Solver に対して最終的な数値を
+直接割り当てる写像としてではなく、Solver が持つ評価構造を
+評価空間 $X$ の元として表現する写像として定義する。
+
+したがって、
+
+\begin{equation}
+    \boxed{
+        \mathcal{G}:
+        \mathcal{S}
+        \longrightarrow
+        X
+    }
+    \label{eq:G-general-solution}
+\end{equation}
+
+とする。
+
+任意の
+
+\begin{equation}
+    S\in\mathcal{S}
+\end{equation}
+
+に対して、
+
+\begin{equation}
+    \mathcal{G}(S)\in X
+\end{equation}
+
+である。
+
+したがって、
+
+\begin{equation}
+    \boxed{
+        S
+        \longmapsto
+        \mathcal{G}(S)\in X
+    }
+\end{equation}
+
+が一般解の基本的な写像構造となる。
+
+ここでいう一般解は、特定の Solver における個別の解を
+列挙するものではない。
+
+一般解 $\mathcal{G}$ は、Solver 集合の各元が持つ評価構造を
+評価空間上に表現することによって、Solver 集合全体に共通する
+一般的な評価構造を記述するものである。
+
+
+%------------------------------------------------------------
+\subsection{(G.4) 評価構造としての一般解}
+\label{subsec:G4}
+
+ECA において評価構造が
+
+\begin{equation}
+    B,\qquad I,\qquad K
+\end{equation}
+
+によって表現される場合を考える。
+
+評価空間 $X$ が
+
+\begin{equation}
+    X
+    =
+    X_B\times X_I\times X_K
+\end{equation}
+
+として構成できる場合には、
+
+\begin{equation}
+    \boxed{
+        \mathcal{G}(S)
+        =
+        \left(
+            B(S),
+            I(S),
+            K(S)
+        \right)
+    }
+    \label{eq:G-BIK}
+\end{equation}
+
+と表現できる。
+
+ただし、この表現は評価空間が実際に
+$B,I,K$ の直積として構成される場合の具体的表現である。
+
+したがって、
+
+\begin{equation}
+    \mathcal{G}:
+    \mathcal{S}\longrightarrow X
+\end{equation}
+
+という一般解の定義そのものを、
+
+\begin{equation}
+    \mathcal{G}(S)
+    =
+    \left(B(S),I(S),K(S)\right)
+\end{equation}
+
+という特定の表現に限定するものではない。
+
+一般解の本質は、
+
+\begin{equation}
+    \boxed{
+        S\longmapsto\mathcal{G}(S)\in X
+    }
+\end{equation}
+
+という写像構造にある。
+
+
+%------------------------------------------------------------
+\subsection{(G.5) 一般解から最終評価への写像}
+\label{subsec:G5}
+
+一般解 $\mathcal{G}(S)$ は評価空間 $X$ の元であるため、
+そこから最終的なスカラー評価を取り出す写像を
+
+\begin{equation}
+    \Psi:
+    X
+    \longrightarrow
+    \mathbb{R}
+\end{equation}
+
+とする。
+
+例えば、
+
+\begin{equation}
+    x=(B,I,K)
+\end{equation}
+
+として表現される場合には、
+
+\begin{equation}
+    \Psi(B,I,K)
+    =
+    BIK
+\end{equation}
+
+と定義できる。
+
+このとき、Solver $S$ に対する最終評価を
+
+\begin{equation}
+    g(S)
+    :=
+    \Psi\!\left(\mathcal{G}(S)\right)
+\end{equation}
+
+と定義する。
 
 すなわち、
 
 \begin{equation}
-\Phi(S)
+    \boxed{
+        g
+        =
+        \Psi\circ\mathcal{G}
+    }
+    \label{eq:G-composed-map}
 \end{equation}
 
-は Solver $S$ を評価空間上へ対応させる評価写像による像であり、
+である。
+
+したがって、
 
 \begin{equation}
-\mathcal{G}(S)
+    g:
+    \mathcal{S}
+    \longrightarrow
+    \mathbb{R}
 \end{equation}
 
-はその評価構造を一般解として記述したものである。
-
-両者が同一の評価構造を表す場合には、
+となり、
 
 \begin{equation}
-\mathcal{G}(S)=\Phi(S)
+    \boxed{
+        g(S)
+        =
+        \Psi\!\left(\mathcal{G}(S)\right)
+    }
+    \label{eq:G-scalar-evaluation}
 \end{equation}
 
-と同一視できる。
+を得る。
 
-この場合、
+以上から、一般解と最終評価の関係は
 
 \begin{equation}
-\mathcal{G}=\Phi
+    \boxed{
+        \mathcal{S}
+        \xrightarrow{\mathcal{G}}
+        X
+        \xrightarrow{\Psi}
+        \mathbb{R}
+    }
+    \label{eq:G-evaluation-chain}
+\end{equation}
+
+という二段階の写像として記述される。
+
+
+%------------------------------------------------------------
+\subsection{(G.6) 評価写像 $\Phi$ と一般解 $\mathcal{G}$ の関係}
+\label{subsec:G6}
+
+(B)--(E) において導入された評価写像を
+
+\begin{equation}
+    \Phi:
+    \mathcal{S}
+    \longrightarrow
+    X
+\end{equation}
+
+とする。
+
+一方、一般解は
+
+\begin{equation}
+    \mathcal{G}:
+    \mathcal{S}
+    \longrightarrow
+    X
+\end{equation}
+
+である。
+
+したがって、両者は型として同じ写像を持つ。
+
+しかし、
+
+\begin{equation}
+    \Phi=\mathcal{G}
+\end{equation}
+
+であることを一般解の定義そのものとして要求する必要はない。
+
+$\Phi$ は Solver を評価空間へ対応させる評価写像であり、
+
+\begin{equation}
+    \mathcal{G}(S)
+\end{equation}
+
+は Solver $S$ の評価構造を一般解として表現するものである。
+
+両者が同一の評価構造を表現する場合には、
+
+\begin{equation}
+    \mathcal{G}(S)
+    =
+    \Phi(S)
+    \qquad
+    (\forall S\in\mathcal{S})
+\end{equation}
+
+として同一視できる。
+
+この場合には、
+
+\begin{equation}
+    \mathcal{G}
+    =
+    \Phi
 \end{equation}
 
 となる。
 
-ただし、一般解 $\mathcal{G}$ を評価写像 $\Phi$ と恒等的に
-同一視することを要求する必要はない。
-
-本節において重要なのは、いずれの場合にも一般解が
+したがって、(G) において必要なのは
+$\mathcal{G}$ と $\Phi$ の名称を機械的に同一視することではなく、
 
 \begin{equation}
-\mathcal{S}\longrightarrow X
+    \boxed{
+        \mathcal{G}:
+        \mathcal{S}\to X
+    }
 \end{equation}
 
-という構造を持ち、最終評価が
-
-\begin{equation}
-X\longrightarrow\mathbb{R}
-\end{equation}
-
-によって与えられるという点である。
+という一般解の構造を明確にすることである。
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(G.5) Solver 同型性と一般解}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%------------------------------------------------------------
+\subsection{(G.7) Solver 同型性と一般解}
+\label{subsec:G7}
 
 (E) において定義された Solver 同型
 
 \begin{equation}
-T:
-\mathcal{S}_1
-\longrightarrow
-\mathcal{S}_2
+    T:
+    \mathcal{S}_1
+    \overset{\sim}{\longrightarrow}
+    \mathcal{S}_2
 \end{equation}
 
 を考える。
 
-Solver 同型によって評価構造が保存される場合、
+それぞれの Solver 集合に対する一般解を
 
 \begin{equation}
-\mathcal{G}_2\circ T
-=
-\mathcal{G}_1
-\label{eq:G-solver-isomorphism}
+    \mathcal{G}_1:
+    \mathcal{S}_1\to X_1,
+    \qquad
+    \mathcal{G}_2:
+    \mathcal{S}_2\to X_2
+\end{equation}
+
+とする。
+
+(E) における強い一意性の条件に従い、
+評価空間の対応を同一視できる場合には、
+
+\begin{equation}
+    \boxed{
+        \mathcal{G}_2\circ T
+        =
+        \mathcal{G}_1
+    }
+    \label{eq:G-isomorphism}
 \end{equation}
 
 が成立する。
@@ -2843,883 +6646,2454 @@ Solver 同型によって評価構造が保存される場合、
 すなわち、任意の
 
 \begin{equation}
-S\in\mathcal{S}_1
+    S\in\mathcal{S}_1
 \end{equation}
 
-に対して、
+について、
 
 \begin{equation}
-\mathcal{G}_2(T(S))
-=
-\mathcal{G}_1(S)
+    \mathcal{G}_2(T(S))
+    =
+    \mathcal{G}_1(S)
 \end{equation}
 
 である。
 
-さらに、最終評価写像 $\Psi$ を適用すると、
+この式は、一般解が Solver の具体的な表現そのものに
+依存するのではなく、(E) において定められた Solver 構造を
+保存する対応によって定まることを表す。
 
-\begin{align}
-\Psi(\mathcal{G}_2(T(S)))
-&=
-\Psi(\mathcal{G}_1(S))
-\\
-g_2(T(S))
-&=
-g_1(S).
-\end{align}
 
-したがって、
+%------------------------------------------------------------
+\subsection{(G.8) 最終評価の不変性}
+\label{subsec:G8}
+
+一般解に対応する最終評価を
 
 \begin{equation}
-\boxed{
-g_2\circ T
-=
-g_1
-}
-\label{eq:G-scalar-invariance}
-\end{equation}
-
-を得る。
-
-これは、一般解が Solver 集合の具体的な表現方法そのものに
-依存するのではなく、Solver 集合において保存される評価構造に
-基づいて定まることを意味する。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(G.6) 離散一般解と連続一般解}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-(F) において定義された離散 Solver 集合の分割を
-
-\begin{equation}
-\mathcal{P}_N
-=
-\left\{
-E_1^{(N)},\ldots,E_N^{(N)}
-\right\}
+    g_1
+    =
+    \Psi_1\circ\mathcal{G}_1,
+    \qquad
+    g_2
+    =
+    \Psi_2\circ\mathcal{G}_2
 \end{equation}
 
 とする。
 
-各分割要素に対応する Solver を
+評価空間間の対応
 
 \begin{equation}
-S_j^{(N)}
+    U:
+    X_1
+    \longrightarrow
+    X_2
 \end{equation}
 
-とし、
+が存在し、
 
 \begin{equation}
-x_j^{(N)}
-=
-\mathcal{G}(S_j^{(N)})
-\end{equation}
-
-とする。
-
-このとき、最終評価は
-
-\begin{equation}
-g(x_j^{(N)})
-=
-\Psi\left(
-\mathcal{G}(S_j^{(N)})
-\right)
-\end{equation}
-
-と表現できる。
-
-したがって、離散一般解は
-
-\begin{equation}
-T_N
-=
-\sum_{j=1}^{N}
-\Psi\left(
-\mathcal{G}(S_j^{(N)})
-\right)
-\Delta\mu_j^{(N)}
-\end{equation}
-
-となる。
-
-(F) において得られた離散極限を用いると、
-
-\begin{equation}
-\lim_{N\to\infty}T_N
-=
-\int_I
-\Psi(\mathcal{G}(x))
-\,d\mu(x)
-\end{equation}
-
-となる。
-
-したがって、離散形式と連続形式は
-
-\begin{equation}
-\boxed{
-\mathcal{G}_{\mathrm{discrete}}
-\longrightarrow
-\mathcal{G}_{\mathrm{continuous}}
-}
-\end{equation}
-
-として接続される。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(G.7) (G) における一般解の数学的意味}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-以上の構成から、一般解 $\mathcal{G}$ は単に Solver に対して
-数値を割り当てる関数ではない。
-
-むしろ、
-
-\begin{equation}
-\boxed{
-\mathcal{G}:
-\mathcal{S}\longrightarrow X
-}
-\end{equation}
-
-によって Solver 集合上の評価構造を評価空間へ写し、
-
-\begin{equation}
-\boxed{
-\Psi:
-X\longrightarrow\mathbb{R}
-}
-\end{equation}
-
-によってその評価構造から最終的な評価値を取り出す。
-
-したがって、
-
-\begin{equation}
-\boxed{
-g=\Psi\circ\mathcal{G}
-}
-\end{equation}
-
-となる。
-
-この構造により、Solver 集合、評価空間、一般解および
-最終評価は
-
-\begin{equation}
-\boxed{
-\mathcal{S}
-\xrightarrow{\mathcal{G}}
-X
-\xrightarrow{\Psi}
-\mathbb{R}
-}
-\end{equation}
-
-という統一された写像構造として記述できる。
-
-さらに (E) における Solver 同型性と (F) における離散極限を
-組み合わせることで、
-
-\begin{equation}
-\boxed{
-\text{Solver 構造}
-\longrightarrow
-\text{一般解}
-\longrightarrow
-\text{離散評価}
-\longrightarrow
-\text{連続評価}
-}
-\end{equation}
-
-という一連の数学的構造が得られる。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(G.8) (A)--(F) との関係}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-(G) は、(A)--(F) において個別に構成された概念を
-一般解 $\mathcal{G}$ のもとに統合する段階である。
-
-(A) では Solver 集合およびその基礎となる数学的構造が与えられ、
-(B) では一般評価空間が構成され、
-(C) ではその評価に必要な測度的性質が扱われ、
-(D) では一般解の存在およびその構造が扱われた。
-
-さらに (E) では Solver 集合の構造的一意性が、
-(F) では離散 Solver 集合から連続的評価への極限が扱われた。
-
-これらを合わせることで、
-
-\begin{equation}
-\boxed{
-\mathcal{G}:
-\mathcal{S}\longrightarrow X
-}
-\end{equation}
-
-という一般解の写像構造が明確になる。
-
-また、
-
-\begin{equation}
-g=\Psi\circ\mathcal{G}
-\end{equation}
-
-によって最終評価を得ることで、
-
-\begin{equation}
-T_N
-=
-\sum_{j=1}^{N}
-g(x_j^{(N)})
-\Delta\mu_j^{(N)}
-\end{equation}
-
-から
-
-\begin{equation}
-T
-=
-\int_I g(x)\,d\mu(x)
-\end{equation}
-
-への移行が可能となる。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(G.9) (H) への接続}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-(G) によって、離散 Solver と連続 Solver は、それぞれ独立した
-数学的対象として扱う必要がなく、一般解 $\mathcal{G}$ によって
-同一の評価構造から記述できる。
-
-すなわち、
-
-\begin{equation}
-\text{離散 Solver}
-\longrightarrow
-\mathcal{G}
-\longrightarrow
-\text{評価空間}
+    U\circ\mathcal{G}_1
+    =
+    \mathcal{G}_2\circ T
 \end{equation}
 
 および
 
 \begin{equation}
-\text{連続 Solver}
-\longrightarrow
-\mathcal{G}
-\longrightarrow
-\text{評価空間}
+    \Psi_2\circ U
+    =
+    \Psi_1
 \end{equation}
 
-を同一の枠組みで考えることができる。
+を満たすとする。
 
-この結果、(H) において扱われる中間 Solver は、
-単に離散 Solver と連続 Solver の中間に存在する対象として
-導入されるのではなく、
+このとき、
 
-\begin{equation}
-\boxed{
-\text{離散的評価構造と連続的評価構造を
-統一的に扱うための Solver 構造}
-}
-\end{equation}
+\begin{align}
+    g_2\circ T
+    &=
+    \Psi_2\circ\mathcal{G}_2\circ T
+    \\
+    &=
+    \Psi_2\circ U\circ\mathcal{G}_1
+    \\
+    &=
+    \Psi_1\circ\mathcal{G}_1
+    \\
+    &=
+    g_1
+\end{align}
 
-として定式化することが可能となる。
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{(H) 中間 Solver の構成}
-\label{sec:H}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{(H.1) 中間 Solver の導入}
-
-(G) において、Solver 集合 $\mathcal{S}$ 上の一般解
-$\mathcal{G}$ は、
-
-\begin{equation}
-\mathcal{G}:\mathcal{S}\longrightarrow X
-\end{equation}
-
-として定義され、さらに最終評価を与える写像
-
-\begin{equation}
-\Psi:X\longrightarrow\mathbb{R}
-\end{equation}
-
-によって、
-
-\begin{equation}
-g=\Psi\circ\mathcal{G}
-\end{equation}
-
-という構造が得られた。
-
-また、(F) および (G) において、Solver の評価は離散的な形式
-
-\begin{equation}
-T_N
-=
-\sum_{j=1}^{N}
-g(x_j^{(N)})
-\Delta\mu_j^{(N)}
-\end{equation}
-
-から、連続的な形式
-
-\begin{equation}
-T
-=
-\int_I g(x)\,d\mu(x)
-\end{equation}
-
-へ接続されることが示された。
-
-このことから、Solver 集合においては、離散的な評価構造と
-連続的な評価構造を必ずしも相互に独立したものとして
-扱う必要はない。
-
-そこで、離散的評価構造と連続的評価構造の双方を含む
-一般化された Solver を導入する。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(H.2) 中間 Solver の定義}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-中間 Solver を
-
-\begin{equation}
-\mathcal{S}_{\mathrm{mid}}
-\end{equation}
-
-とする。
-
-中間 Solver は、離散 Solver 集合
-
-\begin{equation}
-\mathcal{S}_{\mathrm{disc}}
-\end{equation}
-
-と連続 Solver 集合
-
-\begin{equation}
-\mathcal{S}_{\mathrm{cont}}
-\end{equation}
-
-の単純な集合論的中間として定義するものではない。
-
-むしろ、
-
-\begin{equation}
-\mathcal{S}_{\mathrm{mid}}
-\subseteq
-\mathfrak{S}
-\end{equation}
-
-を、離散的構造および連続的構造の双方を許容する
-一般化された Solver の集合として定義する。
-
-ここで $\mathfrak{S}$ は、ECA において許容される Solver 構造
-全体を表す。
+である。
 
 したがって、
 
 \begin{equation}
-\boxed{
-\mathcal{S}_{\mathrm{mid}}
-=
-\left\{
-S\in\mathfrak{S}
-\;\middle|\;
-S\text{ が離散的または連続的な評価構造を許容する}
-\right\}
-}
+    \boxed{
+        g_2\circ T
+        =
+        g_1
+    }
+    \label{eq:G-scalar-invariance}
 \end{equation}
 
-と考えることができる。
+を得る。
+
+これは、Solver の表現を変更しても、
+Solver 構造および最終評価構造が保存される限り、
+最終評価が対応して保存されることを意味する。
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(H.3) 中間 Solver における評価構造}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%------------------------------------------------------------
+\subsection{(G.9) 離散 Solver における一般解}
+\label{subsec:G9}
 
-中間 Solver $S\in\mathcal{S}_{\mathrm{mid}}$ に対しても、
-一般解は
+(F) において定義した可測分割を
 
 \begin{equation}
-\mathcal{G}(S)\in X
+    \mathcal{P}_N
+    =
+    \left\{
+        E_1^{(N)},
+        \ldots,
+        E_N^{(N)}
+    \right\}
 \end{equation}
 
-として定義される。
+とする。
 
-したがって、中間 Solver に対しても
+各分割要素 $E_j^{(N)}$ に対応する Solver を
 
 \begin{equation}
-\mathcal{S}_{\mathrm{mid}}
-\xrightarrow{\mathcal G}
-X
-\xrightarrow{\Psi}
-\mathbb R
+    S_j^{(N)}
 \end{equation}
 
-という評価構造を与えることができる。
-
-ここで重要なのは、中間 Solver が必ずしも一つの固定された
-離散性または連続性を持つ必要がないことである。
-
-ある中間 Solver $S$ に対して、その評価構造が
+とし、その一般解を
 
 \begin{equation}
-\mathcal{G}(S)
-=
-\mathcal{G}_{\mathrm{disc}}(S)
+    x_j^{(N)}
+    :=
+    \mathcal{G}\!\left(S_j^{(N)}\right)
+    \in X
 \end{equation}
 
-として表現可能であれば、その Solver は離散的な
-評価構造を持つ。
+と定義する。
 
-一方、
+このとき、最終評価は
 
 \begin{equation}
-\mathcal{G}(S)
-=
-\mathcal{G}_{\mathrm{cont}}(S)
+    \Psi\!\left(
+        x_j^{(N)}
+    \right)
+    =
+    \Psi\!\left(
+        \mathcal{G}\!\left(S_j^{(N)}\right)
+    \right)
 \end{equation}
 
-として表現可能であれば、連続的な評価構造を持つ。
+である。
 
-さらに、両者を同一の一般解構造の中で表現できる場合には、
+したがって、(F) における離散一般解は
 
 \begin{equation}
-\mathcal{G}(S)
-=
-\mathcal{G}_{\mathrm{disc}}(S)
-\longrightarrow
-\mathcal{G}_{\mathrm{cont}}(S)
+    \boxed{
+        T_N
+        =
+        \sum_{j=1}^{N}
+        \Psi\!\left(
+            \mathcal{G}\!\left(S_j^{(N)}\right)
+        \right)
+        \Delta\mu_j^{(N)}
+    }
+    \label{eq:G-discrete-general-solution}
 \end{equation}
 
-という対応を考えることができる。
+と表現できる。
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(H.4) 離散性と連続性の一般化}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-(H.3) の構造から、中間 Solver の一般解は必ずしも
-離散的または連続的のいずれか一方に限定されない。
-
-すなわち、適切な評価構造の選択によって、
+ここで、
 
 \begin{equation}
-\mathcal{G}(S)
-\in
-\mathcal{G}_{\mathrm{disc}}
+    g
+    =
+    \Psi\circ\mathcal{G}
 \end{equation}
 
-となる場合もあれば、
+であるから、
 
 \begin{equation}
-\mathcal{G}(S)
-\in
-\mathcal{G}_{\mathrm{cont}}
+    T_N
+    =
+    \sum_{j=1}^{N}
+    g\!\left(S_j^{(N)}\right)
+    \Delta\mu_j^{(N)}
 \end{equation}
 
-となる場合もある。
+とも書ける。
 
-したがって、中間 Solver の一般解については、
+
+%------------------------------------------------------------
+\subsection{(G.10) 離散一般解から連続一般解への接続}
+\label{subsec:G10}
+
+(F) の細分化極限定理を適用する。
+
+すなわち、
 
 \begin{equation}
-\boxed{
-\mathcal{G}_{\mathrm{mid}}
-\supseteq
-\mathcal{G}_{\mathrm{disc}}
-\cup
-\mathcal{G}_{\mathrm{cont}}
-}
+    \left\|
+    \mathcal{P}_N
+    \right\|_\mu
+    \longrightarrow0
 \end{equation}
 
-という一般化された構造を考えることができる。
-
-ただし、これは単なる集合の包含関係を主張するものではなく、
-同一の Solver 評価構造に対して離散的表現と連続的表現の
-双方を許容するという意味で理解される。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(H.5) Solver 構造としての中間性}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-中間 Solver の「中間性」は、数直線上の中間値のような
-単純な順序関係によって定義されるものではない。
-
-むしろ、Solver の評価構造が
-
-\begin{equation}
-\text{離散}
-\quad\longleftrightarrow\quad
-\text{連続}
-\end{equation}
-
-の双方を含み得ることによって定義される。
-
-したがって、中間 Solver は、
-
-\begin{equation}
-\boxed{
-\text{離散 Solver}
-\subseteq
-\text{一般化された Solver 構造}
-\supseteq
-\text{連続 Solver}
-}
-\end{equation}
-
-という関係の中で理解される。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(H.6) 公理系との関係}
-
-中間 Solver は、単なる評価値の補間を行う対象ではない。
-
-むしろ、ある Solver がどのような公理体系または数学的枠組みを
-支持するかによって、その後に許容される評価構造が変化する
-という観点から理解できる。
-
-ある公理体系を
-
-\begin{equation}
-\mathcal A
-\end{equation}
-
-とし、その公理体系の採用または非採用によって Solver の
-評価構造が変化するとする。
+および対応する積分近似の収束条件が成立すると仮定する。
 
 このとき、
 
 \begin{equation}
-\mathcal A
-\longrightarrow
-\mathcal{S}
-\longrightarrow
-\mathcal G
-\longrightarrow
-X
+    \lim_{N\to\infty}
+    T_N
+    =
+    \int_I
+    f(x)\,d\mu(x)
 \end{equation}
 
-という依存関係を考えることができる。
+である。
 
-すなわち、Solver は単に与えられた対象を評価するだけでなく、
-採用する公理体系によって、その後に構築される数学的枠組み
-そのものを変化させ得る。
-
-この意味において、中間 Solver は公理体系と評価構造との
-間を接続する一般化された構造として解釈できる。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(H.7) 中間 Solver の一般解}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-中間 Solver に対する一般解を
+ここで、一般解による評価構造を用いて
 
 \begin{equation}
-\mathcal{G}_{\mathrm{mid}}
-:
-\mathcal{S}_{\mathrm{mid}}
-\longrightarrow
-X
+    f(x)
+    =
+    \Psi\!\left(\mathcal{G}(x)\right)
 \end{equation}
 
-とする。
-
-最終評価を
+と表現できる場合には、
 
 \begin{equation}
-\Psi:
-X\longrightarrow\mathbb R
-\end{equation}
-
-によって与えれば、
-
-\begin{equation}
-g_{\mathrm{mid}}
-=
-\Psi\circ\mathcal{G}_{\mathrm{mid}}
+    \boxed{
+        \lim_{N\to\infty}
+        T_N
+        =
+        \int_I
+        \Psi\!\left(\mathcal{G}(x)\right)
+        \,d\mu(x)
+    }
+    \label{eq:G-continuous-limit}
 \end{equation}
 
 となる。
 
-したがって、中間 Solver における最終評価は、
+したがって、離散 Solver に対する一般解の評価は、
+細分化極限を通じて連続的な評価へ接続される。
+
+この関係を記号的に
 
 \begin{equation}
-g_{\mathrm{mid}}(S)
-=
-\Psi(\mathcal{G}_{\mathrm{mid}}(S))
+    \boxed{
+        \mathcal{G}_{\mathrm{discrete}}
+        \longrightarrow
+        \mathcal{G}_{\mathrm{continuous}}
+    }
 \end{equation}
 
-で与えられる。
-
-このとき、$\mathcal{G}_{\mathrm{mid}}(S)$ の具体的な表現は、
-Solver の選択および評価構造によって離散的にも連続的にも
-なり得る。
+と表すことができる。
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(H.8) 完全離散および完全連続な場合}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%------------------------------------------------------------
+\subsection{(G.11) 一般解の連続的構造}
+\label{subsec:G11}
 
-中間 Solver の一般性を明確にするため、二つの極端な場合を
-考える。
+(G.10) により、一般解 $\mathcal{G}$ による評価は
+離散的な Solver の列に限定されず、適切な細分化極限のもとで
+連続的な評価空間上に拡張される。
 
-まず、ある $S\in\mathcal{S}_{\mathrm{mid}}$ に対して
+すなわち、離散段階における
 
 \begin{equation}
-\mathcal{G}_{\mathrm{mid}}(S)
-=
-\mathcal{G}_{\mathrm{disc}}(S)
+    S_j^{(N)}
+    \longmapsto
+    \mathcal{G}\!\left(S_j^{(N)}\right)
 \end{equation}
 
-となる場合、その Solver の一般解は完全に離散的な構造を
-持つ。
-
-一方、
+という対応に対して、細分化極限では
 
 \begin{equation}
-\mathcal{G}_{\mathrm{mid}}(S)
-=
-\mathcal{G}_{\mathrm{cont}}(S)
+    x
+    \longmapsto
+    \mathcal{G}(x)
 \end{equation}
 
-となる場合、その Solver の一般解は完全に連続的な構造を
-持つ。
+という連続的評価構造を考えることができる。
+
+ここで重要なのは、(F) で述べたように、
+
+\begin{equation}
+    \left\|
+    \mathcal{P}_N
+    \right\|_\mu
+    \longrightarrow0
+\end{equation}
+
+という条件そのものを本節で新たに証明しているわけではないことである。
+
+(G) においては、(F) の極限結果を前提として、
+その極限が一般解 $\mathcal{G}$ による評価構造を
+連続的評価へ接続することを記述している。
+
+
+%------------------------------------------------------------
+\subsection{(G.12) 一般解の数学的意味}
+\label{subsec:G12}
+
+以上の構成から、一般解 $\mathcal{G}$ は単に Solver に
+数値を割り当てる関数ではない。
+
+一般解は、
+
+\begin{equation}
+    \boxed{
+        \mathcal{G}:
+        \mathcal{S}\longrightarrow X
+    }
+\end{equation}
+
+によって Solver 集合上の評価構造を評価空間上へ写像する。
+
+さらに、
+
+\begin{equation}
+    \boxed{
+        \Psi:
+        X\longrightarrow\mathbb{R}
+    }
+\end{equation}
+
+によって、その評価構造から最終的なスカラー評価を取り出す。
 
 したがって、
 
 \begin{equation}
-\boxed{
-\mathcal{G}_{\mathrm{mid}}
-\text{ は完全離散から完全連続までの評価構造を許容する}
-}
+    \boxed{
+        g
+        =
+        \Psi\circ\mathcal{G}
+    }
 \end{equation}
 
-と解釈できる。
+である。
 
-このことは、中間 Solver が「離散と連続の中間値」ではなく、
-離散的構造と連続的構造を同一の一般解の枠組みにおいて
-扱うための一般化であることを意味する。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(H.9) (G) との関係}
-
-(G) において、
+この構造によって、
 
 \begin{equation}
-\mathcal S
-\xrightarrow{\mathcal G}
-X
-\xrightarrow{\Psi}
-\mathbb R
+    \boxed{
+        \mathcal{S}
+        \xrightarrow{\mathcal{G}}
+        X
+        \xrightarrow{\Psi}
+        \mathbb{R}
+    }
 \end{equation}
 
-という一般解の評価構造が得られた。
+という統一された写像構造が得られる。
 
-(H) ではこの構造を中間 Solver に拡張し、
+
+%------------------------------------------------------------
+\subsection{(G.13) (E) および (F) との統合}
+\label{subsec:G13}
+
+(E) においては、Solver 同型に対して一般解が
 
 \begin{equation}
-\mathcal S_{\mathrm{mid}}
-\xrightarrow{\mathcal G_{\mathrm{mid}}}
-X
-\xrightarrow{\Psi}
-\mathbb R
+    \mathcal{G}_2\circ T
+    =
+    \mathcal{G}_1
+\end{equation}
+
+という可換性を持つことにより、
+Solver の表現に依存しない一般解の構造的一意性を扱った。
+
+(F) においては、離散 Solver の評価を
+
+\begin{equation}
+    T_N
+    =
+    \sum_{j=1}^{N}
+    \Psi\!\left(
+        \mathcal{G}\!\left(S_j^{(N)}\right)
+    \right)
+    \Delta\mu_j^{(N)}
+\end{equation}
+
+と記述し、適切な細分化極限のもとで
+
+\begin{equation}
+    T_N
+    \longrightarrow
+    \int_I
+    \Psi\!\left(\mathcal{G}(x)\right)
+    \,d\mu(x)
+\end{equation}
+
+という連続形式への接続を定式化した。
+
+したがって、(G) においてこれらを統合すると、
+
+\begin{equation}
+    \boxed{
+        \text{Solver 構造}
+        \longrightarrow
+        \text{一般解 }\mathcal{G}
+        \longrightarrow
+        \text{離散評価}
+        \longrightarrow
+        \text{連続評価}
+    }
+\end{equation}
+
+という一連の構造が得られる。
+
+
+%------------------------------------------------------------
+\subsection{(G.14) (A)--(F) との関係}
+\label{subsec:G14}
+
+(A) では Solver 集合の数学的構造を定義した。
+
+(B) では、その Solver 集合を評価するための一般評価空間
+$X$ および評価写像を構成した。
+
+(C) では、最終評価関数に必要となる測度論的性質を扱った。
+
+(D) では、
+
+\begin{equation}
+    \mathcal{G}:
+    \mathcal{S}\longrightarrow X
+\end{equation}
+
+という一般解の存在を定式化した。
+
+(E) では、Solver 同型によって対応する Solver に対して
+一般解が可換することを定式化し、一般解の構造的一意性を扱った。
+
+(F) では、Solver の離散的評価を可測分割と正規化測度によって
+記述し、適切な細分化極限のもとで連続評価へ接続した。
+
+以上を踏まえると、(G) における一般解は、
+
+\begin{equation}
+    \boxed{
+        \mathcal{G}:
+        \mathcal{S}\longrightarrow X
+    }
+\end{equation}
+
+という基本構造を保持しながら、
+
+\begin{equation}
+    \boxed{
+        \mathcal{S}
+        \xrightarrow{\mathcal{G}}
+        X
+        \xrightarrow{\Psi}
+        \mathbb{R}
+    }
+\end{equation}
+
+という評価構造を形成し、さらに (F) の細分化極限によって
+連続的評価へ接続される。
+
+
+%------------------------------------------------------------
+\subsection{(G.15) (H) への接続}
+\label{subsec:G15}
+
+(G) において一般解
+
+\begin{equation}
+    \mathcal{G}:
+    \mathcal{S}\longrightarrow X
+\end{equation}
+
+の構造が定まることにより、Solver の内部構造と一般解との
+対応をさらに具体化することが可能となる。
+
+特に、Solver が持つ公理選択、離散的構成および連続的構成を
+一般解の像からどの程度復元できるかという問題を考えることができる。
+
+この問題は、(H) において扱う Solver の構造的情報と
+一般解との対応へ接続される。
+
+したがって、(G) から (H) への構造は、
+
+\begin{equation}
+    \boxed{
+        \text{Solver}
+        \xrightarrow{\mathcal{G}}
+        \text{一般評価構造}
+        \longrightarrow
+        \text{Solver 構造の復元}
+    }
+\end{equation}
+
+として理解される。
+
+%################################################################
+% (H)
+%################################################################
+
+\section{(H) 中間 Solver の厳密な定義と構造}
+\label{sec:H}
+
+%------------------------------------------------------------
+\subsection{(H.1) 基本設定}
+\label{subsec:H1}
+
+(A)--(G) において定義された Solver 集合、一般解写像、
+評価空間および ECA の評価構造を前提とする。
+
+Solver 集合を
+
+\begin{equation}
+    \mathcal S
+    =
+    \left\{
+        s
+        \mid
+        s=(\mathcal A_s,\mathcal R_s)
+    \right\}
+    \label{eq:H-solver}
 \end{equation}
 
 とする。
 
-したがって、(H) は (G) において得られた一般解の構造を
-さらに一般化する段階として位置付けられる。
-
-特に、(F) における離散極限を再び仮定または証明し直すことなく、
+ここで、
 
 \begin{equation}
-\mathcal{G}_{\mathrm{disc}}
-\longleftrightarrow
-\mathcal{G}_{\mathrm{cont}}
+    \mathcal A_s
 \end{equation}
 
-を同一の一般解構造の中で扱うことが可能となる。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{(H.10) (H) における中間 Solver の位置付け}
-
-以上より、中間 Solver は、
+は Solver $s$ において採用される公理の選択集合、
 
 \begin{equation}
-\boxed{
-\text{離散 Solver と連続 Solver の単純な中間集合}
-}
+    \mathcal R_s
 \end{equation}
 
-ではなく、
+は推論規則および構成制約の集合を表す。
+
+また、Solver $s$ によって表現される理論を与える写像を
 
 \begin{equation}
-\boxed{
-\text{離散的および連続的な評価構造を許容する
-一般化された Solver}
-}
+    \mathcal T:
+    \mathcal S
+    \longrightarrow
+    \mathrm{Th}
+    \label{eq:H-theory-map}
 \end{equation}
 
-として定義される。
-
-その一般解は、
-
-\begin{equation}
-\boxed{
-\mathcal{G}_{\mathrm{mid}}
-:
-\mathcal{S}_{\mathrm{mid}}
-\longrightarrow
-X
-}
-\end{equation}
-
-によって評価空間へ写される。
-
-そして、その最終評価は
-
-\begin{equation}
-\boxed{
-g_{\mathrm{mid}}
-=
-\Psi\circ\mathcal{G}_{\mathrm{mid}}
-}
-\end{equation}
-
-によって与えられる。
-
-この構造によって、Solver の評価形式が離散的であるか
-連続的であるかという二分法を超えて、両者を同一の数学的
-枠組みにおいて扱うことが可能となる。
-
-\subsection{ECAのSolver構造に関する理論的考察}
-
-ここまでに示した定理および命題によって、
-Solver集合 $\mathcal{S}$、評価空間 $X$、
-および一般解 $\mathcal{G}$ の間に成立する数学的関係の
-一部は形式的に記述することができる。
-
-一方で、これらの構造がなぜECAにおいて自然に現れるのか、
-すなわち「なぜECAのSolver構造からこのような一般解が
-導かれるのか」という問いについては、
-必ずしも同じ形式の証明として記述することが適切とは限らない。
-
-この問題を考察するためには、ECAの構成に至った動機、
-特に数学的命題がどのような公理体系および評価体系の上に
-成立するのかという問題を考える必要がある。
-
-\subsubsection{「$1+1=2$」という問題から見た評価体系}
-
-「$1+1=2$」という命題は、一見すると自明な算術的事実に
-見える。しかし、数学的に厳密に考えれば、この等式の意味は
-数の構成、加法の定義、およびそれらを支える公理体系から
-切り離して理解することはできない。
-
-したがって、ある命題
-\[
-P
-\]
-を考える場合、その真偽あるいは成立性だけでなく、
-
-\[
-(\mathcal{A},P)
-\]
-
-という形で、命題 $P$ と、それを評価する公理体系
-$\mathcal{A}$ の組を考える必要がある。
-
-ECAにおけるSolverは、このような「命題を評価するための
-体系」の差異を一般化して取り扱う対象として解釈できる。
-
-\subsubsection{連続体仮説から見た公理体系への依存性}
-
-連続体仮説を考える場合には、さらに明確に
-「ある命題の数学的位置づけは、それを評価する公理体系との
-関係から決定される」という問題が現れる。
-
-この観点から見ると、数学的対象を単独で扱うのではなく、
-
-\[
-\text{対象}
-\quad+\quad
-\text{評価体系}
-\]
-
-として扱う必要性が生じる。
-
-ECAにおけるSolver集合 $\mathcal{S}$ は、
-このような評価体系の差異を持つ対象を一つの集合として
-取り扱うための構造として考えることができる。
-
-\subsubsection{Solver集合と一般解}
-
-以上の考察から、ECAにおける一般解
-
-\[
-\mathcal{G}:\mathcal{S}\longrightarrow X
-\]
-
-は、単に個々のSolverに対する解を列挙する写像としてではなく、
-異なる評価体系において得られる解を共通の評価空間 $X$ 上で
-取り扱うための写像として解釈することができる。
+とする。
 
 したがって、
 
-\[
-\mathcal{S}
-\overset{\mathcal{G}}{\longrightarrow}
-X
-\]
+\begin{equation}
+    \mathcal T(s)
+\end{equation}
 
-という構造は、異なる公理的・評価的条件のもとにある
-数学的対象を、共通の数学的構造へ写像するという
-ECAの基本的発想を反映している。
+は公理集合そのものではなく、Solver $s$ の公理選択および
+推論規則・構成制約によって表現される理論を表す。
 
-\subsubsection{本節の位置づけ}
+一方、(G) において定義された一般解写像を
 
-ここで述べた議論は、前節までに示した定理の形式的証明を
-構成するものではない。
+\begin{equation}
+    \boxed{
+        \mathcal G:
+        \mathcal S
+        \longrightarrow
+        X
+    }
+    \label{eq:H-general-solution}
+\end{equation}
 
-むしろ、
+とする。
 
-\[
-\text{公理体系への依存性}
-\longrightarrow
-\text{Solverという評価体系の一般化}
-\longrightarrow
-\text{評価空間 $X$}
-\longrightarrow
-\text{一般解 $\mathcal{G}$}
-\]
 
-というECAの理論的発想を明確化するための論考である。
+%------------------------------------------------------------
+\subsection{(H.2) ECA の公理選択空間}
+\label{subsec:H2}
 
-したがって、本節で述べた内容をもって、
-Solver構造から一般解の存在や一意性を直接証明したものとは
-みなさない。
+ECA における公理選択空間を
 
-形式的な証明については、前節までに確立された定義、
-命題および定理のみに基づいて行うものとする。
+\begin{equation}
+    I
+    \subseteq
+    \mathcal P(S)
+    \label{eq:H-axiom-space}
+\end{equation}
+
+とする。
+
+その元
+
+\begin{equation}
+    i\in I
+\end{equation}
+
+を、ECA において実際に採用され得る公理集合とする。
+
+さらに、ECA において定義された離散的要素集合を
+
+\begin{equation}
+    B(i)
+    \subseteq
+    i
+    \subseteq
+    S
+    \label{eq:H-discrete-subset}
+\end{equation}
+
+とする。
+
+ここで $B(i)$ は、公理選択 $i$ に対応して取り出される
+離散的評価対象を表す。
+
+
+%------------------------------------------------------------
+\subsection{(H.3) Solver--ECA 適合条件}
+\label{subsec:H3}
+
+Solver の公理選択成分と ECA の公理選択空間を接続するため、
+次の条件を定義する。
+
+\begin{definition}[Solver--ECA 適合条件]
+\label{def:H-compatible}
+Solver $s\in\mathcal S$ が ECA の公理選択空間 $I$ に適合するとは、
+
+\begin{equation}
+    \boxed{
+        \mathcal A_s\in I
+    }
+    \label{eq:H-compatible}
+\end{equation}
+
+が成立することをいう。
+\end{definition}
+
+したがって、ECA に適合する Solver 全体を
+
+\begin{equation}
+    \boxed{
+        \mathcal S_I
+        :=
+        \left\{
+            s\in\mathcal S
+            \mid
+            \mathcal A_s\in I
+        \right\}
+    }
+    \label{eq:H-compatible-solvers}
+\end{equation}
+
+と定義する。
+
+
+%------------------------------------------------------------
+\subsection{(H.4) 公理選択復元写像}
+\label{subsec:H4}
+
+\begin{definition}[公理選択復元写像]
+\label{def:H-axiom-map}
+
+ECA に適合する Solver
+
+\begin{equation}
+    s\in\mathcal S_I
+\end{equation}
+
+に対して、
+
+\begin{equation}
+    \mathfrak A:
+    \mathcal S_I
+    \longrightarrow
+    I
+\end{equation}
+
+を
+
+\begin{equation}
+    \boxed{
+        \mathfrak A(s)
+        :=
+        \mathcal A_s
+    }
+    \label{eq:H-axiom-reconstruction}
+\end{equation}
+
+によって定義する。
+
+以下、
+
+\begin{equation}
+    \boxed{
+        i_s
+        :=
+        \mathfrak A(s)
+        =
+        \mathcal A_s
+    }
+    \label{eq:H-is}
+\end{equation}
+
+と記す。
+\end{definition}
+
+この定義により、公理選択 $i_s$ は外部から恣意的に
+与えられるものではなく、Solver
+
+\begin{equation}
+    s=(\mathcal A_s,\mathcal R_s)
+\end{equation}
+
+の内部構造に含まれる公理選択成分から直接得られる。
+
+
+%------------------------------------------------------------
+\subsection{(H.5) 公理選択復元写像の well-defined 性}
+\label{subsec:H5}
+
+\begin{proposition}[公理選択復元写像の well-defined 性]
+\label{prop:H-axiom-well-defined}
+
+写像
+
+\begin{equation}
+    \mathfrak A:
+    \mathcal S_I
+    \longrightarrow
+    I
+\end{equation}
+
+は well-defined である。
+\end{proposition}
+
+\begin{proof}
+
+任意の
+
+\begin{equation}
+    s\in\mathcal S_I
+\end{equation}
+
+を取る。
+
+$\mathcal S_I$ の定義より、
+
+\begin{equation}
+    \mathcal A_s\in I
+\end{equation}
+
+が成立する。
+
+したがって、
+
+\begin{equation}
+    \mathfrak A(s)
+    :=
+    \mathcal A_s
+\end{equation}
+
+は $I$ の元を与える。
+
+また、Solver は
+
+\begin{equation}
+    s=(\mathcal A_s,\mathcal R_s)
+\end{equation}
+
+として定義されているため、同一の Solver $s$ に対する
+$\mathcal A_s$ はその定義によって一意に定まる。
+
+よって、
+
+\begin{equation}
+    \mathfrak A(s)=\mathcal A_s
+\end{equation}
+
+は各 $s\in\mathcal S_I$ に対して一意に定まり、
+
+\begin{equation}
+    \mathfrak A:
+    \mathcal S_I\to I
+\end{equation}
+
+は well-defined である。
+
+\end{proof}
+
+
+%------------------------------------------------------------
+\subsection{(H.6) $\mathcal T(s)$ と公理選択の関係}
+\label{subsec:H6}
+
+Solver
+
+\begin{equation}
+    s=(\mathcal A_s,\mathcal R_s)
+\end{equation}
+
+に対して、
+
+\begin{equation}
+    \mathcal T(s)
+    =
+    \mathcal T(\mathcal A_s,\mathcal R_s)
+    \label{eq:H-theory-decomposition}
+\end{equation}
+
+と表記する。
+
+ここで重要なのは、
+
+\begin{equation}
+    \mathcal T(s)
+\end{equation}
+
+から公理集合を単純な集合論的逆像として復元する必要はない
+ということである。
+
+Solver の定義そのものが
+
+\begin{equation}
+    s=(\mathcal A_s,\mathcal R_s)
+\end{equation}
+
+を与えているため、公理選択成分は
+
+\begin{equation}
+    \mathcal A_s
+\end{equation}
+
+として直接抽出できる。
+
+したがって、ECA に適合する Solver に対して、
+
+\begin{equation}
+    \boxed{
+        i_s
+        =
+        \mathfrak A(s)
+        =
+        \mathcal A_s
+    }
+    \label{eq:H-theory-axiom}
+\end{equation}
+
+である。
+
+従って、
+
+\begin{equation}
+    \boxed{
+        \mathcal T(s)
+        =
+        \mathcal T(i_s,\mathcal R_s)
+    }
+    \label{eq:H-theory-is}
+\end{equation}
+
+と表現できる。
+
+ここで $\mathcal T(s)$ は理論を表し、
+$i_s$ はその Solver における公理選択を表す。
+
+両者を同一視しないことが重要である。
+
+
+%------------------------------------------------------------
+\subsection{(H.7) Solver 同値性と公理選択}
+\label{subsec:H7}
+
+Solver 集合上の同値関係を
+
+\begin{equation}
+    s\sim_{\mathrm{Sol}}t
+\end{equation}
+
+とする。
+
+Solver として同値であっても、その内部表現が異なることは
+許容される。
+
+したがって、
+
+\begin{equation}
+    s\sim_{\mathrm{Sol}}t
+\end{equation}
+
+から直ちに
+
+\begin{equation}
+    \mathcal A_s
+    =
+    \mathcal A_t
+\end{equation}
+
+を要求する必要はない。
+
+そこで、公理選択空間 $I$ 上に同値関係
+
+\begin{equation}
+    \sim_I
+\end{equation}
+
+を導入し、Solver 同値性と公理選択との間に
+
+\begin{equation}
+    \boxed{
+        s\sim_{\mathrm{Sol}}t
+        \Longrightarrow
+        \mathfrak A(s)\sim_I\mathfrak A(t)
+    }
+    \label{eq:H-solver-axiom-equivalence}
+\end{equation}
+
+という整合条件を置く。
+
+これは、Solver の内部表現が異なっていても、
+ECA における公理選択の評価構造が保存されることを意味する。
+
+
+%------------------------------------------------------------
+\subsection{(H.8) Solver の離散評価構造}
+\label{subsec:H8}
+
+任意の
+
+\begin{equation}
+    i\in I
+\end{equation}
+
+に対して、
+
+\begin{equation}
+    B(i)\subseteq i\subseteq S
+\end{equation}
+
+が成立する。
+
+したがって、Solver $s\in\mathcal S_I$ に対応する公理選択
+
+\begin{equation}
+    i_s=\mathfrak A(s)
+\end{equation}
+
+について、
+
+\begin{equation}
+    B(i_s)
+    \subseteq
+    i_s
+    \subseteq
+    S
+\end{equation}
+
+が成立する。
+
+\begin{definition}[Solver の離散評価構造]
+\label{def:H-discrete-structure}
+
+Solver $s\in\mathcal S_I$ に対して、その離散評価構造を
+
+\begin{equation}
+    \boxed{
+        D_s
+        :=
+        B(i_s)
+        =
+        B(\mathfrak A(s))
+    }
+    \label{eq:H-Ds}
+\end{equation}
+
+と定義する。
+\end{definition}
+
+したがって、
+
+\begin{equation}
+    \boxed{
+        D_s\subseteq i_s\subseteq S
+    }
+    \label{eq:H-Ds-inclusion}
+\end{equation}
+
+が直ちに成立する。
+
+$D_s$ が有限または可算であり、
+離散評価に用いる重み関数
+
+\begin{equation}
+    w_s:
+    S\longrightarrow[0,1]
+\end{equation}
+
+が
+
+\begin{equation}
+    \sum_{u\in S}w_s(u)=1
+    \label{eq:H-weight-normalization}
+\end{equation}
+
+を満たす場合には、Solver $s$ の離散評価を
+
+\begin{equation}
+    \boxed{
+        E_{\mathrm d}(s)
+        :=
+        \sum_{b\in D_s}w_s(b)
+    }
+    \label{eq:H-discrete-evaluation}
+\end{equation}
+
+と定義する。
+
+
+%------------------------------------------------------------
+\subsection{(H.9) 離散評価の基本性質}
+\label{subsec:H9}
+
+\begin{proposition}[離散評価の有界性]
+\label{prop:H-discrete-bound}
+
+$D_s$ が有限または可算であり、
+
+\begin{equation}
+    w_s:S\to[0,1],
+    \qquad
+    \sum_{u\in S}w_s(u)=1
+\end{equation}
+
+を満たすならば、
+
+\begin{equation}
+    \boxed{
+        0
+        \leq
+        E_{\mathrm d}(s)
+        \leq
+        1
+    }
+    \label{eq:H-discrete-bound}
+\end{equation}
+
+である。
+\end{proposition}
+
+\begin{proof}
+
+各 $b\in D_s$ に対して
+
+\begin{equation}
+    w_s(b)\geq0
+\end{equation}
+
+であるから、
+
+\begin{equation}
+    E_{\mathrm d}(s)
+    =
+    \sum_{b\in D_s}w_s(b)
+    \geq0.
+\end{equation}
+
+また、
+
+\begin{equation}
+    D_s\subseteq S
+\end{equation}
+
+であるため、
+
+\begin{equation}
+    \sum_{b\in D_s}w_s(b)
+    \leq
+    \sum_{u\in S}w_s(u)
+    =
+    1.
+\end{equation}
+
+したがって、
+
+\begin{equation}
+    0\leq E_{\mathrm d}(s)\leq1.
+\end{equation}
+
+\end{proof}
+
+
+%------------------------------------------------------------
+\subsection{(H.10) Solver の連続評価構造：測度そのもの}
+\label{subsec:H10}
+
+Solver $s$ に対応する公理選択 $i_s$ 上で連続的評価を行うため、
+測度
+
+\begin{equation}
+    \mu_s
+\end{equation}
+
+を考える。
+
+\begin{definition}[連続評価測度]
+\label{def:H-continuous-measure}
+
+Solver $s$ に対して、連続評価に用いられる測度そのものを
+
+\begin{equation}
+    \boxed{
+        C_s^{(\mu)}
+        :=
+        \mu_s
+    }
+    \label{eq:H-Cs-measure}
+\end{equation}
+
+と定義する。
+
+対応する連続評価値を
+
+\begin{equation}
+    \boxed{
+        E_{\mathrm c}(s)
+        :=
+        \mu_s(i_s)
+        =
+        \int_S
+        \mathbf 1_{i_s}(u)
+        \,d\mu_s(u)
+    }
+    \label{eq:H-continuous-evaluation}
+\end{equation}
+
+とする。
+
+ここで
+
+\begin{equation}
+    \mathbf1_{i_s}:S\to\{0,1\}
+\end{equation}
+
+は $i_s$ の指示関数である。
+\end{definition}
+
+
+%------------------------------------------------------------
+\subsection{(H.11) Solver の連続評価構造：測度空間}
+\label{subsec:H11}
+
+測度そのものだけでは、可測性や測度の定義域を必要とする
+場合に十分でない。
+
+したがって、可測空間および測度を含めて連続評価構造を扱う場合には、
+次の定義を用いる。
+
+\begin{definition}[連続評価測度空間]
+\label{def:H-continuous-measure-space}
+
+Solver $s$ に対して、連続評価を成立させる測度空間を
+
+\begin{equation}
+    \boxed{
+        C_s^{(\mathrm{ms})}
+        :=
+        (I_s,\Sigma_{I_s},\mu_s)
+    }
+    \label{eq:H-Cs-measure-space}
+\end{equation}
+
+と定義する。
+
+ここで、
+
+\begin{equation}
+    I_s
+\end{equation}
+
+は連続評価に用いられる公理選択空間、
+
+\begin{equation}
+    \Sigma_{I_s}
+\end{equation}
+
+は $I_s$ 上の $\sigma$-代数、
+
+\begin{equation}
+    \mu_s:
+    \Sigma_{I_s}
+    \longrightarrow
+    [0,1]
+\end{equation}
+
+は測度である。
+\end{definition}
+
+したがって、
+
+\begin{equation}
+    C_s^{(\mu)}
+\end{equation}
+
+と
+
+\begin{equation}
+    C_s^{(\mathrm{ms})}
+\end{equation}
+
+は異なるレベルの構造を表す。
+
+すなわち、
+
+\begin{equation}
+    C_s^{(\mu)}
+\end{equation}
+
+は評価作用そのものを表し、
+
+\begin{equation}
+    C_s^{(\mathrm{ms})}
+\end{equation}
+
+はその評価作用を成立させる測度論的構造全体を表す。
+
+
+%------------------------------------------------------------
+\subsection{(H.12) 測度と測度空間の関係}
+\label{subsec:H12}
+
+測度空間
+
+\begin{equation}
+    C_s^{(\mathrm{ms})}
+    =
+    (I_s,\Sigma_{I_s},\mu_s)
+\end{equation}
+
+から測度成分を取り出す写像
+
+\begin{equation}
+    \pi_\mu:
+    C_s^{(\mathrm{ms})}
+    \longrightarrow
+    C_s^{(\mu)}
+\end{equation}
+
+を
+
+\begin{equation}
+    \boxed{
+        \pi_\mu
+        (I_s,\Sigma_{I_s},\mu_s)
+        =
+        \mu_s
+    }
+    \label{eq:H-measure-projection}
+\end{equation}
+
+によって定義する。
+
+したがって、
+
+\begin{equation}
+    C_s^{(\mathrm{ms})}
+    \longrightarrow
+    C_s^{(\mu)}
+\end{equation}
+
+という自然な忘却写像が存在する。
+
+一方、一般には
+
+\begin{equation}
+    \mu_s
+\end{equation}
+
+のみから
+
+\begin{equation}
+    (I_s,\Sigma_{I_s})
+\end{equation}
+
+を一意に復元することはできない。
+
+したがって、
+
+\begin{equation}
+    \boxed{
+        C_s^{(\mu)}
+        \text{ は }
+        C_s^{(\mathrm{ms})}
+        \text{ の情報を完全には保持しない}
+    }
+    \label{eq:H-measure-information-loss}
+\end{equation}
+
+。
+
+
+%------------------------------------------------------------
+\subsection{(H.13) 離散評価と連続評価の統一}
+\label{subsec:H13}
+
+Solver $s\in\mathcal S_I$ に対して、
+
+\begin{equation}
+    i_s=\mathfrak A(s)
+\end{equation}
+
+と置く。
+
+このとき、離散評価は
+
+\begin{equation}
+    E_{\mathrm d}(s)
+    =
+    \sum_{b\in B(i_s)}w_s(b)
+\end{equation}
+
+であり、連続評価は
+
+\begin{equation}
+    E_{\mathrm c}(s)
+    =
+    \int_S
+    \mathbf1_{i_s}(u)\,d\mu_s(u)
+\end{equation}
+
+である。
+
+したがって、
+
+\begin{equation}
+    \boxed{
+    \begin{aligned}
+        i_s
+        &=
+        \mathfrak A(s),
+        \\[1mm]
+        D_s
+        &=
+        B(i_s),
+        \\[1mm]
+        E_{\mathrm d}(s)
+        &=
+        \sum_{b\in D_s}w_s(b),
+        \\[1mm]
+        C_s^{(\mu)}
+        &=
+        \mu_s,
+        \\[1mm]
+        E_{\mathrm c}(s)
+        &=
+        \int_S
+        \mathbf1_{i_s}(u)\,d\mu_s(u).
+    \end{aligned}
+    }
+    \label{eq:H-unified-evaluation}
+\end{equation}
+
+という統一的な構成が得られる。
+
+ここで重要なのは、離散評価と連続評価が新しい二つの評価原理として
+別々に導入されるわけではないことである。
+
+同一の公理選択
+
+\begin{equation}
+    i_s
+\end{equation}
+
+に対して、ECA に既に定義された離散表現および連続表現を
+適用することによって、両者が得られる。
+
+
+%------------------------------------------------------------
+\subsection{(H.14) 一般解における二重評価構造}
+\label{subsec:H14}
+
+(G) において定義された一般解
+
+\begin{equation}
+    \mathcal G:
+    \mathcal S
+    \longrightarrow
+    X
+\end{equation}
+
+を考える。
+
+Solver $s\in\mathcal S_I$ に対して、離散評価および連続評価を
+一般解へ入力する構成写像
+
+\begin{equation}
+    \Phi_s:
+    [0,1]\times[0,1]
+    \longrightarrow
+    X
+\end{equation}
+
+が存在し、
+
+\begin{equation}
+    \boxed{
+        \mathcal G(s)
+        =
+        \Phi_s
+        \left(
+            E_{\mathrm d}(s),
+            E_{\mathrm c}(s)
+        \right)
+    }
+    \label{eq:H-general-solution-two-evaluations}
+\end{equation}
+
+と表現できる場合を考える。
+
+このとき、一般解における離散評価および連続評価への依存性を
+次のように定義する。
+
+
+%------------------------------------------------------------
+\subsubsection{(H.14.1) 離散評価への非自明な依存性}
+\label{subsubsec:H14-1}
+
+$\Phi_s$ が第1変数に非自明に依存するとは、
+
+\begin{equation}
+    \exists x_1,x_2,y\in[0,1]
+\end{equation}
+
+について
+
+\begin{equation}
+    x_1\neq x_2
+\end{equation}
+
+かつ
+
+\begin{equation}
+    \boxed{
+        \Phi_s(x_1,y)
+        \neq
+        \Phi_s(x_2,y)
+    }
+    \label{eq:H-nontrivial-discrete}
+\end{equation}
+
+が成立することをいう。
+
+
+%------------------------------------------------------------
+\subsubsection{(H.14.2) 連続評価への非自明な依存性}
+\label{subsubsec:H14-2}
+
+$\Phi_s$ が第2変数に非自明に依存するとは、
+
+\begin{equation}
+    \exists x,y_1,y_2\in[0,1]
+\end{equation}
+
+について
+
+\begin{equation}
+    y_1\neq y_2
+\end{equation}
+
+かつ
+
+\begin{equation}
+    \boxed{
+        \Phi_s(x,y_1)
+        \neq
+        \Phi_s(x,y_2)
+    }
+    \label{eq:H-nontrivial-continuous}
+\end{equation}
+
+が成立することをいう。
+
+
+%------------------------------------------------------------
+\subsection{(H.15) 中間 Solver の厳密な定義}
+\label{subsec:H15}
+
+\begin{definition}[中間 Solver]
+\label{def:H-middle-solver}
+
+Solver
+
+\begin{equation}
+    s\in\mathcal S_I
+\end{equation}
+
+が中間 Solver であるとは、以下の条件を満たすことをいう。
+
+\begin{enumerate}[label=\textup{(\arabic*)}]
+
+    \item
+    ECA に適合する公理選択
+
+    \begin{equation}
+        i_s
+        =
+        \mathfrak A(s)
+        =
+        \mathcal A_s
+        \in I
+    \end{equation}
+
+    が存在する。
+
+    \item
+    離散評価構造
+
+    \begin{equation}
+        D_s=B(i_s)
+    \end{equation}
+
+    が存在し、離散評価
+
+    \begin{equation}
+        E_{\mathrm d}(s)
+        =
+        \sum_{b\in D_s}w_s(b)
+    \end{equation}
+
+    が定義される。
+
+    \item
+    連続評価構造として、少なくとも
+
+    \begin{equation}
+        C_s^{(\mu)}
+        =
+        \mu_s
+    \end{equation}
+
+    が存在する。
+
+    必要に応じて、より完全な構造として
+
+    \begin{equation}
+        C_s^{(\mathrm{ms})}
+        =
+        (I_s,\Sigma_{I_s},\mu_s)
+    \end{equation}
+
+    を用いる。
+
+    \item
+    一般解が
+
+    \begin{equation}
+        \mathcal G(s)
+        =
+        \Phi_s
+        \left(
+            E_{\mathrm d}(s),
+            E_{\mathrm c}(s)
+        \right)
+    \end{equation}
+
+    と表現され、$\Phi_s$ が第1変数および第2変数の双方に
+    非自明に依存する。
+
+\end{enumerate}
+\end{definition}
+
+この定義において重要なのは、中間 Solver を
+
+\begin{equation}
+    \text{離散構造}\cup\text{連続構造}
+\end{equation}
+
+として定義していないことである。
+
+必要なのは、**同一の Solver に対して両方の評価構造が存在し、
+しかもその双方が一般解の決定に実質的に寄与すること**である。
+
+
+%------------------------------------------------------------
+\subsection{(H.16) 中間 Solver 構造定理}
+\label{subsec:H16}
+
+\begin{theorem}[中間 Solver 構造定理]
+\label{thm:H-middle-solver}
+
+$s\in\mathcal S_I$ とする。
+
+さらに、
+
+\begin{equation}
+    \mathcal G(s)
+    =
+    \Phi_s
+    \left(
+        E_{\mathrm d}(s),
+        E_{\mathrm c}(s)
+    \right)
+\end{equation}
+
+と表現できると仮定する。
+
+このとき、$s$ が中間 Solver であることと、
+
+\begin{equation}
+    \exists x_1\neq x_2,\ y
+\end{equation}
+
+について
+
+\begin{equation}
+    \Phi_s(x_1,y)
+    \neq
+    \Phi_s(x_2,y)
+    \label{eq:H-theorem-discrete}
+\end{equation}
+
+が成立し、かつ
+
+\begin{equation}
+    \exists x,\ y_1\neq y_2
+\end{equation}
+
+について
+
+\begin{equation}
+    \Phi_s(x,y_1)
+    \neq
+    \Phi_s(x,y_2)
+    \label{eq:H-theorem-continuous}
+\end{equation}
+
+が成立することは同値である。
+\end{theorem}
+
+\begin{proof}
+
+定義より、中間 Solver では一般解が離散評価と連続評価の
+双方に非自明に依存する。
+
+まず、離散評価について考える。
+
+もし任意の
+
+\begin{equation}
+    x_1,x_2,y\in[0,1]
+\end{equation}
+
+について
+
+\begin{equation}
+    \Phi_s(x_1,y)
+    =
+    \Phi_s(x_2,y)
+\end{equation}
+
+が成立するならば、$\Phi_s$ は第1変数に依存しない。
+
+したがって、ある写像
+
+\begin{equation}
+    \Psi_s:
+    [0,1]
+    \longrightarrow
+    X
+\end{equation}
+
+が存在して、
+
+\begin{equation}
+    \Phi_s(x,y)
+    =
+    \Psi_s(y)
+\end{equation}
+
+となる。
+
+この場合、
+
+\begin{equation}
+    \mathcal G(s)
+    =
+    \Psi_s(E_{\mathrm c}(s))
+\end{equation}
+
+であり、一般解は離散評価に依存しない。
+
+したがって、$s$ は中間 Solver ではない。
+
+対偶より、中間 Solver ならば
+
+\begin{equation}
+    \exists x_1\neq x_2,\ y:
+    \qquad
+    \Phi_s(x_1,y)
+    \neq
+    \Phi_s(x_2,y)
+\end{equation}
+
+が成立する。
+
+連続評価についても同様に考える。
+
+もし任意の
+
+\begin{equation}
+    x,y_1,y_2\in[0,1]
+\end{equation}
+
+について
+
+\begin{equation}
+    \Phi_s(x,y_1)
+    =
+    \Phi_s(x,y_2)
+\end{equation}
+
+が成立するならば、$\Phi_s$ は第2変数に依存しない。
+
+したがって、ある写像
+
+\begin{equation}
+    \Psi'_s:
+    [0,1]
+    \longrightarrow
+    X
+\end{equation}
+
+が存在して、
+
+\begin{equation}
+    \Phi_s(x,y)
+    =
+    \Psi'_s(x)
+\end{equation}
+
+となる。
+
+この場合、
+
+\begin{equation}
+    \mathcal G(s)
+    =
+    \Psi'_s(E_{\mathrm d}(s))
+\end{equation}
+
+であり、一般解は連続評価に依存しない。
+
+したがって、$s$ は中間 Solver ではない。
+
+よって、中間 Solver であるためには、両方の非自明な依存性が
+必要である。
+
+逆に、\eqref{eq:H-theorem-discrete} と
+\eqref{eq:H-theorem-continuous} がともに成立すれば、
+定義 \ref{def:H-middle-solver} の第4条件が成立する。
+
+したがって、
+
+\begin{equation}
+    \boxed{
+        s\text{ が中間 Solver}
+        \iff
+        \mathcal G(s)
+        \text{ が離散評価・連続評価の双方に
+        非自明に依存する}
+    }
+\end{equation}
+
+が成立する。
+
+\end{proof}
+
+
+%------------------------------------------------------------
+\subsection{(H.17) $\mathcal T(s)$ と二つの評価経路}
+\label{subsec:H17}
+
+Solver $s$ に対して、
+
+\begin{equation}
+    s=(\mathcal A_s,\mathcal R_s)
+\end{equation}
+
+および
+
+\begin{equation}
+    \mathcal T(s)
+    =
+    \mathcal T(\mathcal A_s,\mathcal R_s)
+\end{equation}
+
+である。
+
+さらに、
+
+\begin{equation}
+    i_s=\mathcal A_s
+\end{equation}
+
+であるから、
+
+\begin{equation}
+    \boxed{
+        \mathcal T(s)
+        =
+        \mathcal T(i_s,\mathcal R_s)
+    }
+    \label{eq:H-theory-path}
+\end{equation}
+
+と表現できる。
+
+この公理選択 $i_s$ に対して、
+
+\begin{equation}
+    D_s=B(i_s)
+\end{equation}
+
+が得られる。
+
+したがって、離散評価について
+
+\begin{equation}
+    \boxed{
+        i_s
+        \longrightarrow
+        B(i_s)
+        \longrightarrow
+        E_{\mathrm d}(s)
+    }
+    \label{eq:H-discrete-path}
+\end{equation}
+
+という経路が得られる。
+
+一方、連続評価については
+
+\begin{equation}
+    \boxed{
+        i_s
+        \longrightarrow
+        \mu_s
+        \longrightarrow
+        E_{\mathrm c}(s)
+    }
+    \label{eq:H-continuous-path}
+\end{equation}
+
+という経路が得られる。
+
+したがって、中間 Solver では同一の公理選択 $i_s$ を起点として、
+
+\begin{equation}
+    \boxed{
+    \begin{aligned}
+        i_s
+        &\longrightarrow
+        D_s
+        \longrightarrow
+        E_{\mathrm d}(s),
+        \\[2mm]
+        i_s
+        &\longrightarrow
+        C_s^{(\mu)}
+        \longrightarrow
+        E_{\mathrm c}(s)
+    \end{aligned}
+    }
+    \label{eq:H-two-evaluation-paths}
+\end{equation}
+
+という二つの評価経路が形成される。
+
+
+%------------------------------------------------------------
+\subsection{(H.18) ECA の離散式と連続式の対応}
+\label{subsec:H18}
+
+ECA における離散形式
+
+\begin{equation}
+    \mu(i)
+    =
+    \sum_{b\in B(i)}w(b)
+    \label{eq:H-ECA-discrete}
+\end{equation}
+
+に
+
+\begin{equation}
+    i=i_s
+\end{equation}
+
+を代入すると、
+
+\begin{equation}
+    \boxed{
+        \mu_s^{\mathrm d}(i_s)
+        =
+        \sum_{b\in B(i_s)}w_s(b)
+    }
+    \label{eq:H-discrete-form}
+\end{equation}
+
+を得る。
+
+一方、ECA における連続形式
+
+\begin{equation}
+    \mu(i)
+    =
+    \int_S
+    \mathbf1_i(u)\,d\mu(u)
+    \label{eq:H-ECA-continuous}
+\end{equation}
+
+に
+
+\begin{equation}
+    i=i_s,
+    \qquad
+    \mu=\mu_s
+\end{equation}
+
+を代入すると、
+
+\begin{equation}
+    \boxed{
+        \mu_s^{\mathrm c}(i_s)
+        =
+        \int_S
+        \mathbf1_{i_s}(u)\,d\mu_s(u)
+    }
+    \label{eq:H-continuous-form}
+\end{equation}
+
+を得る。
+
+したがって、
+
+\begin{equation}
+    \boxed{
+        E_{\mathrm d}(s)
+        =
+        \mu_s^{\mathrm d}(i_s)
+    }
+\end{equation}
+
+および
+
+\begin{equation}
+    \boxed{
+        E_{\mathrm c}(s)
+        =
+        \mu_s^{\mathrm c}(i_s)
+    }
+\end{equation}
+
+である。
+
+この二つの式は、新しい評価原理を導入するものではなく、
+同一の公理選択 $i_s$ に対して ECA に既に定義された
+離散表現と連続表現を適用したものである。
+
+
+%------------------------------------------------------------
+\subsection{(H.19) 中間 Solver の数学的意味}
+\label{subsec:H19}
+
+以上から、中間 Solver は単に
+
+\begin{equation}
+    \text{離散集合}\cup\text{連続集合}
+\end{equation}
+
+として定義されるものではない。
+
+中間 Solver $s$ においては、
+
+\begin{equation}
+    i_s=\mathcal A_s
+\end{equation}
+
+を起点として、
+
+\begin{equation}
+    D_s=B(i_s)
+\end{equation}
+
+という離散評価構造と、
+
+\begin{equation}
+    C_s^{(\mu)}=\mu_s
+\end{equation}
+
+または
+
+\begin{equation}
+    C_s^{(\mathrm{ms})}
+    =
+    (I_s,\Sigma_{I_s},\mu_s)
+\end{equation}
+
+という連続評価構造が構成される。
+
+そして、
+
+\begin{equation}
+    E_{\mathrm d}(s)
+    =
+    \sum_{b\in D_s}w_s(b)
+\end{equation}
+
+および
+
+\begin{equation}
+    E_{\mathrm c}(s)
+    =
+    \int_S
+    \mathbf1_{i_s}(u)\,d\mu_s(u)
+\end{equation}
+
+を介して、
+
+\begin{equation}
+    \mathcal G(s)
+    =
+    \Phi_s
+    \left(
+        E_{\mathrm d}(s),
+        E_{\mathrm c}(s)
+    \right)
+\end{equation}
+
+が得られる。
+
+従って、中間 Solver の本質は、
+
+\begin{equation}
+    \boxed{
+    \begin{minipage}{0.85\linewidth}
+    同一の Solver に対して離散的評価構造と連続的評価構造が存在し、
+    その双方が一般解の決定に非自明に寄与すること。
+    \end{minipage}
+    }
+    \label{eq:H-middle-meaning}
+\end{equation}
+
+にある。
+
+
+%------------------------------------------------------------
+\subsection{(H.20) (G) との接続}
+\label{subsec:H20}
+
+(G) において一般解は
+
+\begin{equation}
+    \mathcal G:
+    \mathcal S
+    \longrightarrow
+    X
+\end{equation}
+
+として定義された。
+
+(H) では、この一般解の入力となる Solver の構造を
+
+\begin{equation}
+    s
+    \longrightarrow
+    i_s
+    \longrightarrow
+    (D_s,C_s)
+\end{equation}
+
+という形で具体化した。
+
+したがって、中間 Solver においては、
+
+\begin{equation}
+    \boxed{
+        s
+        \longrightarrow
+        i_s
+        \longrightarrow
+        \left(
+            E_{\mathrm d}(s),
+            E_{\mathrm c}(s)
+        \right)
+        \longrightarrow
+        \mathcal G(s)
+    }
+    \label{eq:H-G-connection}
+\end{equation}
+
+という構造が得られる。
+
+ここで、$\mathcal G$ 自体は (G) で定義された一般解写像であり、
+(H) において新たに定義されるものではない。
+
+
+%------------------------------------------------------------
+\subsection{(H.21) 本節で証明された範囲}
+\label{subsec:H21}
+
+本節では、以下を定義または証明した。
+
+\begin{enumerate}[label=\textup{(\arabic*)}]
+
+    \item
+    Solver $s$ の公理選択成分
+
+    \begin{equation}
+        \mathcal A_s
+    \end{equation}
+
+    と ECA の公理選択空間 $I$ を接続するため、
+
+    \begin{equation}
+        \mathcal S_I
+        =
+        \left\{
+            s\in\mathcal S
+            \mid
+            \mathcal A_s\in I
+        \right\}
+    \end{equation}
+
+    を定義した。
+
+    \item
+    ECA に適合する Solver について、
+
+    \begin{equation}
+        \mathfrak A(s)
+        =
+        \mathcal A_s
+    \end{equation}
+
+    により公理選択復元写像を構成し、その well-defined 性を
+    証明した。
+
+    \item
+    したがって、
+
+    \begin{equation}
+        i_s
+        =
+        \mathfrak A(s)
+        =
+        \mathcal A_s
+    \end{equation}
+
+    が一意に定まる。
+
+    \item
+    ECA の既存構造から、
+
+    \begin{equation}
+        D_s
+        =
+        B(i_s)
+    \end{equation}
+
+    を離散評価構造として定義した。
+
+    \item
+    離散評価を
+
+    \begin{equation}
+        E_{\mathrm d}(s)
+        =
+        \sum_{b\in D_s}w_s(b)
+    \end{equation}
+
+    と定義し、その有界性を証明した。
+
+    \item
+    連続評価について、
+
+    \begin{equation}
+        C_s^{(\mu)}
+        =
+        \mu_s
+    \end{equation}
+
+    と
+
+    \begin{equation}
+        C_s^{(\mathrm{ms})}
+        =
+        (I_s,\Sigma_{I_s},\mu_s)
+    \end{equation}
+
+    を区別して定義した。
+
+    \item
+    離散評価と連続評価を同一の公理選択 $i_s$ に対して
+    構成することを示した。
+
+    \item
+    一般解が両評価へ非自明に依存することを
+    中間 Solver の定義とし、
+
+    \begin{equation}
+        s\text{ が中間 Solver}
+        \iff
+        \mathcal G(s)
+        \text{ が離散評価・連続評価の双方に
+        非自明に依存する}
+    \end{equation}
+
+    を証明した。
+
+\end{enumerate}
+
+
+%------------------------------------------------------------
+\subsection{(H.22) 証明上の前提と ECA 固有の論点}
+\label{subsec:H22}
+
+本節の証明によって得られる結果と、
+ECA に固有の前提として置かれている事項は区別する必要がある。
+
+特に、
+
+\begin{equation}
+    \mathcal A_s\in I
+\end{equation}
+
+という Solver--ECA 適合条件は、Solver の一般定義
+
+\begin{equation}
+    s=(\mathcal A_s,\mathcal R_s)
+\end{equation}
+
+のみから自動的に従うものではない。
+
+したがって、
+
+\begin{equation}
+    \boxed{
+        \mathcal S_I
+        =
+        \left\{
+            s\in\mathcal S
+            \mid
+            \mathcal A_s\in I
+        \right\}
+    }
+\end{equation}
+
+を ECA に適合する Solver の部分集合として明示的に扱う。
+
+この区別により、ECA の公理選択空間に属さない Solver や、
+必要な理論写像が定義できない Solver を、
+中間 Solver の構造へ無理に含めることを避けられる。
+
+
+%------------------------------------------------------------
+\subsection{(H.23) (A)--(G) との統合}
+\label{subsec:H23}
+
+(A) において Solver 集合の数学的構造を定義し、
+
+\begin{equation}
+    s=(\mathcal A_s,\mathcal R_s)
+\end{equation}
+
+という基本表現を与えた。
+
+(B)--(D) において評価空間および一般解
+
+\begin{equation}
+    \mathcal G:
+    \mathcal S\to X
+\end{equation}
+
+を構成した。
+
+(E) において Solver 同型に対する一般解の構造的一意性を扱った。
+
+(F) において離散 Solver の評価を測度的に細分化し、
+適切な極限条件のもとで連続評価へ接続した。
+
+(G) において、一般解を
+
+\begin{equation}
+    \mathcal S
+    \xrightarrow{\mathcal G}
+    X
+    \xrightarrow{\Psi}
+    \mathbb R
+\end{equation}
+
+という評価構造として整理した。
+
+そして (H) では、その一般解に入力される Solver の内部構造を
+
+\begin{equation}
+    \boxed{
+        s
+        \longrightarrow
+        i_s
+        \longrightarrow
+        (D_s,C_s)
+        \longrightarrow
+        (E_{\mathrm d}(s),E_{\mathrm c}(s))
+        \longrightarrow
+        \mathcal G(s)
+    }
+    \label{eq:H-complete-chain}
+\end{equation}
+
+として具体化した。
+
+特に中間 Solver では、
+
+\begin{equation}
+    \boxed{
+        \mathcal G(s)
+        =
+        \Phi_s
+        \left(
+            E_{\mathrm d}(s),
+            E_{\mathrm c}(s)
+        \right)
+    }
+\end{equation}
+
+において双方の評価が非自明に寄与する。
+
+
+%------------------------------------------------------------
+\subsection{(H.24) 本節の結論}
+\label{subsec:H24}
+
+以上により、(H) における中間 Solver の構造は、
+
+\begin{equation}
+    \boxed{
+        s=(\mathcal A_s,\mathcal R_s)
+    }
+\end{equation}
+
+から始まり、
+
+\begin{equation}
+    \boxed{
+        i_s
+        =
+        \mathfrak A(s)
+        =
+        \mathcal A_s
+    }
+\end{equation}
+
+を得て、
+
+\begin{equation}
+    \boxed{
+        D_s=B(i_s)
+    }
+\end{equation}
+
+および
+
+\begin{equation}
+    \boxed{
+        C_s^{(\mu)}=\mu_s
+        \qquad
+        \text{または}
+        \qquad
+        C_s^{(\mathrm{ms})}
+        =
+        (I_s,\Sigma_{I_s},\mu_s)
+    }
+\end{equation}
+
+を構成する。
+
+さらに、
+
+\begin{equation}
+    \boxed{
+        E_{\mathrm d}(s)
+        =
+        \sum_{b\in D_s}w_s(b)
+    }
+\end{equation}
+
+および
+
+\begin{equation}
+    \boxed{
+        E_{\mathrm c}(s)
+        =
+        \int_S
+        \mathbf1_{i_s}(u)\,d\mu_s(u)
+    }
+\end{equation}
+
+を得て、
+
+\begin{equation}
+    \boxed{
+        \mathcal G(s)
+        =
+        \Phi_s
+        \left(
+            E_{\mathrm d}(s),
+            E_{\mathrm c}(s)
+        \right)
+    }
+\end{equation}
+
+として一般解へ接続する。
+
+したがって、
+
+\begin{equation}
+    \boxed{
+        \text{Solver}
+        \longrightarrow
+        \text{公理選択}
+        \longrightarrow
+        \text{離散・連続評価構造}
+        \longrightarrow
+        \text{一般解}
+    }
+\end{equation}
+
+という構造が得られる。
+
+このとき中間 Solver とは、
+
+\begin{equation}
+    \boxed{
+    \begin{minipage}{0.85\linewidth}
+    同一の Solver 内に離散的評価構造と連続的評価構造が存在し、
+    その双方が一般解の決定に非自明に寄与する Solver
+    \end{minipage}
+    }
+\end{equation}
+
+として厳密に定義される。
 
 
 
