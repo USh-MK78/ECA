@@ -1,0 +1,399 @@
+\documentclass[a4paper,11pt]{jsarticle}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\geometry{margin=25mm}
+\newtheorem{definition}{定義}[section]
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{proposition}[definition]{命題}
+\newtheorem{remark}[definition]{注意}
+\newcommand{\Solver}{\mathcal{S}}
+\newcommand{\Ax}{S_{\mathrm{ax}}}
+\newcommand{\Th}{\mathrm{Th}}
+\newcommand{\Zset}{\mathcal{Z}}
+\newcommand{\Pow}{\mathcal{P}}
+
+\title{ECA_10\\$\mathcal{Z}$ 内における連続体濃度の Solver 族の構成条件}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+ECA_9 では、可算無限な公理候補集合 $\mathcal{A}_0$ に対して
+\[
+\mathcal{P}(\mathcal{A}_0)\hookrightarrow\mathcal{Z}
+\]
+を構成できれば
+\[
+|\mathcal{Z}|\geq2^{\aleph_0}
+\]
+が得られることを示した。
+
+本稿では、その単射を実際に構成するために必要となる条件を、
+ECA_6 および ECA_7 の Solver 構造に沿って具体化する。
+特に、公理選択を変化させながらも表現される理論を ZFC と
+理論同型に保つためには、単に公理候補を増やすだけでは不十分で
+あることを確認する。その上で、ZFC と両立する可算無限の冗長な
+公理候補族を仮定した条件付き構成を与える。
+
+本稿の構成は現行 ECA の定義だけから自動的に得られる定理ではない。
+「既存 ECA から確定する結果」と「追加条件の下で成立する構成」を
+明確に分離する。
+\end{abstract}
+
+\section{出発点}
+
+ECA_6 および ECA_7 により、
+\[
+\Ax
+\]
+を ECA が取り扱う公理および公理スキームの全体、
+\[
+I\subseteq\mathcal{P}(\Ax)
+\]
+を公理選択空間とする。
+
+Solver は
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+であり、
+\[
+\mathcal{A}_s\in I
+\]
+を満たす Solver 全体を
+\[
+\Solver_I=
+\left\{
+s=(\mathcal{A}_s,\mathcal{R}_s)\mid
+\mathcal{A}_s\in I
+\right\}
+\]
+とする。
+
+理論写像は
+\[
+\mathcal{T}:\Solver_I\to\Th
+\]
+であり、
+\[
+\mathcal{Z}=
+\left\{
+s\in\Solver_I\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\right\}
+\]
+である。
+
+ECA_7 では、$\mathcal{Z}$ の元を ZFC そのものや
+ZFC と同型な理論そのものではなく、実際の Solver として扱うことを
+確定している。
+
+\section{単射構成に必要な条件}
+
+ECA_9 で中心となった条件は
+\[
+\mathcal{P}(\mathcal{A}_0)\hookrightarrow\mathcal{Z}
+\]
+である。
+
+しかし、
+\[
+\mathcal{A}_0\subseteq\Ax
+\]
+を満たす可算無限集合を取っただけでは、
+各
+\[
+A\subseteq\mathcal{A}_0
+\]
+について
+\[
+(A,\mathcal{R}_0)\in\mathcal{Z}
+\]
+を保証できない。
+
+$\mathcal{Z}$ の所属条件は
+\[
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+だからである。
+
+したがって必要なのは、多数の公理選択を作ることそのものではなく、
+多数の異なる公理選択から ZFC と理論同型な理論を表現できることである。
+
+\section{ZFC 冗長公理候補族}
+
+可算無限の公理候補族
+\[
+\mathcal{R}^*=\{r_0,r_1,r_2,\ldots\}\subseteq\Ax
+\]
+を考える。
+
+ここで各 $r_n$ を ZFC に対して冗長な公理候補として扱うためには、
+任意の部分集合を選択しても ZFC の理論同型性を失わないことが必要である。
+
+\begin{definition}[連続体実現用 ZFC 保存族]
+可算無限集合
+\[
+\mathcal{R}^*=\{r_n\mid n\in\mathbb{N}\}\subseteq\Ax
+\]
+と推論・構成規則 $\mathcal{R}_0$ が与えられているとする。
+
+$\mathcal{A}_{\mathrm{ZFC}}$ を $\mathcal{R}_0$ とともに ZFC を表現する
+基礎公理選択とし、任意の
+\[
+A\subseteq\mathcal{R}^*
+\]
+に対して
+\[
+s_A=
+\left(
+\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0
+\right)
+\]
+を定める。
+
+次の条件
+\[
+\boxed{
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\quad\land\quad
+\mathcal{T}(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+}
+\]
+を満たすとき、$\mathcal{R}^*$ を連続体実現用 ZFC 保存族と呼ぶ。
+\end{definition}
+
+この条件では、$A$ の選択によって Solver の公理選択成分は変化するが、
+表現される理論は ZFC と理論同型に保たれる。
+
+\section{連続体濃度の単射}
+
+\begin{theorem}
+$\mathcal{R}^*$ が連続体実現用 ZFC 保存族であるとする。
+
+このとき
+\[
+\Phi:\mathcal{P}(\mathcal{R}^*)\to\mathcal{Z}
+\]
+を
+\[
+\boxed{
+\Phi(A)=
+\left(
+\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0
+\right)
+}
+\]
+によって定義でき、$\Phi$ は単射である。
+
+したがって
+\[
+\boxed{
+|\mathcal{Z}|\geq2^{\aleph_0}
+}
+\]
+が成立する。
+\end{theorem}
+
+\begin{proof}
+定義により、任意の
+\[
+A\subseteq\mathcal{R}^*
+\]
+について
+\[
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\]
+であるから、
+\[
+\Phi(A)\in\Solver_I.
+\]
+さらに
+\[
+\mathcal{T}(\Phi(A))
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+なので
+\[
+\Phi(A)\in\mathcal{Z}.
+\]
+
+$A\neq B$ ならば
+\[
+\mathcal{A}_{\mathrm{ZFC}}\cup A
+\neq
+\mathcal{A}_{\mathrm{ZFC}}\cup B
+\]
+であり、Solver の第一成分が異なる。したがって
+\[
+\Phi(A)\neq\Phi(B).
+\]
+よって $\Phi$ は単射である。
+
+$\mathcal{R}^*$ は可算無限なので
+\[
+|\mathcal{P}(\mathcal{R}^*)|=2^{\aleph_0}.
+\]
+したがって
+\[
+2^{\aleph_0}\leq|\mathcal{Z}|.
+\]
+\end{proof}
+
+\section{この構成で確認できること}
+
+重要なのは、下界が
+\[
+|\mathcal{P}(\Ax)|
+\]
+の大きさから直接得られたものではないことである。
+
+実際の構成は
+\[
+\mathcal{P}(\mathcal{R}^*)
+\overset{\Phi}{\hookrightarrow}
+\mathcal{Z}
+\subseteq\Solver_I
+\]
+である。
+
+したがって核心は、$\mathcal{P}(\mathcal{R}^*)$ の各元を
+互いに異なる $\mathcal{Z}$ の Solver に対応させることにある。
+
+\section{公理選択の違いと Solver の違い}
+
+この構成では
+\[
+A\neq B
+\]
+ならば
+\[
+\mathcal{A}_{\mathrm{ZFC}}\cup A
+\neq
+\mathcal{A}_{\mathrm{ZFC}}\cup B
+\]
+である。
+
+したがって
+\[
+\Phi(A)\neq\Phi(B)
+\]
+が保証される。
+
+推論・構成規則を
+\[
+\mathcal{R}_0
+\]
+に固定しているため、ここでの Solver の違いは第一成分
+$\mathcal{A}_s$ の違いによって実現される。
+
+これは ECA_6 の
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+という Solver 構造と整合する。
+
+\section{現行 ECA から確定する部分と追加条件}
+
+現行 ECA の定義から確定するのは
+\[
+\mathcal{Z}=
+\left\{
+s\in\Solver_I\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\right\}
+\]
+という構造である。
+
+一方、
+\[
+\mathcal{P}(\mathcal{R}^*)\hookrightarrow\mathcal{Z}
+\]
+を得るには、
+\[
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\]
+および
+\[
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{T}(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+が必要である。
+
+これは現行 ECA の定義だけから自動的には導かれない。
+
+したがって、本稿の結果は
+\[
+\boxed{
+\text{ZFC 保存族の存在}
+\Longrightarrow
+|\mathcal{Z}|\geq2^{\aleph_0}
+}
+\]
+という条件付き結果である。
+
+\section{上界について}
+
+本稿では、$|\mathcal{Z}|$ の上界を確定しない。
+
+一般に
+\[
+\mathcal{Z}\subseteq\Solver_I
+\]
+から
+\[
+|\mathcal{Z}|\leq|\Solver_I|
+\]
+は得られる。
+
+しかし、現行定義から $|\Solver_I|$ 自体の濃度が確定していないため、
+\[
+|\mathcal{Z}|\leq2^{\aleph_0}
+\]
+をここで主張する根拠はない。
+
+したがって、現段階では
+\[
+\boxed{
+2^{\aleph_0}\leq|\mathcal{Z}|\leq|\Solver_I|
+}
+\]
+を、左側の条件付き下界と一般的上界として区別して扱う。
+
+\section{次段階}
+
+次に検討すべきなのは、
+\[
+\mathcal{R}^*\subseteq\Ax
+\]
+を現行 ECA の「公理および公理スキーム」という範囲内で
+実際に構成できるかどうかである。
+
+特に、
+\[
+\mathcal{T}
+\left(
+\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0
+\right)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+をすべての
+\[
+A\subseteq\mathcal{R}^*
+\]
+について保証できる具体的な公理候補族を与えられるかを確認する必要がある。
+
+ここが成立すれば、ECA_9 で条件として置いた
+\[
+\mathcal{P}(\mathcal{A}_0)\hookrightarrow\mathcal{Z}
+\]
+を、ECA の具体的な構造へ接続する段階に進むことができる。
+
+\end{document}

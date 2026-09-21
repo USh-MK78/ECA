@@ -1,0 +1,3528 @@
+% !TEX program = lualatex
+\documentclass[a4paper,11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{luatexja}
+\usepackage{luatexja-fontspec}
+\usepackage{bm}
+\geometry{top=25mm,bottom=25mm,left=25mm,right=25mm}
+\setmainjfont{Noto Serif CJK JP}
+\newtheorem{definition}{定義}[section]
+\newtheorem{proposition}[definition]{命題}
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{lemma}[definition]{補題}
+\newtheorem{corollary}[definition]{系}
+\newtheorem{remark}[definition]{注記}
+\newcommand{\Solver}{\mathcal{S}}
+\newcommand{\Aset}{\mathcal{A}}
+\newcommand{\Rset}{\mathcal{R}}
+\newcommand{\Th}{\mathrm{Th}}
+\newcommand{\ZFC}{\mathrm{ZFC}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\SubSolver}{\preceq}
+\newcommand{\Type}{\operatorname{Type}}
+\newcommand{\Types}{\operatorname{Types}}
+\newcommand{\Zset}{\mathcal{Z}}
+\newcommand{\Pow}{\mathcal{P}}
+\newcommand{\Pset}{\mathcal{P}}
+\newcommand{\Th}{\mathrm{Th}}
+
+
+\title{ECA における通常の数学的対象の構成}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+
+\section{ECA における通常の数学的対象の構成 \large{第1段階：$\mathcal{Z}$ 内の Solver から $\mathbb{N},\mathbb{Z},\mathbb{Q},\mathbb{R}$ を構成するための基礎整理}}
+
+\section{本書の目的と論理的立場}
+本書は、拡張連続性公理（ECA）における Solver の枠組みを出発点として、通常の数学で用いられる
+\[
+\mathbb{N},\qquad \mathbb{Z},\qquad \mathbb{Q},\qquad \mathbb{R}
+\]
+を、Solver が表現する理論の内部でどのように構成できるかを整理する第1段階の文書である。
+
+ここで重要なのは、これらの数学的対象を最初から「ECA に対応する Solver」として仮定しないことである。まず Solver の定義と理論写像から出発し、$S\in\mathcal{Z}$ を固定した上で、$\mathcal{T}(S)$ において通常の集合論的構成が可能であることを確認する。その後に初めて、その構成と ECA の Solver 構造との対応を調べる。
+
+したがって、本書の基本的な論理方向は
+\[
+\boxed{S\in\mathcal{Z}\longrightarrow\mathcal{T}(S)\longrightarrow\text{通常の数学的対象の構成}\longrightarrow\text{ECA 構造との対応}}
+\]
+である。
+
+本書では、具体例を基礎資料として用いるのではなく、既に定義されている Solver、理論写像、$\mathcal{Z}$、および (A)--(H) の構造を基礎とする。
+
+\section{第1段階の開始点：Solver と $\mathcal{Z}$}
+ECA における Solver 集合を
+\[
+\Solver=\left\{S\mid S=(\Aset_S,\Rset_S)\right\}
+\]
+とする。
+
+各 Solver は単なる数値や集合ではなく、公理選択と推論・構成規則からなる数学的構造である。すなわち
+\[
+S=(\Aset_S,\Rset_S)
+\]
+であり、$\Aset_S$ は Solver $S$ において採用される公理選択の集合、$\Rset_S$ は推論規則および構成制約の集合を表す。
+
+また、Solver が表現する理論を
+\[
+\mathcal{T}:\Solver\longrightarrow\Th
+\]
+によって表す。したがって
+\[
+\mathcal{T}(S)=\mathcal{T}(\Aset_S,\Rset_S)
+\]
+と書ける。
+
+ZFC に対応する Solver の領域を
+\[
+\boxed{\mathcal{Z}=\left\{S\in\Solver\mid\mathcal{T}(S)\cong\ZFC\right\}}
+\]
+とする。
+
+ここで注意すべきなのは、$\mathcal{Z}\neq\ZFC$ であることである。$\mathcal{Z}$ は理論そのものではなく、$\ZFC$ に対応する理論を表現する Solver の部分集合である。
+
+\section{既存数学を優先する原則}
+(A) において、Solver の数学的性質を既存数学によって厳密に判定できる場合には、ECA 固有の量を導入する前に既存数学を用いる原則が定められている。
+\[
+\boxed{\text{既存数学による判定}\longrightarrow\text{必要な場合のみ ECA の量による判定}}
+\]
+
+この原則は、本書の構成において特に重要である。$\mathbb{N},\mathbb{Z},\mathbb{Q},\mathbb{R}$ は通常の集合論・代数学・解析学によって定義・構成できる対象であるため、まずそれらを通常数学として構成する。その構成そのものを ECA 固有の量 $B,I,K,C$ などによって再定義することはしない。
+
+したがって、ECA における第1段階では、$S\in\mathcal{Z}$ から直接 $\mathbb{N},\mathbb{Z},\mathbb{Q},\mathbb{R}$ という記号を割り当てるのではなく、$\mathcal{T}(S)$ の中でこれらの標準的構成が成立することを確認する。
+
+\section{$\mathbb{N}$ の構成}
+\subsection{無限公理による出発点}
+$\mathcal{T}(S)\cong\ZFC$ を満たす $S\in\mathcal{Z}$ を固定する。
+
+$\ZFC$ における無限公理は、
+\[
+\exists x\left(\varnothing\in x\land\forall y\left(y\in x\Rightarrow y\cup\{y\}\in x\right)\right)
+\]
+という形で表現できる。
+
+したがって、$\mathcal{T}(S)$ においても、空集合を含み、後者操作
+\[
+y\longmapsto y\cup\{y\}
+\]
+に関して閉じた集合が存在する。
+
+この段階で重要なのは、ECA が新しい自然数の概念を導入することではない。$\mathcal{T}(S)$ が $\ZFC$ に対応することにより、通常の集合論における自然数の構成を内部で実行できることを確認することである。
+
+\subsection{帰納的集合}
+集合 $X$ が帰納的であることを
+\[
+\operatorname{Ind}(X)\;:\\Longleftrightarrow\;\varnothing\in X\land\forall y\in X\,(y\cup\{y\}\in X)
+\]
+と定義する。
+
+無限公理から
+\[
+\exists X\,\operatorname{Ind}(X)
+\]
+が得られる。
+
+そこで、すべての帰納的集合の共通部分を
+\[
+\omega=\bigcap\{X\mid\operatorname{Ind}(X)\}
+\]
+とする。$\ZFC$ における分出公理図式等により、この定義は集合として形成できる。そして自然数全体を
+\[
+\boxed{\mathbb{N}:=\omega}
+\]
+と置く。
+
+通常の von Neumann 型構成では、
+\[
+0:=\varnothing,\qquad 1:=0\cup\{0\},\qquad 2:=1\cup\{1\},\qquad\ldots
+\]
+すなわち
+\[
+n+1=n\cup\{n\}
+\]
+によって自然数を生成する。
+
+したがって、$\mathcal{T}(S)$ 内では $0,1,2,\ldots$ を集合として構成でき、その全体を $\mathbb{N}$ として得られる。
+
+\subsection{第1段階における $\mathbb{N}$ の意味}
+ここまでで得られたのは、
+\[
+S\in\mathcal{Z}\quad\Longrightarrow\quad\mathcal{T}(S)\text{ 内で }\mathbb{N}\text{ の標準構成が可能}
+\]
+という関係である。
+
+これは $S=\mathbb{N}$ を意味しない。また、$\mathbb{N}\in\mathcal{Z}$ とも言わない。$\mathcal{Z}$ の元は Solver であり、$\mathbb{N}$ は $\mathcal{T}(S)$ が表現する集合論の内部で構成される数学的対象だからである。
+
+\section{$\mathbb{Z}$ の構成}
+$\mathbb{N}$ が構成された後、整数は自然数の順序対から構成できる。
+
+まず $\mathbb{N}\times\mathbb{N}$ 上に
+\[
+(a,b)\sim(c,d)\quad\Longleftrightarrow\quad a+d=b+c
+\]
+を定義する。これは $\sim$ が同値関係となる。
+
+整数全体をこの商集合として
+\[
+\boxed{\mathbb{Z}=(\mathbb{N}\times\mathbb{N})/{\sim}}
+\]
+と定義する。同値類 $[(a,b)]$ は形式的に $a-b$ を表す。
+
+この構成により、
+\[
+[(a,b)]+[(c,d)]=[(a+c,b+d)]
+\]
+および
+\[
+[(a,b)]\cdot[(c,d)]=[(ac,bd)]
+\]
+によって加法・乗法を定義できる。
+
+したがって、$\mathcal{T}(S)$ において $\mathbb{N}$ が構成可能であれば、標準的な集合論的構成を通じて $\mathbb{Z}$ も構成可能である。
+
+\section{$\mathbb{Q}$ の構成}
+まず $\mathbb{Z}\times(\mathbb{Z}\setminus\{0\})$ 上に
+\[
+(a,b)\sim(c,d)\quad\Longleftrightarrow\quad ad=bc
+\]
+を定義する。これも同値関係となる。
+
+したがって、
+\[
+\boxed{\mathbb{Q}=\left(\mathbb{Z}\times(\mathbb{Z}\setminus\{0\})\right)/{\sim}}
+\]
+と定義する。同値類 $[(a,b)]$ を通常 $a/b$ と表す。
+
+この構成により、
+\[
+\frac ab+\frac cd=\frac{ad+bc}{bd},\qquad\frac ab\frac cd=\frac{ac}{bd}
+\]
+が定義できる。
+
+よって、$\mathcal{T}(S)$ において $\mathbb{Z}$ が構成可能であれば、標準的な商構成によって $\mathbb{Q}$ も構成可能である。
+
+\section{$\mathbb{R}$ の構成}
+実数については、自然数・整数・有理数よりも注意が必要である。$\mathbb{R}$ は $\mathbb{Q}$ の単純な商集合として直ちに得られるわけではなく、$\mathbb{Q}$ の完備化が必要となる。
+
+\subsection{Dedekind 切断による構成}
+Dedekind 切断を $A\subsetneq\mathbb{Q}$ であって、
+\begin{enumerate}[label=(\roman*)]
+\item $A\neq\varnothing$,
+\item $A\neq\mathbb{Q}$,
+\item $p\in A,q<p\Rightarrow q\in A$,
+\item $A$ に最大元が存在しない、
+\end{enumerate}
+を満たすものとして定義する。
+
+その全体を $\mathbb{R}_{\mathrm{Ded}}$ と書けば、標準的な順序体構造を定義できる。そして通常の同型を介して
+\[
+\boxed{\mathbb{R}\cong\mathbb{R}_{\mathrm{Ded}}}
+\]
+とみなすことができる。
+
+したがって、$\mathcal{T}(S)$ が $\ZFC$ に対応し、その内部で $\mathbb{Q}$ が構成できるならば、冪集合公理・分出公理図式等を用いて Dedekind 切断の集合を形成し、$\mathbb{R}$ を構成できる。
+
+\subsection{Cauchy 完備化による別構成}
+別の標準構成として、$\mathbb{Q}$ 上の Cauchy 列 $(q_n)_{n\in\mathbb{N}}$ を考え、
+\[
+(q_n)\sim(p_n)\quad\Longleftrightarrow\quad\lim_{n\to\infty}(q_n-p_n)=0
+\]
+によって同値類を取ることもできる。この商構成によって得られる完備順序体を $\mathbb{R}_{\mathrm{Cauchy}}$ とすれば、
+\[
+\mathbb{R}_{\mathrm{Cauchy}}\cong\mathbb{R}
+\]
+である。
+
+したがって、$\mathbb{R}$ の構成方法は一意ではない。しかし、表現が異なる場合でも、標準的な構成間には順序体同型が存在する。この点は、後に ECA の Solver 同型および Representation Independence を扱う際に重要となる。
+
+\section{4つの数学的対象の構成関係}
+以上の構成は、
+\[
+\boxed{\mathbb{N}\longrightarrow\mathbb{Z}\longrightarrow\mathbb{Q}\longrightarrow\mathbb{R}}
+\]
+という依存関係を持つ。
+
+より具体的には、$\mathbb{N}$ は無限公理を起点とした帰納的集合の構成から得られ、$\mathbb{Z}$ では順序対の同値関係による商を用い、$\mathbb{Q}$ では整数の順序対の同値関係による商を用い、$\mathbb{R}$ では Dedekind 切断または Cauchy 完備化を用いる。
+
+したがって、$S\in\mathcal{Z}$ に対して、$\mathcal{T}(S)$ が標準的な ZFC の集合論的構成を表現できるならば、次の構成系列を $\mathcal{T}(S)$ 内で実行できる。
+\[
+\boxed{\begin{array}{c}S\in\mathcal{Z}\\\Downarrow\\\mathcal{T}(S)\\\Downarrow\\\mathbb{N}\\\Downarrow\\\mathbb{Z}\\\Downarrow\\\mathbb{Q}\\\Downarrow\\\mathbb{R}\end{array}}
+\]
+
+\section{この段階で確立できることと、まだ確立できないこと}
+本書の第1段階で確立すべきなのは、「ECA における Solver が通常数学の対象をどのように扱うか」を調べるための出発点である。
+
+まず、$S\in\mathcal{Z}$ を固定することで、$\mathcal{T}(S)$ が ZFC に対応する理論であることを前提にできる。その上で、$\mathbb{N},\mathbb{Z},\mathbb{Q},\mathbb{R}$ を通常の集合論的構成として $\mathcal{T}(S)$ 内に構成する。
+
+しかし、この段階ではまだ次を主張してはいけない。
+\begin{enumerate}
+\item $\mathbb{N},\mathbb{Z},\mathbb{Q},\mathbb{R}$ がそれぞれ固有の Solver そのものである。
+\item $\mathbb{N},\mathbb{Z},\mathbb{Q},\mathbb{R}$ の濃度が ECA の Solver の濃度に等しい。
+\item $\mathbb{R}$ の構成が直ちに ECA の連続 Solver 構造を意味する。
+\item $\mathbb{R}$ の濃度が直ちに ECA の量から導出される。
+\end{enumerate}
+これらはすべて次段階以降で個別に検証する必要がある。
+
+特に、
+\[
+\boxed{\text{数学的対象の構成}\neq\text{Solver 構造の同定}}
+\]
+である。
+
+\section{次段階への接続}
+次に行うべきことは、上で構成した $\mathbb{N},\mathbb{Z},\mathbb{Q},\mathbb{R}$ を、それぞれ Solver $S$ の既存構造
+\[
+D_S,\qquad C_S,\qquad D_S\cap C_S,\qquad \operatorname{Type}(S),\qquad S'\SubSolver S
+\]
+と照らし合わせることである。
+
+ただし、この場合においても「$\mathbb{N}$ は離散だから $D_S=\mathbb{N}$ である」のように同一視してはならない。
+まず通常数学によって、各対象のどの性質が証明されるかを確認し、その後に、それらの性質が ECA の既存構造のどの条件に対応するかを検証する必要がある。
+
+したがって、第1段階から第2段階への正確な接続は
+\[
+\boxed{\begin{array}{c}S\in\mathcal{Z}\\\Downarrow\\\mathcal{T}(S)\\\Downarrow\\\mathbb{N},\mathbb{Z},\mathbb{Q},\mathbb{R}\text{ の標準構成}\\\Downarrow\\\text{通常数学による性質の判定}\\\Downarrow\\D_S,C_S,D_S\cap C_S,\operatorname{Type}(S),S'\SubSolver S\text{ との対応}\end{array}}
+\]
+である。
+
+\section{結論}
+第1段階では、ECA 固有の量によって通常数学を再定義するのではなく、まず Solver が表現する理論の内部で通常の数学的対象を構成する。
+
+その結果、$S\in\mathcal{Z}$ から、$\mathcal{T}(S)$ における標準的な集合論的構成を通じて
+\[
+\boxed{\mathbb{N}\longrightarrow\mathbb{Z}\longrightarrow\mathbb{Q}\longrightarrow\mathbb{R}}
+\]
+を得る。
+
+ここで得られた $\mathbb{N},\mathbb{Z},\mathbb{Q},\mathbb{R}$ は ECA の新しい対象として導入されたものではなく、$\mathcal{T}(S)$ において通常数学から構成された対象である。
+
+したがって、次の課題はそれらを ECA の既存の Solver 構造へ接続することである。この接続を行って初めて、
+\[
+i_S=\mathfrak{A}(S),\qquad B(i_S)\subseteq i_S\subseteq S,
+\]
+\[
+D_S,\quad C_S,\quad D_S\cap C_S,\qquad \operatorname{Type}(S),\qquad S'\SubSolver S
+\]
+が、通常数学で構成された対象に対してどのような意味を持つかを検証できる。
+
+
+
+
+%################################################################
+% ECA における通常の数学的対象の構成
+% 第2段階：N, Z, Q, R と Solver 構造の対応比較
+%################################################################
+\section{ECA における通常の数学的対象の構成 \large{第2段階：$\N,\Z,\Q,\R$ と Solver 構造の対応比較}}
+
+
+\section{目的と出発点}
+
+
+第1段階では、固定した Solver $S\in\mathcal{Z}$ に対して、その Solver が表現する理論
+$\mathcal{T}(S)$ の内部で、通常の集合論における
+$\N,\Z,\Q,\R$ を構成するための基礎を整理した。
+
+本段階では、その構成結果を直ちに ECA の型へ同一視することはせず、既存の ECA 構造
+\[
+D_S,\qquad C_S,\qquad D_S\cap C_S,\qquad \Type(S),\qquad S'\preceq S
+\]
+との対応を順に比較する。
+
+出発点は
+\[
+\boxed{
+S\in\mathcal{Z}
+\;\longrightarrow\;
+\mathcal{T}(S)
+\;\longrightarrow\;
+\N,\Z,\Q,\R
+}
+\]
+である。
+
+ここで
+\[
+\mathcal{S}=\{S\mid S=(\mathcal{A_S},\mathcal{R_S})\}
+\]
+および
+\[
+\mathcal{T}:\mathcal{S}\to\mathrm{Th}
+\]
+を用い、
+\[
+\mathcal{Z}
+=
+\{S\in\mathcal{S}\mid\mathcal{T}(S)\cong\mathrm{ZFC}\}
+\]
+とする。
+
+重要なのは、$\N,\Z,\Q,\R$ は Solver そのものではなく、$\mathcal{T}(S)$ の内部で構成される通常の数学的対象だという点である。
+
+
+\section{固定した $S\in\mathcal{Z}$ における数体系}
+
+\subsection{$\N$}
+
+$\mathcal{T}(S)$ が ZFC と同型な理論を表現するならば、Infinity 公理に基づいて帰納的集合が存在し、その最小のものとして
+\[
+\omega
+=
+\bigcap\{X\mid \operatorname{Ind}(X)\}
+\]
+を構成できる。
+
+通常の記法との対応として
+\[
+\N:=\omega
+\]
+とする。また von Neumann 型の自然数を
+\[
+0:=\varnothing,
+\qquad
+n+1:=n\cup\{n\}
+\]
+で構成する。
+
+したがって、固定した $S$ に対して得られる自然数対象を、必要に応じて
+\[
+\N^S
+\]
+と表す。ただしこれは新しい ECA 構造を定義するものではなく、$\mathcal{T}(S)$ 内の自然数対象を区別して記述するための添字である。
+
+\subsection{$\Z$}
+
+整数は通常の商集合構成により
+\[
+\Z
+=
+(\N\times\N)/\sim
+\]
+とし、
+\[
+(a,b)\sim(c,d)
+\iff
+ a+d=b+c
+\]
+で定める。
+
+したがって、$\mathcal{T}(S)$ 内でも
+\[
+\Z^S
+=(\N^S\times\N^S)/\sim
+\]
+という通常の整数構成が得られる。
+
+\subsection{$\Q$}
+
+有理数は
+\[
+\Q
+=
+\bigl(\Z\times(\Z\setminus\{0\})\bigr)/\sim
+\]
+とし、
+\[
+(a,b)\sim(c,d)
+\iff
+ad=bc
+\]
+によって構成できる。
+
+したがって、$\mathcal{T}(S)$ 内にも
+\[
+\Q^S
+=
+\bigl(\Z^S\times(\Z^S\setminus\{0\})\bigr)/\sim
+\]
+が構成される。
+
+\subsection{$\R$}
+
+実数は、例えば Dedekind 切断による構成、または Cauchy 列による完備化によって構成できる。
+
+Dedekind 切断の場合には、実数を
+\[
+\alpha\subsetneq\Q
+\]
+であって、
+\[
+\alpha\neq\varnothing,
+\qquad
+\forall p\in\alpha\;\forall q\in\Q,
+\bigl(q<p\Rightarrow q\in\alpha\bigr),
+\]
+および最大元を持たないという条件を満たすものとして構成できる。
+
+この構成により、$\mathcal{T}(S)$ 内にも通常の実数体系
+\[
+\R^S
+\]
+を得ることができる。
+
+%################################################################
+\section{公理選択 $i_S$ との接続}
+%################################################################
+
+ECA の公理選択復元写像は
+\[
+\mathfrak{A}:\mathcal{S}_I\to I,
+\qquad
+\mathfrak{A}(S)=\mathcal{A_S}
+\]
+であり、
+\[
+i_S:=\mathfrak{A}(S)=\mathcal{A_S}
+\]
+と書く。
+
+また、ECA の構造として
+\[
+B(i_S)\subseteq i_S\subseteq S
+\]
+が成立する。
+
+したがって、離散評価構造は
+\[
+\boxed{
+D_S:=B(i_S)=B(\mathfrak{A}(S))
+}
+\]
+であり、特に
+\[
+\boxed{
+D_S\subseteq i_S\subseteq S
+}
+\]
+である。
+
+ここで注意すべきなのは、$\N^S,\Z^S,\Q^S,\R^S$ の存在から、直ちに
+\[
+\N^S\subseteq D_S
+\]
+などを結論できるわけではないことである。
+
+それには、各数学的対象の表現が実際に $B(i_S)$ に含まれることを別途示す必要がある。
+
+したがって、現段階で確実に言える関係は
+\[
+\boxed{
+\mathcal{T}(S)\text{ における数学的対象の構成}
+\quad\neq\quad
+D_S\text{ への所属の証明}
+}
+\]
+である。
+
+%################################################################
+\section{離散構造 $D_S$ との比較}
+%################################################################
+
+\subsection{自然数}
+
+自然数は後者演算による逐次的構成を持つため、$\N^S$ に対応する表現が $B(i_S)$ によって取り出されることを証明できる場合には、$D_S$ 内に自然数に対応する離散部分構造が現れる。
+
+この場合、離散評価は
+\[
+E_{\mathrm{d}}(S)
+=
+\sum_{b\in D_S}w_S(b)
+\]
+で与えられる。
+
+したがって、$\N^S$ の通常数学上の可算性と、ECA における $D_S$ の存在は関連するが、両者は同じ概念ではない。
+
+\subsection{整数}
+
+$\Z^S$ は $\N^S\times\N^S$ の同値類として構成されるため、その構成に現れる符号化された対および同値類の表現が $D_S$ によって評価されるならば、整数構造に対応する離散部分構造を得られる。
+
+ただし、これも
+\[
+|\Z|=\aleph_0
+\]
+という濃度だけからは導けない。
+
+\subsection{有理数}
+
+$\Q^S$ は整数の商構成から得られる可算集合である。
+
+しかし、$\Q$ は通常の実数位相において稠密であるため、
+\[
+\text{可算}\Rightarrow\text{ECA における離散型}
+\]
+とはならない。
+
+したがって、$\Q^S$ については、どの部分構造が $D_S$ に入り、どの構造が連続評価に関与するかを分離して調べる必要がある。
+
+%################################################################
+\section{連続構造 $C_S$ との比較}
+%################################################################
+
+ECA の連続評価構造として、測度そのものを
+\[
+C_S^{(\mu)}:=\mu_S
+\]
+とする定義があり、対応する連続評価値は
+\[
+E_{\mathrm{c}}(S)
+=
+\mu_S(i_S)
+=
+\int_S\mathbf 1_{i_S}(u)\,d\mu_S(u)
+\]
+で与えられる。
+
+したがって、$C_S$ は「非可算集合そのもの」を意味するものではなく、連続評価に用いられる測度構造として現れる。
+
+\subsection{$\R$}
+
+$\R^S$ は完備順序体として構成されるため、通常の解析学で用いられる測度・位相・極限などの連続構造を与える基盤となる。
+
+ただし、
+\[
+\R^S\text{ が存在する}
+\]
+ことだけから
+\[
+C_S\neq\varnothing
+\]
+を形式的に導くには、$\mathcal{T}(S)$ 内の実数構造と ECA が採用する測度 $\mu_S$ との対応を明示する必要がある。
+
+その対応が構成できた場合には、$\R^S$ に対する連続評価を
+\[
+E_{\mathrm{c}}(S)
+=
+\int_S\mathbf 1_{i_S}(u)\,d\mu_S(u)
+\]
+の枠組みで扱える。
+
+\subsection{$\Q$}
+
+$\Q^S$ は $\R^S$ の部分体として埋め込むことができるが、$\Q$ 自体は実数の完備性を持たない。
+
+したがって、
+\[
+\Q^S\subset\R^S
+\]
+という包含から直ちに
+\[
+C_S\neq\varnothing
+\]
+とは結論しない。
+
+一方で、$\Q^S$ の稠密性が $\R^S$ の連続構造に関与することは、通常数学上の構造として確認できる。
+
+%################################################################
+\section{$D_S\cap C_S$ の意味}
+%################################################################
+
+ECA では
+\[
+D_S\cap C_S\neq\varnothing
+\]
+となる場合、同一 Solver 内に離散的性質と連続的性質の双方に関係する構造が存在する可能性がある。
+
+このため、数体系については次のように整理する。
+
+\begin{itemize}
+\item $\N^S$：主として逐次的・離散的な構成を持つ。
+\item $\Z^S$：$\N^S$ からの商構成による離散的構造を持つ。
+\item $\Q^S$：可算な代数構造である一方、$\R^S$ 内では稠密性を持つ。
+\item $\R^S$：完備化によって連続的解析構造を担う。
+\end{itemize}
+
+したがって、特に $\Q^S$ については、単一の型だけに押し込めるのではなく、必要に応じて部分構造を分離して扱うことが適切である。
+
+%################################################################
+\section{部分 Solver $S'\preceq S$ による分解}
+%################################################################
+
+異なる構造を Solver 全体から分離する必要がある場合、部分 Solver
+\[
+S'\preceq S
+\]
+を考える。
+
+ここで重要なのは、$S'$ は単なる集合の部分集合ではなく、Solver として独立した構造を形成する必要があるという点である。
+
+したがって、例えば
+\[
+S'_{\N}\preceq S,
+\qquad
+S'_{\Z}\preceq S,
+\qquad
+S'_{\Q}\preceq S,
+\qquad
+S'_{\R}\preceq S
+\]
+という候補を考えることはできるが、それぞれが実際に ECA の部分 Solver になることは個別に証明しなければならない。
+
+特に $\Q^S$ については、
+\[
+S'_{\Q}\preceq S
+\]
+を構成し、その内部に
+\[
+D_{S'_{\Q}}
+\]
+と連続評価へ関係する構造が存在するかを調べることが、単純な濃度判定より適切である。
+
+%################################################################
+\section{型 $\Type(S)$ との対応}
+%################################################################
+
+ECA の型は Solver またはその部分構造の性質によって判定されるのであり、濃度そのものではない。
+
+部分構造について型の集合を考える場合、
+\[
+\Types(S)
+:=
+\left\{
+\Type(S')\mid S'\preceq S
+\right\}
+\]
+という構造を用いることができる。
+
+この観点から、現段階の判定を次のように整理する。
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+対象 & 離散構造との関係 & 連続構造との関係 & 現段階の判定 \\
+\hline
+$\N^S$ & 強い & 未確定 & 離散構造候補 \\
+\hline
+$\Z^S$ & 強い & 未確定 & 離散構造候補 \\
+\hline
+$\Q^S$ & 有 & 有理数自身については要分解 & 混合・部分構造を要検証 \\
+\hline
+$\R^S$ & 補助的 & 強い & 連続構造候補 \\
+\hline
+\end{tabular}
+\end{center}
+
+ただし、上表は通常数学上の構造から ECA の型を確定したものではない。
+
+型を確定するためには、実際に
+\[
+D_S,
+\qquad
+C_S,
+\qquad
+D_S\cap C_S,
+\qquad
+S'\preceq S
+\]
+を構成し、それぞれの評価経路を確認する必要がある。
+
+%################################################################
+\section{既存数学上の濃度との分離}
+%################################################################
+
+通常数学では
+\[
+|\N|=|\Z|=|\Q|=\aleph_0
+\]
+および
+\[
+|\R|=2^{\aleph_0}
+\]
+である。
+
+また、
+\[
+\aleph_0<2^{\aleph_0}
+\]
+が成立する。
+
+しかし、これらから
+\[
+\Type(S)=\mathrm{d}
+\quad\text{または}\quad
+\Type(S)=\mathrm{c}
+\]
+を直接導くことはできない。
+
+したがって、ここでは
+\[
+\boxed{
+\text{数学的対象の濃度}
+\neq
+\text{Solver の型}
+}
+\]
+を維持する。
+
+同様に、
+\[
+|\R|=2^{\aleph_0}
+\]
+から直ちに「連続 Solver の濃度が $2^{\aleph_0}$」とは結論しない。
+
+%################################################################
+\section{第2段階の結論}
+%################################################################
+
+固定した $S\in\mathcal{Z}$ に対して、$\mathcal{T}(S)$ の内部では通常の集合論と同じ構成原理により
+\[
+\N^S,\quad\Z^S,\quad\Q^S,\quad\R^S
+\]
+を構成できる。
+
+一方、これらと ECA の構造との対応について、現段階で確立できるのは次の段階までである。
+
+\begin{enumerate}[label=(\arabic*)]
+\item 公理選択復元により
+\[
+i_S=\mathfrak{A}(S)=\mathcal{A_S}
+\]
+が得られる。
+
+\item そこから
+\[
+D_S=B(i_S)\subseteq i_S\subseteq S
+\]
+が得られる。
+
+\item $D_S$ が実際に $\N^S,\Z^S,\Q^S$ の表現を含むかどうかは、個別の構成を必要とする。
+
+\item 連続評価構造として
+\[
+C_S^{(\mu)}=\mu_S
+\]
+を持ち、
+\[
+E_{\mathrm{c}}(S)
+=
+\int_S\mathbf1_{i_S}(u)\,d\mu_S(u)
+\]
+が定義される。
+
+\item $\R^S$ と $C_S$ の対応には、$\mathcal{T}(S)$ の実数構造と $\mu_S$ の対応を明示する必要がある。
+
+\item $\Q^S$ は可算であるにもかかわらず $\R^S$ で稠密であるため、濃度だけで ECA の型を決定してはならない。
+
+\item 複数の構造を分離する必要がある場合には、$S'\preceq S$ による部分 Solver の構成を検討する。
+\end{enumerate}
+
+したがって、本段階の到達点は
+\[
+\boxed{
+\mathcal{Z}
+\to
+\mathcal{T}(S)
+\to
+\N^S,\Z^S,\Q^S,\R^S
+\to
+(i_S,D_S,C_S,D_S\cap C_S,\Type(S),S'\preceq S)
+}
+\]
+という対応を、同一視ではなく「構成された対象と ECA 構造との照合」として整理したことである。
+
+次段階では、この照合をさらに具体化し、特に
+\[
+\N^S,\Z^S,\Q^S,\R^S
+\]
+の各構成について、どの表現が実際に $B(i_S)$ に入り、どの構造が $C_S$ によって評価され得るかを、ECA の既存定義から個別に検証する。
+
+その後、
+\[
+E_{\mathrm{d}}(S),
+\qquad
+E_{\mathrm{c}}(S),
+\qquad
+\mathcal G(S)
+\]
+へ進む。
+
+
+
+\section{ECA における通常の数学的対象の構成 第3段階：$\mathbb{N},\mathbb{Z},\mathbb{Q},\mathbb{R}$ の ECA 評価と一般解への接続}
+
+
+\section{目的と出発点}
+本段階では、前段階までに $S\in\Zset$ の理論 $\mathcal{T}(S)$ 内で構成した通常の数学的対象 $\N,\Z,\Q,\R$ を、ECA の既存の評価構造へ接続する。
+ここでは新しい Solver 概念を導入せず、既存の
+\[
+S=(\Aset_S,\Rset_S),\qquad
+\mathfrak{A}:\mathcal{S}_I\to I,
+\qquad i_S=\mathfrak{A}(S)=\Aset_S
+\]
+を出発点とする。
+Solver の理論写像は
+\[
+\mathcal{T}:\Solver\to\mathrm{Th}
+\]
+であり、$\mathcal{T}(S)$ は $\Aset_S$ と $\Rset_S$ によって表現される理論である。
+
+\begin{remark}
+本稿では、$\N,\Z,\Q,\R$ 自体を Solver と同一視しない。また、対象の濃度や「連続」という名称だけから $D_S,C_S$ を決定しない。
+ECA の定義では、離散性・連続性は Solver の要素が持つ構造に基づいて判定される。
+\end{remark}
+
+\section{公理選択から評価構造へ}
+$S\in\mathcal{S}_I$ に対して
+\[
+ i_S=\mathfrak{A}(S)=\Aset_S\in I
+\]
+である。既存の ECA 定義から
+\[
+ B(i_S)\subseteq i_S\subseteq S
+\]
+が成立し、離散評価構造は
+\[
+\boxed{D_S:=B(i_S)}
+\]
+と定義される。
+したがって
+\[
+D_S\subseteq i_S\subseteq S
+\]
+である。
+
+離散評価は $D_S$ が有限または可算で必要な総和が定義できる場合
+\[
+\boxed{E_{\mathrm{d}}(S)=\sum_{b\in D_S}w_S(b)}
+\]
+で与えられる。ただし $w_S$ の具体値は別途与えられなければならない。
+
+連続評価では測度 $\mu_S$ を用い
+\[
+\boxed{C_S^{(\mu)}=\mu_S}
+\]
+および
+\[
+\boxed{E_{\mathrm{c}}(S)=\mu_S(i_S)=\int_S\mathbf1_{i_S}(u)\,d\mu_S(u)}
+\]
+とする。後者には $i_S$ の可測性等の条件が必要である。
+
+\section{$\mathbb{N}$ の評価構造}
+\subsection{通常数学における構成}
+$\mathcal{T}(S)$ が ZFC と同等の理論を表現する $S\in\Zset$ を固定する。
+Infinity 公理から帰納集合が存在し、そこから
+\[
+\omega=\bigcap\{X\mid X\text{ は帰納集合}\}
+\]
+を構成し、通常の同定により
+\[
+\omega=\N
+\]
+とする。von Neumann 構成では
+\[
+0=\varnothing,\qquad n+1=n\cup\{n\}
+\]
+である。
+
+\subsection{ECA 側の対応}
+ここで重要なのは、$\N$ の可算性そのものを $D_S=\N$ とする根拠にはしないことである。
+ECA 上では、$\N$ の構成に必要な帰納・後者操作・有限段階の生成構造が、実際に $S$ の要素または部分 Solver の構造としてどのように表現されているかを確認する必要がある。
+
+したがって、$\N$ に対応する部分 Solver $S_{\N}\SubSolver S$ を構成でき、その要素が ECA の所定の離散構造を満たすなら、
+\[
+D_{S_{\N}}\neq\varnothing,
+\qquad
+\DType\in\Type(S_{\N})
+\]
+を得る。
+ただし、この存在は $\mathcal{T}(S)$ の通常数学的構成だけから自動的に証明されるものではなく、Solver の具体的表現を追加で指定する必要がある。
+
+\section{$\mathbb{Z}$ の評価構造}
+通常数学では
+\[
+\Z=(\N\times\N)/\sim,
+\qquad
+(a,b)\sim(c,d)\iff a+d=b+c
+\]
+によって整数を構成できる。
+この構成は自然数上の離散的な対と同値類からなるため、$S$ 内にこの構成を担う部分 Solver $S_{\Z}\SubSolver S$ を実際に構成した場合、その部分構造について離散評価を適用できる。
+
+しかし、ここでも
+\[
+|\Z|=\aleph_0
+\]
+だけから $D_{S_{\Z}}=S_{\Z}$ 等を結論してはならない。
+必要なのは、$S_{\Z}$ の要素が ECA の定義する離散構造を満たすことの確認である。
+
+\section{$\mathbb{Q}$ の評価構造}
+通常数学では
+\[
+\Q=(\Z\times(\Z\setminus\{0\}))/\sim,
+\qquad
+(a,b)\sim(c,d)\iff ad=bc
+\]
+である。
+また
+\[
+\Q\subset\R
+\]
+かつ $\Q$ は $\R$ において稠密である。
+
+しかし、稠密性は ECA における連続構造との同一性を意味しない。
+したがって、$S_{\Q} \SubSolver S$ を構成した場合、少なくとも次の三つを区別する。
+\begin{enumerate}
+\item 分数の同値類という代数的・離散的構造。
+\item 順序構造と稠密性。
+\item $\R$ の測度空間へ埋め込んだときに現れる連続評価構造。
+\end{enumerate}
+特に $\Q$ 自体について $C_{S_{\Q}} \neq \varnothing$ とするには、ECA の「連続的構造」を満たす具体的構造を別途示す必要がある。
+
+\section{$\mathbb{R}$ の評価構造}
+通常数学では、例えば Dedekind 切断によって
+\[
+\R=\{A \subseteq \Q \mid A \text{ が Dedekind 切断}
+\}
+\]
+と構成できる。また Cauchy 列による完備化によっても構成できる。
+
+この段階で確定できるのは、$\R$ が順序体であり完備であるという通常数学上の性質である。さらに、$\R$ 上の Borel $\sigma$-代数と Lebesgue 測度などを採用すれば、連続評価のための測度空間を与えられる。
+
+ただし、ECA の定義上、
+\[
+\R\text{ が非可算}
+\]
+あるいは
+\[
+|\R|=2^{\aleph_0}
+\]
+という事実だけから $C_S$ を同定することはできない。
+連続評価には、実際に $\mu_S$ と可測空間を含む構造が必要である。
+
+\section{四体系の比較}
+対象そのものの通常数学上の性質と、ECA の Solver 構造を次のように分離する。
+
+\[
+\begin{array}{c|c|c|c}
+\text{対象}&\text{通常数学上の構造}&\text{ECA で確認すべき構造}&\text{現段階}\
+\hline
+\N&\text{帰納・後者・可算}&D_{S_{\N}}&\text{具体構成が必要}\\
+\Z&\text{整数環・可算}&D_{S_{\Z}}&\text{具体構成が必要}\\
+\Q&\text{順序体・稠密・可算}&D_{S_{\Q}},C_{S_{\Q}}&\text{構造分解が必要}\\
+\R&\text{完備順序体・連続解析}&C_{S_{\R}}&\text{測度構造まで指定が必要}
+\end{array}
+\]
+
+この表から分かるように、通常数学上の構成が完了したことと、ECA の $D_S,C_S$ が具体的に決定されたことは別である。
+
+\section{一般解 $\mathcal G$ への接続}
+ECA の一般解は
+\[
+\boxed{\mathcal G:\Solver\to X}
+\]
+であり、最終評価は
+\[
+\boxed{g=\Psi\circ\mathcal G}
+\]
+である。
+中間 Solver においては、既存の定義に従い
+\[
+\boxed{
+\mathcal G(S)=\Phi_S\bigl(E_{\mathrm{d}}(S),E_{\mathrm{c}}(S)\bigr)
+}
+\]
+という形で表現できる場合がある。
+
+しかし、$\N,\Z,\Q,\R$ を構成したという事実だけから $\Phi_S$ の具体形を決定することはできない。
+$E_{\mathrm{d}}$ と $E_{\mathrm{c}}$ の具体値、およびそれらから $X$ の元を構成する規則が必要である。
+
+したがって本段階で確定できる ECA 側の経路は、
+\[
+\boxed{
+S
+\longrightarrow
+i_S
+\longrightarrow
+(D_S,C_S)
+\longrightarrow
+(E_{\mathrm{d}}(S),E_{\mathrm{c}}(S))
+\longrightarrow
+\mathcal G(S)
+}
+\]
+という既存構造までである。
+
+\section{次段階への課題：連続体濃度との接続}
+次の段階では、まず通常数学における
+\[
+|\N|=|\Z|=|\Q|=\aleph_0,
+\qquad
+|\R|=2^{\aleph_0}
+\]
+を確定したうえで、これらの濃度と ECA の Solver 型・評価構造を厳密に分離する。
+
+特に、既存の検証では
+\[
+|\R|=|\mathcal P(\N)|=2^{\aleph_0}
+\]
+および
+\[
+\aleph_1\le 2^{\aleph_0}
+\]
+までが基準として確立されており、逆向きの不等式は未導出である。
+したがって、ECA の連続評価構造から直ちに $2^{\aleph_0}=\aleph_1$ を結論することはできない。
+
+\begin{remark}
+本段階の結論は「四つの数体系の ECA 対応を完全に決定した」ことではない。むしろ、通常数学による対象構成と、ECA における Solver 構造・評価・一般解を混同せず、次の濃度論的検証へ進むための論理的境界を確定したことにある。
+\end{remark}
+
+
+%################################################################
+% ECA における通常の数学的対象の構成
+% 第4段階：連続体濃度と ECA 評価の厳密な接続
+%################################################################
+\section{ECA における通常の数学的対象の構成 \large{第4段階：連続体濃度と ECA 評価の厳密な接続}}
+
+
+\section{目的と出発点}
+
+第1から3段階では、固定した $S\in\Zset$ について、その理論 $\mathcal{T}(S)$ の内部で通常の数学的対象 $\N,\Z,\Q,\R$ を構成し、それらを既存の ECA の Solver 構造
+\[
+i_S,\quad D_S,\quad C_S,\quad D_S\cap C_S,\quad
+\Type(S),\quad S'\SubSolver S
+\]
+および評価
+\[
+E_{\mathrm{d}}(S),\qquad E_{\mathrm c}(S),\qquad \mathcal G(S)
+\]
+へ接続する経路を整理した。
+
+第3段階の結論は、既存構造として
+\[
+\boxed{
+S
+\longrightarrow
+i_S
+\longrightarrow
+(D_S,C_S)
+\longrightarrow
+(E_{\mathrm{d}}(S),E_{\mathrm c}(S))
+\longrightarrow
+\mathcal G(S)
+}
+\]
+までを確認し「ここから先では通常数学上の濃度と ECA の Solver 構造を混同しないことが必要だ」というものである。
+
+本段階では、この境界を維持したまま
+\[
+|\N|,\quad |\Z|,\quad |\Q|,\quad |\R|
+\]
+を通常の基数として確定し、その後で ECA の評価構造がこれらの濃度に対して何を追加できるのかを検証する。
+
+特に目的は、連続体仮説
+\[
+\mathrm{CH}:\qquad 2^{\aleph_0}=\aleph_1
+\]
+を先取りすることではない。
+
+検証対象を
+\[
+\boxed{
+\text{連続体濃度の既存数学}
+\longrightarrow
+\text{ECA による構造化}
+\longrightarrow
+\text{CH に必要な追加不等式}
+}
+\]
+と分離する。
+
+\begin{remark}
+本稿では、$\mathbb{N},\mathbb{Z},\mathbb{Q},\mathbb{R}$ 自体を Solver と同一視しない。
+また、別個の「CH 専用 Solver」や新しい濃度概念を仮定して議論を進めることもしない。
+まず既に構成された通常数学的対象と既存 ECA 構造との対応だけを扱う。
+\end{remark}
+
+%################################################################
+\section{通常数学における四つの濃度}
+%################################################################
+
+\subsection{$\mathbb{N},\mathbb{Z},\mathbb{Q}$ の可算性}
+
+第1--3段階で構成した
+\[
+\N,\qquad \Z,\qquad \Q
+\]
+について、通常数学では
+\[
+|\N|=\aleph_0,
+\]
+\[
+|\Z|=\aleph_0,
+\]
+\[
+|\Q|=\aleph_0
+\]
+が成立する。
+
+したがって、
+\[
+\boxed{
+|\N|=|\Z|=|\Q|=\aleph_0
+}
+\]
+である。
+
+ここで重要なのは、これら三つの集合がすべて同じ濃度を持つことと、それらの数学的構造が同じであることとは別問題だという点である。
+例えば $\N$ は自然数の構造を持ち $\Z$ は整数環の構造を持ち、$\Q$ は順序体かつ可算稠密な構造を持つ。
+したがって、$|\N|=|\Q|=\aleph_0$ から $\N\cong\Q$ という集合としての全単射の存在は得られるが、自然数構造と有理数体構造が同一であることは意味しない。
+
+これは ECA においても重要であり
+\[
+\boxed{
+\text{濃度}
+\neq
+\text{構造}
+}
+\]
+を維持しなければならない。
+
+\subsection{$\mathbb{R}$ の濃度}
+
+通常数学では、
+\[
+|\R|=|\Pow(\N)|
+\]
+が成立し、
+\[
+|\Pow(\N)|=2^{\aleph_0}
+\]
+であるから、
+\[
+\boxed{
+|\R|=2^{\aleph_0}
+}
+\]
+を得る。
+
+さらにカントールの定理より、
+\[
+|\N|<|\Pow(\N)|
+\]
+なので、
+\[
+\boxed{
+\aleph_0<2^{\aleph_0}
+}
+\]
+である。
+
+したがって、
+\[
+\boxed{
+|\Q|<|\R|
+}
+\]
+も得られる。
+
+これらは CH そのものではない。
+ここまでで確定しているのは、
+\[
+\aleph_0<2^{\aleph_0}
+\]
+という関係と、
+\[
+|\R|=2^{\aleph_0}
+\]
+という連続体濃度の同定である。
+
+%################################################################
+\section{$\aleph_1$ と CH の位置}
+%################################################################
+
+\subsection{$\aleph_1$ の定義から得られる下界}
+
+$\aleph_1$ を最初の非可算基数とする。
+
+任意の基数 $\kappa$ が
+\[
+\aleph_0<\kappa
+\]
+を満たすなら、
+\[
+\aleph_1\leq\kappa
+\]
+である。
+
+ここで
+\[
+\kappa=2^{\aleph_0}
+\]
+とすれば、
+\[
+\boxed{
+\aleph_1\leq2^{\aleph_0}
+}
+\]
+を得る。
+
+従って、現段階で通常数学から得られている関係は
+\[
+\boxed{
+\aleph_0<\aleph_1\leq2^{\aleph_0}
+}
+\]
+である。
+
+\subsection{CH が要求するもの}
+
+CH は
+\[
+\boxed{
+2^{\aleph_0}=\aleph_1
+}
+\]
+である。
+
+既に
+\[
+\aleph_1\leq2^{\aleph_0}
+\]
+が成立しているため、CH を得るために追加で必要なのは
+\[
+\boxed{
+2^{\aleph_0}\leq\aleph_1
+}
+\]
+である。
+
+したがって、
+\[
+\boxed{
+\mathrm{CH}
+\iff
+\left(
+\aleph_1\leq2^{\aleph_0}
+\;\land\;
+2^{\aleph_0}\leq\aleph_1
+\right)
+}
+\]
+であり、前者が既に確立している現在の検証では後者が本質的な追加課題となる。
+
+\begin{proposition}
+現段階までに確認された
+\[
+\aleph_0<2^{\aleph_0}
+\]
+だけから、
+\[
+2^{\aleph_0}=\aleph_1
+\]
+を導出することはできない。
+\end{proposition}
+
+\begin{proof}
+$\aleph_0<2^{\aleph_0}$ は $2^{\aleph_0}$ が非可算であることを与えるに留まる。
+$\aleph_1$ は最初の非可算基数なので
+\[
+\aleph_1\leq2^{\aleph_0}
+\]
+は得られるが、
+\[
+2^{\aleph_0}\leq\aleph_1
+\]
+はこの事実からは得られない。
+したがって両者の等号は別途証明する必要がある。
+\end{proof}
+
+%################################################################
+\section{ECA の評価構造と通常の濃度の分離}
+%################################################################
+
+\subsection{公理選択から評価まで}
+
+固定した
+\[
+S\in\mathcal{S}_I
+\]
+に対して、
+\[
+i_S=\mathfrak A(S)=\Aset_S
+\]
+であり、
+\[
+B(i_S)\subseteq i_S\subseteq S
+\]
+が成立する。
+
+既存定義により、
+\[
+D_S=B(i_S)
+\]
+であり、離散評価は
+\[
+E_{\mathrm{d}}(S)
+=
+\sum_{b\in D_S}w_S(b)
+\]
+で与えられる。
+
+また連続側では
+\[
+C_S^{(\mu)}=\mu_S
+\]
+および
+\[
+E_{\mathrm c}(S)
+=
+\int_S\mathbf 1_{i_S}(u)\,d\mu_S(u)
+\]
+である。
+
+中間 Solver においては、既存の一般解構造として
+\[
+\mathcal G(S)
+=
+\Phi_S
+\left(
+E_{\mathrm{d}}(S),
+E_{\mathrm c}(S)
+\right)
+\]
+と表現できる場合がある。
+
+\subsection{濃度は評価値ではない}
+
+ここで、
+\[
+|\R|=2^{\aleph_0}
+\]
+という通常の基数と、
+\[
+E_{\mathrm c}(S)\in[0,1]
+\]
+という ECA の評価値は異なる数学的対象である。
+
+したがって、
+\[
+E_{\mathrm c}(S)
+\]
+が実数値を取ることから、
+\[
+|\R|=E_{\mathrm c}(S)
+\]
+のような同一視を行ってはならない。
+
+同様に、
+\[
+\operatorname{Type}(S)
+\]
+が連続型を含むことから
+\[
+|\R|=\aleph_1
+\]
+を導くこともできない。
+
+\[
+\boxed{
+\text{ECA の型・評価値}
+\neq
+\text{通常の集合論における基数}
+}
+\]
+
+という分離を維持する。
+
+\subsection{濃度を ECA に接続するために必要なもの}
+
+通常の集合
+\[
+X
+\]
+に対して、その濃度を ECA の評価構造へ接続するには、少なくとも
+
+\begin{enumerate}
+\item $X$ がどの Solver のどの構造によって表現されるか
+\item その表現が $i_S$、$D_S$、$C_S$ のどこに属するか
+\item 評価写像が何を入力としているか
+\item 評価によって異なる元を区別できるか
+\item その評価構造から通常の基数への対応を構成できるか
+\end{enumerate}
+
+を個別に証明する必要がある。
+
+特に評価写像
+\[
+E:X\to Y
+\]
+について、
+\[
+E(x_1)=E(x_2)
+\]
+から
+\[
+x_1=x_2
+\]
+を結論するには、$E$ の単射性が必要である。
+
+したがって、
+\[
+\boxed{
+\text{評価値の存在}
+\not\Rightarrow
+\text{対象の濃度の決定}
+}
+\]
+である。
+
+%################################################################
+\section{$\mathcal{P}(\mathbb{N})$ と $\mathbb{R}$ の対応}
+%################################################################
+
+\subsection{通常数学による対応}
+
+任意の
+\[
+A\subseteq\N
+\]
+に対して特性関数
+\[
+\chi_A:\N\to\{0,1\}
+\]
+を定める。
+
+これにより
+\[
+A
+\longleftrightarrow
+(\chi_A(0),\chi_A(1),\ldots)
+\]
+という対応を得る。
+
+二進展開を用いれば、$[0,1]$ の実数と $\{0,1\}^{\N}$ との対応を構成できる。
+
+ただし、
+\[
+0.1000\ldots_2
+=
+0.0111\ldots_2
+\]
+のような二進展開の非一意性があるため、代表元を選択する規約が必要である。
+
+この問題を処理した上で、
+\[
+|[0,1]|=|\Pow(\N)|
+\]
+を得て、さらに通常数学上の既知の全単射により
+\[
+\boxed{
+|\R|=|\Pow(\N)|=2^{\aleph_0}
+}
+\]
+となる。
+
+\subsection{ECA における追加課題}
+
+ここで初めて ECA 側の検証を行う。
+
+\[
+\Pow(\N)
+\]
+の各元を ECA の既存 Solver 構造にどのように表現するかを具体化し、その表現に対して
+\[
+i_S,\qquad D_S,\qquad C_S,\qquad
+E_{\mathrm{d}},\qquad E_{\mathrm c},\qquad \mathcal G
+\]
+のどれが実際に作用するのかを確認する必要がある。
+
+重要なのは、単に
+\[
+\Pow(\N)
+\]
+の元が「連続体に対応する」と言うだけでは不十分だということである。
+
+必要なのは、例えば
+\[
+\eta:\Pow(\N)\longrightarrow X
+\]
+という ECA 上の表現写像を具体的に構成し、さらにその写像がどの程度の情報を保持するのかを検証することである。
+
+\begin{remark}
+この段階では $\eta$ の存在・単射性・全射性を ECA の既存定義から自動的に仮定しない。
+これらは以後の検証対象である。
+\end{remark}
+
+%################################################################
+\section{CH を導くために ECA 側で必要となる条件}
+%################################################################
+
+\subsection{必要条件の定式化}
+
+通常数学から既に
+\[
+\aleph_1\leq2^{\aleph_0}
+\]
+が得られている。
+
+従って、ECA によって CH を導出するためには、
+\[
+\boxed{
+2^{\aleph_0}\leq\aleph_1
+}
+\]
+を ECA の既存構造から導く必要がある。
+
+これを、$\Pow(\N)$ を介して検証する。
+
+もし
+\[
+F:\Pow(\N)\longrightarrow\omega_1
+\]
+が単射として構成できれば、
+\[
+|\Pow(\N)|\leq|\omega_1|
+\]
+なので、
+\[
+2^{\aleph_0}\leq\aleph_1
+\]
+が得られる。
+
+既に
+\[
+\aleph_1\leq2^{\aleph_0}
+\]
+があるため、
+\[
+\boxed{
+2^{\aleph_0}=\aleph_1
+}
+\]
+が従う。
+
+\subsection{単射構成が決定的である理由}
+
+\[
+\Pow(\N)
+\]
+から $\omega_1$ への単射を得ることと、
+\[
+\Pow(\N)
+\]
+を ECA の評価値へ写すことは同じではない。
+
+例えば、
+\[
+E:\Pow(\N)\to[0,1]
+\]
+という評価写像が存在したとしても、
+\[
+|[0,1]|=2^{\aleph_0}
+\]
+であるから、これは単に連続体濃度の領域へ写しているに過ぎない。
+
+さらに、$E$ が単射でないなら、多数の異なる集合が同じ評価値を持ち得る。
+
+したがって、
+\[
+\boxed{
+\Pow(\N)\to[0,1]
+}
+\]
+だけでは
+\[
+2^{\aleph_0}\leq\aleph_1
+\]
+を導く根拠にはならない。
+
+CH に必要なのは、
+\[
+\boxed{
+\Pow(\N)\hookrightarrow\omega_1
+}
+\]
+に相当する構造、またはこれと同値な通常数学上の上界を与える構造である。
+
+\subsection{$\Omega_{\mathrm{CH}}\subseteq[0,1]^4$ からは CH は出ない}
+
+既存の CH 検証では、
+\[
+\omega=(B,I,K,C)
+\]
+という内部状態と
+\[
+\Omega_{\mathrm{CH}}
+=
+\{\omega\mid\omega=(B,I,K,C)\}
+\]
+が扱われている。
+
+仮に
+\[
+\Omega_{\mathrm{CH}}\subseteq[0,1]^4
+\]
+ならば、
+\[
+|\Omega_{\mathrm{CH}}|
+\leq
+|[0,1]^4|
+=
+2^{\aleph_0}
+\]
+である。
+
+しかし、
+\[
+|\Omega_{\mathrm{CH}}|\leq2^{\aleph_0}
+\]
+から
+\[
+2^{\aleph_0}\leq\aleph_1
+\]
+は導けない。
+
+また、
+\[
+B=I=K=C
+\]
+という特殊化によって
+\[
+\Omega_{\mathrm{CH}}\cong[0,1]
+\]
+となる場合があったとしても、それは連続体濃度を得る特殊例であり
+\[
+2^{\aleph_0}=\aleph_1
+\]
+を意味しない。
+
+\begin{proposition}
+\[
+\Omega_{\mathrm{CH}}\subseteq[0,1]^4
+\]
+および
+\[
+|\Omega_{\mathrm{CH}}|\leq2^{\aleph_0}
+\]
+は、単独では CH を導出するための十分条件ではない。
+\end{proposition}
+
+\begin{proof}
+CH の導出には
+\[
+2^{\aleph_0}\leq\aleph_1
+\]
+が必要である。一方
+\[
+|\Omega_{\mathrm{CH}}|\leq2^{\aleph_0}
+\]
+は $\Omega_{\mathrm{CH}}$ が連続体以下の濃度を持つことしか与えない。
+$\aleph_1$ への単射や、それに相当する上界は得られない。
+したがって十分条件ではない。
+\end{proof}
+
+%################################################################
+\section{現段階での ECA の到達点}
+%################################################################
+
+ここまでを論理的に整理すると、
+
+\[
+\boxed{
+\begin{aligned}
+|\N|&=|\Z|=|\Q|=\aleph_0,\\
+|\R|&=|\Pow(\N)|=2^{\aleph_0},\\
+\aleph_0&<2^{\aleph_0},\\
+\aleph_1&\leq2^{\aleph_0}
+\end{aligned}
+}
+\]
+は通常数学上の既知の結果として得られる。
+
+一方、ECA については、
+
+\[
+\boxed{
+i_S
+\longrightarrow
+(D_S,C_S)
+\longrightarrow
+(E_{\mathrm{d}}(S),E_{\mathrm c}(S))
+\longrightarrow
+\mathcal G(S)
+}
+\]
+という既存の評価経路がある。
+
+しかし、
+\[
+\boxed{
+\text{この評価経路だけから }
+2^{\aleph_0}\leq\aleph_1
+\text{ はまだ導出されていない}
+}
+\]
+というのが現段階の厳密な結論である。
+
+特に、
+\[
+\text{連続型 Solver}
+\]
+の存在、
+\[
+E_{\mathrm c}(S)\in[0,1]
+\]
+という評価値、
+\[
+\Omega_{\mathrm{CH}}\subseteq[0,1]^4
+\]
+という状態空間の上界、
+あるいは
+\[
+|\R|=2^{\aleph_0}
+\]
+という通常数学上の事実のいずれも、それ単独では
+\[
+2^{\aleph_0}\leq\aleph_1
+\]
+を与えない。
+
+%################################################################
+\section{次段階で検証すべき具体的課題}
+%################################################################
+
+次段階では、CH を直接仮定したり、未知の中間基数を先に導入したりするのではなく、次の構成を具体的に検証する。
+
+\begin{enumerate}
+\item 固定した $S\in\Zset$ における $\Pow(\N)$ の通常数学的構成を明示する。
+\item $\Pow(\N)$ の各元が $S$ のどの構造によって表現されるかを特定する。
+\item その表現が
+\[
+i_S,\quad B(i_S),\quad D_S,\quad C_S
+\]
+のどこに属するかを確認する。
+\item 既存の
+\[
+E_{\mathrm{d}}(S),\quad E_{\mathrm c}(S),\quad\mathcal G(S)
+\]
+が実際にその表現へどう作用するかを計算する。
+\item 評価が異なる集合を区別できる条件、すなわち単射性を検証する。
+\item その ECA 上の区別構造から通常の
+\[
+\omega_1
+\]
+への写像を構成できるかを検証する。
+\item もし
+\[
+\Pow(\N)\hookrightarrow\omega_1
+\]
+を構成できれば、
+\[
+2^{\aleph_0}\leq\aleph_1
+\]
+を通常数学へ戻す。
+\item その場合に限り、
+\[
+2^{\aleph_0}=\aleph_1
+\]
+を得て CH の導出を確定する。
+\end{enumerate}
+
+逆に、この構成がどこかで停止するなら、その停止箇所を明示することで、
+\[
+\boxed{
+\text{現在の ECA が CH に対して実際に与えている情報の限界}
+}
+\]
+を確定できる。
+
+%################################################################
+\section{結論}
+%################################################################
+
+第4段階では、通常数学上の濃度と ECA の Solver 構造を明確に分離した。
+
+通常数学では、
+\[
+\boxed{
+|\N|=|\Z|=|\Q|=\aleph_0
+}
+\]
+および
+\[
+\boxed{
+|\R|=|\Pow(\N)|=2^{\aleph_0}
+}
+\]
+が成立し、さらに
+\[
+\boxed{
+\aleph_1\leq2^{\aleph_0}
+}
+\]
+が得られる。
+
+したがって CH の残された要求は、
+\[
+\boxed{
+2^{\aleph_0}\leq\aleph_1
+}
+\]
+である。
+
+ECA 側では、
+\[
+S
+\longrightarrow
+i_S
+\longrightarrow
+(D_S,C_S)
+\longrightarrow
+(E_{\mathrm{d}},E_{\mathrm c})
+\longrightarrow
+\mathcal G(S)
+\]
+という既存構造を利用できるが、現時点ではこれだけから
+\[
+2^{\aleph_0}\leq\aleph_1
+\]
+を導出することはできない。
+
+従って、次の核心的検証は
+\[
+\boxed{
+\Pow(\N)\hookrightarrow\omega_1
+}
+\]
+に相当する構造を、既存 ECA の定義から実際に構成できるかどうかである。
+
+ここで初めて「ECA が CH に対して単なる既存数学の再記述を超えた情報を与える」のか、それとも「現在の定義ではそこまで到達しないのか」を成否として判定できる。
+
+
+
+
+
+
+\section{ECA における通常の数学的対象の構成 \large{第5段階：公理選択空間 $I$ と $\mathcal{P}(\mathbb{N})$ の対応可能性}}
+
+\section{目的}
+
+第4段階では、
+\[
+|\mathbb R|=|\mathcal{P}(\mathbb{N})|=2^{\aleph_0},
+\qquad
+\aleph_1\leq 2^{\aleph_0}
+\]
+を通常数学として確認し、CH
+\[
+2^{\aleph_0}=\aleph_1
+\]
+を得るためには
+\[
+2^{\aleph_0}\leq\aleph_1
+\]
+に相当する追加構造が必要であることを確認した。
+
+本段階では、既存の ECA の定義に従い、
+\[
+\boxed{\mathcal{P}(\mathbb{N})\hookrightarrow I}
+\]
+が実際に構成できるかを検証する。
+
+重要なのは、
+\[
+\mathcal{P}(\mathbb{N})\to\mathcal{P}(\mathcal{A}_0)
+\]
+という符号化と、
+\[
+\mathcal{P}(\mathbb{N})\to I
+\]
+という ECA の公理選択空間への写像を同一視しないことである。
+
+\section{既存の公理選択符号化}
+
+可算な公理候補集合
+\[
+\mathcal{A}_0=\{a_1,a_2,a_3,\ldots\}
+\]
+を固定する。
+
+任意の
+\[
+A\subseteq\mathbb{N}
+\]
+に対して、
+\[
+\mathcal{A}_A
+:=
+\{a_n\in\mathcal{A}_0\mid n\in A\}
+\]
+を定義する。
+
+すると、
+\[
+\Gamma:
+\mathcal{P}(\mathbb{N})
+\longrightarrow
+\mathcal{P}(\mathcal{A}_0)
+\]
+を
+\[
+\Gamma(A)=\mathcal{A}_A
+\]
+によって定義できる。
+
+\begin{proposition}
+$\Gamma$ は単射である。
+\end{proposition}
+
+\begin{proof}
+$A\neq B$ なら、ある $n\in\mathbb{N}$ について
+\[
+n\in A,\quad n\notin B
+\]
+またはその逆が成立する。
+したがって
+\[
+a_n\in\mathcal{A}_A,\quad
+a_n\notin\mathcal{A}_B
+\]
+またはその逆であり、
+\[
+\mathcal{A}_A\neq\mathcal{A}_B.
+\]
+ゆえに $\Gamma$ は単射である。
+\end{proof}
+
+したがって、
+\[
+\boxed{
+\mathcal{P}(\mathbb{N})
+\hookrightarrow
+\mathcal{P}(\mathcal{A}_0)
+}
+\]
+が成立する。
+
+\begin{remark}
+ここで得られた終点は $\mathcal{P}(\mathcal{A}_0)$ であり、まだ $I$ ではない。
+\end{remark}
+
+\section{$I$ への写像に必要な条件}
+
+ECA の公理選択空間は
+\[
+I\subseteq\mathcal{P}(S)
+\]
+と定義される。
+
+したがって、
+\[
+\mathcal{A}_A\subseteq S
+\]
+であることから直ちに得られるのは
+\[
+\mathcal{A}_A\in\mathcal{P}(S)
+\]
+までである。
+
+\[
+I\subseteq\mathcal{P}(S)
+\]
+だけから
+\[
+\mathcal{A}_A\in I
+\]
+は導けない。
+
+ゆえに、
+\[
+\boxed{
+\forall A\subseteq\mathbb{N},\quad
+\mathcal{A}_A\in I
+}
+\]
+を別途証明する必要がある。
+
+これが成立すれば、
+\[
+\Phi:
+\mathcal{P}(\mathbb{N})\hookrightarrow I,
+\qquad
+\Phi(A)=\mathcal{A}_A
+\]
+を得られる。
+
+\section{Solver 構成からの検証}
+
+固定した推論規則・構成制約
+\[
+\mathcal{R}_0
+\]
+に対して
+\[
+S_A=(\mathcal{A}_A,\mathcal{R}_0)
+\]
+を考えることができる。
+
+しかし、
+\[
+S_A\in\mathcal{S}_I
+\]
+を得るには
+\[
+\mathcal{A}_{S_A}\in I
+\]
+が必要である。
+
+\[
+\mathcal{A}_{S_A}=\mathcal{A}_A
+\]
+なので、結局
+\[
+\mathcal{A}_A\in I
+\]
+が必要となる。
+
+したがって、
+\[
+\mathcal{P}(\mathbb{N})\to\Solver
+\]
+という形式的な Solver の構成だけでは、
+\[
+\mathcal{P}(\mathbb{N})\hookrightarrow I
+\]
+は得られない。
+
+\section{$\mathcal{Z}$ との関係}
+
+本研究で対象とする ZFC-compatible Solver 領域を
+\[
+\mathcal{Z}
+=
+\{S\in\Solver\mid\mathcal{T}(S)\cong\mathrm{ZFC}\}
+\]
+とする。
+
+ここで、
+\[
+S_A=(\mathcal{A}_A,\mathcal{R}_0)
+\]
+を構成しても、
+\[
+\mathcal{T}(S_A)\cong\mathrm{ZFC}
+\]
+が全ての $A\subseteq\mathbb{N}$ について成立することは、現在の定義からは与えられていない。
+
+したがって、
+\[
+\mathcal{P}(\mathbb{N})
+\hookrightarrow
+\mathcal{P}(\mathcal{A}_0)
+\]
+から
+\[
+\mathcal{P}(\mathbb{N})
+\hookrightarrow
+\mathcal{Z}
+\]
+を導くことはできない。
+
+これは、公理選択の符号化と ZFC-compatible Solver の存在を分離する重要な点である。
+
+\section{現在の定義から得られる上界}
+
+\[
+I\subseteq\mathcal{P}(S)
+\]
+なので、
+\[
+|I|
+\leq
+|\mathcal{P}(S)|
+=
+2^{|S|}
+\]
+が得られる。
+
+特に $S$ が可算なら、
+\[
+|I|\leq2^{\aleph_0}.
+\]
+
+しかし、この上界から
+\[
+|I|\leq\aleph_1
+\]
+を導くことはできない。
+
+また、測度の値が
+\[
+\mu(I)\in[0,1]
+\]
+に収まることや、正規化条件を課すことだけからも、$I$ の基数上界として $\aleph_1$ は得られない。
+
+\section{第一段階の判定}
+
+以上より、現在の ECA 定義について、
+
+\[
+\boxed{
+\mathcal{P}(\mathbb{N})
+\hookrightarrow
+\mathcal{P}(\mathcal{A}_0)
+}
+\]
+までは構成できる。
+
+一方、
+\[
+\boxed{
+\mathcal{P}(\mathbb{N})
+\hookrightarrow I
+}
+\]
+には
+\[
+\forall A\subseteq\mathbb{N},\quad
+\mathcal{A}_A\in I
+\]
+が必要であり、これは現行定義からは導出されない。
+
+さらに、
+\[
+S_A=(\mathcal{A}_A,\mathcal{R}_0)
+\]
+を構成しても、
+\[
+S_A\in\mathcal{Z}
+\]
+を全ての $A\subseteq\mathbb{N}$ について保証することはできない。
+
+したがって、
+\[
+\boxed{
+\mathcal{P}(\mathbb{N})
+\hookrightarrow
+\mathcal{P}(\mathcal{A}_0)
+}
+\]
+と
+\[
+\boxed{
+\mathcal{P}(\mathbb{N})
+\hookrightarrow
+I
+}
+\]
+は明確に別の命題である。
+
+\section{CH に対する意味}
+
+CH の上界
+\[
+2^{\aleph_0}\leq\aleph_1
+\]
+を得るために、例えば
+\[
+\mathcal{P}(\mathbb{N})
+\hookrightarrow I
+\hookrightarrow\omega_1
+\]
+という構造が必要になる。
+
+しかし現時点で確認できるのは
+\[
+\mathcal{P}(\mathbb{N})
+\hookrightarrow
+\mathcal{P}(\mathcal{A}_0)
+\]
+と
+\[
+I\subseteq\mathcal{P}(S)
+\]
+までである。
+
+したがって、第一段階
+\[
+\mathcal{P}(\mathbb{N})\hookrightarrow I
+\]
+から既に追加条件が必要であり、その後さらに
+\[
+I\hookrightarrow\omega_1
+\]
+を構成する必要がある。
+
+\section{追加条件を仮定した場合}
+
+仮に
+\[
+\boxed{
+\mathcal{P}(\mathcal{A}_0)\subseteq I
+}
+\]
+を追加条件として置けば、
+\[
+\mathcal{P}(\mathbb{N})
+\hookrightarrow
+\mathcal{P}(\mathcal{A}_0)
+\hookrightarrow I
+\]
+が成立する。
+
+しかし、この場合に得られるのは
+\[
+|I|\geq2^{\aleph_0}
+\]
+であり、さらに
+\[
+I\subseteq\mathcal{P}(\mathcal{A}_0)
+\]
+も仮定すれば
+\[
+|I|=2^{\aleph_0}
+\]
+となる。
+
+それでも、
+\[
+|I|=\aleph_1
+\]
+は導かれない。
+
+したがって、
+\[
+\boxed{
+\mathcal{P}(\mathcal{A}_0)\subseteq I
+}
+\]
+だけでは CH の証明にはならない。
+
+\section{次段階}
+
+次に検証すべきなのは、
+\[
+I\hookrightarrow\omega_1
+\]
+を新しい公理として導入することではなく、既存の ECA 構造
+
+\[
+B(i)\subseteq i\subseteq S,
+\]
+\[
+i_S=\mathfrak{A}(S),
+\]
+\[
+D_S=B(i_S),
+\]
+\[
+C_S^{(\mu)}=\mu_S,
+\]
+\[
+E_{\mathrm d}(S),
+\qquad
+E_{\mathrm c}(S),
+\qquad
+\mathcal G(S)
+\]
+
+の中に、$I$ の元を $\omega_1$ 以下へ分類できる rank 型構造が存在するかどうかである。
+
+すなわち次段階の核心は、
+
+\[
+\boxed{
+\text{ECA の既存構造から }
+\rho:I\hookrightarrow\omega_1
+\text{ を構成できるか}
+}
+\]
+
+である。
+
+\section{結論}
+
+第5段階では、公理選択の符号化について、
+
+\[
+\boxed{
+\mathcal{P}(\mathbb{N})
+\hookrightarrow
+\mathcal{P}(\mathcal{A}_0)
+}
+\]
+
+を確認した。
+
+しかし、
+
+\[
+\mathcal{A}_A\subseteq S
+\]
+から
+\[
+\mathcal{A}_A\in I
+\]
+は導けず、また
+\[
+S_A=(\mathcal{A}_A,\mathcal{R}_0)
+\]
+を作っただけでは
+\[
+S_A\in\mathcal{Z}
+\]
+も保証されない。
+
+したがって、現行 ECA 定義から CH の上界
+\[
+2^{\aleph_0}\leq\aleph_1
+\]
+へ進むには、まず
+\[
+\mathcal{P}(\mathbb{N})\hookrightarrow I
+\]
+を成立させる根拠を探し、その後に
+\[
+I\hookrightarrow\omega_1
+\]
+を検証する必要がある。
+
+
+
+
+
+
+
+\section{ECA における通常の数学的対象の構成 \large{第6段階：公理選択空間 $I$ から $\omega_1$ への写像可能性の検証}}
+
+\section{目的}
+
+第5段階では、可算な公理候補集合
+\[
+\mathcal{A}_0=\{a_1,a_2,\ldots\}\cong\mathbb{N}
+\]
+を用いることで
+\[
+\mathcal{P}(\mathbb{N})
+\hookrightarrow
+\mathcal{P}(\mathcal{A}_0)
+\]
+を構成した。
+
+一方、ECA の公理選択空間は
+\[
+I\subseteq\mathcal{P}(S)
+\]
+であり、一般には
+\[
+\mathcal{P}(\mathbb{N})\hookrightarrow I
+\]
+すら未証明である。
+
+本段階では、さらにその先にある
+\[
+I\hookrightarrow\omega_1
+\]
+について、既存の ECA 構造から導出可能かを検証する。
+
+\section{既存の構造}
+
+Solver は
+\[
+\Solver
+=
+\{S\mid S=(\mathcal{A}_S,\mathcal{R}_S)\}
+\]
+であり、理論写像
+\[
+\mathcal{T}:\Solver\longrightarrow\Th
+\]
+を持つ。
+
+ZFC-compatible Solver 領域は
+\[
+\mathcal{Z}
+=
+\left\{
+S\in\Solver\mid
+\mathcal{T}(S)\cong\mathrm{ZFC}
+\right\}
+\]
+である。
+
+ECA の公理選択空間について
+\[
+I\subseteq\mathcal{P}(S)
+\]
+とし、適合 Solver を
+\[
+\mathcal{S}_I
+=
+\{S\in\Solver\mid\mathcal{A}_S\in I\}
+\]
+とする。
+
+公理選択写像は
+\[
+\mathfrak{A}:\mathcal{S}_I\to I,
+\qquad
+\mathfrak{A}(S)=\mathcal{A}_S
+\]
+であり、
+\[
+i_S=\mathfrak{A}(S)=\mathcal{A}_S
+\]
+と書く。
+
+さらに
+\[
+B(i_S)\subseteq i_S\subseteq S,
+\qquad
+D_S=B(i_S)
+\]
+があり、評価構造として
+\[
+E_{\mathrm{d}}(S)
+=
+\sum_{b\in D_S}w_S(b)
+\]
+および
+\[
+E_{\mathrm{c}}(S)
+=
+\int_S\mathbf 1_{i_S}(u)\,d\mu_S(u)
+\]
+が定義される。
+
+中間 Solver では
+\[
+\mathcal{G}(S)
+=
+\Phi_S
+\left(
+E_{\mathrm{d}}(S),E_{\mathrm{c}}(S)
+\right)
+\]
+という一般解への接続が与えられる。
+
+\section{$\omega_1$ への写像に必要なもの}
+
+$\omega_1$ は最初の非可算順序数である。
+
+したがって、
+\[
+\rho:I\to\omega_1
+\]
+を構成するためには、少なくとも $I$ の各元に対して、可算な順序数を割り当てるための構造が必要になる。
+
+特に、
+\[
+\rho:I\hookrightarrow\omega_1
+\]
+を単射として得るなら、$I$ 上に
+\[
+\alpha(i)<\omega_1
+\]
+という識別可能な rank を構成し、それが異なる $i$ に対して異なる値を取ることを証明しなければならない。
+
+\begin{remark}
+ここで重要なのは、単に $I$ が集合であることから rank
+$\rho:I\to\omega_1$ が得られるわけではない点である。
+\end{remark}
+
+\section{$B(i)\subseteq i$ から rank は得られるか}
+
+既存の関係
+\[
+B(i)\subseteq i
+\]
+は、各公理選択 $i$ の内部に離散的要素集合 $B(i)$ が存在することを表す。
+
+しかし、これだけでは
+\[
+B(i_1),B(i_2)
+\]
+の間に順序関係は定義されていない。
+
+したがって、
+\[
+B(i)
+\]
+の包含関係や濃度を用いて
+\[
+i\mapsto\alpha_i
+\]
+を定義するためには、追加の性質が必要である。
+
+例えば、
+\[
+i_1\neq i_2
+\quad\Longrightarrow\quad
+B(i_1)\neq B(i_2)
+\]
+すら現在の定義からは導かれない。
+
+実際、
+\[
+B(i_1)=B(i_2)
+\]
+であっても
+\[
+i_1\neq i_2
+\]
+であることは定義上排除されていない。
+
+したがって、
+\[
+i\mapsto B(i)
+\]
+は一般には $I$ の埋め込みを与えない。
+
+\section{$E_{\mathrm{d}}$ による rank の構成可能性}
+
+離散評価は
+\[
+E_{\mathrm{d}}(S)
+=
+\sum_{b\in D_S}w_S(b)
+\]
+である。
+
+これは
+\[
+E_{\mathrm{d}}(S)\in[0,1]
+\]
+という実数値評価を与えるが、実数値であることだけでは
+\[
+I\hookrightarrow\omega_1
+\]
+を意味しない。
+
+特に、異なる Solver または異なる公理選択について
+\[
+E_{\mathrm{d}}(S_1)=E_{\mathrm{d}}(S_2)
+\]
+となることを定義上排除していない。
+
+したがって、
+\[
+S\mapsto E_{\mathrm{d}}(S)
+\]
+は一般には単射ではない。
+
+さらに、
+\[
+[0,1]
+\]
+自体は
+\[
+\omega_1
+\]
+への単射を現在の ECA 定義から与える構造ではない。
+
+よって、
+\[
+E_{\mathrm{d}}
+\]
+だけから
+\[
+I\hookrightarrow\omega_1
+\]
+を導くことはできない。
+
+\section{$E_{\mathrm{c}}$ による rank の構成可能性}
+
+連続評価は
+\[
+E_{\mathrm{c}}(S)
+=
+\int_S\mathbf 1_{i_S}(u)\,d\mu_S(u)
+\]
+である。
+
+これも実数値であるため、
+\[
+E_{\mathrm{c}}(S)\in[0,1]
+\]
+となるが、異なる $i_S$ に対して同じ値を取ることが可能である。
+
+したがって、
+\[
+i\mapsto E_{\mathrm{c}}(i)
+\]
+を $I$ 上の単射として扱う根拠は現時点ではない。
+
+また、測度は集合を順序数に分類する構造ではない。
+
+ゆえに、
+\[
+E_{\mathrm{c}}
+\]
+だけから
+\[
+I\hookrightarrow\omega_1
+\]
+を得ることもできない。
+
+\section{$E_{\mathrm{d}}$ と $E_{\mathrm{c}}$ の組による可能性}
+
+中間 Solver では
+\[
+\left(
+E_{\mathrm{d}}(S),
+E_{\mathrm{c}}(S)
+\right)
+\]
+が一般解
+\[
+\mathcal{G}(S)
+=
+\Phi_S
+\left(
+E_{\mathrm{d}}(S),E_{\mathrm{c}}(S)
+\right)
+\]
+に接続される。
+
+したがって、
+\[
+I\to[0,1]^2
+\]
+という評価写像を考えることはできる。
+
+しかし、
+\[
+[0,1]^2
+\]
+への写像であることから
+\[
+I\hookrightarrow\omega_1
+\]
+は導かれない。
+
+さらに、
+\[
+(E_{\mathrm{d}},E_{\mathrm{c}})
+\]
+が $I$ 上で単射であることも現在の定義からは保証されない。
+
+したがって、
+\[
+\boxed{
+(E_{\mathrm{d}},E_{\mathrm{c}})
+\text{ だけでは CH の上界を導けない}
+}
+\]
+と判断される。
+
+\section{$\mathfrak{A}$ と $\mathcal{Z}$ の利用}
+
+CH の分岐を考える場合、
+\[
+\mathcal{Z}_{\mathrm{CH}},
+\qquad
+\mathcal{Z}_{\neg\mathrm{CH}}
+\]
+に対して
+\[
+\mathfrak{A}:
+\mathcal{Z}_{\mathrm{CH}}\to I,
+\qquad
+\mathfrak{A}:
+\mathcal{Z}_{\neg\mathrm{CH}}\to I
+\]
+という制限写像が考えられる。
+
+しかし、$\mathfrak{A}$ は Solver から公理選択を取り出す写像であり、
+\[
+I\to\omega_1
+\]
+の rank 写像ではない。
+
+また、
+\[
+\mathfrak{A}(S_1)=\mathfrak{A}(S_2)
+\]
+となることも排除されていない。
+
+したがって、
+\[
+|\mathcal{Z}|
+\]
+や
+\[
+|\mathcal{Z}_{\mathrm{CH}}|
+\]
+から直接
+\[
+|I|\leq\aleph_1
+\]
+を導くこともできない。
+
+\section{$S'\preceq S$ による rank の可能性}
+
+既存の構造には
+\[
+S'\preceq S
+\]
+という部分 Solver の関係がある。
+
+これを rank 構造へ利用するには、少なくとも
+\[
+\preceq
+\]
+が $I$ の元を比較するための十分な順序構造を誘導する必要がある。
+
+例えば仮に、
+\[
+i_1\triangleleft i_2
+\]
+を
+\[
+\exists S_1,S_2\in\mathcal{S}_I
+\quad
+\left(
+\mathfrak{A}(S_1)=i_1,\,
+\mathfrak{A}(S_2)=i_2,\,
+S_1\preceq S_2
+\right)
+\]
+などによって定義したとしても、現在の定義だけでは
+
+\begin{enumerate}[label=(\arabic*)]
+\item 反射律・反対称律・推移律
+\item $I$ 上の全順序性
+\item 良順序性
+\item 各初期部分集合が可算であること
+\end{enumerate}
+
+が保証されていない。
+
+したがって、$S'\preceq S$ は rank の候補となり得るが
+\[
+I\hookrightarrow\omega_1
+\]
+を現時点で証明する構造にはなっていない。
+
+\section{現在の ECA から確定できる範囲}
+
+以上をまとめると、現在の ECA の既存構造からは、
+
+\[
+i_S=\mathfrak{A}(S),
+\]
+\[
+B(i_S)\subseteq i_S,
+\]
+\[
+D_S=B(i_S),
+\]
+\[
+E_{\mathrm{d}}(S),
+\quad
+E_{\mathrm{c}}(S),
+\quad
+\mathcal{G}(S)
+\]
+
+という構造までは確定している。
+
+しかし、
+\[
+I\hookrightarrow\omega_1
+\]
+に必要な
+
+\[
+\boxed{
+\text{$I$ 上の well-order または同等の rank 構造}
+}
+\]
+
+は、現在確認されている定義からは導出されない。
+
+したがって、
+
+\[
+\boxed{
+\mathcal{P}(\mathbb{N})
+\hookrightarrow I
+\hookrightarrow\omega_1
+}
+\]
+
+という CH 導出経路は、現段階では未成立である。
+
+\section{条件付き命題}
+
+一方、もし ECA の既存構造から、ある写像
+\[
+\rho:I\to\omega_1
+\]
+について
+\[
+i_1\neq i_2
+\quad\Longrightarrow\quad
+\rho(i_1)\neq\rho(i_2)
+\]
+を証明できれば、
+\[
+|I|\leq\aleph_1
+\]
+が得られる。
+
+さらに、第5段階で必要とされた
+\[
+\mathcal{P}(\mathbb{N})\hookrightarrow I
+\]
+も証明できれば、
+
+\[
+2^{\aleph_0}
+=
+|\mathcal{P}(\mathbb{N})|
+\leq
+|I|
+\leq
+\aleph_1
+\]
+となる。
+
+通常数学から既に
+\[
+\aleph_1\leq2^{\aleph_0}
+\]
+が成立するため、
+
+\[
+\boxed{
+2^{\aleph_0}=\aleph_1
+}
+\]
+
+が従う。
+
+したがって、CH を得るための ECA 側の核心条件は、
+
+\[
+\boxed{
+\mathcal{P}(\mathbb{N})\hookrightarrow I
+\quad\text{かつ}\quad
+I\hookrightarrow\omega_1
+}
+\]
+
+である。
+
+\section{次段階の課題}
+
+次に行うべきことは、新しい rank をいきなり公理として導入することではない。
+
+既存の
+
+\[
+B(i),\quad
+i_S,\quad
+D_S,\quad
+C_S,\quad
+S'\preceq S
+\]
+
+の組み合わせから、自然に定義できる順序・階層が存在するかを具体的に調べることである。
+
+特に、
+
+\[
+B(i_1)\subsetneq B(i_2)
+\]
+のような包含関係、
+
+\[
+i_1\subsetneq i_2,
+\]
+または
+\[
+S_1\preceq S_2
+\]
+
+がどの程度 $I$ 上の階層を決定できるかを検証する必要がある。
+
+ただし、その結果として well-order が得られなければ、
+\[
+I\hookrightarrow\omega_1
+\]
+は ECA の現行構造からは導出不能である。
+
+\section{結論}
+
+第6段階では、既存の ECA 構造から
+\[
+I\hookrightarrow\omega_1
+\]
+を構成できるかを検証した。
+
+その結果、
+
+\[
+B(i),\quad
+E_{\mathrm{d}},\quad
+E_{\mathrm{c}},\quad
+\mathcal{G}
+\]
+
+はいずれも現在の定義だけでは $I$ 上の単射的 rank を与えず、
+\[
+S'\preceq S
+\]
+も $I$ 上の well-order を構成するための性質がまだ不足している。
+
+したがって現段階では、
+
+\[
+\boxed{
+\mathcal{P}(\mathbb{N})\hookrightarrow I
+}
+\]
+も
+\[
+\boxed{
+I\hookrightarrow\omega_1
+}
+\]
+も未証明である。
+
+特に CH の証明に必要な核心は、ECA の連続評価値そのものではなく、
+
+\[
+\boxed{
+\text{$I$ の各元を可算順序数によって一意に階層化できる構造}
+}
+\]
+
+が既存の ECA 定義から導出できるかどうかにある。
+
+
+\section{ECA における通常の数学的対象の構成 \large{第7段階：$B(i)$、$i_S$、$S'\preceq S$ による階層構造の検証}}
+
+\section{目的}
+
+第6段階では、
+\[
+I\hookrightarrow\omega_1
+\]
+を既存の ECA 構造から構成できるかを検証した。
+
+その結果、単独の
+\[
+B(i),\quad E_{\mathrm{d}},\quad E_{\mathrm{c}},\quad\mathcal G
+\]
+からは $I$ 上の単射的 rank を導く根拠がなく、
+\[
+S'\preceq S
+\]
+についても、それだけでは $I$ 上の well-order を保証できないことを確認した。
+
+本段階では、これらを個別に見るのではなく、
+
+\[
+S
+\longrightarrow
+i_S=\mathfrak A(S)
+\longrightarrow
+B(i_S)=D_S
+\]
+
+および
+
+\[
+S'\preceq S
+\]
+
+の関係を組み合わせたときに、既存定義の範囲内で自然な階層構造が得られるかを検証する。
+
+\section{公理選択から離散構造への写像}
+
+ECA では
+\[
+i_S=\mathfrak A(S)=\mathcal{A}_S
+\]
+であり、
+\[
+B(i_S)\subseteq i_S\subseteq S
+\]
+を満たす。
+
+さらに
+\[
+D_S:=B(i_S)
+\]
+である。
+
+したがって Solver $S$ に対して
+\[
+S
+\longmapsto
+i_S
+\longmapsto
+D_S
+\]
+という構造的対応が存在する。
+
+しかし、これを $I$ 上の rank とみなすためには、
+\[
+i_1\neq i_2
+\quad\Longrightarrow\quad
+D(i_1)\neq D(i_2)
+\]
+などの識別性が必要になる。
+
+現在の定義にはこの条件は含まれていない。
+
+\section{$B(i)$ の包含関係}
+
+$i_1,i_2\in I$ に対して
+\[
+B(i_1)\subseteq B(i_2)
+\]
+を考えること自体は可能である。
+
+これによって、例えば
+\[
+i_1\preceq_B i_2
+\quad\Longleftrightarrow\quad
+B(i_1)\subseteq B(i_2)
+\]
+という関係を候補として考えられる。
+
+ただし、これは現時点では \emph{新たに定義した候補関係} であり、既存 ECA の公理として与えられた順序ではない。
+
+さらに、この関係についても、
+
+\begin{enumerate}[label=(\arabic*)]
+\item 反射律、
+\item 反対称律、
+\item 推移律、
+\item 全順序性、
+\item well-order 性
+\end{enumerate}
+
+の全てを $I$ 上で保証する定義は存在しない。
+
+特に
+\[
+B(i_1)=B(i_2)
+\]
+かつ
+\[
+i_1\neq i_2
+\]
+が排除されていないため、$\preceq_B$ は一般には反対称性を満たすとは限らない。
+
+したがって、
+\[
+B(i)
+\]
+の包含関係だけから $I$ の rank は構成できない。
+
+\section{$i_S$ 自体の包含関係}
+
+同様に、
+\[
+i_1\subseteq i_2
+\]
+を考えることもできる。
+
+しかし、これも現在の ECA 定義において $I$ 上の well-order として定義されているわけではない。
+
+例えば、異なる二つの元について
+\[
+i_1\nsubseteq i_2,
+\qquad
+i_2\nsubseteq i_1
+\]
+となることを排除する条件はない。
+
+したがって $I$ は一般には包含関係によって線形順序されていない。
+
+さらに、
+\[
+I\subseteq\mathcal{P}(S)
+\]
+なので、包含関係は一般に部分順序に留まり、$\omega_1$ のような整列順序を自動的には与えない。
+
+\section{$S'\preceq S$ の役割}
+
+既存の部分 Solver 関係
+\[
+S'\preceq S
+\]
+を考える。
+
+これを公理選択へ写すと、
+\[
+S'\preceq S
+\quad\Longrightarrow\quad
+i_{S'}=\mathfrak A(S'),
+\quad
+i_S=\mathfrak A(S)
+\]
+である。
+
+しかし、
+\[
+S'\preceq S
+\]
+から
+\[
+i_{S'}\subseteq i_S
+\]
+が導かれることは、現在確認されている定義には含まれていない。
+
+同様に、
+\[
+B(i_{S'})\subseteq B(i_S)
+\]
+も自動的には導かれない。
+
+したがって、部分 Solver 関係から公理選択空間 $I$ 上の順序を直接構成することはできない。
+
+\section{商構造を利用する可能性}
+
+$B$ が異なる $i$ を同じ値へ送る可能性があるなら、
+\[
+i_1\sim_B i_2
+\quad\Longleftrightarrow\quad
+B(i_1)=B(i_2)
+\]
+という同値関係を考えることができる。
+
+これは $B$ による情報の同一視を表す候補である。
+
+すると
+\[
+I/{\sim_B}
+\]
+上では
+\[
+[i_1]\leq[i_2]
+\quad\Longleftrightarrow\quad
+B(i_1)\subseteq B(i_2)
+\]
+という順序を検討できる。
+
+しかし、これも現段階では新たに導入した候補構造であり、既存 ECA の定義として与えられたものではない。
+
+さらに、この商構造が well-order になることも証明されていない。
+
+したがって、
+\[
+I/{\sim_B}\hookrightarrow\omega_1
+\]
+も現時点では未証明である。
+
+\section{$B(i)$ の濃度を rank とする可能性}
+
+別の候補として
+\[
+i\longmapsto |B(i)|
+\]
+を考えることができる。
+
+しかし、$B(i)$ の濃度は一般に
+\[
+|B(i)|\leq\aleph_0
+\]
+のような可算値だけではなく、ECA の一般定義上、どの基数になるかは別途の構造に依存する。
+
+また、異なる $i$ に対して
+\[
+|B(i_1)|=|B(i_2)|
+\]
+となることは当然可能であり、これを rank としても単射性はない。
+
+したがって、
+\[
+|B(i)|
+\]
+だけから
+\[
+I\hookrightarrow\omega_1
+\]
+は得られない。
+
+\section{$B(i)$ の有限段階反復}
+
+$B$ を一回適用した
+\[
+B(i)
+\]
+だけでなく、
+\[
+B^2(i):=B(B(i)),
+\qquad
+B^3(i):=B(B^2(i))
+\]
+のような反復を考えれば階層が生じる可能性がある。
+
+しかし、現行の定義では $B$ の定義域が
+\[
+I
+\]
+であることから、
+\[
+B(i)\in I
+\]
+が保証されているわけではない。
+
+したがって一般には
+\[
+B(B(i))
+\]
+は定義できない。
+
+よって、この方法によって rank を構成することも現行定義からはできない。
+
+\section{$E_{\mathrm{d}}$ との組合せ}
+
+\[
+D_S=B(i_S)
+\]
+に対して
+\[
+E_{\mathrm{d}}(S)
+=
+\sum_{b\in D_S}w_S(b)
+\]
+が与えられる。
+
+ここで仮に
+\[
+B(i_1)\subsetneq B(i_2)
+\]
+ならば評価値に一定の単調性があることを期待したくなるが、現在の定義だけではそれも保証されない。
+
+重み
+\[
+w_S(b)
+\]
+が Solver ごとに異なるため、
+\[
+B(i_1)\subsetneq B(i_2)
+\]
+であっても
+\[
+E_{\mathrm{d}}(S_1)
+<
+E_{\mathrm{d}}(S_2)
+\]
+とは限らない。
+
+したがって $E_{\mathrm{d}}$ は rank を補完する可能性はあるものの、現在の定義だけから順序埋め込みを構成するものではない。
+
+\section{$E_{\mathrm{c}}$ との組合せ}
+
+連続評価
+\[
+E_{\mathrm{c}}(S)
+=
+\int_S\mathbf1_{i_S}(u)\,d\mu_S(u)
+\]
+についても同様である。
+
+例えば
+\[
+i_{S_1}\subsetneq i_{S_2}
+\]
+であっても、測度が異なる場合には
+\[
+E_{\mathrm{c}}(S_1)
+<
+E_{\mathrm{c}}(S_2)
+\]
+を保証できない。
+
+さらに同一の測度空間であったとしても、評価値は $I$ の元を一意に識別するとは限らない。
+
+したがって、
+\[
+E_{\mathrm{c}}
+\]
+も単独では rank を与えない。
+
+\section{$B$、$E_{\mathrm{d}}$、$E_{\mathrm{c}}$ の組合せ}
+
+より多くの情報を使って
+\[
+i
+\longmapsto
+\left(
+B(i),
+E_{\mathrm{d}}(i),
+E_{\mathrm{c}}(i)
+\right)
+\]
+を考えることはできる。
+
+しかし、この写像が単射であることは現在の定義から証明されていない。
+
+したがって、
+\[
+I
+\hookrightarrow
+\mathcal{P}(S)\times[0,1]^2
+\]
+という形の情報を得られたとしても、
+\[
+I\hookrightarrow\omega_1
+\]
+には直結しない。
+
+\section{CH への到達可能性}
+
+CH の上界
+\[
+2^{\aleph_0}\leq\aleph_1
+\]
+を ECA から導くためには、少なくとも
+\[
+\mathcal{P}(\mathbb{N})\hookrightarrow I
+\]
+と
+\[
+I\hookrightarrow\omega_1
+\]
+が必要となる。
+
+第5段階で前者は未証明であり、第6・7段階で後者についても既存構造からは導けないことが確認された。
+
+したがって現在の ECA 定義からは、
+
+\[
+\boxed{
+2^{\aleph_0}\leq\aleph_1
+}
+\]
+
+を導く論理鎖は完成していない。
+
+\section{重要な判定}
+
+ここまでの検証から、現在の ECA 構造について次のことを区別できる。
+
+\begin{enumerate}[label=(\arabic*)]
+\item $B(i)$ は $i$ の離散的要素を抽出する構造である。
+\item $i_S=\mathfrak A(S)$ は Solver から公理選択を復元する構造である。
+\item $D_S=B(i_S)$ は離散評価対象を与える。
+\item $E_{\mathrm{d}}$ と $E_{\mathrm{c}}$ は評価値を与える。
+\item $S'\preceq S$ は部分 Solver の関係である。
+\item しかし、これらを組み合わせても、現行定義だけでは $I$ 上の well-order は得られない。
+\end{enumerate}
+
+したがって、
+\[
+\boxed{
+\text{ECA の「連続性」は、現時点では }I\text{ の順序型を決定していない}
+}
+\]
+と判断される。
+
+\section{次に検証すべきこと}
+
+ここで重要な分岐が生じる。
+
+既存構造から rank が得られないなら、次に調べるべきなのは
+\[
+\mathcal T(S)
+\]
+そのものが持つ通常数学の構造である。
+
+特に $S\in\mathcal{Z}$ なら
+\[
+\mathcal T(S)\cong\mathrm{ZFC}
+\]
+であるため、$\mathcal T(S)$ の内部で構成した
+\[
+\mathbb{N}^S,\quad
+\mathbb Z^S,\quad
+\mathbb Q^S,\quad
+\mathbb R^S,\quad
+\mathcal{P}(\mathbb{N}^S)
+\]
+と、ECA の
+\[
+I,\quad B(i_S),\quad C_S,\quad E_{\mathrm{d}},\quad E_{\mathrm{c}}
+\]
+との対応を改めて直接調べる必要がある。
+
+特に重要なのは、
+
+\[
+\boxed{
+\mathcal{P}(\mathbb{N}^S)
+\text{ が }I\text{ の構造として表現されるか}
+}
+\]
+
+である。
+
+もしその対応が成立しないなら、ECA の $I$ は連続体濃度の担体ではなく、単に公理選択の構造を表す空間である可能性が高い。
+
+逆に、対応が成立し、さらにその構造に既存の $S'\preceq S$ 等から well-order が導かれるなら、CH への道が残る。
+
+\section{結論}
+
+第7段階では、
+
+\[
+B(i),\quad i_S,\quad D_S,\quad
+E_{\mathrm{d}},\quad E_{\mathrm{c}},\quad S'\preceq S
+\]
+
+を組み合わせて $I$ 上の rank を構成できるか検証した。
+
+結果として、現在の定義から確定するのは
+
+\[
+S
+\longrightarrow
+i_S
+\longrightarrow
+B(i_S)=D_S
+\longrightarrow
+(E_{\mathrm{d}}(S),E_{\mathrm{c}}(S))
+\longrightarrow
+\mathcal G(S)
+\]
+
+という評価・一般解への構造であり、
+
+\[
+I\longrightarrow\omega_1
+\]
+
+という整列構造ではない。
+
+したがって現時点では、
+
+\[
+\boxed{
+\mathcal{P}(\mathbb{N})
+\hookrightarrow I
+\hookrightarrow\omega_1
+}
+\]
+
+による CH の導出は成立していない。
+
+次段階では、ECA の外部的な rank を仮定するのではなく、
+
+\[
+\mathcal T(S)\cong\mathrm{ZFC}
+\]
+
+の内部で既に構成された
+
+\[
+\mathcal{P}(\mathbb{N}^S)
+\]
+
+が ECA の $I$ とどのように対応するかを直接検証する。
+
+
+
+\end{document}

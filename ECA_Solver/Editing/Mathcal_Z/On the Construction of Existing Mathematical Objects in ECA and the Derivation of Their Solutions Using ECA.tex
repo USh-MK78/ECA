@@ -1,0 +1,537 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\geometry{top=25mm,bottom=25mm,left=25mm,right=25mm}
+
+\newtheorem{definition}{定義}[section]
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{proposition}[definition]{命題}
+\newtheorem{lemma}[definition]{補題}
+\newtheorem{corollary}[definition]{系}
+\newtheorem{remark}[definition]{注記}
+
+\title{ECA における既存の数学的対象の構成とECAを用いたその解の導出について}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{目的と問題設定}
+\label{sec:introduction}
+
+本稿では、拡張連続性公理（Extended Continuity Axiom; ECA）において $\mathbb{N}$、$\mathbb{Z}$、$\mathbb{Q}$、$\mathbb{R}$ のような既存数学の基本的な数学的対象を構成したとき、ECA の構造がどのような解を返すのかを整理する。
+
+本稿の目的は次の順序を基本方針とし、その主な目的として「ECA から得られた解を通常数学の体系へ解釈した結果として成立するか否かを検証する対象として位置付ける」ものである。
+\[
+\boxed{
+\begin{aligned}
+&\text{ECA}
+\longrightarrow
+\text{数学的対象の構成}
+\longrightarrow
+\text{ECA 内部での表現}\\
+&\longrightarrow
+\text{ECA 側の解}
+\longrightarrow
+\text{通常数学への解釈}
+\longrightarrow
+\text{連続体濃度に関する命題}\\
+&\longrightarrow
+\text{必要なら CH の検討}
+\end{aligned}}
+\]
+
+
+\section{既存の ECA 構造}
+\label{sec:existing-structure}
+
+ECA における Solver 集合を $\mathcal{S}$ とする。
+各 $S\in\mathcal{S}$ は、所定の公理選択、推論規則および構成制約のもとで対象を評価するための構造であり、
+\[
+\boxed{S=(\mathcal{A}_S,\mathcal{R}_S)}
+\]
+と表す。
+
+ここで $\mathcal{A}_S$ は採用される公理選択の集合、$\mathcal{R}_S$ は推論規則および構成制約の集合を表す。
+
+一般解を与える写像を
+\[
+\mathcal{G}:\mathcal{S}\longrightarrow X
+\]
+とし、必要に応じて最終的な評価を
+\[
+\Psi:X\longrightarrow\mathbb{R}
+\]
+によって行う。したがって、
+\[
+g=\Psi\circ\mathcal{G}
+\]
+と表せる。
+
+既存の具体的導出例で確認されている基本的な流れは、
+\[
+\boxed{
+\text{既存数学の命題}
+\longrightarrow
+\text{Solver}
+\longrightarrow
+\text{評価構造}
+\longrightarrow
+\text{一般解}}
+\]
+である。
+
+\section{$\mathcal{Z}$ の位置付け}
+\label{sec:Z-position}
+
+通常の数学体系を扱うための領域として、
+\[
+\boxed{
+\mathcal{Z}
+=
+\left\{
+S\in\mathcal{S}
+\;\middle|\;
+\mathcal{T}(S)\cong\mathrm{ZFC}
+\right\}}
+\]
+を考える。
+ここで
+\[
+\mathcal{T}:\mathcal{S}\longrightarrow\mathrm{Th}
+\]
+は Solver から理論への対応を与える写像であり、
+\[
+\mathcal{Z}=\mathcal{T}^{-1}([\mathrm{ZFC}])
+\]
+とも書ける。
+
+$\mathcal{Z}$ は ZFC そのものではなく、$\mathbb{N}$、$\mathbb{Q}$、$\mathbb{R}$ のような数学的対象の集合でもない。
+むしろ $S\in\mathcal{Z}$ であることによって、その Solver が通常の ZFC に対応する数学的理論を基盤として数学的対象を扱える領域に属していることを表す。
+
+したがって、数学的対象を ECA の内部で扱う場合には、
+\[
+\boxed{
+S\in\mathcal{Z}
+\longrightarrow
+\mathcal{T}(S)
+\longrightarrow
+\text{数学的対象}}
+\]
+という経路を考える。
+
+例えば $\mathbb{R}\in\mathcal{Z}$ とするのではなく、$S\in\mathcal{Z}$ に対して、その理論 $\mathcal{T}(S)$ の内部で $\mathbb{R}$ を構成するという関係を採用する。
+
+\section{数学的対象の構成}
+\label{sec:construction}
+
+本稿では、
+\[
+\mathbb{N},\qquad
+\mathbb{Z},\qquad
+\mathbb{Q},\qquad
+\mathbb{R}
+\]
+を順に考える。
+
+これは単なる「離散」または「連続」の二択分類を目的とするものではない。
+各対象について、Solver 内部に存在する既存の構造との対応を調べる。
+
+既存の ECA の定式化では、公理選択 $i$ に対して
+\[
+B(i)\subseteq i\subseteq S
+\]
+が与えられ、公理選択空間について
+\[
+I\subseteq\mathcal{P}(S)
+\]
+が与えられる。
+
+また、
+\[
+\mathcal{S}_I
+=
+\left\{
+S\in\mathcal{S}
+\;\middle|\;
+\mathcal{A}_S\in I
+\right\}
+\]
+および
+\[
+\mathfrak{A}:\mathcal{S}_I\longrightarrow I,
+\qquad
+\mathfrak{A}(S)=\mathcal{A}_S
+\]
+を用いる。
+
+したがって、
+\[
+i_S=\mathfrak{A}(S)=\mathcal{A}_S
+\]
+とおけば、
+\[
+B(i_S)\subseteq i_S\subseteq S
+\]
+となる。
+
+この構造を利用して、数学的対象を Solver の内部構造と対応付ける。
+
+\section{Solver 内部における離散・連続構造}
+\label{sec:discrete-continuous}
+
+既存の一般解構築では、Solver に含まれる離散的および連続的な部分を考えるため、
+\[
+D_S,\qquad C_S,\qquad D_S\cap C_S
+\]
+および
+\[
+\operatorname{Type}(S)
+\]
+が用いられる。必要に応じて部分 Solver
+\[
+S'\preceq S
+\]
+を導入する。
+
+離散評価については、
+\[
+E_{\mathrm d}(S)
+=
+\sum_{b\in D_S}w_S(b)
+\]
+という既存の構造を用いる。
+
+一方、連続評価については、
+\[
+E_{\mathrm c}(S)
+=
+\int_S\mathbf{1}_{i_S}(u)\,d\mu_S(u)
+\]
+という構造を用いる。
+
+これらを必要に応じて組み合わせ、
+\[
+\boxed{
+\mathcal{G}(S)
+=
+\Phi_S\left(
+E_{\mathrm d}(S),E_{\mathrm c}(S)
+\right)}
+\]
+という形で一般解へ接続する。
+
+ここで $\Phi_S$ は既存の Solver の評価構造に基づく写像であり、
+本稿ではこれ以上の新たな構造を仮定しない。
+
+\section{$\mathbb{N}$、$\mathbb{Z}$、$\mathbb{Q}$、$\mathbb{R}$ の段階的構成}
+\label{sec:number-systems}
+
+数学的対象の構成は、
+\[
+\boxed{
+\mathbb{N}
+\longrightarrow
+\mathbb{Z}
+\longrightarrow
+\mathbb{Q}
+\longrightarrow
+\mathbb{R}}
+\]
+の順序で考える。
+
+$\mathbb{N}$ では自然数の生成と算術構造を中心として Solver 内部の離散構造を調べる。
+$\mathbb{Z}$ では整数の構成によって $\mathbb{N}$ より広い代数的構造を導入する。
+$\mathbb{Q}$ では整数の比としての有理数を構成し、
+$\mathbb{R}$ では $\mathbb{Q}$ を基礎として完備化その他の既存数学上の構成を行う。
+
+この段階的構成は、
+\[
+\mathbb{N}
+\longrightarrow
+\mathbb{Z}
+\longrightarrow
+\mathbb{Q}
+\longrightarrow
+\mathbb{R}
+\longrightarrow
+\text{極限}
+\longrightarrow
+\text{積分}
+\]
+という既存の具体的導出例における発展系列とも対応する。
+
+ここで重要なのは、これらの数学的対象を単に ECA の記号へ置換することではない。
+各対象について、
+\[
+\text{対象の構成}
+\longrightarrow
+\text{必要な Solver 構造}
+\longrightarrow
+\text{評価}
+\]
+という対応を確認することである。
+
+\section{ECA 側の解}
+\label{sec:eca-solution}
+
+数学的対象 $X$ を Solver $S$ の内部で構成した後、ECA による評価を $\mathcal{G}(S)$ として得る。
+
+本稿でいう「ECA 側の解」とは、あらかじめ通常数学における既知の結論を指定したものではなく
+\[
+\boxed{
+S
+\longrightarrow
+i_S
+\longrightarrow
+(D_S,C_S)
+\longrightarrow
+(E_{\mathrm d}(S),E_{\mathrm c}(S))
+\longrightarrow
+\mathcal{G}(S)}
+\]
+というECA上の既存の構造から得られる結果を指す。
+
+このとき、$\mathcal{G}(S)$ がどのような数学的対象または数学的関係に対応するかを通常数学の側へ解釈する必要がある。
+
+したがって、
+\[
+\boxed{
+\text{ECA 側の解}
+\neq
+\text{あらかじめ設定した既知の数学的結論}}
+\]
+という原則を置く。
+
+\section{連続体濃度への接続}
+\label{sec:continuum}
+
+$\mathbb{R}$ の構成が ECA 内部で確立された後、その構造から得られた ECA 側の解が「通常数学における連続体の濃度とどのように対応するか」を調べる。
+
+通常の集合論では、
+\[
+|\mathbb{R}|
+=
+|\mathcal{P}(\mathbb{N})|
+=
+2^{\aleph_0}
+\]
+が成立する。
+
+しかし、本稿の目的はこの等式を ECA の解として最初から仮定することではない。
+必要なのは、
+\[
+\boxed{
+\text{ECA 側の解}
+\longrightarrow
+\text{通常数学における集合構造}
+\longrightarrow
+\text{その濃度}}
+\]
+という対応を具体的に構成することである。
+
+特に、
+\[
+|\mathcal{Z}|,\qquad
+|\mathcal{G}(\mathcal{Z})|,\qquad
+|g(\mathcal{Z})|
+\]
+と
+\[
+2^{\aleph_0}
+\]
+はそれぞれ異なる対象として扱う。
+
+\[
+\boxed{
+\text{Solver の集合の濃度}
+\neq
+\text{Solver が扱う数学的集合の濃度}}
+\]
+
+したがって、$\mathcal{Z}$ の濃度を直接調べることによって連続体濃度を得ようとはしない。
+
+\section{連続体仮説との関係}
+\label{sec:CH}
+
+連続体仮説は、
+\[
+\boxed{2^{\aleph_0}=\aleph_1}
+\]
+という命題として通常の集合論で表現される。
+
+しかし、本稿ではこの命題を ECA の最終解として設定しない。
+
+正しい順序は
+\[
+\boxed{
+\begin{aligned}
+&\text{数学的対象の構成}
+\longrightarrow
+\text{ECA 内部での表現}
+\longrightarrow
+\text{ECA 側の解}\\
+&\longrightarrow
+\text{濃度構造の解釈}
+\longrightarrow
+\text{CH の検討}
+\end{aligned}}
+\]
+
+である。
+
+したがって、ECA から得られた解を $E_{\mathrm{ECA}}$ と表すなら、
+最終的に検証すべき関係は、例えば
+\[
+E_{\mathrm{ECA}}
+\Longrightarrow
+2^{\aleph_0}=\aleph_1
+\]
+である可能性がある。
+
+しかし、
+\[
+E_{\mathrm{ECA}}
+\Longrightarrow
+2^{\aleph_0}\neq\aleph_1
+\]
+となる可能性もあり、また、
+\[
+E_{\mathrm{ECA}}
+\Longrightarrow
+\text{CH の真偽を決定しない}
+\]
+という結果も排除されない。
+
+さらに、
+\[
+E_{\mathrm{ECA}}
+\Longrightarrow
+\text{CH を含む、より一般的な濃度構造}
+\]
+という可能性もある。
+
+したがって、本稿およびECAにおいては $2^{\aleph_0}=\aleph_1$ を解とするのではなく「ECA が独立に生成した解が通常数学へ解釈された結果として、この命題またはそれ以上の構造が現れるかどうか」を調べるべきであると結論付ける。
+
+\section{本稿における論理的境界}
+\label{sec:boundary}
+
+本稿では、次の三つを明確に区別する。
+
+\subsection{既存数学の結果の再現}
+
+既知の数学的命題 $\varphi$ を Solver 上へ表現し、
+\[
+\text{Solver}
+\longrightarrow
+\text{評価}
+\longrightarrow
+\varphi
+\]
+という対応を確認する場合である。
+これは ECA が既存数学と整合的に機能することを検証するものである。
+
+\subsection{ECA による数学的対象の構成}
+
+既存数学の対象を ECA の構造内に展開し、
+その構成過程と評価構造を明示する場合である。
+ここでは
+\[
+\mathbb{N},\quad
+\mathbb{Z},\quad
+\mathbb{Q},\quad
+\mathbb{R}
+\]
+のような対象が検討される。
+
+\subsection{ECA からの独立した帰結}
+ECA の構造から得られた解を通常数学へ解釈した結果、既知の命題を含む新たな数学的帰結が得られる場合である。
+
+この場合に初めて、
+\[
+E_{\mathrm{ECA}}
+\Longrightarrow
+2^{\aleph_0}=\aleph_1
+\]
+のような関係を、CH に対する ECA の結果として検討することができる。
+
+\section{今後の検討順序}
+\label{sec:future}
+
+今後の検討は、次の順序で進める。
+
+\begin{enumerate}[label=\arabic*.]
+    \item $\mathcal{Z}$ の内部にある Solver を対象として、$\mathbb{N}$、$\mathbb{Z}$、$\mathbb{Q}$、$\mathbb{R}$ を構成する。
+    \item 各数学的対象について、$D_S$、$C_S$、$D_S\cap C_S$、$\operatorname{Type}(S)$ および必要な部分 Solver$S'\preceq S$ との対応を確認する。
+    \item $i_S=\mathfrak{A}(S)$ を用いて $B(i_S)\subseteq i_S\subseteq S$ の構造を対象ごとに確認する。
+
+    \item 離散評価および連続評価
+    \[
+    E_{\mathrm d}(S),\qquad
+    E_{\mathrm c}(S)
+    \]
+    を既存の ECA 構造に従って適用する。
+
+    \item $\mathcal{G}(S)$ として得られる ECA 側の解を明示する。
+    \item 得られた解を通常数学へ解釈し、その解がどの数学的対象・関係に対応するかを確認する。
+    \item $\mathbb{R}$ に対応する解について、連続体濃度との関係を調べる。
+    \item 必要であれば、その結果を用いて $2^{\aleph_0}=\aleph_1$ の導出可能性を独立に検討する。
+\end{enumerate}
+
+この順序により、CH の結論を ECA に先に与えることなく、ECA の構造から得られる結果そのものを先に確定できる。
+
+\section{結語}
+\label{sec:conclusion}
+
+本稿では ECA における数学的対象の構成と一般解の導出について、既存の Solver、評価構造および $\mathcal{Z}$ の位置付けを統合して整理した。
+
+その中心となる構造は
+\[
+\boxed{
+\mathcal{Z}
+\longrightarrow
+S
+\longrightarrow
+\mathcal{T}(S)
+\longrightarrow
+\text{数学的対象}
+\longrightarrow
+\text{ECA 側の解}
+\longrightarrow
+\text{通常数学への解釈}}
+\]
+である。
+
+ここで $\mathcal{Z}$ は
+\[
+\mathcal{Z}
+=
+\left\{
+S\in\mathcal{S}
+\;\middle|\;
+\mathcal{T}(S)\cong\mathrm{ZFC}
+\right\}
+\]
+として、通常の数学的対象を構成するための Solver の領域を指定する。
+
+一方、$2^{\aleph_0}=\aleph_1$ は ECA の解としてあらかじめ与えるものではない。
+ECA によって構成された数学的対象から得られた解を通常数学へ解釈した結果として、この命題が導かれるか否かを検証する。
+したがって、本稿における最も基本的な目標は「ECA は数学的対象を内部で構成したとき、何を解として返すのか」という問いに対して、既存の ECA の定義体系から具体的な解を構成することに集約される。
+
+その上で「既知の CH の結論を ECA に持ち込む」ことと「ECA の構造から CH あるいはそれ以上の数学的帰結を導出する」ことを明確に区別するため、必要に応じて
+\[
+\boxed{
+\text{ECA の解}
+\longrightarrow
+\text{連続体濃度}
+\longrightarrow
+\text{必要なら CH}
+}
+\]
+という段階を踏みながら検討していく。
+
+\end{document}

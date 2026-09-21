@@ -1,0 +1,459 @@
+% ECA_21.tex
+\documentclass[a4paper,11pt]{ltjsarticle}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\geometry{margin=25mm}
+
+\title{ECA_21 $I$ の選択閉包性と $B(i)$ の役割}
+\author{}
+\date{}
+
+\newtheorem{definition}{定義}
+\newtheorem{proposition}{命題}
+\newtheorem{remark}{注意}
+
+\begin{document}
+\maketitle
+
+\section{目的}
+
+ECA_20 では、可算無限公理候補族
+\[
+\mathcal{R}^*=\{r_n\mid n\in\mathbb{N}\}
+\]
+に対して
+\[
+\forall A\subseteq\mathcal{R}^*,
+\qquad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\]
+という局所的な選択閉包条件を検討した。
+
+本稿では、この条件が ECA の既存構造
+\[
+I\subseteq\mathcal{P}(\Ax),
+\qquad
+B(i)\subseteq i\subseteq\Ax
+\]
+から自然に導出される可能性を検査する。
+
+特に、
+\[
+B(i)
+\]
+が単なる部分集合として定義されているだけなのか、それとも公理選択集合 $i$ の構成規則に関する条件を与えるものなのかを区別する。
+
+\section{現行の基本関係}
+
+公理候補集合を
+\[
+\Ax
+\]
+とし、公理選択空間を
+\[
+I\subseteq\mathcal{P}(\Ax)
+\]
+とする。
+
+各
+\[
+i\in I
+\]
+について
+\[
+B(i)\subseteq i\subseteq\Ax
+\]
+を満たす。
+
+また、Solver
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+について
+\[
+\mathcal{A}_s\in I
+\]
+を要求する。
+
+したがって、
+\[
+B(i)
+\]
+は少なくとも形式上は、選択された公理集合 $i$ の内部にある部分集合である。
+
+\section{$B(i)$ から全部分集合閉包を導けるか}
+
+現在の関係
+\[
+B(i)\subseteq i
+\]
+だけから、
+\[
+A\subseteq i
+\Longrightarrow A\in I
+\]
+を導くことはできない。
+
+そもそも $B(i)$ の定義は
+\[
+B(i)\subseteq i
+\]
+であり、
+\[
+B(i)=\mathcal{P}(i)
+\]
+でも
+\[
+B(i)=\{A\subseteq i\mid A\in I\}
+\]
+でもない。
+
+したがって、現行の定義だけでは $B(i)$ によって $I$ の閉包性を表現することはできない。
+
+\begin{proposition}
+\[
+I\subseteq\mathcal{P}(\Ax),
+\qquad
+B(i)\subseteq i
+\]
+だけでは、
+\[
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\]
+は導出できない。
+\end{proposition}
+
+\begin{proof}
+例えば
+\[
+I=\{\mathcal{A}_{\mathrm{ZFC}}\}
+\]
+とし、
+\[
+B(\mathcal{A}_{\mathrm{ZFC}})
+=
+\varnothing
+\]
+とすれば、
+\[
+B(i)\subseteq i\subseteq\Ax
+\]
+は成立する。
+
+一方、$\mathcal{R}^*\neq\varnothing$ なら、一般に
+\[
+\mathcal{A}_{\mathrm{ZFC}}\cup A
+\notin I
+\]
+となる $A\subseteq\mathcal{R}^*$ が存在する。
+
+よって、現在の包含関係だけでは選択閉包性は導けない。
+\end{proof}
+
+\section{$B(i)$ を選択可能部分族として読む場合}
+
+別の定義として、
+\[
+B(i)
+=
+\{A\subseteq i\mid A\text{ が許容される}\}
+\]
+のように、$B(i)$ を $i$ 内部の選択可能部分集合族として定義することは考えられる。
+
+この場合には
+\[
+B(i)\subseteq\mathcal{P}(i)
+\]
+となる。
+
+さらに
+\[
+B(i)=\mathcal{P}(i)
+\]
+を仮定すれば、$i$ の任意の部分集合が $B(i)$ に属する。
+
+しかし、これは現在の
+\[
+B(i)\subseteq i
+\]
+とは別の定義である。
+
+したがって、この解釈を ECA に導入する場合は、既存の $B(i)$ の意味を変更することになるため、現時点では導入せず、別案として扱う。
+
+\section{$I$ の局所閉包性を直接定義する場合}
+
+$B(i)$ を変更せずに、$I$ の閉包性を直接記述する方法がある。
+
+対象となる
+\[
+\mathcal{R}^*\subseteq\Ax
+\]
+と
+\[
+\mathcal{A}_{\mathrm{ZFC}}\subseteq\Ax
+\]
+に対して、
+\[
+\boxed{
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+}
+\]
+を直接条件として置く。
+
+この方法では
+\[
+B(i)
+\]
+の意味を変更する必要がない。
+
+また、
+\[
+I=\mathcal{P}(\Ax)
+\]
+という大域的な条件も不要である。
+
+したがって、現行構造をできるだけ保存するという観点では、この記述が最も直接的である。
+
+\section{$B(i)$ と局所閉包条件の関係}
+
+仮に
+\[
+i_A=\mathcal{A}_{\mathrm{ZFC}}\cup A
+\]
+と置く。
+
+ECA_20 の局所閉包条件は
+\[
+\forall A\subseteq\mathcal{R}^*,
+\quad i_A\in I
+\]
+である。
+
+一方、
+\[
+B(i_A)\subseteq i_A
+\]
+は各 $i_A$ が選択された後に成立する包含関係である。
+
+したがって、論理的には
+
+\[
+\boxed{
+i_A\in I
+\quad\text{と}\quad
+B(i_A)\subseteq i_A
+}
+\]
+
+は別の情報である。
+
+前者は「その公理集合が選択空間 $I$ に属する」ことを表し、後者は「その公理集合に対応する $B$ が $i_A$ の部分集合である」ことを表す。
+
+このため、現在の定義では $B(i)$ を用いて Stage 2 の選択閉包性を導く必要はない。
+
+\section{有限閉包と全部分集合閉包}
+
+$B(i)$ に何らかの閉包性を追加する場合にも、有限の場合と全部分集合の場合を区別する必要がある。
+
+例えば
+\[
+A,B\subseteq\mathcal{R}^*
+\]
+について
+\[
+i_A,i_B\in I
+\]
+から
+\[
+i_{A\cup B}\in I
+\]
+を導く二項閉包性を考えることができる。
+
+しかし、このような有限的な閉包性だけでは
+\[
+\forall A\subseteq\mathcal{R}^*,
+\quad i_A\in I
+\]
+を直ちに導けない。
+
+特に可算無限集合
+\[
+A=\{r_n\mid n\in J\},
+\qquad J\subseteq\mathbb{N}
+\]
+については、有限近似
+\[
+A_n=A\cap\{r_0,\ldots,r_{n-1}\}
+\]
+から
+\[
+i_A\in I
+\]
+を得るための極限・可算閉包に相当する条件が別途必要になる。
+
+\section{選択閉包を ECA の構造条件とする場合}
+
+ECA の基本構造を変更することなく、選択空間 $I$ に対する追加条件として
+\[
+\mathsf{Closure}(\mathcal{R}^*,\mathcal{A}_{\mathrm{ZFC}})
+\]
+を導入し、
+\[
+\mathsf{Closure}(\mathcal{R}^*,\mathcal{A}_{\mathrm{ZFC}})
+\iff
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\]
+と定義することができる。
+
+この場合、
+\[
+\mathsf{Closure}
+\]
+は $B(i)$ の定義ではなく、$I$ に対する追加の構造条件となる。
+
+この分離には、
+
+\[
+\operatorname{Ax}(U)
+\quad\longrightarrow\quad
+\mathcal{R}^*
+\]
+
+と
+
+\[
+\mathcal{R}^*
+\quad\longrightarrow\quad
+I
+\]
+
+を別々に検証できるという利点がある。
+
+\section{連続体濃度への影響}
+
+\[
+|\mathcal{R}^*|=\aleph_0
+\]
+および
+\[
+\mathsf{Closure}(\mathcal{R}^*,\mathcal{A}_{\mathrm{ZFC}})
+\]
+に加えて
+\[
+\mathcal{R}^*\cap\mathcal{A}_{\mathrm{ZFC}}=\varnothing
+\]
+を仮定すると、
+\[
+\Gamma:
+\mathcal{P}(\mathcal{R}^*)\hookrightarrow I,
+\qquad
+\Gamma(A)=\mathcal{A}_{\mathrm{ZFC}}\cup A
+\]
+が得られる。
+
+したがって
+\[
+|I|\ge2^{\aleph_0}.
+\]
+
+しかし、これは依然として
+\[
+|\mathcal Z|\ge2^{\aleph_0}
+\]
+を意味しない。
+
+Stage 3 において
+\[
+\mathcal T(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+をすべての $A\subseteq\mathcal{R}^*$ について確認する必要がある。
+
+\section{現段階で採用すべき構造}
+
+現時点では、
+\[
+B(i)\subseteq i
+\]
+という既存の定義を変更せず、
+
+\[
+\boxed{
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+}
+\]
+
+を独立した Stage 2 の検証条件として扱うのが最も整合的である。
+
+これにより、
+
+\[
+\operatorname{Ax}(U)
+\to
+\mathcal{R}^*
+\]
+
+は ECA_19、
+
+\[
+\mathcal{R}^*
+\to
+I
+\]
+
+は本稿、
+
+\[
+I
+\to
+\mathcal Z
+\]
+
+は Stage 3 として分離できる。
+
+\section{結論}
+
+現在の ECA における
+\[
+I\subseteq\mathcal{P}(\Ax),
+\qquad
+B(i)\subseteq i
+\]
+から、$\mathcal{R}^*$ の全部分集合に対する選択閉包性を導くことはできない。
+
+特に、
+\[
+B(i)\subseteq i
+\]
+は、それ自体では $I$ の閉包性を規定していない。
+
+したがって、現段階では
+\[
+B(i)
+\]
+の意味を変更して閉包性を担わせるより、
+
+\[
+\boxed{
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+}
+\]
+を独立した選択構造上の条件として検査する方が、既存の ECA 構造を保ったまま議論できる。
+
+次の検討では、この条件をさらに
+\[
+I
+\]
+そのものの定義、すなわち「何を ECA における許容可能な公理選択とするのか」という問題まで戻して調べる必要がある。
+
+\end{document}

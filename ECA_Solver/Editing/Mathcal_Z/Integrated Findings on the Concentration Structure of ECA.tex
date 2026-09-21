@@ -1,0 +1,782 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\geometry{top=25mm,bottom=25mm,left=25mm,right=25mm}
+
+\newtheorem{definition}{定義}[section]
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{proposition}[definition]{命題}
+\newtheorem{lemma}[definition]{補題}
+\newtheorem{remark}[definition]{注記}
+
+\newcommand{\Ax}{\mathrm{Ax}}
+\newcommand{\Pow}{\mathcal P}
+\newcommand{\Solver}{\mathcal S}
+\newcommand{\Zset}{\mathcal Z}
+\newcommand{\Th}{\mathrm{Th}}
+\newcommand{\Rstar}{\mathcal R^*}
+\newcommand{\N}{\mathbb N}
+\newcommand{\R}{\mathbb R}
+
+\title{ECA における濃度構造の統合的到達点\\
+\large ECA\_1--24 および既存の濃度関連文書の統合}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{目的と位置づけ}
+
+本稿では、これまでに構築された
+\[
+\mathrm{ECA}_1,\ldots,\mathrm{ECA}_{24}
+\]
+および既存の濃度関連文書における議論を、濃度追跡という観点から
+一つの連続した構造として整理する。
+
+本稿は新しい公理や追加条件を導入するものではない。既存文書で構築された
+\[
+\operatorname{Ax}(U)\longrightarrow
+\Rstar\longrightarrow
+\Pow(\Rstar)\longrightarrow
+I\longrightarrow
+\Solver_I\longrightarrow
+\Zset
+\]
+という経路と、通常数学における
+\[
+\N\longrightarrow\Pow(\N)\longrightarrow\R
+\]
+という濃度構造を統合して記述する。
+
+特に、公理候補集合、公理選択空間、Solver 集合、ZFC に対応する
+Solver 集合 $\Zset$、Solver が表現する集合論的対象、および
+ECA の評価値を同一視しない。
+
+\section{ECA における基本構造}
+
+ECA_6 以降で整理された構造では、ECA が扱う公理および公理スキームの全体を
+\[
+\Ax
+\]
+とし、公理選択空間を
+\[
+I\subseteq\Pow(\Ax)
+\]
+とする。
+
+Solver は
+\[
+s=(\mathcal A_s,\mathcal R_s)
+\]
+であり、$\mathcal A_s$ は公理選択、$\mathcal R_s$ は推論規則および構成制約である。
+
+\[
+\Solver_I=
+\left\{
+s=(\mathcal A_s,\mathcal R_s)\mid
+\mathcal A_s\in I
+\right\}.
+\]
+
+公理選択復元写像は
+\[
+\mathfrak A:\Solver_I\to I,
+\qquad
+\mathfrak A(s)=\mathcal A_s
+\]
+である。
+
+Solver が表現する理論を
+\[
+\mathcal T:\Solver_I\to\Th
+\]
+とし、
+\[
+\boxed{
+\Zset=
+\left\{
+s\in\Solver_I\mid
+\mathcal T(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\right\}
+}
+\]
+と定める。
+
+理論同型類を $[\mathrm{ZFC}]$ と書けば、
+\[
+\boxed{
+\Zset=\mathcal T^{-1}([\mathrm{ZFC}])
+}
+\]
+となる。
+
+\section{数学的宇宙と公理候補集合}
+
+ECA_12--15 では、数学的宇宙 $U$ とその公理候補集合
+$\operatorname{Ax}(U)$ の関係を整理している。
+
+\[
+\operatorname{Ax}_{\mathrm{map}}:
+\mathfrak U_{\mathrm{ECA}}\to\Pow(\Ax),
+\qquad
+\operatorname{Ax}_{\mathrm{map}}(U)=\operatorname{Ax}(U)
+\]
+を考え、
+\[
+\Ax=
+\bigcup_{U\in\mathfrak U_{\mathrm{ECA}}}
+\operatorname{Ax}(U)
+\]
+によって ECA 全体の公理候補集合へ接続する。
+
+ECA_3 以来、ECA が扱う候補には個々の公理と公理スキームが含まれる。
+ECA_2 では分離公理・置換公理が公理スキームとして扱われることも明示されている。
+
+したがって、スキーム $\Sigma$ の個別インスタンス
+$\Sigma(\varphi)$ を個々の公理候補として扱う構成が可能であり、
+ECA_15、ECA_19 ではこの構成が明示されている。
+
+\section{公理スキームから可算無限公理候補族へ}
+
+可算個の入力
+\[
+\{\varphi_n\mid n\in\N\}
+\]
+に対して
+\[
+r_n=\Sigma(\varphi_n)
+\]
+とする。
+
+各 $r_n$ が
+\[
+r_n\in\operatorname{Ax}(U)
+\]
+を満たし、かつ
+\[
+n\neq m\Longrightarrow r_n\neq r_m
+\]
+ならば、
+\[
+\Rstar=\{r_n\mid n\in\N\}
+\subseteq\operatorname{Ax}(U)
+\]
+であり、
+\[
+\boxed{|\Rstar|=\aleph_0}
+\]
+を得る。
+
+ここで重要なのは、$\Rstar$ 自体の基数と、その冪集合の基数を区別することである。
+
+\section{可算無限族から冪集合へ}
+
+\[
+|\Rstar|=\aleph_0
+\]
+ならば、カントールの冪集合定理から
+\[
+|\Pow(\Rstar)|
+=
+2^{|\Rstar|}
+=
+2^{\aleph_0}.
+\]
+
+したがって
+\[
+\boxed{
+\Rstar\longrightarrow\Pow(\Rstar)
+}
+\]
+によって、可算無限の公理候補族から連続体濃度が現れる。
+
+これは
+\[
+|\Rstar|=2^{\aleph_0}
+\]
+という主張ではない。連続体濃度を与えるのは
+$\Pow(\Rstar)$ の側である。
+
+\section{通常数学における連続体濃度}
+
+通常数学では
+\[
+|\N|=\aleph_0
+\]
+であり、
+\[
+|\Pow(\N)|=2^{\aleph_0}.
+\]
+
+各 $A\subseteq\N$ に対して特性関数
+\[
+\chi_A:\N\to\{0,1\}
+\]
+を考え、
+\[
+x_A=
+\sum_{n=1}^{\infty}\frac{\chi_A(n)}{2^n}
+\]
+とすれば、二進展開の非一意性を適切に処理することで
+$\Pow(\N)$ と $[0,1]$ の間の全単射を構成できる。
+
+さらに
+\[
+|[0,1]|=|\R|
+\]
+なので、
+\[
+\boxed{
+|\R|=|\Pow(\N)|=2^{\aleph_0}
+}
+\]
+となる。
+
+またカントールの定理により
+\[
+\boxed{\aleph_0<2^{\aleph_0}}.
+\]
+
+\section{$\aleph_1$ と連続体濃度}
+
+$\aleph_1$ を最初の非可算基数とする。
+任意の基数 $\kappa$ について
+\[
+\aleph_0<\kappa\Longrightarrow\aleph_1\leq\kappa
+\]
+なので、
+\[
+\boxed{\aleph_1\leq2^{\aleph_0}}.
+\]
+
+従って通常数学では
+\[
+\boxed{
+\aleph_0<\aleph_1\leq2^{\aleph_0}
+}.
+\]
+
+CH は
+\[
+\boxed{2^{\aleph_0}=\aleph_1}
+\]
+であるから、既に成立している不等式に加えて
+\[
+2^{\aleph_0}\leq\aleph_1
+\]
+が必要となる。
+
+\section{$\Rstar$ の部分集合族から公理選択空間へ}
+
+ZFC を表現する基礎公理選択を
+\[
+\mathcal A_{\mathrm{ZFC}}
+\]
+とする。
+
+任意の
+\[
+A\subseteq\Rstar
+\]
+に対して
+\[
+i_A=\mathcal A_{\mathrm{ZFC}}\cup A
+\]
+と定める。
+
+既存文書で定式化された局所選択閉包条件
+\[
+\boxed{
+\forall A\subseteq\Rstar,\qquad
+\mathcal A_{\mathrm{ZFC}}\cup A\in I
+}
+\]
+により、
+\[
+\Gamma:\Pow(\Rstar)\to I,
+\qquad
+\Gamma(A)=\mathcal A_{\mathrm{ZFC}}\cup A
+\]
+を得る。
+
+さらに
+\[
+\Rstar\cap\mathcal A_{\mathrm{ZFC}}=\varnothing
+\]
+ならば $\Gamma$ は単射であるため、
+\[
+\Pow(\Rstar)\hookrightarrow I
+\]
+となり、
+\[
+\boxed{|I|\geq2^{\aleph_0}}.
+\]
+
+\section{公理選択から ZFC 保存 Solver へ}
+
+ECA_23--24 では、固定した推論・構成規則 $\mathcal R_0$ の下で
+\[
+s_A=(i_A,\mathcal R_0)
+\]
+を構成する。
+
+Stage 3 の条件は
+\[
+\boxed{
+\forall A\subseteq\Rstar,\qquad
+\mathcal T(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+}.
+\]
+
+これは、各 $r_n$ が単独で ZFC と両立することではなく、
+$\Rstar$ の任意の部分集合を追加しても ZFC と理論同型な理論を
+表現できることを要求する。
+
+基礎理論を
+\[
+T_0=
+\mathcal T(\mathcal A_{\mathrm{ZFC}},\mathcal R_0)
+\]
+とし、
+\[
+\forall r\in\Rstar,\qquad T_0\vdash r
+\]
+という冗長性条件を候補とする。
+
+同一言語・固定推論規則の設定でこれが成立すれば、任意の
+$A\subseteq\Rstar$ に対して
+\[
+\operatorname{Th}(T_0\cup A)
+=
+\operatorname{Th}(T_0)
+\]
+という形の保存が得られる。
+
+さらに
+\[
+T_0\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+ならば、
+\[
+\forall A\subseteq\Rstar,\qquad s_A\in\Zset
+\]
+へ接続する。
+
+\section{$\Pow(\Rstar)$ から $\Zset$ への単射}
+
+以上を合わせ、
+\[
+|\Rstar|=\aleph_0,
+\qquad
+\Rstar\cap\mathcal A_{\mathrm{ZFC}}=\varnothing
+\]
+とし、選択可能性と ZFC 保存性が成立するとする。
+
+\[
+\Phi:\Pow(\Rstar)\to\Zset,
+\qquad
+\Phi(A)=s_A
+\]
+を定める。
+
+$A\neq B$ なら
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A
+\neq
+\mathcal A_{\mathrm{ZFC}}\cup B
+\]
+なので
+\[
+s_A\neq s_B.
+\]
+したがって $\Phi$ は単射であり、
+\[
+\boxed{
+|\Zset|
+\geq
+|\Pow(\Rstar)|
+=
+2^{\aleph_0}
+}.
+\]
+
+これは ECA_9--24 において段階的に構成されてきた
+連続体濃度の $\Zset$ 内部への接続である。
+
+\section{濃度追跡全体の統合}
+
+以上の構造は
+\[
+\boxed{
+\operatorname{Ax}(U)
+\longrightarrow
+\Rstar
+\longrightarrow
+\Pow(\Rstar)
+\longrightarrow
+I
+\longrightarrow
+\Solver_I
+\longrightarrow
+\Zset
+}
+\]
+とまとめられる。
+
+濃度については、
+\[
+|\Rstar|=\aleph_0,
+\]
+\[
+|\Pow(\Rstar)|=2^{\aleph_0},
+\]
+\[
+|I|\geq2^{\aleph_0},
+\]
+および ZFC 保存 Solver の構成条件が成立する場合に
+\[
+|\Zset|\geq2^{\aleph_0}
+\]
+となる。
+
+さらに
+\[
+\Zset\subseteq\Solver_I
+\]
+なので
+\[
+|\Zset|\leq|\Solver_I|.
+\]
+
+従って、
+\[
+\boxed{
+2^{\aleph_0}\leq|\Zset|\leq|\Solver_I|
+}
+\]
+という濃度範囲が得られる。
+
+ここで $|\Solver_I|\leq2^{\aleph_0}$ の一般上界は本構成からは確定していない。
+従って $|\Zset|=2^{\aleph_0}$ を一般結論として同一視せず、
+既存構成から得られる下界として扱う。
+
+\section{ECA の評価値と通常の基数の分離}
+
+ECA には
+\[
+S\longrightarrow i_S
+\longrightarrow(D_S,C_S)
+\longrightarrow
+(E_{\mathrm d}(S),E_{\mathrm c}(S))
+\longrightarrow
+\mathcal G(S)
+\]
+という評価経路がある。
+
+しかし、
+\[
+E_{\mathrm c}(S)\in[0,1]
+\]
+であることや、
+\[
+\Omega_{\mathrm{CH}}\subseteq[0,1]^4
+\]
+のような状態空間を考えられることから、通常の集合論における基数を
+直接決定することはできない。
+
+したがって、
+\[
+\boxed{
+\text{ECA の型・評価値}
+\neq
+\text{通常の集合論における基数}
+}
+\]
+を維持する。
+
+同様に、
+\[
+|\R|=2^{\aleph_0}
+\]
+と
+\[
+|\Zset|\geq2^{\aleph_0}
+\]
+は異なる命題である。
+
+前者は通常数学における実数集合の濃度、
+後者は ECA の Solver 集合の一部として定義された $\Zset$ の
+濃度の下界である。
+
+\section{通常数学と ECA の二つの経路}
+
+連続体濃度を扱う際には、二つの経路を区別する必要がある。
+
+通常数学側では
+\[
+\N\longrightarrow\Pow(\N)\longrightarrow\R
+\]
+によって
+\[
+|\R|=2^{\aleph_0}
+\]
+を得る。
+
+ECA 側では
+\[
+\operatorname{Ax}(U)
+\longrightarrow
+\Rstar
+\longrightarrow
+\Pow(\Rstar)
+\longrightarrow
+I
+\longrightarrow
+\Solver_I
+\longrightarrow
+\Zset
+\]
+によって、連続体濃度を公理選択および Solver 構造へ接続する。
+
+この二つを混同せず、
+\[
+\boxed{
+\text{通常数学上の濃度}
+\quad\text{と}\quad
+\text{ECA 上の Solver 構造}
+}
+\]
+を別個に保持する。
+
+\section{CH に対する現在の位置}
+
+通常数学から
+\[
+\aleph_1\leq2^{\aleph_0}
+\]
+が得られている。
+
+一方、CH のためには
+\[
+2^{\aleph_0}\leq\aleph_1
+\]
+が必要である。
+
+既存の ECA 評価経路
+\[
+i_S
+\longrightarrow
+(D_S,C_S)
+\longrightarrow
+(E_{\mathrm d},E_{\mathrm c})
+\longrightarrow
+\mathcal G(S)
+\]
+だけから、この上界を導くことはできない。
+
+従って CH を ECA から導出する場合に必要なのは、
+\[
+\boxed{
+\Pow(\N)\hookrightarrow\omega_1
+}
+\]
+に相当する構造である。
+
+評価写像
+\[
+\Pow(\N)\to[0,1]
+\]
+や
+\[
+\Omega_{\mathrm{CH}}\subseteq[0,1]^4
+\]
+だけでは、この上界は得られない。
+
+したがって、本稿で確認される連続体濃度の構造化と、
+\[
+2^{\aleph_0}=\aleph_1
+\]
+という CH の導出とは分離される。
+
+\section{$\Rstar$ の位置づけ}
+
+$\Rstar$ は
+\[
+|\Rstar|=\aleph_0
+\]
+を満たす可算無限の公理候補族である。
+
+しかし、ECA における $\Rstar$ の役割はその基数値だけでは表せない。
+
+\[
+\Rstar
+\longrightarrow
+\Pow(\Rstar)
+\longrightarrow
+I
+\longrightarrow
+\Solver_I
+\longrightarrow
+\Zset
+\]
+という展開を通して、$\Rstar$ は連続体濃度を公理選択および Solver
+構造へ接続する基礎となる。
+
+したがって、
+\[
+\boxed{
+|\Rstar|=\aleph_0,
+\qquad
+|\Pow(\Rstar)|=2^{\aleph_0}
+}
+\]
+という二段階を維持する。
+
+ここでいう「連続体濃度よりも複雑な濃度」という表現は、
+$\Rstar$ 自身の基数が $2^{\aleph_0}$ より大きいという意味ではなく、
+$\Rstar$ を起点として形成される多段の濃度・構造関係を、
+単一の基数値だけでは表現できないという意味で理解する。
+
+\section{統合された到達点}
+
+以上を総合すると、これまでの ECA_1--24 と既存の濃度関連文書によって、
+次の構造が構築されている。
+
+\[
+\boxed{
+\operatorname{Ax}(U)
+\longrightarrow
+\Rstar
+\longrightarrow
+\Pow(\Rstar)
+\longrightarrow
+I
+\longrightarrow
+\Solver_I
+\longrightarrow
+\Zset
+}
+\]
+
+その濃度関係は、
+\[
+\boxed{|\Rstar|=\aleph_0}
+\]
+から
+\[
+\boxed{|\Pow(\Rstar)|=2^{\aleph_0}}
+\]
+へ進み、選択可能性および ZFC 保存 Solver の構成を通じて
+\[
+\boxed{2^{\aleph_0}\leq|\Zset|}
+\]
+へ接続される。
+
+また、
+\[
+\boxed{|\Zset|\leq|\Solver_I|}
+\]
+であるため、
+\[
+\boxed{
+2^{\aleph_0}
+\leq
+|\Zset|
+\leq
+|\Solver_I|
+}
+\]
+が現在の $\Zset$ に対する濃度範囲となる。
+
+通常数学側では、
+\[
+\boxed{
+|\R|=|\Pow(\N)|=2^{\aleph_0}
+}
+\]
+および
+\[
+\boxed{
+\aleph_0<\aleph_1\leq2^{\aleph_0}
+}
+\]
+が確定している。
+
+これに対して CH の最終条件は
+\[
+2^{\aleph_0}\leq\aleph_1
+\]
+であり、これは既存の ECA 評価値や連続型分類から自動的には得られない。
+
+従って、現在までの ECA の濃度構造における到達点は、
+CH の先取りではなく、
+\[
+\boxed{
+\text{可算無限の公理候補族}
+\longrightarrow
+\text{その冪集合}
+\longrightarrow
+\text{連続体濃度}
+\longrightarrow
+\text{公理選択}
+\longrightarrow
+\text{Solver}
+\longrightarrow
+\mathcal Z
+}
+\]
+という具体的な構造経路を形成し、連続体濃度を ECA の公理選択・Solver
+構造へ接続するところまでを体系化したことにある。
+
+\section{結語}
+
+$\Rstar$ は可算無限の基礎族として構成され、その冪集合によって
+\[
+2^{\aleph_0}
+\]
+が現れる。
+
+さらに、その部分集合族を公理選択へ接続し、ZFC 保存 Solver の族として
+$\Zset$ に接続することで、
+\[
+2^{\aleph_0}\leq|\Zset|
+\]
+という連続体濃度の下界を構成できる。
+
+この構造は、
+\[
+\operatorname{Ax}(U)
+\to
+\Rstar
+\to
+\Pow(\Rstar)
+\to
+I
+\to
+\Solver_I
+\to
+\Zset
+\]
+という一連の濃度追跡としてまとめられる。
+
+同時に、
+\[
+\text{濃度}\neq\text{構造}
+\]
+および
+\[
+\text{ECA の評価値}\neq\text{通常の集合論における基数}
+\]
+という区別を維持する。
+
+したがって、$\Rstar$ の意義は単独の可算濃度にあるのではなく、
+その冪集合および後段の構造を通じて連続体濃度を ECA の内部構造へ
+接続する点にある。
+
+\end{document}

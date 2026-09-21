@@ -1,0 +1,228 @@
+\documentclass[a4paper,11pt]{jsarticle}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\geometry{margin=25mm}
+\newtheorem{definition}{定義}[section]
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{proposition}[definition]{命題}
+\newtheorem{remark}[definition]{注意}
+\newcommand{\Solver}{\mathcal{S}}
+\newcommand{\Sel}{I}
+\newcommand{\Ax}{S_{\mathrm{ax}}}
+\newcommand{\Th}{\mathrm{Th}}
+\newcommand{\Zset}{\mathcal{Z}}
+\newcommand{\Pow}{\mathcal{P}}
+\title{ECA_9\\$\mathcal{Z}$ の濃度追跡と連続体濃度の下界}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+\begin{abstract}
+本稿では、ECA_6 および ECA_7 で確定した Solver、公理選択空間、理論写像、$\mathcal{Z}$ の定義を前提として、
+$|\mathcal{Z}|\geq 2^{\aleph_0}$ をどのような条件の下で導出できるかを整理する。
+これまでの検証では、$\mathcal{P}(\mathbb{N})\hookrightarrow\mathcal{P}(\mathcal{A}_0)$ は構成できる一方、
+$\mathcal{P}(\mathbb{N})\hookrightarrow I$ や $\mathcal{P}(\mathbb{N})\hookrightarrow\mathcal{Z}$ は現行定義だけからは導出できないことを確認している。
+そこで本稿では、$\mathcal{Z}$ 内に連続体濃度の異なる Solver を実際に構成するための条件を明示し、その条件から得られる濃度下界を定理として記述する。
+CH の証明は本稿の目的としない。
+\end{abstract}
+\section{出発点となる ECA の構造}
+ECA_6 により、公理候補全体を $\Ax$ とし、公理選択空間を
+\[
+\Sel=I\subseteq\Pow(\Ax)
+\]
+とする。Solver は
+\[
+\boxed{s=(\mathcal{A}_s,\mathcal{R}_s)}
+\]
+であり、$\mathcal{A}_s\in I$ を満たすものを ECA に適合する Solver とする。したがって、
+\[
+\Solver_I=\{s=(\mathcal{A}_s,\mathcal{R}_s)\mid\mathcal{A}_s\in I\}.
+\]
+また、$\mathfrak{A}:\Solver_I\to I$ を $\mathfrak{A}(s)=\mathcal{A}_s$ とする。
+ECA_7 では
+\[
+\boxed{\mathcal{Z}=\{s\in\Solver_I\mid\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}\}}
+\]
+と定義した。したがって $\mathcal{Z}\subseteq\Solver_I$ である。
+\section{これまでに得られている濃度関係}
+可算な公理候補集合 $\mathcal{A}_0=\{a_1,a_2,a_3,\ldots\}$ を固定する。
+任意の $A\subseteq\mathbb{N}$ に対して
+\[
+\mathcal{A}_A=\{a_n\in\mathcal{A}_0\mid n\in A\}
+\]
+を定義すると、
+\[
+\Gamma:\Pow(\mathbb{N})\to\Pow(\mathcal{A}_0),\qquad \Gamma(A)=\mathcal{A}_A
+\]
+は単射である。したがって
+\[
+|\Pow(\mathcal{A}_0)|=2^{\aleph_0}.
+\]
+しかし、$\Pow(\mathcal{A}_0)\subseteq\Pow(\Ax)$ や $I\subseteq\Pow(\Ax)$ だけから $\Pow(\mathbb{N})\hookrightarrow I$ は導かれない。さらに $\mathcal{Z}\subseteq\Solver_I$ であるため、$\Pow(\mathbb{N})\hookrightarrow\mathcal{Z}$ を得るには、$\mathcal{Z}$ 内で連続体濃度の族を実現する追加条件が必要である。
+\section{$\mathfrak{A}|_{\mathcal{Z}}$ による濃度追跡}
+\[
+\boxed{\mathfrak{A}|_{\mathcal{Z}}:\mathcal{Z}\to I}
+\]
+を考え、その像を
+\[
+\operatorname{Im}(\mathfrak{A}|_{\mathcal{Z}})=\{\mathcal{A}_s\mid s\in\mathcal{Z}\}
+\]
+とする。任意の写像について
+\[
+|\operatorname{Im}(\mathfrak{A}|_{\mathcal{Z}})|\leq|\mathcal{Z}|
+\]
+が成立する。したがって、像の濃度が $2^{\aleph_0}$ 以上であることを示せれば、$|\mathcal{Z}|\geq2^{\aleph_0}$ が得られる。
+ただし $\mathfrak{A}|_{\mathcal{Z}}$ は一般には単射ではない。$\mathcal{A}_s=\mathcal{A}_t$ でも $\mathcal{R}_s\neq\mathcal{R}_t$ ならば $s\neq t$ であり得るからである。
+\section{連続体濃度の族を $\mathcal{Z}$ 内に構成する条件}
+可算な $\mathcal{A}_0$ と固定された推論規則・構成制約 $\mathcal{R}_0$ を考える。任意の $A\subseteq\mathcal{A}_0$ に対して
+\[
+s_A=(A,\mathcal{R}_0)
+\]
+という Solver 候補を考える。
+この候補が $\mathcal{Z}$ に属するには、少なくとも $A\in I$ および
+\[
+\mathcal{T}(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+が必要である。
+\begin{definition}[$\mathcal{Z}$ 内連続体実現条件]
+可算な $\mathcal{A}_0$ と固定された $\mathcal{R}_0$ に対して
+\[
+\boxed{\forall A\subseteq\mathcal{A}_0,\quad (A,\mathcal{R}_0)\in\mathcal{Z}}
+\]
+が成立するとき、これを $\mathcal{Z}$ 内連続体実現条件と呼ぶ。
+\end{definition}
+この条件は、単に $A\subseteq\mathcal{A}_0$ を構成できることではなく、すべての $A$ について ECA 適合性と ZFC との理論同型性を同時に要求する。
+\section{連続体濃度下界の定理}
+\begin{theorem}
+$\mathcal{A}_0$ が可算無限集合であり、$\mathcal{Z}$ 内連続体実現条件が成立すると仮定する。このとき
+\[
+\boxed{|\mathcal{Z}|\geq2^{\aleph_0}}
+\]
+が成立する。
+\end{theorem}
+\begin{proof}
+\[
+\Phi:\Pow(\mathcal{A}_0)\to\mathcal{Z},\qquad \Phi(A)=(A,\mathcal{R}_0)
+\]
+と定義する。実現条件により $\Phi(A)\in\mathcal{Z}$ である。
+$A\neq B$ ならば第一成分が異なるため
+\[
+(A,\mathcal{R}_0)\neq(B,\mathcal{R}_0),
+\]
+したがって $\Phi$ は単射である。可算無限集合 $\mathcal{A}_0$ に対して $|\Pow(\mathcal{A}_0)|=2^{\aleph_0}$ なので、
+\[
+2^{\aleph_0}=|\Pow(\mathcal{A}_0)|\leq|\mathcal{Z}|.
+\]
+\end{proof}
+\section{この定理が示していること}
+核心は、単なる
+\[
+\Pow(\mathbb{N})\hookrightarrow\Pow(\mathcal{A}_0)
+\]
+ではなく、
+\[
+\Pow(\mathcal{A}_0)\hookrightarrow\mathcal{Z}
+\]
+という新たな単射を構成することである。すなわち、
+\[
+\Pow(\mathbb{N})\cong\Pow(\mathcal{A}_0)\hookrightarrow\mathcal{Z}
+\]
+という連鎖を成立させる必要がある。
+\section{現行 ECA 定義から自動的に導かれるか}
+現行の定義からは
+\[
+\mathcal{Z}=\{s\in\Solver_I\mid\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}\}
+\]
+しか与えられていない。したがって
+\[
+\forall A\subseteq\mathcal{A}_0,\quad(A,\mathcal{R}_0)\in\mathcal{Z}
+\]
+は、この定義だけからは導出されない。
+特に、
+\[
+\forall A\subseteq\mathcal{A}_0,\ A\subseteq\Ax
+\]
+と
+\[
+\forall A\subseteq\mathcal{A}_0,\ (A,\mathcal{R}_0)\in\mathcal{Z}
+\]
+は別の条件である。前者は公理候補としての集合論的構成を表すだけであり、後者は各選択から ZFC と理論同型な Solver が実現されることまで要求する。
+したがって現段階で確定できるのは、
+\[
+\boxed{\text{$\mathcal{Z}$ 内連続体実現条件}\Longrightarrow |\mathcal{Z}|\geq2^{\aleph_0}}
+\]
+という条件付き結果である。
+\section{より一般的な単射条件}
+\begin{proposition}
+$\mathcal{A}_0$ が可算無限であり、
+\[
+\Phi:\Pow(\mathcal{A}_0)\hookrightarrow\mathcal{Z}
+\]
+が単射であるならば、
+\[
+\boxed{|\mathcal{Z}|\geq2^{\aleph_0}}
+\]
+である。
+\end{proposition}
+\begin{proof}
+$|\Pow(\mathcal{A}_0)|=2^{\aleph_0}$ であり、$\Phi$ が単射なので
+\[
+2^{\aleph_0}=|\Pow(\mathcal{A}_0)|\leq|\mathcal{Z}|.
+\]
+\end{proof}
+\section{濃度追跡の現在位置}
+\[
+\mathcal{A}_0\cong\mathbb{N}
+\]
+から
+\[
+\boxed{|\Pow(\mathcal{A}_0)|=2^{\aleph_0}}
+\]
+までは通常の集合論として確定する。一方、
+\[
+\Pow(\mathcal{A}_0)\hookrightarrow I
+\]
+および
+\[
+\Pow(\mathcal{A}_0)\hookrightarrow\mathcal{Z}
+\]
+は現行 ECA 定義だけからは未確定である。
+ただし、後者を構成できれば
+\[
+\boxed{|\mathcal{Z}|\geq2^{\aleph_0}}
+\]
+が直ちに得られる。
+したがって現在の核心は、ECA の既存定義から $\mathcal{Z}$ 内の連続体濃度の Solver 族を構成できるか、という問題である。
+\section{CH との切り分け}
+本稿の結果
+\[
+|\mathcal{Z}|\geq2^{\aleph_0}
+\]
+は CH
+\[
+2^{\aleph_0}=\aleph_1
+\]
+を意味しない。また、そこから
+\[
+2^{\aleph_0}\leq\aleph_1
+\]
+を導くこともできない。
+したがって、連続体濃度以上の $\mathcal{Z}$ の構成と CH の成立は別問題として扱う。
+\section{次段階}
+次に検証すべきなのは、
+\[
+s_A=(A,\mathcal{R}_A)
+\]
+をどのように定めれば
+\[
+\mathcal{A}_{s_A}=A,
+\qquad
+\mathcal{T}(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+を同時に保証できるかである。
+ここでは、単に公理選択を増やすのではなく、
+\[
+\mathcal{Z}=\mathcal{T}^{-1}([\mathrm{ZFC}]_{\mathrm{Th}})
+\]
+という $\mathcal{Z}$ の構造そのものに対して、連続体濃度の族を実現できるかを調べる。
+\end{document}

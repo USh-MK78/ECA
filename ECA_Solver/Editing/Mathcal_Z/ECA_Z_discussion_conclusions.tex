@@ -1,0 +1,823 @@
+%################################################################
+% これまでの議論から得られた ECA における \mathcal{Z} の位置づけ
+%################################################################
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\geometry{top=25mm,bottom=25mm,left=25mm,right=25mm}
+
+\newtheorem{definition}{定義}[section]
+\newtheorem{proposition}[definition]{命題}
+\newtheorem{remark}[definition]{注記}
+
+\title{これまでの議論から得られた ECA における $\mathcal{Z}$ の位置づけ}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{本稿の目的}
+
+本稿では ECA における ZFC 対応 Solver 集合 $\mathcal{Z}$ の位置づけに関して、これまでの検討から得られた構造上の結論を整理する。
+
+特に連続体濃度および連続体仮説を ECA の枠組みに接続する際に、$\mathcal{Z}$ 自体の濃度と、$\mathcal{Z}$ によって表現される通常の数学的対象の濃度とを混同しないことを重視する。
+
+本稿では新たな ECA の公理や Solver 構造を導入するのではなく、既に定義されている
+\[
+\mathcal{S},\quad
+\mathcal{T},\quad
+S=(\mathcal{A}_S,\mathcal{R}_S),\quad
+S'\preceq S,\quad
+D_S,\quad
+C_S,\quad
+\operatorname{Type}(S)
+\]
+および既存の ECA 評価構造を用いて、現在までに確認された事項を整理する。
+
+\section{$\mathcal{Z}$ の基本的位置}
+
+ECA における Solver 集合を $\mathcal{S}$ とし、各 Solver を
+\[
+S=(\mathcal{A}_S,\mathcal{R}_S)
+\]
+とする。
+
+また、Solver が表現する理論を
+\[
+\mathcal{T}:\mathcal{S}\longrightarrow\mathrm{Th}
+\]
+によって与える。
+
+このとき、ZFC に対応する Solver の集合は
+\[
+\boxed{
+\mathcal{Z}
+=
+\left\{
+S\in\mathcal{S}
+\;\middle|\;
+\mathcal{T}(S)\cong\mathrm{ZFC}
+\right\}
+}
+\]
+である。
+
+ZFC の理論同型類を $[\mathrm{ZFC}]$ と書けば、
+\[
+\boxed{
+\mathcal{Z}
+=
+\mathcal{T}^{-1}\left([\mathrm{ZFC}]\right)
+}
+\]
+と表すことができる。
+
+したがって、$\mathcal{Z}$ は ZFC そのものではない。
+また、$\mathcal{Z}$ は $\mathbb{N}$、$\mathbb{Q}$、$\mathbb{R}$、$\mathcal{P}(\mathbb{N})$ などの数学的対象を直接要素として持つ集合として定義されているわけでもない。
+$\mathcal{Z}$ はあくまで $\mathcal{S}$ の中から、表現する理論が ZFC と同型となる Solver を取り出した集合である。
+
+\section{Solver の内部構造と数学的対象}
+各 $S\in\mathcal{Z}$ は、依然として
+\[
+S=(\mathcal{A}_S,\mathcal{R}_S)
+\]
+という Solver 構造を持つ。
+
+したがって、$\mathcal{Z}$ の内部で通常の数学的対象を考える場合、対象そのものを $\mathcal{Z}$ の要素として扱うのではなく
+\[
+\boxed{
+S\in\mathcal{Z}
+\longrightarrow
+\mathcal{T}(S)
+\longrightarrow
+\text{数学的対象}
+}
+\]
+という対応として考える必要がある。
+
+例えば、ZFC に対応する理論 $\mathcal{T}(S)$ の内部では、自然数集合 $\mathbb{N}$、整数集合 $\mathbb{Z}$、有理数集合 $\mathbb{Q}$、実数集合 $\mathbb{R}$ などを通常の数学として構成することができる。
+
+このことから、今後の連続体濃度の検討においては、$S\in\mathcal{Z}$ そのものの濃度を直接連続体濃度と同一視するのではなく $\mathcal{T}(S)$ によって表現される対象の構造と濃度を追跡する必要がある。
+
+\section{既存数学と ECA の役割分担}
+
+既存の ECA Solver の定義では、Solver の数学的性質を既存数学によって厳密に判定できる場合、ECA 固有の量を導入する前に既存数学を用いるという原則が採用されている。
+
+すなわち、
+\[
+\boxed{
+\text{既存数学による判定}
+\longrightarrow
+\text{必要な場合のみ ECA の量による判定}
+}
+\]
+である。
+
+この原則に従えば、集合の濃度についても、まず通常の集合論によって判定する。
+
+実際、
+\[
+|\mathbb{N}|=\aleph_0,
+\qquad
+|\mathbb{Q}|=\aleph_0,
+\qquad
+|\mathbb{R}|=2^{\aleph_0}
+\]
+であり、カントールの定理から
+\[
+\aleph_0<2^{\aleph_0}
+\]
+が得られる。
+
+したがって、
+\[
+\boxed{
+|\mathbb{Q}|<|\mathbb{R}|
+}
+\]
+であることは、ECA 固有の仮定を追加することなく既存数学から得られる。
+
+この段階で ECA が担うべき役割は、これらの既存数学上の対象や結果を Solver の構造および評価写像へどのように接続するかを記述することである。
+
+\section{離散・連続という分類と濃度の分離}
+
+ECA では Solver $S$ の要素について、離散的構造を持つ要素の集合を
+\[
+D_S
+=
+\left\{
+s\in S
+\;\middle|\;
+s\text{ が所定の離散的構造を満たす}
+\right\}
+\]
+とし、連続的構造を持つ要素の集合を
+\[
+C_S
+=
+\left\{
+s\in S
+\;\middle|\;
+s\text{ が所定の連続的構造を満たす}
+\right\}
+\]
+としている。
+
+また、
+\[
+D_S\cap C_S\neq\varnothing
+\]
+によって中間的構造を表現できる。
+
+この定義から重要なのは、
+\[
+\boxed{
+\text{Solver の型}
+\neq
+\text{Solver が扱う集合の濃度}
+}
+\]
+という点である。
+
+例えば、
+\[
+|\mathbb{Q}|=\aleph_0
+\]
+であることだけから、$\mathbb{Q}$ に対応する Solver の型を一意に
+「離散」と決定することはできない。
+
+実際、$\mathbb{Q}$ は $\mathbb{R}$ の部分空間として稠密である。
+したがって、
+\[
+\text{可算}\not\Rightarrow\text{離散}
+\]
+である。
+
+同様に、
+\[
+\text{非可算}\not\Rightarrow\text{連続}
+\]
+でもある。
+
+よって、$\mathbb{N}$、$\mathbb{Q}$、$\mathbb{R}$ を ECA に接続する際には、
+\[
+\boxed{
+\text{濃度}
++
+\text{数学的構造}
++
+\text{評価構造}
+}
+\]
+を分離して扱う必要がある。
+
+\section{部分 Solver の役割}
+
+ECA では、単なる部分集合と部分 Solver を区別し、
+\[
+S'\preceq S
+\]
+によって、$S$ の構造を必要な範囲で継承する部分 Solver を表す。
+
+したがって、ある $S\in\mathcal{Z}$ の内部に
+\[
+S'\preceq S
+\]
+を満たす部分 Solver が存在する場合、その部分 Solver に
+$\mathbb{N}$、$\mathbb{Q}$、$\mathbb{R}$ などの数学的構造を対応させる
+ことを検討できる。
+
+ただし、
+\[
+S'\subseteq S
+\]
+だけでは
+\[
+S'\preceq S
+\]
+を意味しない。
+
+したがって、今後実際に $\mathbb{N}$、$\mathbb{Q}$、$\mathbb{R}$ に対応する部分構造を構成する場合には、それが単なる集合ではなく Solver として必要な構造を継承していることを明示する必要がある。
+
+\section{ECA の評価構造との接続}
+
+ECA の公理選択空間を
+\[
+I\subseteq\mathcal{P}(S)
+\]
+とし、Solver $s$ の公理選択成分を $\mathcal{A}_s$ とする。
+
+ECA に適合する Solver の集合は
+\[
+\mathcal{S}_I
+=
+\left\{
+s\in\mathcal{S}
+\;\middle|\;
+\mathcal{A}_s\in I
+\right\}
+\]
+であり、公理選択復元写像を
+\[
+\mathfrak{A}:\mathcal{S}_I\longrightarrow I,
+\qquad
+\mathfrak{A}(s)=\mathcal{A}_s
+\]
+とする。
+
+したがって、
+\[
+i_s=\mathfrak{A}(s)=\mathcal{A}_s
+\]
+である。
+
+このとき、既存の ECA 構造では
+\[
+B(i_s)\subseteq i_s\subseteq S
+\]
+が成立し、離散的要素集合を
+\[
+D_s=B(i_s)
+\]
+とすれば、
+\[
+E_{\mathrm d}(s)
+=
+\sum_{b\in D_s}w_s(b)
+\]
+によって離散評価が与えられる。
+
+また、連続評価について
+\[
+E_{\mathrm c}(s)
+=
+\int_S\mathbf{1}_{i_s}(u)\,d\mu_s(u)
+\]
+が与えられ、中間 Solver では
+\[
+\mathcal{G}(s)
+=
+\Phi_s
+\left(
+E_{\mathrm d}(s),
+E_{\mathrm c}(s)
+\right)
+\]
+という形で一般解へ接続される。
+
+ここで重要なのは、
+\[
+B(i_s)
+\]
+や
+\[
+D_s
+\]
+をそのまま $\mathbb{N}$、$\mathbb{Q}$、$\mathbb{R}$ と同一視してはならないことである。
+これらは ECA の Solver 評価における構造であり、通常の集合論における数体系とは役割が異なる。
+
+\section{$\mathcal{Z}$ の濃度と連続体濃度の分離}
+
+これまでの検討から、少なくとも次の三つを明確に区別する必要がある。
+\[
+|\mathcal{Z}|,
+\qquad
+|\mathcal{G}(\mathcal{Z})|,
+\qquad
+2^{\aleph_0}.
+\]
+
+さらに、評価後に実数値を取る写像
+\[
+g:\mathcal{S}\longrightarrow\mathbb{R}
+\]
+を考える場合には、
+\[
+|g(\mathcal{Z})|
+\]
+も別の対象である。
+
+したがって、
+\[
+|\mathcal{Z}|=2^{\aleph_0}
+\]
+を示すことと、
+\[
+|\mathbb{R}|=2^{\aleph_0}
+\]
+を示すことは全く同じ命題ではない。
+
+また、
+\[
+E_{\mathrm c}(S)\in[0,1]
+\]
+のような連続的評価が存在することから、
+\[
+|\mathcal{Z}|=2^{\aleph_0}
+\]
+を導くこともできない。
+
+すなわち、
+\[
+\boxed{
+\text{ECA の連続的評価}
+\not\Rightarrow
+|\mathcal{Z}|=2^{\aleph_0}
+}
+\]
+である。
+
+\section{連続体濃度を ECA へ接続するために必要なこと}
+
+通常の集合論では、
+\[
+|\mathbb{R}|
+=
+|\mathcal{P}(\mathbb{N})|
+=
+2^{\aleph_0}
+\]
+である。
+
+また、$\mathbb{R}$ と $\mathcal{P}(\mathbb{N})$ の濃度が等しいことは両者の間に全単射が存在することによって表現できる。
+
+したがって、これを ECA の構造へ接続するためには、単に「連続的な Solver が存在する」と述べるだけでは不十分であり、これは「通常の集合論における対象と Solver の間にどのような写像が存在し、その写像が単射または全射となるかを明示する必要がある」ことを意味する。
+
+特に、$\mathcal{P}(\mathbb{N})$ を ECA 内の構造へ接続する場合には $\mathbb{N}$ そのものをまず既存の Solver 構造の中でどのように表現するかを確定し、その後にその冪集合をどのように表現するかを考える必要がある。
+
+したがって、今後の構成は
+\[
+\boxed{
+\mathcal{Z}
+\longrightarrow
+S
+\longrightarrow
+\mathcal{T}(S)
+\longrightarrow
+\text{数学的対象}
+\longrightarrow
+\text{その濃度}
+}
+\]
+という順序を基本とする。
+
+これは、
+\[
+S
+\longrightarrow
+i_S
+\longrightarrow
+(D_S,C_S)
+\longrightarrow
+(E_{\mathrm d},E_{\mathrm c})
+\longrightarrow
+\mathcal{G}(S)
+\]
+という ECA の評価経路とは別の論理経路として扱う。
+
+\section{公理選択による連続体濃度の導出についての注意}
+
+可算な公理候補集合
+\[
+\mathcal{A}_0=\{a_1,a_2,\ldots\}
+\]
+を考え、その部分集合が Solver の公理選択として実現される場合、通常の集合論として
+\[
+\mathcal{P}(\mathcal{A}_0)
+\cong
+\mathcal{P}(\mathbb{N})
+\]
+という対応を考えることができる。
+
+もし
+\[
+\forall A\subseteq\mathcal{A}_0,\quad
+\exists S\in\mathcal{S}
+\quad
+\mathcal{A}_S=A
+\]
+かつ、異なる公理選択が異なる Solver を与えるなら、
+\[
+|\mathcal{S}|
+\geq
+2^{\aleph_0}
+\]
+という下界を得ることができる。
+
+しかし、ここから直ちに
+\[
+|\mathcal{Z}|
+\geq
+2^{\aleph_0}
+\]
+とは言えない。
+
+$\mathcal{Z}$ に属するためには、さらに
+\[
+\mathcal{T}(S)\cong\mathrm{ZFC}
+\]
+を満たす必要があるからである。
+
+したがって、$\mathcal{Z}$ について同様の下界を得るためには、例えば
+\[
+\boxed{
+\forall A\subseteq\mathcal{A}_0,\quad
+\exists S\in\mathcal{Z}
+\quad
+\mathcal{A}_S=A
+}
+\]
+のような、$\mathcal{Z}$ 内での実現条件を別途証明しなければならない。
+
+この点からも「公理選択空間が非可算であること」と「ZFC に対応する Solver 集合 $\mathcal{Z}$ が非可算であること」は別問題であることが分かる。
+
+\section{現在までに得られた結論}
+
+ここまでの議論から、次の事項が確認された。
+
+\begin{enumerate}[label=\arabic*.]
+    \item
+    $\mathcal{Z}$ は
+    \[
+    \mathcal{Z}
+    =
+    \mathcal{T}^{-1}\left([\mathrm{ZFC}]\right)
+    \]
+    によって定義される ZFC 対応 Solver の集合である。
+
+    \item
+    $\mathcal{Z}$ は ZFC そのものでも、連続体濃度そのものでもない。
+
+    \item
+    $\mathbb{N}$、$\mathbb{Q}$、$\mathbb{R}$ などを ECA に接続する際には、
+    それらを $\mathcal{Z}$ の要素として直接置くのではなく、
+    \[
+    S\in\mathcal{Z}
+    \longrightarrow
+    \mathcal{T}(S)
+    \longrightarrow
+    \text{数学的対象}
+    \]
+    という対応を考える必要がある。
+
+    \item Solver の型と、Solver が扱う数学的対象の濃度は区別しなければならない。
+    \item $\mathbb{Q}$ の可算性や $\mathbb{R}$ の連続体濃度など、既存数学で判定できる性質については、まず既存数学を用いる。
+
+    \item
+    \[
+    |\mathbb{Q}|=\aleph_0,
+    \qquad
+    |\mathbb{R}|=2^{\aleph_0},
+    \qquad
+    \aleph_0<2^{\aleph_0}
+    \]
+    は既存数学から得られるが、
+    \[
+    2^{\aleph_0}=\aleph_1
+    \]
+    はこれまでの議論から導出されていない。
+
+    \item
+    $\mathcal{Z}$ の濃度、評価写像の像の濃度、および連続体濃度
+    $2^{\aleph_0}$ は、それぞれ別の対象として扱う必要がある。
+
+    \item ECA の連続的評価が存在することだけから $|\mathcal{Z}|=2^{\aleph_0}$ を導くことはできない。
+    \item $\mathcal{P}(\mathbb{N})$ や $\mathbb{R}$ を ECA の構造へ接続するには、通常の数学的対象と Solver の間にある単射・全射・全単射を具体的に構成する必要がある。
+    \item 公理選択空間 $\mathcal{P}(\mathcal{A}_0)$ の濃度から $\mathcal{S}$ の下界を得ることと、$\mathcal{Z}$ の濃度について同じ下界を得ることは別問題である。
+\end{enumerate}
+
+\section{次の内容への接続}
+ここまでの議論では、$\mathcal{Z}$ を単に ZFC に対応するSolver の集合として扱うだけではなく、その内部における公理選択、Solver 構造、数学的宇宙、および通常の集合論的対象との関係を順次明示してきた。
+
+特に公理候補集合と公理選択空間について
+\[
+\operatorname{Ax}(U),
+\qquad
+I\subseteq\mathcal{P}(\Ax)
+\]
+を導入し、Solver を
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+として
+\[
+\Solver_I
+
+\left{
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\mid
+\mathcal{A}_s\in I
+\right}
+\]
+と定めた。
+
+さらに、
+\[
+\mathfrak{A}:\Solver_I\longrightarrow I,
+\qquad
+\mathfrak{A}(s)=\mathcal{A}_s
+\]
+によって Solver から公理選択を復元できることを明示し、
+ZFC に対応する Solver 集合を
+\[
+\mathcal{Z}
+
+\left{
+s\in\Solver_I
+\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\right}
+\]
+として定義した。
+
+この構造によって $\mathcal{Z}$ の濃度を検討する際に、公理選択の濃度と Solver 自体の濃度を分離して扱うことが可能となった。
+
+\subsection{通常の数学的対象との接続}
+
+一方 $\mathcal{Z}$ に属する Solver が表現する理論においては、通常の集合論的構成によって
+\[
+\mathbb{N},
+\qquad
+\mathbb{Z},
+\qquad
+\mathbb{Q},
+\qquad
+\mathbb{R}
+\]
+を構成することができる。
+
+したがって、通常数学における濃度構造として
+\[
+\mathbb{N}
+\longrightarrow
+\mathcal{P}(\mathbb{N})
+\longrightarrow
+\mathbb{R}
+\]
+を考えることができ、
+\[
+|\mathbb{N}|=\aleph_0,
+\qquad
+|\mathcal{P}(\mathbb{N})|
+
+|\mathbb{R}|
+
+2^{\aleph_0}
+\]
+が得られる。
+
+ここで重要なのは、これらの濃度を ECA 固有の評価値から直接導出されたものとして扱わないことである。
+
+すなわち
+\[
+\boxed{
+\text{ECA の評価値}
+\neq
+\text{通常の集合論における基数}
+}
+\]
+である。
+
+通常数学における基数は通常の集合論的対象について定義され、ECA における評価値は ECA の評価構造に属する。
+両者は接続して扱うことができるが、同一の対象ではない。
+
+\subsection{可算公理候補族から連続体濃度への接続}
+
+これまでの濃度追跡では、可算無限の公理候補族
+\[
+\mathcal{R}^*
+
+{r_n\mid n\in\mathbb{N}}
+\]
+を構成し、
+\[
+|\mathcal{R}^*|=\aleph_0
+\]
+とした。
+
+さらに、そのすべての部分集合を公理選択へ接続する構造として
+\[
+\Gamma:
+\mathcal{P}(\mathcal{R}^*)
+\longrightarrow
+I
+\]
+を考え、
+\[
+\Gamma(A)
+
+\mathcal{A}_{\mathrm{ZFC}}\cup A
+\]
+と定義した。
+
+適切な局所的閉包条件および $\Gamma$ の単射性が成立する場合、
+\[
+|\mathcal{P}(\mathcal{R}^*)|
+
+2^{\aleph_0}
+\]
+から
+\[
+2^{\aleph_0}\leq |I|
+\]
+が得られる。
+
+さらに、これらの公理選択に対応する Solver が ZFC と同型な理論を保持する条件を満たす場合
+\[
+\Phi:
+\mathcal{P}(\mathcal{R}^*)
+\longrightarrow
+\mathcal{Z}
+\]
+を構成できる。
+
+この写像が単射であるならば
+\[
+\boxed{
+2^{\aleph_0}\leq|\mathcal{Z}|
+}
+\]
+が得られる。
+
+したがって、ここまでの構成によって「可算無限の公理候補族からその冪集合を経由して連続体濃度を生成し、それを公理選択、Solver、および $\mathcal{Z}$ へ接続する経路」が形成される。
+
+\subsection{濃度追跡における対象の分離}
+この段階で、濃度を比較する対象を明確に分離しておく必要がある。
+
+少なくとも
+\[
+|\operatorname{Ax}(U)|,
+\qquad
+|\mathcal{R}^*|,
+\qquad
+|\mathcal{P}(\mathcal{R}^*)|,
+\qquad
+|I|,
+\qquad
+|\Solver_I|,
+\qquad
+|\mathcal{Z}|
+\]
+は、それぞれ異なる集合の濃度である。
+
+特に、$|\mathcal{R}^*|=\aleph_0$ から $|\mathcal{P}(\mathcal{R}^*)|=2^{\aleph_0}$ が得られることと、$|\mathcal{Z}|\geq2^{\aleph_0}$ が得られることは、同一の命題ではない。
+前者は冪集合による通常の集合論的濃度計算であり、後者はその冪集合を公理選択および Solver の構造へ接続した結果として得られる $\mathcal{Z}$ の濃度下界である。
+
+したがって、
+\[
+\boxed{
+|\mathbb{R}|=2^{\aleph_0}
+\quad\text{と}\quad
+|\mathcal{Z}|\geq2^{\aleph_0}
+}
+\]
+を区別する。
+
+\subsection{CH に関する位置づけ}
+通常の集合論においては $\aleph_0<2^{\aleph_0}$ および $\aleph_1\leq2^{\aleph_0}$ が成立する。
+一方、連続体仮説 $\mathrm{CH}$ に必要な条件は $2^{\aleph_0}\leq\aleph_1$ である。
+
+ここまでの ECA の濃度追跡から得られた $2^{\aleph_0}\leq|\mathcal{Z}|$ という下界は、この CH の上界 $2^{\aleph_0}\leq\aleph_1$ とは異なる。
+
+したがって、
+\[
+|\mathcal{Z}|\geq2^{\aleph_0}
+\]
+を得たことのみから
+\[
+2^{\aleph_0}=\aleph_1
+\]
+を導くことはできない。
+
+また、ECA の評価値が $[0,1]$ に属することや連続型の評価空間を構成できることから、通常の集合論における基数が直接決定されるわけでもない。
+したがって CH の導出可能性については、ここまでに構築された濃度追跡とは独立した問題として保持する。
+
+\subsection{統合的な濃度構造への移行}
+以上によって、これまで個別に扱われてきた構造を次の濃度追跡として一つの経路にまとめることができる。
+
+\[
+\boxed{
+\operatorname{Ax}(U)
+\longrightarrow
+\mathcal{R}^*
+\longrightarrow
+\mathcal{P}(\mathcal{R}^*)
+\longrightarrow
+I
+\longrightarrow
+\Solver_I
+\longrightarrow
+\mathcal{Z}
+}
+\]
+
+この経路では、
+
+\begin{enumerate}
+\item 数学的宇宙 $U$ に対応する公理候補集合 $\operatorname{Ax}(U)$ を出発点とする。
+\item そこから可算無限の公理候補族 $\mathcal{R}^*$ を構成する。
+\item その冪集合 $\mathcal{P}(\mathcal{R}^*)$ によって $2^{\aleph_0}$ を得る。
+\item その部分集合族を公理選択空間 $I$ へ接続する。
+\item 公理選択から Solver 集合 $\Solver_I$ を構成する。
+\item その中から $\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}$ を満たす Solver を取り出し、$\mathcal{Z}$ を構成する。
+\end{enumerate}
+
+これにより、従来個別に検討されていた「公理候補」「公理選択」「Solver」「$\mathcal{Z}$」「通常数学における連続体濃度」という対象を濃度という共通の観点から考えることができる。
+
+\subsection{本章から統合段階への移行}
+ここまでの検討によって、個々の構成要素を別々に検討する段階からそれらを一つの濃度構造として統合して記述する段階へ移行することが可能となった。
+
+その際には、
+\[
+\operatorname{Ax}(U),
+\qquad
+\mathcal{R}^*,
+\qquad
+\mathcal{P}(\mathcal{R}^*),
+\qquad
+I,
+\qquad
+\Solver_I,
+\qquad
+\mathcal{Z}
+\]
+の各対象について、
+
+\[
+\text{対象そのもの}
+\qquad\text{と}\qquad
+\text{その濃度}
+\]
+を区別しながら、全体の関係を整理する必要がある。
+
+また
+\[
+\mathbb{N}
+\longrightarrow
+\mathcal{P}(\mathbb{N})
+\longrightarrow
+\mathbb{R}
+\]
+という通常数学側の濃度構造と
+\[
+\operatorname{Ax}(U)
+\longrightarrow
+\mathcal{R}^*
+\longrightarrow
+\mathcal{P}(\mathcal{R}^*)
+\longrightarrow
+I
+\longrightarrow
+\Solver_I
+\longrightarrow
+\mathcal{Z}
+\]
+という ECA 側の構造を対応させることで、連続体濃度が ECA の内部構造のどこに現れ、どのように後段の Solver 構造へ接続されるのかを一つの体系として記述できる。
+したがって、ここから先ではこれまでに構築された各構造と濃度関係を統合し「ECA における濃度構造の全体像」として整理する段階へ移行する。
+
+\end{document}

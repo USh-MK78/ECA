@@ -1,0 +1,353 @@
+\documentclass[a4paper,11pt]{ltjsarticle}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\geometry{margin=25mm}
+\title{ECA_20 $\mathcal{R}^*$ の選択可能性と ECA 構造からの導出条件}
+\author{}
+\date{}
+\newtheorem{definition}{定義}
+\newtheorem{proposition}{命題}
+\begin{document}
+\maketitle
+
+\section{目的}
+ECA_19 では、数学的宇宙 $U$ に対応する
+$\operatorname{Ax}(U)$ から可算無限公理候補族
+\[
+\mathcal{R}^*=\{r_n\mid n\in\mathbb N\},
+\qquad |\mathcal{R}^*|=\aleph_0
+\]
+を構成できる条件を検討した。
+
+本稿では次の段階として、$\mathcal{R}^*$ の全部分集合を ECA の公理選択空間 $I$ において選択可能にできるかを検討する。
+
+現在の
+\[
+I\subseteq\mathcal{P}(\Ax)
+\]
+から
+\[
+\mathcal{P}(\mathcal{R}^*)\subseteq I
+\]
+を導くことはできない。そこで本稿では、強すぎる大域条件を置かず、
+\[
+\mathcal{R}^*\longrightarrow\mathcal{P}(\mathcal{R}^*)
+\longrightarrow I
+\]
+の構造を検査する。
+
+\section{前提構造}
+ECA の数学的宇宙の集合を $\mathfrak U_{\mathrm{ECA}}$ とし、
+$U\in\mathfrak U_{\mathrm{ECA}}$ に対して公理的に取り扱う候補集合
+$\operatorname{Ax}(U)$ を対応させる。
+
+大域的公理候補集合は
+\[
+\Ax=\bigcup_{U\in\mathfrak U_{\mathrm{ECA}}}\operatorname{Ax}(U)
+\]
+とする。
+
+公理選択空間は
+\[
+I\subseteq\mathcal{P}(\Ax)
+\]
+であり、Solver は
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s),
+\qquad
+\Solver_I=\{s\mid\mathcal{A}_s\in I\}
+\]
+とする。
+
+また、
+\[
+\mathcal{Z}=
+\left\{
+s\in\Solver_I\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\right\}.
+\]
+
+\section{$\mathcal{R}^*$ 選択閉包条件}
+$\mathcal{R}^*\subseteq\operatorname{Ax}(U)\subseteq\Ax$ が構成されたと仮定し、
+ZFC を表現する基礎公理集合を
+\[
+\mathcal{A}_{\mathrm{ZFC}}\subseteq\Ax
+\]
+とする。
+
+\begin{definition}
+\textbf{$\mathcal{R}^*$ 選択閉包条件}を
+\[
+\boxed{
+\forall A\subseteq\mathcal{R}^*,
+\qquad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+}
+\]
+と定義する。
+\end{definition}
+
+これは
+$\mathcal{P}(\mathcal{R}^*)\subseteq I$
+を要求するものではない。必要なのは
+\[
+\Gamma:\mathcal{P}(\mathcal{R}^*)\to I,
+\qquad
+\Gamma(A)=\mathcal{A}_{\mathrm{ZFC}}\cup A
+\]
+という写像が定義できることである。
+
+\section{ECA の現行定義から導出できるか}
+\[
+I\subseteq\mathcal{P}(\Ax)
+\]
+は、$I$ の各要素が $\Ax$ の部分集合であることしか述べていない。
+したがって、
+\[
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\]
+は現行定義からは導出できない。
+
+つまり、
+\[
+\mathcal{P}(\mathcal{R}^*)\longrightarrow I
+\]
+という全部分集合の選択可能性は現時点では未確定である。
+
+\section{最小限の追加条件}
+大域条件
+\[
+I=\mathcal{P}(\Ax)
+\]
+を仮定する必要はない。対象となる $\mathcal{R}^*$ に対してのみ
+\[
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\]
+を要求すればよい。
+
+さらに
+\[
+\mathcal{R}^*\cap\mathcal{A}_{\mathrm{ZFC}}=\varnothing
+\]
+なら、
+\[
+A\neq B\Longrightarrow
+\mathcal{A}_{\mathrm{ZFC}}\cup A\neq
+\mathcal{A}_{\mathrm{ZFC}}\cup B
+\]
+である。
+
+\begin{proposition}
+\[
+|\mathcal{R}^*|=\aleph_0,
+\quad
+\mathcal{R}^*\cap\mathcal{A}_{\mathrm{ZFC}}=\varnothing
+\]
+および $\mathcal{R}^*$ 選択閉包条件を仮定すると、
+\[
+\boxed{|I|\ge2^{\aleph_0}}
+\]
+が成り立つ。
+\end{proposition}
+
+\begin{proof}
+\[
+\Gamma(A)=\mathcal{A}_{\mathrm{ZFC}}\cup A
+\]
+とする。上記の交わり条件により $\Gamma$ は単射である。
+また
+\[
+|\mathcal{P}(\mathcal{R}^*)|
+=2^{\aleph_0}.
+\]
+したがって
+\[
+2^{\aleph_0}
+=
+|\mathcal{P}(\mathcal{R}^*)|
+\le |I|.
+\]
+\end{proof}
+
+\section{反例}
+例えば
+\[
+I=\{\mathcal{A}_{\mathrm{ZFC}}\}
+\]
+は
+\[
+I\subseteq\mathcal{P}(\Ax)
+\]
+に矛盾しない。しかし一般には
+\[
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\]
+は $A=\varnothing$ の場合しか成立しない。
+
+したがって
+\[
+I\subseteq\mathcal{P}(\Ax)
+\]
+だけでは
+\[
+|I|\ge2^{\aleph_0}
+\]
+も
+\[
+\mathcal{P}(\mathcal{R}^*)\hookrightarrow I
+\]
+も保証されない。
+
+これは、$\operatorname{Ax}(U)$ に多数の候補が存在することと、それらの任意の組合せが $I$ で許容されることが別条件であることを示す。
+
+\section{有限部分集合による検査}
+\[
+A_n=\{r_0,\ldots,r_{n-1}\}
+\]
+について
+\[
+\forall n\in\mathbb N,\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A_n\in I
+\]
+という有限選択可能性を考えることができる。
+
+ただし、
+\[
+\text{有限部分集合に対する閉包}
+\not\Rightarrow
+\text{全部分集合に対する閉包}
+\]
+である。したがって、有限的な閉包性だけから全部分集合に対する条件を導くことはできない。
+
+\section{局所条件と大域条件}
+局所条件は
+\[
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\]
+である。
+
+一方、大域条件は
+\[
+I=\mathcal{P}(\Ax)
+\]
+である。
+
+大域条件は局所条件を含意する場合があるが、局所条件から大域条件は導けない。本研究の目的では、まず局所条件を検査する方が適切である。
+
+\section{Stage 2 と Stage 3 の境界}
+本稿は Stage 2、
+\[
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\]
+までを扱う。
+
+ここから直ちに
+\[
+(\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0)\in\mathcal{Z}
+\]
+は得られない。
+
+Stage 3 ではさらに
+\[
+\mathcal{T}(\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+を要求する必要がある。
+
+したがって現段階の連鎖は
+\[
+\mathcal{R}^*\overset{\mathrm{Stage\ 2}}{\longrightarrow}I
+\]
+であり、
+\[
+I\overset{\mathrm{Stage\ 3}}{\longrightarrow}\mathcal{Z}
+\]
+は別の検証段階である。
+
+\section{連続体濃度に関する位置づけ}
+本稿で得られる条件付き結果は
+\[
+|\mathcal{R}^*|=\aleph_0
+\land
+\text{$\mathcal{R}^*$ 選択閉包条件}
+\Longrightarrow
+|I|\ge2^{\aleph_0}
+\]
+である。
+
+しかし、
+\[
+|I|\ge2^{\aleph_0}
+\]
+から
+\[
+|\mathcal{Z}|\ge2^{\aleph_0}
+\]
+を導くことはできない。 $\mathcal{Z}$ はさらに
+\[
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+という条件で切り出されるからである。
+
+よって
+\[
+\mathcal{R}^*
+\to
+\mathcal{P}(\mathcal{R}^*)
+\to
+I
+\to
+\Solver_I
+\to
+\mathcal{Z}
+\]
+の各段階を別々に検証する必要がある。
+
+\section{現段階での結論}
+ECA の現在の定義から確定しているのは
+\[
+I\subseteq\mathcal{P}(\Ax)
+\]
+である。
+
+これだけでは
+\[
+\mathcal{P}(\mathcal{R}^*)\hookrightarrow I
+\]
+は導出できない。
+
+一方、
+\[
+\mathcal{R}^*\cap\mathcal{A}_{\mathrm{ZFC}}=\varnothing
+\]
+と
+\[
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\]
+を追加条件として採用すれば、
+\[
+\mathcal{P}(\mathcal{R}^*)\hookrightarrow I
+\]
+および
+\[
+|I|\ge2^{\aleph_0}
+\]
+を導出できる。
+
+したがって次に検討すべきなのは、単に $I$ を大きく仮定することではなく、
+\[
+I,\quad B(i),\quad\operatorname{Ax}(U),\quad\mathcal{T}
+\]
+の既存構造から、この局所的な選択閉包性を導出できるかどうかである。
+
+\end{document}

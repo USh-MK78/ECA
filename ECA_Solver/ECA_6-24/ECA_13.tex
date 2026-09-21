@@ -1,0 +1,346 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{margin=25mm}
+\title{ECA\_13\\数学的宇宙と公理候補宇宙の形式化}
+\author{}\date{}
+\newtheorem{definition}{定義}
+\begin{document}
+\maketitle
+
+\section{目的}
+ECA\_12で導入した
+\[
+\mathfrak U_{\mathrm{ECA}}
+\]
+を基礎として、数学的宇宙と公理候補宇宙の関係を一段具体化する。
+特に、個々の数学的宇宙に関係する公理候補と、ECA全体で扱う公理候補
+\(\Ax\)、さらに選択可能な公理集合 \(I\) を区別する。
+本稿ではまだ \(\mathcal R^*\) の存在や
+\(|\mathcal Z|\ge2^{\aleph_0}\) を導出しない。
+
+\section{ECAにおける数学的宇宙}
+ECAが数学的対象として取り扱う数学的宇宙の全体を
+\[
+\mathfrak U_{\mathrm{ECA}}
+\]
+とし、
+\[
+U\in\mathfrak U_{\mathrm{ECA}}
+\]
+を一つのECA数学的宇宙とする。
+ここで \(V,L,M[G]\) のような異なる数学的構成を扱う可能性を許容する。
+ただし、数学的宇宙、そこで成立する公理体系、モデル、Solverを同一概念とはしない。
+
+\section{宇宙別公理候補}
+\begin{definition}
+各 \(U\in\mathfrak U_{\mathrm{ECA}}\) に対して、ECAがその数学的宇宙に関係する
+公理的選択候補として扱う対象の集合を
+\[
+\operatorname{Ax}(U)
+\]
+と表す。
+\end{definition}
+
+\(\operatorname{Ax}(U)\) は単に「宇宙 \(U\) の内部にある公理」を意味するのではなく、
+ECAがその宇宙に関係して公理的構成要素として扱う候補を表す。
+
+概念的にはECA全体の公理候補を
+\[
+\boxed{
+\Ax=
+\bigcup_{U\in\mathfrak U_{\mathrm{ECA}}}\operatorname{Ax}(U)
+}
+\]
+と表す。
+
+この式は現時点で \(\operatorname{Ax}(U)\) の完全な定義が確定していることを意味しない。
+また、現在の
+\[
+I\subseteq\mathcal P(\Ax)
+\]
+を維持するため、基本構造では \(\Ax\) を集合として扱う。
+数学的宇宙の全体を無制限な集合として仮定することは本稿では行わない。
+
+\section{公理候補と選択可能集合}
+\(\Ax\) はECAが扱う公理候補の全体であり、\(I\) はその中から実際に選択可能な
+公理集合の族である：
+\[
+I\subseteq\mathcal P(\Ax).
+\]
+各 \(i\in I\) について
+\[
+i\subseteq\Ax
+\]
+であり、従来の構造
+\[
+B(i)\subseteq i\subseteq\Ax
+\]
+を維持する。
+
+したがって、
+\[
+a\in\Ax
+\]
+から
+\[
+\{a\}\in I
+\]
+が自動的に従うわけではない。
+公理候補として存在することと、選択可能性は別の概念である。
+
+\section{数学的宇宙と選択可能性}
+宇宙 \(U\) に対して
+\[
+\operatorname{Ax}(U)
+\]
+が定まっても、
+\[
+\operatorname{Ax}(U)\subseteq I
+\]
+とはならない。
+両者の要素の型が異なるためである。
+
+宇宙 \(U\) に関係する候補だけから構成される選択可能集合の族は、概念的には
+\[
+\{i\in I\mid i\subseteq\operatorname{Ax}(U)\}
+\]
+と表せる。
+
+\section{公理条件による数学的宇宙の分類}
+任意の公理 \(A\) について、
+\[
+\mathfrak U_A
+=
+\{U\in\mathfrak U_{\mathrm{ECA}}\mid U\models A\},
+\qquad
+\mathfrak U_{\neg A}
+=
+\{U\in\mathfrak U_{\mathrm{ECA}}\mid U\models\neg A\}
+\]
+を考えることができる。
+
+特に選択公理について、
+\[
+\mathfrak U_{\mathrm{AC}}
+=
+\{U\in\mathfrak U_{\mathrm{ECA}}\mid U\models\mathrm{AC}\},
+\]
+\[
+\mathfrak U_{\neg\mathrm{AC}}
+=
+\{U\in\mathfrak U_{\mathrm{ECA}}\mid U\models\neg\mathrm{AC}\}
+\]
+とする。
+
+これらは
+\[
+\mathfrak U_{\mathrm{AC}},
+\mathfrak U_{\neg\mathrm{AC}}
+\subseteq\mathfrak U_{\mathrm{ECA}}
+\]
+として位置づける。
+
+\section{公理条件を固定していない段階}
+ここで「未確定」とは第三の真理値を意味しない。
+\[
+U\models A
+\]
+でも
+\[
+U\models\neg A
+\]
+でもない第三種類の宇宙を導入するわけではない。
+
+「未確定」とは、数学的宇宙を構成・分類する段階において、
+\(A\) を成立させる条件も \(\neg A\) を成立させる条件もまだ固定していない
+段階を表す。
+
+これを概念的に
+\[
+\mathfrak U_{?}
+\]
+と表すなら、
+\[
+\boxed{
+\mathfrak U_{?}
+\longrightarrow
+\begin{cases}
+\mathfrak U_A,\\
+\mathfrak U_{\neg A}
+\end{cases}}
+\]
+という分岐を考えられる。
+
+したがって \(\mathfrak U_?\) は、ACの第三状態ではなく、
+公理条件を固定する前段階を表す。
+
+\section{数学的宇宙の入れ子構造の可能性}
+ECAの数学的宇宙概念が、ある数学的宇宙の内部にさらにECA数学的宇宙を
+扱うことを排除しない場合、入れ子構造を考えることができる。
+
+まず
+\[
+U_0\in\mathfrak U_{\mathrm{ECA}}
+\]
+に対し、
+\[
+\mathfrak U_{\mathrm{ECA}}(U_0)
+\]
+を \(U_0\) の内部でECAの数学的宇宙として扱われる宇宙の族とする。
+
+もし
+\[
+U_1\in\mathfrak U_{\mathrm{ECA}}(U_0)
+\]
+なら、さらに
+\[
+\mathfrak U_{\mathrm{ECA}}(U_1)
+\]
+を考える可能性が生じる。
+
+一般には
+\[
+\boxed{
+U_{n+1}\in\mathfrak U_{\mathrm{ECA}}(U_n)
+}
+\qquad(n\in\mathbb N)
+\]
+という入れ子構造を記述できる。
+
+これは「無数の数学的宇宙が存在する」という定理ではない。
+現段階では、このような構造をECAが許容する可能性を記述している。
+
+なお、
+\[
+U_0\supseteq U_1\supseteq U_2\supseteq\cdots
+\]
+と書く場合にも、集合としての包含関係を自動的に主張するものではなく、
+基本関係は
+\[
+U_{n+1}\in\mathfrak U_{\mathrm{ECA}}(U_n)
+\]
+である。
+
+\section{Solverおよび理論との接続}
+Solverを
+\[
+s=(\mathcal A_s,\mathcal R_s)
+\]
+とし、
+\[
+\Solver_I
+=
+\{s=(\mathcal A_s,\mathcal R_s)\mid\mathcal A_s\in I\}
+\]
+とする。
+公理選択写像は
+\[
+\mathfrak A:\Solver_I\to I,
+\qquad
+\mathfrak A(s)=\mathcal A_s
+\]
+である。
+
+理論写像を
+\[
+\mathcal T:\Solver_I\to\mathrm{Th}
+\]
+とする。
+
+したがって概念的には
+\[
+U
+\longrightarrow
+\operatorname{Ax}(U)
+\longrightarrow
+i
+\longrightarrow
+s
+\longrightarrow
+\mathcal T(s)
+\]
+という階層を考えられる。
+ただし、この矢印をすべて一意な写像として確定したわけではない。
+
+また、
+\[
+s=t,\qquad
+s\cong_{\mathrm{Sol}}t,\qquad
+\mathcal T(s)\cong_{\mathrm{Th}}\mathcal T(t)
+\]
+はそれぞれ異なる関係として維持する。
+
+\section{\(\mathcal Z\)との接続}
+ECA\_7で定義した
+\[
+\mathcal Z
+=
+\{s\in\Solver_I\mid
+\mathcal T(s)\cong_{\mathrm{Th}}\mathrm{ZFC}\}
+\]
+を維持する。
+
+よって
+\[
+\mathcal Z\subseteq\Solver_I
+\]
+であり、\(\mathcal Z\) の要素は数学的宇宙そのものではなくSolverである。
+
+したがって、
+\[
+|\Ax|,\quad |I|,\quad|\Solver_I|,\quad|\mathcal Z|
+\]
+は引き続き別々に追跡する必要がある。
+
+\section{\(\mathcal R^*\)の検討への準備}
+ECA\_10--11で扱った
+\[
+\mathcal R^*=\{r_0,r_1,r_2,\ldots\}\subseteq\Ax
+\]
+について、次段階では直接その存在を仮定するのではなく、
+\[
+U\in\mathfrak U_{\mathrm{ECA}}
+\]
+に対して
+\[
+\mathcal R^*\subseteq\operatorname{Ax}(U)
+\]
+となる宇宙が存在するかを調べる。
+
+その上で、
+\[
+\mathcal R^*\subseteq\Ax
+\]
+への包含、各選択の許容性、
+さらにZFCを表現するSolverの構成可能性を個別に検証する。
+
+したがって、検討順序は
+\[
+\boxed{
+\mathfrak U_{\mathrm{ECA}}
+\rightarrow
+\operatorname{Ax}(U)
+\rightarrow
+\Ax
+\rightarrow
+I
+\rightarrow
+\Solver_I
+\rightarrow
+\mathcal Z
+}
+\]
+となる。
+
+本稿ではまだ、
+\[
+\mathcal R^*\text{ が存在する}
+\]
+とも、
+\[
+|\mathcal Z|\ge2^{\aleph_0}
+\]
+とも結論しない。
+
+\end{document}

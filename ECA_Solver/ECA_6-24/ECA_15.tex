@@ -1,0 +1,112 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{margin=25mm}
+\title{ECA\_15\\可算無限公理候補族 $\mathcal R^*$ の構成可能性}
+\author{}
+\date{}
+\newtheorem{definition}{定義}
+\newtheorem{proposition}{命題}
+\newtheorem{remark}{注意}
+\begin{document}
+\maketitle
+
+\section{目的}
+ECA\_14では、数学的宇宙 $U$ と、その宇宙に関係する公理候補集合 $\operatorname{Ax}(U)$ を区別し、
+$\mathcal R^*\subseteq\operatorname{Ax}(U)\subseteq\Ax$ という形で、可算無限公理候補族を再検討できる段階まで整理した。
+本稿では、ECAの既存構造から可算無限集合 $\mathcal R^*\subseteq\operatorname{Ax}(U)$ を構成できるかを検討する。存在を最初から仮定せず、$|\mathcal Z|\ge2^{\aleph_0}$ も先取りしない。
+
+\section{現在確定している構造}
+\[
+U\longrightarrow\operatorname{Ax}(U)\longrightarrow I(U)\longrightarrow\Solver(U)\longrightarrow\mathcal T(s)
+\]
+を考える。ECA全体では $\mathfrak U_{\mathrm{ECA}}\to\Ax\to I\to\Solver_I$ とする。
+\[
+I\subseteq\mathcal P(\Ax),\qquad s=(\mathcal A_s,\mathcal R_s),\qquad
+\Solver_I=\{s\mid\mathcal A_s\in I\},
+\]
+さらに
+\[
+\mathcal Z=\{s\in\Solver_I\mid\mathcal T(s)\cong_{\mathrm{Th}}\mathrm{ZFC}\}.
+\]
+
+\section{必要となる可算無限族}
+\[
+\mathcal R^*=\{r_0,r_1,r_2,\ldots\}
+\]
+について、$r_n\in\operatorname{Ax}(U)$ および $r_m\ne r_n$ ($m\ne n$) を要求する。この二条件から $|\mathcal R^*|=\aleph_0$ となる。したがって最初の問題は、$|\operatorname{Ax}(U)|\ge\aleph_0$ を既存定義から導けるか、である。
+
+\section{公理および公理スキームから可算性を導けるか}
+「公理および公理スキームを取り扱う」という記述だけから $|\Ax|\ge\aleph_0$ は導けない。公理スキームそのものを一つの対象として扱うなら、その存在だけでは可算無限性は保証されない。
+\[
+\boxed{\text{公理スキームの存在}\not\Rightarrow |\Ax|\ge\aleph_0}
+\]
+
+\section{公理スキームのインスタンスを候補とする場合}
+公理スキーム $\Sigma$ の相異なるインスタンスを
+\[
+\Sigma=\{\sigma_n\mid n\in\mathbb N\}
+\]
+として個別に $\operatorname{Ax}(U)$ に含める設計を採用すれば、$|\operatorname{Ax}(U)|\ge\aleph_0$ となる。この場合 $\mathcal R^*:=\Sigma$ とできる。
+ただし、スキームとそのインスタンスを $\Ax$ の対象としてどのように符号化するかは、現在のECA定義から自動的には確定していない。
+
+\section{ZFCを基準とした候補族}
+連続体濃度の議論に使うには、可算無限であるだけでは不十分である。基準公理集合 $\mathcal A_{\mathrm{ZFC}}$ と規則 $\mathcal R_0$ に対し、
+\[
+s_A=(\mathcal A_{\mathrm{ZFC}}\cup A,\mathcal R_0)
+\]
+を考え、各 $A\subseteq\mathcal R^*$ について
+\[
+\mathcal T(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+を必要とする。したがって $\mathcal R^*$ の存在、全部分集合の選択可能性、ZFC保存性は別条件である。
+
+\section{三段階の条件}
+\subsection*{第1段階：候補族の存在}
+\[
+\exists U\in\mathfrak U_{\mathrm{ECA}}\,\exists\mathcal R^*
+\left(\mathcal R^*\subseteq\operatorname{Ax}(U)\land|\mathcal R^*|=\aleph_0\right).
+\]
+\subsection*{第2段階：選択可能性}
+\[
+\forall A\subseteq\mathcal R^*,\qquad \mathcal A_{\mathrm{ZFC}}\cup A\in I.
+\]
+\subsection*{第3段階：ZFC保存性}
+\[
+\forall A\subseteq\mathcal R^*,\qquad \mathcal T(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}.
+\]
+第1段階だけでは $\mathcal Z$ の濃度議論には足りず、第2・第3段階まで必要である。
+
+\section{現在のECAから直接導ける範囲}
+現在の定義から $\mathcal R^*\subseteq\Ax$ を考えることはできるが、
+\[
+\exists\mathcal R^*\quad |\mathcal R^*|=\aleph_0
+\]
+は導出されていない。また、第2段階および第3段階も導出されていない。したがって
+\[
+\boxed{\mathcal R^*\text{ の存在は現時点ではECAの定理ではない。}}
+\]
+
+\section{追加条件を最小化する方向}
+無制限に新しい公理を追加するのではなく、既存の $\operatorname{Ax}(U)$ の構造から $\mathcal R^*$ を取り出せるかを検討する。その候補は、(1) 公理スキームのインスタンスを個別の候補として符号化する、(2) ZFCに関係する既存候補から可算無限族を指定する、(3) $\operatorname{Ax}(U)$ に可算無限部分集合が存在することを構造条件として明示する、の三方向である。ただし、ZFC保存性は別途確認する必要がある。
+
+\section{濃度議論への接続}
+第1～第3段階と単射性が成立するなら、
+\[
+\Phi:\mathcal P(\mathcal R^*)\to\mathcal Z,\qquad \Phi(A)=s_A
+\]
+を定義でき、相異なる $A$ が相異なるSolverを与えるなら単射となる。したがって
+\[
+|\mathcal Z|\ge|\mathcal P(\mathcal R^*)|=2^{\aleph_0}.
+\]
+これはあくまで条件付き帰結であり、現時点のECAの既成結果ではない。
+
+\section{結論}
+ECAから $\mathcal R^*$ を構成するには、少なくとも $\operatorname{Ax}(U)$ が可算無限個の相異なる候補を個別に保持できる構造であることを明示する必要がある。さらに、連続体濃度の下界へ接続するには、
+\[
+\boxed{\text{候補族の存在}\to\text{全部分集合の選択可能性}\to\text{ZFC保存性}\to\text{Solverの単射的構成}}
+\]
+の順に確認する必要がある。
+したがって次の問題は、公理スキームとその各インスタンスをECAにおいてどの対象階層で扱うかを確定することである。
+
+\end{document}

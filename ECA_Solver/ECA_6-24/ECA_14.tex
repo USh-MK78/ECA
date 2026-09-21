@@ -1,0 +1,189 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{margin=25mm}
+\title{ECA_14\\\\数学的宇宙と公理候補集合の対応}
+\author{}
+\date{}
+\newtheorem{definition}{定義}
+\begin{document}
+\maketitle
+
+\section{目的}
+ECA_13で導入した
+\[
+\mathfrak U_{\\mathrm{ECA}}
+\]
+を基礎として、数学的宇宙と公理候補集合の対応を一段具体化する。本稿では特に
+\[
+U\\longmapsto\\operatorname{Ax}(U)
+\]
+を検討し、数学的宇宙、理論、モデル、公理候補、選択可能な公理集合、Solverを同一視しない。
+
+\section{数学的宇宙の対象型}
+ECAにおける数学的宇宙を
+\\[
+U\\in\\mathfrak U_{\\mathrm{ECA}}
+\\]
+とする。数学的宇宙そのもの、そこを記述する理論、理論のモデルは別の対象型として扱う。したがって
+\\[
+M\\models T
+\\]
+はモデルと理論の間の関係であり、任意の数学的宇宙について自動的に成立する記法とはしない。
+
+\\section{宇宙別公理候補集合}
+\\begin{definition}
+各数学的宇宙 $U$ に対し、ECAがその宇宙に関係する公理的構成要素として取り扱う候補の集合を
+\\[
+\\operatorname{Ax}(U)
+\\]
+とする。
+\\end{definition}
+
+ここで $a\\in\\operatorname{Ax}(U)$ は、$a$ が $U$ に関係する公理候補であることを表すが、これだけから $U\\models a$ や「$a$ が $U$ で真」を導かない。
+
+\\section{公理候補と採用公理集合}
+ある $U$ に対して採用される公理集合を
+\\[
+A_U\\subseteq\\operatorname{Ax}(U)
+\\]
+とする。公理集合から宇宙が一意に決定されることは仮定しない。したがって、異なる宇宙が同じ公理集合を共有することや、一つの宇宙が異なる記述を持つことを排除しない。
+
+\\section{ECA全体の公理候補集合}
+ECA全体で扱う公理候補集合を $\\Ax$ とする。概念的には
+\\[
+\\boxed{\\Ax=\\bigcup_{U\\in\\mathfrak U_{\\mathrm{ECA}}}\\operatorname{Ax}(U)}
+\\]
+と表す。ただし、現在のECAで $I\\subseteq\\mathcal P(\\Ax)$ を用いるため、$\\Ax$ は基本構造では集合として扱う。$\\mathfrak U_{\\mathrm{ECA}}$ を無制限な全数学的宇宙の集合とすることは本稿では要求しない。
+
+\\section{宇宙から公理候補集合への対応}
+対応を
+\\[
+\\operatorname{Ax}_{\\mathrm{map}}:\mathfrak U_{\\mathrm{ECA}}\\to\\mathcal P(\\Ax),
+\\qquad
+\\operatorname{Ax}_{\\mathrm{map}}(U)=\\operatorname{Ax}(U)
+\\]
+として形式化できる場合、各 $U$ について $\\operatorname{Ax}(U)\\subseteq\\Ax$ となる。
+
+ただし $U\\ne V$ から $\\operatorname{Ax}(U)\\ne\\operatorname{Ax}(V)$ は従わない。逆に公理候補集合が異なることだけから宇宙の同型性・非同型性を直接結論しない。
+
+\\section{選択空間への接続}
+従来どおり
+\\[
+I\\subseteq\\mathcal P(\\Ax)
+\\]
+とし、$i\\in I$ は一つの許容された公理集合である。宇宙 $U$ に関係する選択可能集合の族を
+\\[
+I(U)=\\{i\\in I\\mid i\\subseteq\\operatorname{Ax}(U)\\}
+\\]
+とする。
+
+ここで $\\operatorname{Ax}(U)$ は公理候補の集合、$I(U)$ はその候補だけからなる許容された選択集合の族であり、両者を同一視しない。
+
+\\section{Solverへの接続}
+Solverを
+\\[
+s=(\\mathcal A_s,\\mathcal R_s)
+\\]
+とし、
+\\[
+\\Solver_I=\\{s=(\\mathcal A_s,\\mathcal R_s)\\mid\\mathcal A_s\\in I\\}
+\\]
+とする。公理選択写像は
+\\[
+\\mathfrak A:\\Solver_I\\to I,
+\\qquad
+\\mathfrak A(s)=\\mathcal A_s
+\\]
+である。
+
+宇宙 $U$ に関係するSolverを
+\\[
+\\Solver(U)=\\{s\\in\\Solver_I\\mid\\mathcal A_s\\in I(U)\\}
+\\]
+と定義できる。したがって概念的には
+\\[
+U\\longrightarrow\\operatorname{Ax}(U)\\longrightarrow I(U)\\longrightarrow\\Solver(U)
+\\]
+という階層を記述できるが、各矢印を一意な写像として確定したわけではない。
+
+\\section{理論との関係}
+理論写像を
+\\[
+\\mathcal T:\\Solver_I\\to\\mathrm{Th}
+\\]
+とする。$\\mathcal T(s)$ はSolverが表現する理論であり、数学的宇宙 $U$ そのものではない。したがって
+\\[
+U,\\qquad s,\\qquad\\mathcal T(s)
+\\]
+は別の対象として扱う。また
+\\[
+s=t,\\qquad s\\cong_{\\mathrm{Sol}}t,\\qquad \\mathcal T(s)\\cong_{\\mathrm{Th}}\\mathcal T(t)
+\\]
+を区別する。
+
+\\section{\\mathcal Zとの関係}
+ECA_7の定義
+\\[
+\\mathcal Z=\\{s\\in\\Solver_I\\mid\\mathcal T(s)\\cong_{\\mathrm{Th}}\\mathrm{ZFC}\\}
+\\]
+を維持する。宇宙 $U$ に関係するZFC表現Solverを
+\\[
+\\mathcal Z(U)=\\mathcal Z\\cap\\Solver(U)
+\\]
+とする。
+
+ただし、全ての $s\\in\\mathcal Z$ が何らかの $U$ に関係づけられることを本稿から自動的には導かない。したがって
+\\[
+\\mathcal Z=\\bigcup_U\\mathcal Z(U)
+\\]
+も現時点では追加条件なしに定理とはしない。
+
+\\section{AC分岐と対象型}
+ACについて
+\\[
+\\mathfrak U_{\\mathrm{AC}}=\\{U\\in\\mathfrak U_{\\mathrm{ECA}}\\mid U\\models\\mathrm{AC}\\},
+\\]
+\\[
+\\mathfrak U_{\\neg\\mathrm{AC}}=\\{U\\in\\mathfrak U_{\\mathrm{ECA}}\\mid U\\models\\neg\\mathrm{AC}\\}
+\\]
+を考える場合、まず $U\\models A$ の意味をどの対象型の数学的宇宙に対して定義するかを確定する必要がある。したがって、ECA_13のAC分岐は維持しつつ、その意味論的形式化は別途行う。
+
+\\section{入れ子構造}
+ECA_13で示した
+\\[
+U_{n+1}\\in\\mathfrak U_{\\mathrm{ECA}}(U_n)
+\\]
+という構造を採用する場合、各 $U_n$ に $\\operatorname{Ax}(U_n)$ を対応させることが考えられる。しかし、
+\\[
+\\operatorname{Ax}(U_{n+1})\\subseteq\\operatorname{Ax}(U_n)
+\\]
+などの包含関係は自動的には仮定しない。宇宙の入れ子関係と公理候補集合の包含関係は別問題である。
+
+\\section{\\mathcal R^*への含意}
+ECA_11で検討した可算無限族
+\\[
+\\mathcal R^*=\\{r_0,r_1,r_2,\\ldots\\}\\subseteq\\Ax
+\\]
+を宇宙別に考えるなら、より具体的に
+\\[
+\\boxed{\\mathcal R^*\\subseteq\\operatorname{Ax}(U)\\subseteq\\Ax}
+\\]
+を検討することになる。
+
+ただし、これだけでは $\\mathcal R^*$ の存在も、各部分集合に対応するZFC保存Solverの存在も導かれない。さらに、選択可能性、Solverの構成、ZFCとの理論同型性、異なる部分集合に対するSolverの非同一性を個別に確認する必要がある。
+
+\\section{現段階での結論}
+本稿では、
+\\[
+\\boxed{\\mathfrak U_{\\mathrm{ECA}}\\to\\Ax\\to I\\to\\Solver_I\\to\\mathcal Z}
+\\]
+というECA全体の階層と、個別宇宙についての
+\\[
+\\boxed{U\\to\\operatorname{Ax}(U)\\to I(U)\\to\\Solver(U)}
+\\]
+という局所的な階層を整理した。
+
+現段階では $\\mathcal R^*$ の存在も $|\\mathcal Z|\\ge2^{\\aleph_0}$ も主張しない。次に必要なのは、数学的宇宙をECAでどの対象型として正式に扱うか、そして $\\operatorname{Ax}(U)$ を実際のECA構造としてどのように定義するかの確定である。
+
+\\end{document}

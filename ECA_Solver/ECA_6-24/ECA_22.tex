@@ -1,0 +1,481 @@
+% ECA_22.tex
+\documentclass[a4paper,11pt]{ltjsarticle}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\geometry{margin=25mm}
+
+\title{ECA_22 公理選択空間 $I$ の定義と選択閉包性}
+\author{}
+\date{}
+
+\newtheorem{definition}{定義}
+\newtheorem{proposition}{命題}
+\newtheorem{remark}{注意}
+
+\begin{document}
+\maketitle
+
+\section{目的}
+
+ECA_21 では、
+\[
+I\subseteq\mathcal{P}(\Ax),
+\qquad
+B(i)\subseteq i\subseteq\Ax
+\]
+という既存構造だけから、
+\[
+\forall A\subseteq\mathcal{R}^*,
+\qquad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\]
+を導出することはできないことを確認した。
+
+そこで本稿では、議論を $I$ の定義そのものまで戻し、
+\[
+\text{「ECA において許容される公理選択とは何か」}
+\]
+を検査する。
+
+ここでの目的は、直ちに $I$ を大きくすることではない。
+まず、現在の ECA における $I$ の構造から、どの程度の選択閉包性が自然に得られるかを明確にすることである。
+
+\section{$I$ の基本的位置}
+
+ECA では、
+\[
+\Ax
+\]
+を公理および公理スキームとして扱う候補の全体とし、
+\[
+I\subseteq\mathcal{P}(\Ax)
+\]
+とする。
+
+したがって、
+\[
+i\in I
+\]
+は $\Ax$ の部分集合であり、ECA において公理選択として扱われる集合である。
+
+ここで重要なのは、
+\[
+\Ax
+\]
+と
+\[
+I
+\]
+が異なる対象であることである。
+
+\[
+a\in\Ax
+\]
+は公理候補そのものを表す一方、
+\[
+i\in I
+\]
+は公理候補を組み合わせた選択集合を表す。
+
+したがって、
+\[
+\Ax=\text{候補の宇宙},
+\qquad
+I=\text{許容される選択集合の空間}
+\]
+という役割分担になる。
+
+\section{部分集合としての $I$}
+
+\[
+I\subseteq\mathcal{P}(\Ax)
+\]
+は、$I$ が $\Ax$ の全部分集合を必ず含むという意味ではない。
+
+例えば、
+\[
+I=\{\varnothing,\mathcal{A}_0\}
+\]
+も形式的には
+\[
+I\subseteq\mathcal{P}(\Ax)
+\]
+を満たし得る。
+
+したがって、
+\[
+\forall A\subseteq\Ax,\quad A\in I
+\]
+を要求する
+\[
+I=\mathcal{P}(\Ax)
+\]
+とは明確に異なる。
+
+この区別は、$\mathcal{R}^*$ の全部分集合を選択可能にする問題に直接関係する。
+
+\section{許容性を表す条件}
+
+$I$ を単なる任意の部分集合として扱うのではなく、ある許容性条件によって定めることを考える。
+
+抽象的に
+\[
+\operatorname{Adm}(i)
+\]
+を「$i$ が ECA において許容される公理選択である」という条件とする。
+
+このとき、
+\[
+\boxed{
+I=\{i\subseteq\Ax\mid\operatorname{Adm}(i)\}
+}
+\]
+と表現できる。
+
+この表現を採用した場合、ECA の問題は
+\[
+\operatorname{Adm}(i)
+\]
+をどのように定義するかへ移る。
+
+ただし、これは現行 ECA に既に存在する完成済みの定義として扱うのではなく、$I$ を形式化するための一般形として扱う。
+
+\section{$B(i)$ との関係}
+
+現在の
+\[
+B(i)\subseteq i
+\]
+は、$B(i)$ が $i$ の内部にあることを表す。
+
+一方、
+\[
+\operatorname{Adm}(i)
+\]
+は $i$ 自体が選択空間 $I$ に属するための条件である。
+
+したがって、
+\[
+B(i)\subseteq i
+\]
+と
+\[
+\operatorname{Adm}(i)
+\]
+は異なる役割を持つ。
+
+概念的には、
+
+\[
+\operatorname{Adm}(i)
+\longrightarrow
+i\in I
+\]
+
+と
+
+\[
+B(i)\subseteq i
+\]
+
+を分けて扱うことができる。
+
+この分離によって、$B(i)$ の既存の意味を変更せずに $I$ の選択規則を検討できる。
+
+\section{$\mathcal{R}^*$ に対する許容性}
+
+ECA_19 により、
+\[
+\mathcal{R}^*
+\subseteq\operatorname{Ax}(U)
+\subseteq\Ax
+\]
+が得られたと仮定する。
+
+ZFC を表現する基礎集合を
+\[
+\mathcal{A}_{\mathrm{ZFC}}\subseteq\Ax
+\]
+とする。
+
+このとき
+\[
+i_A=\mathcal{A}_{\mathrm{ZFC}}\cup A,
+\qquad
+A\subseteq\mathcal{R}^*
+\]
+を考える。
+
+Stage 2 の条件は
+\[
+\boxed{
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\operatorname{Adm}(i_A)
+}
+\]
+と書き換えられる。
+
+すなわち、
+\[
+\forall A\subseteq\mathcal{R}^*,
+\quad
+i_A\in I
+\]
+を保証するためには、
+\[
+\operatorname{Adm}
+\]
+がこの族に対してどのような性質を持つかを検討すればよい。
+
+\section{許容性の候補となる性質}
+
+ここでは、まだ ECA の公理として採用せず、検査対象としていくつかの性質を区別する。
+
+\subsection{単純な包含閉包}
+
+\[
+i\in I,\quad A\subseteq i
+\Longrightarrow
+A\in I.
+\]
+
+これは $I$ が部分集合について閉じていることを意味する。
+
+しかし、
+\[
+\mathcal{A}_{\mathrm{ZFC}}\cup A
+\]
+は $\mathcal{A}_{\mathrm{ZFC}}$ の部分集合ではないため、この性質だけでは
+\[
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\]
+を導けない。
+
+\subsection{有限和閉包}
+
+\[
+i,j\in I
+\Longrightarrow
+i\cup j\in I.
+\]
+
+これは有限個の許容された選択集合を組み合わせる条件である。
+
+ただし、これだけでは
+\[
+\bigcup_{n\in\mathbb N}i_n\in I
+\]
+を導けない。
+
+\subsection{可算和閉包}
+
+\[
+(i_n)_{n\in\mathbb N}\subseteq I
+\Longrightarrow
+\bigcup_{n\in\mathbb N}i_n\in I.
+\]
+
+これは有限和閉包より強い条件である。
+
+しかし、これだけでも「各 $A\subseteq\mathcal{R}^*$ に対する
+$\mathcal{A}_{\mathrm{ZFC}}\cup A$」が $I$ に属することを直ちに意味しない。
+
+\subsection{局所的な $\mathcal{R}^*$ 閉包}
+
+最も直接的なのは、
+\[
+\boxed{
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\operatorname{Adm}
+(\mathcal{A}_{\mathrm{ZFC}}\cup A)
+}
+\]
+を要求することである。
+
+これは ECA_20--ECA_21 で扱った条件そのものであり、必要な範囲に限定された条件である。
+
+\section{閉包性だけでは十分でない場合}
+
+$I$ に閉包性を与えても、
+\[
+\mathcal{A}_{\mathrm{ZFC}}\in I
+\]
+が成立しなければ、そこから
+\[
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\]
+を構成することはできない。
+
+したがって、例えば有限和閉包を採用する場合には、
+
+\[
+\mathcal{A}_{\mathrm{ZFC}}\in I
+\]
+と
+\[
+\{r\}\text{ を組み込むための適切な許容性}
+\]
+
+など、出発点となる条件も必要になる。
+
+このため、
+\[
+\text{候補の存在}
+\]
+と
+\[
+\text{候補を含む選択集合の許容性}
+\]
+は分離して検査する必要がある。
+
+\section{必要条件と十分条件の分離}
+
+Stage 2 に関して、次の条件を区別する。
+
+\subsection*{候補存在}
+\[
+\exists U\in\mathfrak U_{\mathrm{ECA}},
+\quad
+\exists\mathcal{R}^*
+\subseteq\operatorname{Ax}(U),
+\quad
+|\mathcal{R}^*|=\aleph_0.
+\]
+
+これは ECA_19 の対象である。
+
+\subsection*{基礎選択}
+\[
+\mathcal{A}_{\mathrm{ZFC}}\in I.
+\]
+
+\subsection*{局所閉包}
+\[
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I.
+\]
+
+この三つは同一の条件ではない。
+
+特に、
+\[
+|\operatorname{Ax}(U)|\ge\aleph_0
+\]
+から
+\[
+|I|\ge2^{\aleph_0}
+\]
+を直接導くことはできない。
+
+\section{連続体濃度との関係}
+
+\[
+|\mathcal{R}^*|=\aleph_0
+\]
+かつ
+\[
+\mathcal{R}^*\cap\mathcal{A}_{\mathrm{ZFC}}=\varnothing
+\]
+であり、局所閉包条件が成立すれば、
+
+\[
+\Gamma:
+\mathcal{P}(\mathcal{R}^*)\hookrightarrow I,
+\qquad
+\Gamma(A)=\mathcal{A}_{\mathrm{ZFC}}\cup A
+\]
+が得られる。
+
+したがって、
+\[
+|I|\ge2^{\aleph_0}.
+\]
+
+しかし、ここでも
+\[
+|I|\ge2^{\aleph_0}
+\not\Rightarrow
+|\mathcal Z|\ge2^{\aleph_0}
+\]
+である。
+
+\[
+\mathcal Z
+\]
+については、さらに
+\[
+\mathcal T(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+を満たす Solver を構成する必要がある。
+
+\section{現段階での判断}
+
+現行 ECA の
+\[
+I\subseteq\mathcal{P}(\Ax)
+\]
+という定義だけからは、$\mathcal{R}^*$ の全部分集合に対する選択可能性は導出できない。
+
+また、
+\[
+B(i)\subseteq i
+\]
+をそのための閉包性として読み替える必要もない。
+
+したがって、現段階では
+
+\[
+\boxed{
+I=\{i\subseteq\Ax\mid\operatorname{Adm}(i)\}
+}
+\]
+
+という一般的な許容性表現を導入して検討するのが適切である。
+
+その上で、必要最小限の条件として
+
+\[
+\boxed{
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\operatorname{Adm}
+(\mathcal{A}_{\mathrm{ZFC}}\cup A)
+}
+\]
+
+を検査対象とする。
+
+この条件が ECA の既存構造から導出されるなら追加公理として扱う必要性は低くなり、導出できないなら、ECA において明示的な選択条件として採用するかどうかを改めて判断することになる。
+
+\section{次段階}
+
+次に必要なのは、Stage 3 の検査である。
+
+すなわち、
+\[
+i_A=\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\]
+から
+\[
+s_A=(i_A,\mathcal{R}_0)\in\mathcal Z
+\]
+を得るために、
+
+\[
+\mathcal T(i_A,\mathcal{R}_0)
+\cong_{\mathrm{Th}}
+\mathrm{ZFC}
+\]
+をすべての
+\[
+A\subseteq\mathcal{R}^*
+\]
+について保証できる条件を検討する。
+
+ここでは、単に各 $r_n$ が個別に ZFC と矛盾しないという条件ではなく、任意の部分集合 $A$ を加えた場合にも同じ理論表現を保てることが必要になる。
+
+\end{document}

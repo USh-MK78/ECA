@@ -1,0 +1,426 @@
+\documentclass[a4paper,11pt]{jsarticle}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\geometry{margin=25mm}
+\newtheorem{definition}{定義}[section]
+\newtheorem{remark}[definition]{注意}
+\newcommand{\Solver}{\mathcal{S}}
+\newcommand{\Ax}{S_{\mathrm{ax}}}
+\newcommand{\Th}{\mathrm{Th}}
+\newcommand{\Zset}{\mathcal{Z}}
+\newcommand{\Mod}{\mathrm{Mod}}
+
+\title{ECA_8\\$\mathcal{Z}$ におけるモデル分岐と連続体仮説}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+本稿では、ECA_7 において再定義した
+\[
+\mathcal{Z}=
+\left\{s\in\Solver_I\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}\right\}
+\]
+を前提として、ECA_5 で記述されていた連続体仮説（CH）の
+「Solver に依存する」という記述を、理論レベルとモデルレベルに
+分離して再構成する。
+
+特に、異なる Solver が ZFC と理論同型な理論を表現することと、
+それらの理論について CH または $\neg\mathrm{CH}$ を満たすモデルを
+考えることを区別する。
+
+本稿の目的は CH の独立性そのものを新たに証明することではない。
+また、$\mathcal{Z}$ の濃度や連続体濃度 $2^{\aleph_0}$ を
+本稿のモデル分岐から導出するものでもない。
+\end{abstract}
+
+\section{本稿の位置付け}
+
+ECA_7 では、ECA に適合する Solver 全体を
+\[
+\Solver_I=
+\left\{s=(\mathcal{A}_s,\mathcal{R}_s)\mid
+\mathcal{A}_s\in I\right\}
+\]
+とし、理論写像を
+\[
+\mathcal{T}:\Solver_I\longrightarrow\Th
+\]
+とした。
+
+さらに、
+\[
+\mathcal{Z}=
+\left\{s\in\Solver_I\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}\right\}
+\]
+を定義した。
+
+したがって、$s\in\mathcal{Z}$ は「Solver $s$ 自体が ZFC である」
+という意味ではなく、Solver $s$ が表現する理論
+$\mathcal{T}(s)$ が ZFC と理論同型であることを意味する。
+
+\section{ECA_5 における従来の CH 記述}
+
+ECA_5 では、
+\[
+\exists S_1,S_2\in\mathcal{Z}\quad
+\left(
+\mathcal{T}(S_1)\models\mathrm{CH}
+\land
+\mathcal{T}(S_2)\models\neg\mathrm{CH}
+\right)
+\]
+という形で CH の分岐を記述していた。
+
+しかし、ECA_7 で理論とモデルを明確に区別したため、
+この式は理論レベルの主張として読まれる可能性がある。
+本稿では、ECA_5 の意図していた分岐をモデルを明示した形へ改める。
+
+\section{モデルの導入}
+
+\begin{definition}[モデル]
+各理論 $T\in\Th$ に対して、そのモデル全体を
+\[
+\Mod(T)
+\]
+と表す。
+
+\[
+M\in\Mod(T)
+\]
+とは、
+\[
+M\models T
+\]
+を満たす構造 $M$ であることを表す。
+\end{definition}
+
+したがって Solver $s$ に対しては、
+\[
+M\in\Mod(\mathcal{T}(s))
+\]
+によって $\mathcal{T}(s)$ のモデルを表す。
+
+\subsection{理論とモデルの論理関係}
+
+\[
+\mathcal{T}(s)\models\mathrm{CH}
+\]
+と
+\[
+\exists M\in\Mod(\mathcal{T}(s))\quad
+M\models\mathrm{CH}
+\]
+は異なる主張である。
+
+前者は CH が理論 $\mathcal{T}(s)$ の論理的帰結であることを表す。
+後者は $\mathcal{T}(s)$ のモデルのうち CH を満たすものが存在する
+ことを表す。
+
+同様に、
+\[
+\exists M\in\Mod(\mathcal{T}(s))\quad
+M\models\neg\mathrm{CH}
+\]
+は $\neg\mathrm{CH}$ を満たすモデルの存在を表す。
+
+\section{CH と $\neg$CH のモデル分岐}
+
+\begin{definition}[CH モデル]
+$s\in\mathcal{Z}$ に対して、
+\[
+M_{\mathrm{CH}}\in\Mod(\mathcal{T}(s)),
+\qquad
+M_{\mathrm{CH}}\models\mathrm{CH}
+\]
+を満たすモデルを CH モデルと呼ぶ。
+\end{definition}
+
+\begin{definition}[$\neg$CH モデル]
+$s\in\mathcal{Z}$ に対して、
+\[
+M_{\neg\mathrm{CH}}\in\Mod(\mathcal{T}(s)),
+\qquad
+M_{\neg\mathrm{CH}}\models\neg\mathrm{CH}
+\]
+を満たすモデルを $\neg$CH モデルと呼ぶ。
+\end{definition}
+
+異なる Solver を明示したモデル分岐は、次のように記述できる。
+\[
+\boxed{
+\begin{aligned}
+\exists s_1,s_2\in\mathcal{Z},\;
+\exists M_1,M_2\quad
+&
+\bigl(
+M_1\in\Mod(\mathcal{T}(s_1))
+\land M_1\models\mathrm{CH}
+\\
+&{}\land
+M_2\in\Mod(\mathcal{T}(s_2))
+\land M_2\models\neg\mathrm{CH}
+\bigr).
+\end{aligned}}
+\]
+
+ただし、これは「異なる Solver を用いたモデル分岐」を表す条件であり、
+ECA の定義から自動的に導かれるものではない。
+
+\section{同一 Solver におけるモデル分岐}
+
+モデル分岐と Solver の分岐は同一ではない。
+
+一つの Solver $s\in\mathcal{Z}$ に対して
+\[
+M_1,M_2\in\Mod(\mathcal{T}(s))
+\]
+かつ
+\[
+M_1\models\mathrm{CH},
+\qquad
+M_2\models\neg\mathrm{CH}
+\]
+という状況を考えることも形式上は可能である。
+
+この場合、
+\[
+\boxed{\text{Solver の分岐}\neq\text{モデルの分岐}}
+\]
+となる。
+
+すなわち、モデルの違いを表すために
+\[
+s_1\neq s_2
+\]
+を必ずしも要求しない。
+
+\section{異なる Solver を用いた分岐}
+
+一方、ECA の Solver 構造そのものの違いを併せて記述する場合には、
+\[
+s_1,s_2\in\mathcal{Z},
+\qquad s_1\neq s_2
+\]
+を考え、
+\[
+M_1\in\Mod(\mathcal{T}(s_1)),
+\qquad
+M_2\in\Mod(\mathcal{T}(s_2))
+\]
+とする。
+
+さらに、
+\[
+M_1\models\mathrm{CH},
+\qquad
+M_2\models\neg\mathrm{CH}
+\]
+を追加条件として置く。
+
+ここで重要なのは、
+\[
+s_1\neq s_2
+\]
+だけから CH と $\neg$CH の違いが導かれるわけではないことである。
+
+また、
+\[
+\mathcal{T}(s_1)\cong_{\mathrm{Th}}\mathcal{T}(s_2)
+\]
+だけから、二つのモデルにおける CH の真偽が異なるとも限らない。
+
+したがって、モデル分岐は明示的な追加条件として扱う。
+
+\section{ZFC との理論同型と CH}
+
+$\mathcal{Z}$ の定義から、
+\[
+s\in\mathcal{Z}
+\Longrightarrow
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+である。
+
+しかし、この条件から
+\[
+\mathcal{T}(s)\models\mathrm{CH}
+\]
+または
+\[
+\mathcal{T}(s)\models\neg\mathrm{CH}
+\]
+のいずれかが直ちに導かれるわけではない。
+
+理論同型は理論としての構造を対応させる条件であり、
+特定のモデルを一つ選択する条件ではない。
+
+したがって、
+\[
+\boxed{
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+}
+\]
+と
+\[
+\boxed{
+M\models\mathrm{CH}
+}
+\]
+は異なる層の条件である。
+
+\section{ECA_5 の CH 記述の再構成}
+
+ECA_5 の記述を ECA_7 の定義に合わせるなら、
+「CH の真偽は Solver 集合の選択に依存する」と直接断定するのではなく、
+まず
+\[
+s\in\mathcal{Z}
+\]
+を ZFC と理論同型な理論を表現する Solver とし、
+そのモデル
+\[
+M\in\Mod(\mathcal{T}(s))
+\]
+を考える。
+
+その上で、
+\[
+M\models\mathrm{CH}
+\]
+または
+\[
+M\models\neg\mathrm{CH}
+\]
+というモデルレベルの分岐を記述する。
+
+異なる Solver を比較する場合には、
+\[
+s_1,s_2\in\mathcal{Z}
+\]
+に対して
+\[
+M_1\in\Mod(\mathcal{T}(s_1)),
+\qquad
+M_2\in\Mod(\mathcal{T}(s_2))
+\]
+を取り、
+\[
+M_1\models\mathrm{CH},
+\qquad
+M_2\models\neg\mathrm{CH}
+\]
+という関係を明示する。
+
+これにより、
+\[
+\mathcal{Z}
+\]
+の定義と、その元に対するモデルの分岐を混同しない。
+
+\section{モデル分岐と $\mathcal{Z}$ の濃度}
+
+本稿で導入したモデル分岐から、
+\[
+|\mathcal{Z}|
+\]
+の値を決定することはできない。
+
+特に、
+\[
+\exists s_1,s_2\in\mathcal{Z}
+\]
+という存在条件が成立したとしても、
+それだけから
+\[
+|\mathcal{Z}|\geq2^{\aleph_0}
+\]
+は導かれない。
+
+同様に、二つのモデルについて
+\[
+M_1\models\mathrm{CH},
+\qquad
+M_2\models\neg\mathrm{CH}
+\]
+が成立しても、
+\[
+|\mathcal{Z}|=2^{\aleph_0}
+\]
+は導かれない。
+
+したがって、$\mathcal{Z}$ の濃度については、
+モデル分岐とは独立に、Solver の構成と写像を用いて別途検討する。
+
+\section{本稿で確定した関係}
+
+以上により、ECA における関係を
+\[
+\boxed{
+s
+\longrightarrow
+\mathcal{T}(s)
+\longrightarrow
+M
+}
+\]
+と整理する。
+
+ここで、
+\[
+s\in\Solver_I,\qquad
+\mathcal{T}(s)\in\Th,\qquad
+M\in\Mod(\mathcal{T}(s))
+\]
+である。
+
+また、
+\[
+s\in\mathcal{Z}
+\iff
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+は理論レベルの条件であり、
+\[
+M\models\mathrm{CH}
+\quad\text{または}\quad
+M\models\neg\mathrm{CH}
+\]
+はモデルレベルの条件である。
+
+したがって、
+\[
+\boxed{
+\begin{array}{c}
+\text{Solver}\\
+\downarrow\\
+\text{理論}\\
+\downarrow\\
+\text{モデル}\\
+\downarrow\\
+\mathrm{CH}/\neg\mathrm{CH}
+\end{array}}
+\]
+という階層を維持する。
+
+\section{後続する議論}
+
+本稿を基礎として、後続文書では次を個別に検討できる。
+
+\begin{enumerate}
+\item $\mathcal{Z}$ に含まれる Solver の具体的構成。
+\item 異なる Solver が $\mathcal{Z}$ の異なる元となる条件。
+\item $\mathfrak{A}\restriction_{\mathcal{Z}}$ と
+$\mathcal{T}\restriction_{\mathcal{Z}}$ の関係。
+\item $\mathcal{Z}$ の濃度と $2^{\aleph_0}$ との関係。
+\item 必要に応じて CH/$\neg$CH を満たすモデルの構成条件。
+\end{enumerate}
+
+これらは本稿の定義から自動的に導かれるものではなく、
+それぞれ追加の構成または証明を必要とする。
+
+\end{document}

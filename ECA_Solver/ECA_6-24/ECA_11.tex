@@ -1,0 +1,717 @@
+% ECA_11.tex
+\documentclass[a4paper,11pt]{jsarticle}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\geometry{margin=25mm}
+
+\newtheorem{definition}{定義}[section]
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{proposition}[definition]{命題}
+\newtheorem{remark}[definition]{注意}
+\newtheorem{conclusion}[definition]{結論}
+
+\newcommand{\Solver}{\mathcal{S}}
+\newcommand{\Ax}{S_{\mathrm{ax}}}
+\newcommand{\Sel}{I}
+\newcommand{\Th}{\mathrm{Th}}
+\newcommand{\Zset}{\mathcal{Z}}
+\newcommand{\Pow}{\mathcal{P}}
+
+\title{ECA_11\\
+$\mathcal{Z}$ における ZFC 保存族の構成可能性}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+ECA_10 では、可算無限な公理候補族
+\[
+\mathcal{R}^{*}=\{r_0,r_1,r_2,\ldots\}\subseteq\Ax
+\]
+を用いて、任意の部分集合 $A\subseteq\mathcal{R}^{*}$ から
+\[
+s_A=
+\left(
+\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0
+\right)
+\]
+を構成し、すべての $s_A$ が $\mathcal{Z}$ に属するならば
+\[
+\mathcal{P}(\mathcal{R}^{*})\hookrightarrow\mathcal{Z}
+\]
+が得られることを示した。
+
+本稿では、この「ZFC 保存族」が現行 ECA の既存の公理候補全体
+$\Ax$ から実際に構成できるかを検討する。特に、現行 ECA において
+$\Ax$ が「公理および公理スキームの全体」と定義されていること、および
+Solver が
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+として構成されることを前提とし、候補となる構成方法を区別する。
+
+結論として、現行 ECA の定義だけから可算無限の ZFC 保存族
+$\mathcal{R}^{*}\subseteq\Ax$ の存在を導くことはできない。
+特に、ZFC から証明可能な文を任意に「公理候補」として $\Ax$ に加える構成、
+あるいは同値な公理の無限族を $\Ax$ に含める構成は、現行定義には明示されていない。
+したがって、$\mathcal{P}(\mathcal{R}^{*})\hookrightarrow\mathcal{Z}$ を公理選択の差から
+構成するためには、追加の公理・構成条件が必要である。
+
+一方、Solver の推論・構成規則 $\mathcal{R}_s$ を変えることで、同一の公理選択から
+異なる Solver を得る可能性は、現行構造と矛盾しない。ただし、この方法は
+$\mathfrak{A}$ の像を増やす方法ではなく、$\mathcal{Z}$ の同一公理選択上の
+ファイバーを増やす方法として扱う必要がある。
+\end{abstract}
+
+\section{出発点}
+
+ECA_6 および ECA_7 により、ECA が取り扱う公理および公理スキームの全体を
+\[
+\Ax
+\]
+とし、公理選択空間を一般に
+\[
+\Sel\subseteq\mathcal{P}(\Ax)
+\]
+として扱う。
+
+Solver は
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+であり、ECA に適合する条件は
+\[
+\mathcal{A}_s\in\Sel
+\]
+である。したがって
+\[
+\Solver_{\Sel}
+=
+\left\{
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\mid
+\mathcal{A}_s\in\Sel
+\right\}
+\]
+とする。
+
+また、
+\[
+\mathfrak{A}:\Solver_{\Sel}\longrightarrow\Sel,
+\qquad
+\mathfrak{A}(s)=\mathcal{A}_s
+\]
+および
+\[
+\mathcal{T}:\Solver_{\Sel}\longrightarrow\Th
+\]
+を考える。
+
+ECA_7 における $\mathcal{Z}$ は
+\[
+\boxed{
+\mathcal{Z}
+=
+\left\{
+s\in\Solver_{\Sel}
+\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\right\}
+}
+\]
+である。
+
+したがって、本稿で検証すべき対象は
+\[
+\mathcal{R}^{*}\subseteq\Ax
+\]
+を実際に構成できるかどうかである。
+
+\section{ECA_10 の ZFC 保存族条件}
+
+ECA_10 では、可算無限集合
+\[
+\mathcal{R}^{*}=\{r_n\mid n\in\mathbb{N}\}\subseteq\Ax
+\]
+を考え、基礎公理選択 $\mathcal{A}_{\mathrm{ZFC}}$ および推論・構成規則
+$\mathcal{R}_0$ を固定した。
+
+任意の
+\[
+A\subseteq\mathcal{R}^{*}
+\]
+について
+\[
+s_A=
+\left(
+\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0
+\right)
+\]
+と定める。
+
+このとき必要な条件は
+\[
+\boxed{
+\forall A\subseteq\mathcal{R}^{*},
+\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in\Sel
+\quad\land\quad
+\mathcal{T}(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+}
+\]
+である。
+
+この条件が成立すれば、
+\[
+\Phi:\mathcal{P}(\mathcal{R}^{*})\longrightarrow\mathcal{Z},
+\qquad
+\Phi(A)=s_A
+\]
+を定めることができる。
+
+さらに
+\[
+A\neq A'
+\quad\Longrightarrow\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A
+\neq
+\mathcal{A}_{\mathrm{ZFC}}\cup A'
+\]
+であるから
+\[
+s_A\neq s_{A'}
+\]
+となり、$\Phi$ は単射である。
+
+したがって
+\[
+|\mathcal{R}^{*}|=\aleph_0
+\]
+ならば
+\[
+|\mathcal{Z}|
+\ge
+|\mathcal{P}(\mathcal{R}^{*})|
+=
+2^{\aleph_0}
+\]
+を得る。
+
+ただし、ここまでの議論は $\mathcal{R}^{*}$ の存在を仮定した条件付き構成であり、
+$\mathcal{R}^{*}\subseteq\Ax$ の存在そのものは示していない。
+
+\section{現行 ECA における $\Ax$ の内容}
+
+ECA_6 では
+\[
+a\in\Ax
+\]
+を「一つの公理または公理スキーム」としている。
+
+したがって、現在の定義から直接確認できるのは、
+$\Ax$ が公理および公理スキームを収容する集合であるということまでである。
+
+ここで重要なのは、
+\[
+\text{公理スキームの各インスタンス}
+\]
+と
+\[
+\text{公理スキームそのもの}
+\]
+を同一の要素として扱ってはいないことである。
+
+ある公理スキームが無限個の具体的インスタンスを生成するとしても、
+現行 ECA の定義だけから、それら個々のインスタンスが
+$\Ax$ の別々の元であるとはいえない。
+
+すなわち、
+\[
+\mathsf{AxSchema}\in\Ax
+\]
+から
+\[
+\{\varphi_n:n\in\mathbb{N}\}\subseteq\Ax
+\]
+は従わない。
+
+この点は、可算無限な $\mathcal{R}^{*}$ を既存の公理スキームから
+自動的に取り出せると考える場合の重要な障害である。
+
+\section{候補構成 I：ZFC の定理を冗長公理として採用する場合}
+
+最も直接的な候補は、ZFC から証明可能な文を
+「追加しても理論が ZFC と変わらない公理」として利用する方法である。
+
+ある文 $\rho$ に対して
+\[
+\mathrm{ZFC}\vdash\rho
+\]
+が成立するなら、通常の論理的な意味では
+$\rho$ を明示的な公理として追加しても ZFC の定理体系を拡張することにはならない。
+
+しかし、ECA の型が問題となる。
+
+現行定義では
+\[
+\Ax
+=
+\{\text{ECA が取り扱う公理および公理スキーム}\}
+\]
+であって、
+\[
+\Ax
+=
+\{\text{ZFC から証明可能なすべての文}\}
+\]
+とは定義されていない。
+
+したがって、
+\[
+\mathrm{ZFC}\vdash\rho
+\]
+から
+\[
+\rho\in\Ax
+\]
+を導くことはできない。
+
+よって、この方法によって
+\[
+\mathcal{R}^{*}\subseteq\Ax
+\]
+を構成するには、少なくとも
+\[
+\boxed{
+\text{ZFC から証明可能な文を公理候補として $\Ax$ に含める}
+}
+\]
+という追加条件が必要になる。
+
+\begin{remark}
+この追加条件を導入する場合、$\Ax$ の意味は
+「公理および公理スキームの全体」から、
+「公理として採用可能な文・公理スキームを含む候補全体」
+へ拡張される。したがって、これは単なる証明ではなく
+ECA の構造定義の変更または拡張として扱う必要がある。
+\end{remark}
+
+\section{候補構成 II：ZFC と同値な公理の無限族}
+
+次に、ZFC の各公理について異なる形式の同値な公理を多数用意する方法を考える。
+
+一つの理論を同じ理論として表現する公理化には複数の形式が存在し得る。
+したがって、理論を変えない異なる公理化を構成すること自体は数学的に自然である。
+
+しかし、ECA における問題は、
+\[
+\Ax
+\]
+の要素としてそれらを採用することが明示されているかどうかである。
+
+現行 ECA では、
+\[
+\text{ZFC と同値な公理化}
+\subseteq
+\Ax
+\]
+という包含関係は定義されていない。
+
+したがって、
+\[
+\{r_0,r_1,r_2,\ldots\}\subseteq\Ax
+\]
+を「ZFC と同値な公理の異なる表現」から構成することも、
+現行定義だけでは保証されない。
+
+よって、この方法についても、
+\[
+\boxed{
+\text{ZFC と理論同値な公理・公理スキームの族を $\Ax$ に含める}
+}
+\]
+という追加の構成条件が必要となる。
+
+\section{候補構成 III：既存の巨大基数公理を利用する場合}
+
+ECA_4 では巨大基数に関する公理群が扱われている。
+しかし、巨大基数公理を
+\[
+r_n\in\Ax
+\]
+として採用するだけでは、一般に
+\[
+\mathcal{T}(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+を保証する理由にはならない。
+
+巨大基数公理は、少なくとも現行 ECA の記述では、
+ZFC に対して追加される公理として扱われており、
+「ZFC に対して冗長である」という性質は与えられていない。
+
+したがって、
+\[
+\text{巨大基数公理}
+\quad\not\Rightarrow\quad
+\text{ZFC 保存族}
+\]
+である。
+
+この方法は、ECA の $\Ax$ に候補が存在することを示す材料にはなるが、
+$\mathcal{Z}$ の連続体濃度下界を与えるための
+$\mathcal{R}^{*}$ の構成には直接使用できない。
+
+\section{候補構成 IV：$\mathcal{R}_s$ を変化させる場合}
+
+Solver は
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+であるから、同一の公理選択
+\[
+\mathcal{A}_s=A
+\]
+に対して異なる
+\[
+\mathcal{R}_s
+\]
+を持つ Solver を考えることは、現行構造と矛盾しない。
+
+例えば
+\[
+s_1=(A,\mathcal{R}_1),
+\qquad
+s_2=(A,\mathcal{R}_2)
+\]
+で
+\[
+\mathcal{R}_1\neq\mathcal{R}_2
+\]
+ならば、Solver の同一性の定義から
+\[
+s_1\neq s_2
+\]
+である。
+
+一方で、
+\[
+\mathcal{T}(s_1)\cong_{\mathrm{Th}}\mathrm{ZFC},
+\qquad
+\mathcal{T}(s_2)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+を満たすような $\mathcal{R}_1,\mathcal{R}_2$ を構成できれば、
+同一の公理選択から複数の $\mathcal{Z}$ の元を得られる。
+
+ただし、この方法では
+\[
+\mathfrak{A}(s_1)=\mathfrak{A}(s_2)=A
+\]
+である。
+
+したがって、この構成は
+\[
+\mathcal{P}(\mathcal{R}^{*})\hookrightarrow\mathcal{Z}
+\]
+を公理選択の差によって作る ECA_10 の方法とは異なる。
+
+これはむしろ、
+\[
+\mathfrak{A}|_{\mathcal{Z}}
+\]
+の各ファイバーに複数の Solver が存在するという構造を与える。
+
+\section{公理選択による増加と Solver 表現による増加の分離}
+
+$\mathcal{Z}$ 上で
+\[
+\mathfrak{A}|_{\mathcal{Z}}:
+\mathcal{Z}\longrightarrow\Sel
+\]
+を考える。
+
+任意の
+\[
+A\in\operatorname{Im}(\mathfrak{A}|_{\mathcal{Z}})
+\]
+について
+\[
+\mathcal{Z}_A
+:=
+\left\{
+s\in\mathcal{Z}
+\mid
+\mathfrak{A}(s)=A
+\right\}
+\]
+を定める。
+
+すると
+\[
+\mathcal{Z}
+=
+\bigcup_{A\in\operatorname{Im}(\mathfrak{A}|_{\mathcal{Z}})}
+\mathcal{Z}_A
+\]
+である。
+
+ここで、
+\[
+|\operatorname{Im}(\mathfrak{A}|_{\mathcal{Z}})|
+\]
+は「ZFC を表現する Solver が使用する異なる公理選択の数」を表し、
+各
+\[
+|\mathcal{Z}_A|
+\]
+は「同一の公理選択から得られる異なる Solver の数」に対応する。
+
+したがって、$\mathcal{Z}$ の濃度を調べる際には、
+
+\begin{enumerate}
+\item 公理選択そのものを多数構成できるか、
+\item 一つの公理選択から多数の Solver 表現を構成できるか、
+\item その両方を構成できるか、
+\end{enumerate}
+
+を分離して調べる必要がある。
+
+特に ECA_10 の
+\[
+\mathcal{P}(\mathcal{R}^{*})\hookrightarrow\mathcal{Z}
+\]
+は第1の方法であり、
+$\mathcal{R}_s$ の変化による構成は第2の方法である。
+
+\section{現行 ECA から導けることと導けないこと}
+
+ここまでの検討から、現行 ECA の定義について次を区別できる。
+
+\subsection{導けること}
+
+現行 ECA からは、少なくとも次が確定している。
+
+\begin{enumerate}
+\item
+公理候補全体 $\Ax$ があり、
+\[
+a\in\Ax
+\]
+が公理または公理スキームを表す。
+
+\item
+公理選択は
+\[
+\Sel\subseteq\mathcal{P}(\Ax)
+\]
+として扱われる。
+
+\item
+Solver は
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+であり、
+\[
+\mathcal{A}_s\in\Sel
+\]
+を満たす。
+
+\item
+$\mathcal{T}(s)$ は $\mathcal{A}_s$ だけではなく、
+$\mathcal{R}_s$ を含む Solver の構造から得られる。
+
+\item
+\[
+\mathcal{Z}
+=
+\{s\in\Solver_{\Sel}\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}\}
+\]
+と定義できる。
+
+\item
+$\mathfrak{A}|_{\mathcal{Z}}$ の異なる元は、
+必ずしも異なる公理選択を持つ必要はない。
+\end{enumerate}
+
+\subsection{現行 ECA だけでは導けないこと}
+
+一方、次は現行定義からは導けない。
+
+\begin{enumerate}
+\item
+$\Ax$ が可算無限の ZFC 冗長公理族
+\[
+\mathcal{R}^{*}\subseteq\Ax
+\]
+を含むこと。
+
+\item
+任意の
+\[
+A\subseteq\mathcal{R}^{*}
+\]
+について
+\[
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in\Sel
+\]
+となること。
+
+\item
+任意の
+\[
+A\subseteq\mathcal{R}^{*}
+\]
+について
+\[
+\mathcal{T}
+\left(
+\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0
+\right)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+となること。
+
+\item
+したがって、
+\[
+\mathcal{P}(\mathcal{R}^{*})\hookrightarrow\mathcal{Z}
+\]
+が現行 ECA だけから成立すること。
+
+\item
+さらに、
+\[
+|\mathcal{Z}|\ge2^{\aleph_0}
+\]
+が現行 ECA だけから成立すること。
+\end{enumerate}
+
+\section{追加条件として何を導入すべきか}
+
+ECA_10 の構成を実際に ECA の体系へ組み込む場合、最低限、次のいずれかを明示する必要がある。
+
+\subsection{案 A：公理候補の閉包条件}
+
+ZFC から証明可能な文の一部または全部を、
+公理候補として $\Ax$ に含める条件を導入する。
+
+例えば、ある集合 $\mathrm{Thm}(\mathrm{ZFC})$ に対して
+\[
+\mathrm{Thm}(\mathrm{ZFC})\subseteq\Ax
+\]
+を要求する。
+
+ただし、この条件を採用すると、
+$\Ax$ の定義そのものを拡張する必要がある。
+
+\subsection{案 B：ZFC 同値公理化族の包含条件}
+
+可算無限集合
+\[
+\mathcal{R}^{*}
+=
+\{r_n\mid n\in\mathbb{N}\}
+\]
+を直接導入し、
+\[
+\mathcal{R}^{*}\subseteq\Ax
+\]
+および
+\[
+\forall A\subseteq\mathcal{R}^{*},
+\quad
+\mathcal{T}(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+を構成条件として要求する。
+
+この場合、ECA_10 の議論をそのまま継続できる。
+
+\subsection{案 C：Solver 構造側の保存条件}
+
+公理選択を増やす代わりに、
+\[
+\mathcal{R}_s
+\]
+の変更に対して
+\[
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+を保存する条件を導入する。
+
+この場合、$\mathcal{Z}$ のファイバー
+\[
+\mathcal{Z}_A
+\]
+を研究する方向へ進むことになる。
+
+ただし、これは ECA_10 の
+「公理選択によって連続体濃度を実現する」
+構成とは別の問題である。
+
+\section{本稿の結論}
+
+\begin{conclusion}
+現行 ECA の既存構造だけから、可算無限の
+ZFC 保存族
+\[
+\mathcal{R}^{*}\subseteq\Ax
+\]
+の存在を導くことはできない。
+\end{conclusion}
+
+その理由は、
+\[
+\Ax
+=
+\{\text{公理および公理スキーム}\}
+\]
+という定義からは、
+
+\begin{enumerate}
+\item ZFC から証明可能な文をすべて公理候補として含むこと、
+\item ZFC と同値な公理化をすべて含むこと、
+\item それらの中から可算無限な冗長公理族を選択できること、
+\end{enumerate}
+がいずれも保証されないためである。
+
+したがって、ECA_10 の
+\[
+\mathcal{P}(\mathcal{R}^{*})\hookrightarrow\mathcal{Z}
+\]
+を無条件の ECA の結果にするには、
+「ZFC 保存族」の存在を別途構成するための明示的な公理または構成条件が必要である。
+
+一方、Solver が
+\[
+(\mathcal{A}_s,\mathcal{R}_s)
+\]
+という二成分構造を持つことから、
+同一の公理選択に対する複数の Solver を調べる方向は、
+現行 ECA の構造内にすでに存在している。
+
+したがって、次の段階では、
+
+\[
+\boxed{
+\text{公理選択による $\mathcal{Z}$ の増加}
+\quad\text{と}\quad
+\text{Solver 構造による $\mathcal{Z}$ の増加}
+}
+\]
+
+を分離した上で、
+
+\[
+\boxed{
+\text{現行 ECA のままで構成できる部分}
+\quad\text{と}\quad
+\text{追加条件を必要とする部分}
+}
+\]
+
+をさらに明確化する必要がある。
+
+\end{document}

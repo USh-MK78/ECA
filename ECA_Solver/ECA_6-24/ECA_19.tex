@@ -1,0 +1,632 @@
+% !TEX program = lualatex
+\documentclass[a4paper,11pt]{ltjsarticle}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\geometry{margin=25mm}
+
+\newtheorem{definition}{定義}[section]
+\newtheorem{proposition}[definition]{命題}
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{example}[definition]{例}
+\newtheorem{counterexample}[definition]{反例}
+\newtheorem{remark}[definition]{注意}
+
+\newcommand{\Ax}{\mathrm{Ax}}
+\newcommand{\Solver}{\mathsf{Solver}}
+\newcommand{\Th}{\mathrm{Th}}
+\newcommand{\ZFC}{\mathrm{ZFC}}
+
+\title{ECA_19 公理スキームから可算無限公理候補族 $\mathcal R^*$ を構成する方法}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{目的}
+
+ECA_18では、ECAの構造そのものが連続体濃度
+\[
+2^{\aleph_0}
+\]
+を生成できるかを検査するため、
+\[
+\mathfrak U_{\mathrm{ECA}}
+\to
+\operatorname{Ax}(U)
+\to
+\mathcal R^*
+\to
+\mathcal P(\mathcal R^*)
+\to
+I
+\to
+\Solver_I
+\to
+\mathcal Z
+\]
+という検査経路を整理した。
+
+本書では、その最初の重要な段階、すなわち
+\[
+\boxed{
+\operatorname{Ax}(U)
+\text{ から }
+|\mathcal R^*|=\aleph_0
+\text{ なる }
+\mathcal R^*
+\text{ を構成できるか}
+}
+\]
+を検査する。
+
+ここでは、最初から
+\[
+\mathcal R^*\subseteq\Ax
+\]
+を仮定するのではなく、ECA_13--ECA_15で導入した
+\[
+\operatorname{Ax}(U)
+\]
+と「公理および公理スキーム」という構造から、可算無限候補族を自然に取り出せるかを調べる。
+
+なお、本書ではこの段階だけを扱い、
+\[
+|\mathcal Z|\ge2^{\aleph_0}
+\]
+を結論として導かない。
+
+\section{ECAにおける公理候補の位置}
+
+ECAでは数学的宇宙を
+\[
+U\in\mathfrak U_{\mathrm{ECA}}
+\]
+とし、それに対応する公理候補集合を
+\[
+\operatorname{Ax}(U)
+\]
+とする。
+
+また、ECA全体で扱う候補集合を
+\[
+\Ax
+=
+\bigcup_{U\in\mathfrak U_{\mathrm{ECA}}}
+\operatorname{Ax}(U)
+\]
+としている。
+
+このとき
+\[
+\operatorname{Ax}(U)\subseteq\Ax
+\]
+である。
+
+したがって、ある
+\[
+\mathcal R^*\subseteq\operatorname{Ax}(U)
+\]
+を構成できれば、
+\[
+\mathcal R^*\subseteq\Ax
+\]
+も得られる。
+
+しかし、ここで重要なのは、
+\[
+\operatorname{Ax}(U)
+\]
+が単に「Uの内部に存在する公理」を意味するものではないことである。
+
+\[
+\operatorname{Ax}(U)
+\]
+はECAがその数学的宇宙に関連して公理的対象として扱う候補の集合であり、その構成方法自体を形式化する必要がある。
+
+\section{公理と公理スキームの区別}
+
+「公理および公理スキーム」を
+\[
+\operatorname{Ax}(U)
+\]
+の要素として扱う場合、少なくとも二つの形式化が考えられる。
+
+\subsection{スキームを一つの対象とする場合}
+
+公理スキーム
+\[
+\Sigma
+\]
+を一個の対象として
+\[
+\Sigma\in\operatorname{Ax}(U)
+\]
+とする。
+
+この場合、スキームが無限個のインスタンスを生成するとしても、
+\[
+\Sigma
+\]
+自体は一個の要素である。
+
+したがって、
+\[
+\Sigma
+\]
+の存在だけから
+\[
+|\operatorname{Ax}(U)|\ge\aleph_0
+\]
+は導けない。
+
+\subsection{インスタンスを個別候補とする場合}
+
+一方、スキーム
+\[
+\Sigma(x)
+\]
+から得られる各インスタンスを
+\[
+\Sigma(\varphi_n)
+\]
+のように個別の公理候補として扱う形式化を採用するなら、
+\[
+\mathcal R^*
+=
+\{
+\Sigma(\varphi_n)\mid n\in\mathbb N
+\}
+\]
+を構成できる可能性がある。
+
+ただし、そのためには
+\[
+\Sigma(\varphi_n)\in\operatorname{Ax}(U)
+\]
+がすべての
+\[
+n\in\mathbb N
+\]
+について成立することをECAの定義として保証する必要がある。
+
+したがって、
+
+\[
+\boxed{
+\text{「公理スキームが存在する」}
+\not\Rightarrow
+\text{「その全インスタンスが }\operatorname{Ax}(U)\text{ の要素である」}
+}
+\]
+
+という区別を維持する。
+
+\section{標準構成候補：可算なインスタンス族}
+
+公理スキーム
+\[
+\Sigma(\varphi)
+\]
+があり、
+\[
+\{\varphi_n\mid n\in\mathbb N\}
+\]
+という可算な系列の入力に対して異なるインスタンスを生成するとする。
+
+各
+\[
+n\in\mathbb N
+\]
+について
+\[
+r_n=\Sigma(\varphi_n)
+\]
+と定める。
+
+さらに、
+\[
+r_n\in\operatorname{Ax}(U)
+\]
+をすべての
+\[
+n\in\mathbb N
+\]
+について保証できるなら、
+\[
+\mathcal R^*
+=
+\{r_n\mid n\in\mathbb N\}
+\subseteq\operatorname{Ax}(U)
+\]
+となる。
+
+ここでさらに
+\[
+n\neq m\Longrightarrow r_n\neq r_m
+\]
+が成立すれば、
+\[
+|\mathcal R^*|=\aleph_0
+\]
+である。
+
+したがって、可算無限候補族を得るための最小条件の一つは、
+
+\[
+\boxed{
+\begin{aligned}
+&\forall n\in\mathbb N,\quad
+r_n\in\operatorname{Ax}(U),\\
+&\forall n,m\in\mathbb N,\quad
+n\neq m\Rightarrow r_n\neq r_m.
+\end{aligned}
+}
+\]
+
+である。
+
+\section{注意：可算な入力系列だけでは十分でない}
+
+\begin{counterexample}
+可算な系列
+\[
+\varphi_0,\varphi_1,\ldots
+\]
+が存在しても、
+\[
+\Sigma(\varphi_n)=\Sigma(\varphi_m)
+\]
+となる場合には、生成される候補は有限個または一個になり得る。
+
+したがって、
+\[
+|\{\varphi_n\mid n\in\mathbb N\}|=\aleph_0
+\]
+だけでは
+\[
+|\mathcal R^*|=\aleph_0
+\]
+を保証しない。
+\end{counterexample}
+
+必要なのは、インスタンスそのものの非同一性である。
+
+\section{標準検査：ZFCにおける公理スキームをどう扱うか}
+
+ECAの
+\[
+\operatorname{Ax}(U)
+\]
+を具体的に検査する際には、ZFCの公理スキームを一つの標準例として利用できる。
+
+ただし、ここでの目的はZFCそのものをECAの公理候補宇宙と同一視することではない。
+
+検査すべきなのは、
+
+\[
+\text{ZFCにおける公理スキーム}
+\longrightarrow
+\text{個別インスタンス}
+\longrightarrow
+\operatorname{Ax}(U)
+\]
+
+という対応をECAが採用できるかどうかである。
+
+例えば、あるスキーム
+\[
+\Sigma(\varphi)
+\]
+について、可算な異なる入力
+\[
+\varphi_0,\varphi_1,\ldots
+\]
+を選び、
+\[
+r_n=\Sigma(\varphi_n)
+\]
+とする。
+
+このとき、ECA側で
+\[
+r_n\in\operatorname{Ax}(U)
+\]
+を保証する仕組みがあれば、可算族
+\[
+\mathcal R^*
+\]
+の候補となる。
+
+この段階では、それらをZFCの「冗長公理」として扱う必要はない。
+
+まず必要なのは、あくまで
+\[
+\operatorname{Ax}(U)
+\]
+の要素として可算無限族を形成できるかという構造上の確認である。
+
+\section{別の構成候補：構文的に異なる公理候補}
+
+公理スキームのインスタンス化以外にも、構文的に異なる公理候補を用いる方法がある。
+
+例えば、
+\[
+r_0,r_1,r_2,\ldots
+\]
+がそれぞれ異なる有限の構文表現として
+\[
+\operatorname{Ax}(U)
+\]
+に登録されるなら、
+\[
+\mathcal R^*
+=
+\{r_n\mid n\in\mathbb N\}
+\]
+を構成できる。
+
+この方法では、
+\[
+r_n\neq r_m
+\]
+という構文上の非同一性を確認するだけでよい場合がある。
+
+ただし、後段でZFC保存性を要求するなら、
+\[
+\mathcal T
+\left(
+\mathcal A_{\mathrm{ZFC}}\cup A,\mathcal R_0
+\right)
+\cong_{\mathrm{Th}}\ZFC
+\]
+を任意の
+\[
+A\subseteq\mathcal R^*
+\]
+について検証しなければならない。
+
+したがって、この方法は現段階では「候補族を作る方法」の一つとして扱い、ZFC保存性とは分離する。
+
+\section{反例：ZFCの定理を列挙するだけでは足りない}
+
+\begin{counterexample}
+ZFCで証明可能な命題を
+\[
+\{q_0,q_1,q_2,\ldots\}
+\]
+と列挙できたとしても、
+\[
+q_n\in\operatorname{Ax}(U)
+\]
+が保証されるとは限らない。
+
+\[
+\ZFC\vdash q_n
+\]
+は「q_nがZFCから導出可能である」ことを示すだけであり、
+\[
+q_n
+\]
+がECAの公理候補集合に登録されていることを意味しない。
+
+したがって、
+\[
+\ZFC\vdash q_n
+\]
+から
+\[
+\mathcal R^*
+=
+\{q_n\mid n\in\mathbb N\}
+\subseteq\operatorname{Ax}(U)
+\]
+を直接結論することはできない。
+\end{counterexample}
+
+この区別はECA_11で確認した、
+\[
+\text{「ZFCの定理」}
+\neq
+\text{「ECAの公理候補」}
+\]
+という関係を維持するものである。
+
+\section{検証条件の整理}
+
+現段階で、ECAの構造から
+\[
+|\mathcal R^*|=\aleph_0
+\]
+を導くために必要な条件は、少なくとも次のように分解できる。
+
+\subsection*{条件 R1：対象となる数学的宇宙}
+
+\[
+\exists U\in\mathfrak U_{\mathrm{ECA}}.
+\]
+
+\subsection*{条件 R2：候補集合の存在}
+
+\[
+\operatorname{Ax}(U)
+\]
+が集合として適切に定義されている。
+
+\subsection*{条件 R3：可算系列の存在}
+
+\[
+\exists\{r_n\}_{n\in\mathbb N}.
+\]
+
+\subsection*{条件 R4：候補集合への所属}
+
+\[
+\forall n\in\mathbb N,
+\quad
+r_n\in\operatorname{Ax}(U).
+\]
+
+\subsection*{条件 R5：相互非同一性}
+
+\[
+\forall n,m\in\mathbb N,
+\quad
+n\neq m\Rightarrow r_n\neq r_m.
+\]
+
+R1--R5が成立すれば、
+\[
+\mathcal R^*
+=
+\{r_n\mid n\in\mathbb N\}
+\]
+について
+\[
+\boxed{
+\mathcal R^*\subseteq\operatorname{Ax}(U),
+\qquad
+|\mathcal R^*|=\aleph_0
+}
+\]
+が得られる。
+
+\section{ECAから自動的に得られる条件か}
+
+現在のECA定義だけから、
+
+\[
+\exists U,\quad
+|\operatorname{Ax}(U)|\ge\aleph_0
+\]
+が確定しているとはまだ言えない。
+
+また、
+\[
+\text{「公理スキームを扱う」}
+\]
+という記述だけから、
+\[
+\forall n,\quad r_n\in\operatorname{Ax}(U)
+\]
+を確定することもできない。
+
+したがって、現段階ではR1--R5のすべてがECAから導出されたとは扱わない。
+
+ここで重要なのは、これを直ちに「追加公理が必要」と結論することでもない。
+
+まず、
+
+\[
+\boxed{
+\operatorname{Ax}(U)
+\text{ の形式化をさらに具体化することでR1--R5が導けるか}
+}
+\]
+
+を調べる必要がある。
+
+特に、公理スキームとそのインスタンスの関係をECAの基本構造として明示すれば、R3--R5が既存構造から導出可能になる可能性がある。
+
+\section{連続体濃度への接続はまだ行わない}
+
+R1--R5によって
+\[
+|\mathcal R^*|=\aleph_0
+\]
+が得られたとしても、ここではまだ
+\[
+|\mathcal Z|\ge2^{\aleph_0}
+\]
+を結論しない。
+
+次の段階には、
+\[
+|\mathcal P(\mathcal R^*)|
+=
+2^{\aleph_0}
+\]
+という集合論的事実に加えて、
+\[
+\mathcal P(\mathcal R^*)\to I
+\]
+という選択構造が必要である。
+
+さらに、
+\[
+I\to\Solver_I\to\mathcal Z
+\]
+では、ZFC保存性とSolverの非同一性を検証する必要がある。
+
+したがって、本書の成果はあくまで
+
+\[
+\boxed{
+\operatorname{Ax}(U)
+\text{ から可算無限候補族を取り出せる条件の明確化}
+}
+\]
+
+である。
+
+\section{次の検査への接続}
+
+R1--R5を検証した後には、
+\[
+\mathcal R^*
+\]
+の全部分集合
+\[
+A\subseteq\mathcal R^*
+\]
+をECAの選択構造
+\[
+I\subseteq\mathcal P(\Ax)
+\]
+へ接続できるかを調べる。
+
+すなわち、
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A\in I
+\]
+をどこまで既存構造から導けるかを検証する。
+
+その後に、
+\[
+s_A
+=
+(\mathcal A_{\mathrm{ZFC}}\cup A,\mathcal R_0)
+\]
+を構成し、
+\[
+\mathcal T(s_A)\cong_{\mathrm{Th}}\ZFC
+\]
+を任意の
+\[
+A\subseteq\mathcal R^*
+\]
+について確認する。
+
+この順序によって、
+
+\[
+\boxed{
+\operatorname{Ax}(U)
+\to
+\mathcal R^*
+\to
+\mathcal P(\mathcal R^*)
+\to
+I
+\to
+\Solver_I
+\to
+\mathcal Z
+}
+\]
+
+の各段階を混同せずに検査できる。
+
+\end{document}

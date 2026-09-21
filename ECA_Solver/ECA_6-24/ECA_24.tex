@@ -1,0 +1,371 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=25mm]{geometry}
+\usepackage{hyperref}
+
+\title{ECA_24 ZFC 保存候補の具体化と冗長公理による部分集合族の保存条件}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{目的}
+
+本稿では、ECA_23 で導入した
+「$\mathcal{R}^*$ の部分集合を追加しても ZFC と同型な理論が得られる」
+という条件を、より具体的な論理条件へ分解する。
+
+ここで扱うのは、Solver 集合版 ECA の構造から
+$\mathcal{R}^*$ や連続体濃度が既に得られているという主張ではない。
+目的は、既に導入された
+\[
+\mathcal{A}_{\mathrm{ZFC}},\quad
+\mathcal{R}^*,\quad
+\mathcal{R}_0,\quad
+i_A=\mathcal{A}_{\mathrm{ZFC}}\cup A,\quad
+s_A=(i_A,\mathcal{R}_0)
+\]
+に対して、Stage 3 の
+\[
+s_A\in\mathcal{Z}
+\]
+を成立させるための条件を具体化することである。
+
+Solver は ECA の構築過程から形成された現在の ECA の構造であり、
+本稿ではそれを前提として議論する。
+
+\section{基礎理論}
+
+基礎となる Solver を
+\[
+s_0=(\mathcal{A}_{\mathrm{ZFC}},\mathcal{R}_0)
+\]
+とし、その理論を
+\[
+T_0:=\mathcal{T}(s_0)
+=\mathcal{T}(\mathcal{A}_{\mathrm{ZFC}},\mathcal{R}_0)
+\]
+と置く。
+
+ECA_23 における候補 Solver は
+\[
+s_A=(\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0),
+\qquad
+A\subseteq\mathcal{R}^*.
+\]
+
+したがって、追加される候補 $A$ が基礎理論 $T_0$ に対してどのような関係を持つかを調べれば、Stage 3 の保存条件を具体化できる。
+
+\section{単一候補の冗長性}
+$r\in\mathcal{R}^*$ を一つ固定する。
+$r$ が $T_0$ と同一の形式言語上の文として扱える場合、$T_0\vdash r$ を考えることができる。
+これは、$r$ が $T_0$ において既に証明可能であることを意味する。
+したがって、同一言語・固定推論規則の通常の公理追加として扱う限り $r$ を公理として追加しても理論の定理集合は変化しない。
+
+ただし、この議論には次の前提がある。
+
+\begin{enumerate}
+\item $r$ が $T_0$ と同じ形式言語上で表現されること。
+\item $r$ が一つの文として扱えること。
+\item $\mathcal{T}$ が公理集合への文の追加を通常の公理追加として解釈すること。
+\item 推論規則 $\mathcal{R}_0$ が変更されないこと。
+\end{enumerate}
+
+したがって、
+\[
+T_0\vdash r
+\]
+は ECA の現行定義から自動的に得られる条件ではなく、ZFC 保存を実現するための具体的な十分条件候補である。
+
+\section{部分集合全体への拡張}
+
+単一の $r$ について冗長性が成立するだけでは、
+任意の $A\subseteq\mathcal{R}^*$ に対する保存を記述するには不十分である。
+
+そこで、
+\[
+\boxed{\forall r\in\mathcal{R}^*,\quad T_0\vdash r}
+\]
+を考える。
+
+任意の
+\[
+A\subseteq\mathcal{R}^*
+\]
+を取ると、各 $r\in A$ について
+\[
+T_0\vdash r
+\]
+が成立する。
+
+同一言語・固定推論規則による通常の公理追加として扱う限り、
+\[
+\operatorname{Th}(T_0\cup A)
+=
+\operatorname{Th}(T_0)
+\]
+となる。
+
+ここで $\operatorname{Th}(T)$ は、理論 $T$ から導出される定理全体を表す。
+
+したがって、
+\[
+\mathcal{T}(\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0)
+\]
+は基礎理論 $T_0$ と同じ定理集合を持つ。
+
+\section{ZFC 同型との関係}
+ECA_23 で定義した
+\[
+\mathcal{Z}=
+\left\{
+s\in\Solver_I
+\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\right\}
+\]
+に対しては、基礎理論 $T_0$ 自体について
+\[
+T_0\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+を確認する必要がある。
+
+そのうえで、同一言語・同一推論規則の下で
+\[
+\operatorname{Th}(T_0\cup A)
+=
+\operatorname{Th}(T_0)
+\]
+が成立するならば、
+\[
+\mathcal{T}(\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0)
+\cong_{\mathrm{Th}}
+\mathrm{ZFC}
+\]
+を得るための具体的な経路が得られる。
+
+したがって、次の条件をまとめることができる。
+\[
+\boxed{
+\begin{aligned}
+&T_0\cong_{\mathrm{Th}}\mathrm{ZFC},\\
+&\forall r\in\mathcal{R}^*,\quad T_0\vdash r,\\
+&\forall A\subseteq\mathcal{R}^*,\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I.
+\end{aligned}}
+\]
+
+このとき、上記の前提の下で
+\[
+\forall A\subseteq\mathcal{R}^*,\quad s_A\in\mathcal{Z}
+\]
+を得る。
+
+\section{保存概念の区別}
+ZFC 保存を論じる際には、異なる性質を同一視してはならない。
+
+\subsection{既に証明可能であること}
+$T_0\vdash r$ は、$r$ が基礎理論の定理であることを表す。
+
+この条件は、同一言語・固定推論規則の通常の公理追加に対して、$r$ の追加が冗長であることを示すために利用できる。
+
+\subsection{整合性}
+
+\[
+\operatorname{Con}(T_0+\{r\})
+\]
+は、$T_0+r$ が無矛盾であることを表す。
+
+しかし、
+\[
+\operatorname{Con}(T_0+\{r\})
+\]
+だけから
+\[
+\operatorname{Th}(T_0+\{r\})
+=
+\operatorname{Th}(T_0)
+\]
+は得られない。
+
+したがって、整合性は ZFC 保存そのものとは異なる。
+
+\subsection{保存拡大}
+拡張理論 $T_1$ が基礎理論 $T_0$ に対して保存的であるとは、通常は基礎言語における定理について
+\[
+T_1\vdash\varphi
+\Longrightarrow
+T_0\vdash\varphi
+\]
+が成立することを意味する。
+
+これは
+\[
+\operatorname{Th}(T_1)=\operatorname{Th}(T_0)
+\]
+より弱い条件である場合がある。
+
+したがって、保存的拡大であることだけから、
+ECA_23 の
+\[
+\mathcal{T}(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+を直ちに得られるとは限らない。
+
+\subsection{理論同型}
+ECA における
+\[
+T_1\cong_{\mathrm{Th}}T_0
+\]
+は、ECA_7 で導入した理論同型の定義に従って扱う。
+
+そのため、「保存的である」ことと「ECA の意味で理論同型である」ことを同一視しない。
+
+\section{条件の関係}
+同一言語・固定推論規則で、公理追加を通常の公理追加として扱うという仮定の下では
+\[
+T_0\vdash r
+\]
+は
+\[
+\operatorname{Th}(T_0+\{r\}) = \operatorname{Th}(T_0)
+\]
+を導くための強い条件として利用できる。
+
+一方、
+\[
+\operatorname{Con}(T_0+\{r\})
+\]
+だけでは同じ結論は得られない。
+
+また、保存的拡大
+\[
+T_0\preccurlyeq_{\mathrm{cons}}T_1
+\]
+は、通常、旧言語における保存を表すため、ECA の理論同型と同値ではない。
+
+したがって、本稿では概念上
+\[
+\boxed{
+\text{定理として既に導出可能}
+\quad\Rightarrow\quad
+\text{冗長な公理追加}
+}
+\]
+を Stage 3 の具体的な十分条件として採用し、整合性や保存的拡大とは分離して扱う。
+
+\section{公理スキームの場合}
+$r$ が単一の文ではなく公理スキームである場合、
+単純な
+\[
+T_0\vdash r
+\]
+という記述はそのまま適用できない。
+
+この場合には、スキームの各インスタンス、またはスキームをどのような対象として $\mathcal{T}$ が扱うかを明示する必要がある。
+
+例えばスキーム $\Sigma$ の各インスタンスを
+\[
+\Sigma[\varphi]
+\]
+と書くなら、適切な範囲の $\varphi$ に対して
+\[
+T_0\vdash\Sigma[\varphi]
+\]
+が成立することを検討する必要がある。
+
+ただし、これは ECA_19 で問題にした「公理スキームそのもの」と「そのインスタンス」を $\operatorname{Ax}(U)$ の要素としてどう表現するかという問題と直結する。
+
+したがって、公理スキームを含む $\mathcal{R}^*$ については、単一文の場合の議論をそのまま一般化してはならない。
+
+\section{Stage 2 と Stage 3 の統合}
+
+Stage 2 は
+\[
+\forall A\subseteq\mathcal{R}^*,\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I.
+\]
+
+Stage 3 は
+\[
+\forall A\subseteq\mathcal{R}^*,\quad
+\mathcal{T}(\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}.
+\]
+
+さらに本稿では、Stage 3 を保証する具体的な強条件候補として
+\[
+T_0\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+および
+\[
+\forall r\in\mathcal{R}^*,\quad T_0\vdash r
+\]
+を置いた。
+
+このとき、同一言語・固定推論規則などの前提の下で
+\[
+\forall A\subseteq\mathcal{R}^*,\quad s_A\in\mathcal{Z}
+\]
+を得る。
+
+さらに
+\[
+|\mathcal{R}^*|=\aleph_0
+\]
+かつ
+\[
+\mathcal{R}^*\cap\mathcal{A}_{\mathrm{ZFC}}=\varnothing
+\]
+ならば、
+\[
+\Phi:\mathcal{P}(\mathcal{R}^*)\to\mathcal{Z},
+\qquad
+\Phi(A)=s_A
+\]
+は単射となる。
+
+したがって条件付きで
+\[
+|\mathcal{Z}|
+\ge
+|\mathcal{P}(\mathcal{R}^*)|
+=
+2^{\aleph_0}
+\]
+を得る。
+
+\section{現時点で未確定な点}
+
+本稿の条件は、現在の ECA から自動的に得られる定理としてではなく、$\mathcal{Z}$ 内で連続体濃度を実現するための具体的な検証経路として整理される。
+
+特に未確定なのは次の点である。
+
+\begin{enumerate}
+\item $\operatorname{Ax}(U)$ から実際に可算無限な $\mathcal{R}^*$ を構成できるか。
+\item $\mathcal{A}_{\mathrm{ZFC}}\cup A\in I$ が全ての $A\subseteq\mathcal{R}^*$ について成立するか。
+\item 基礎 Solver $s_0$ が $T_0\cong_{\mathrm{Th}}\mathrm{ZFC}$ を満たすことをどのように確認するか。
+\item $\mathcal{R}^*$ の各候補を $T_0\vdash r$ という形で実際に構成できるか。
+\item 公理スキームを含む場合に、各インスタンスを $\mathcal{T}$ がどのように扱うか。
+\item 上記条件が ECA の既存定義から導出されるのか、それとも Solver 構造を具体化するための明示条件として定める必要があるのか。
+\end{enumerate}
+
+\section{次の検証対象}
+
+次の段階では、$\operatorname{Ax}(U)$ の中から実際に $\mathcal{R}^*$ を構成できる候補を調べる。
+
+特に、
+\[
+\text{ZFC の定理}
+\longrightarrow
+\text{ECA が扱う公理候補}
+\longrightarrow
+\mathcal{R}^*
+\]
+という経路が、現在の
+$\operatorname{Ax}(U)$ の定義の中で成立するかを確認する必要がある。
+
+ここが成立すれば、ECA_19 で残された「可算無限公理候補族を $\operatorname{Ax}(U)$ から実際に取り出せるか」という問題と、ECA_24 で具体化した「その候補族を ZFC 保存族として扱えるか」を接続できる。
+
+\end{document}

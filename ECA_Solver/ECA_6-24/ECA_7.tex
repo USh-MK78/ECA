@@ -1,0 +1,501 @@
+\documentclass[a4paper,11pt]{jsarticle}
+
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{geometry}
+\usepackage{hyperref}
+
+\geometry{margin=25mm}
+
+\newtheorem{definition}{定義}[section]
+\newtheorem{proposition}[definition]{命題}
+\newtheorem{remark}[definition]{注意}
+\newtheorem{example}[definition]{例}
+
+\newcommand{\Solver}{\mathcal{S}}
+\newcommand{\Ax}{S_{\mathrm{ax}}}
+\newcommand{\Th}{\mathrm{Th}}
+\newcommand{\Zset}{\mathcal{Z}}
+\newcommand{\Model}{\mathrm{Mod}}
+
+\title{ECA_7\\
+$\mathcal{Z}$ の再定義と ZFC 表現 Solver の構造}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+本稿では、ECA_6 において整理された公理候補全体 $\Ax$、公理選択空間 $I$、Solver 集合 $\Solver$、公理選択写像 $\mathfrak{A}$、および理論写像 $\mathcal{T}$ を前提として、ECA における $\mathcal{Z}$ の位置付けを改めて定義する。
+
+ここでの目的は、$\mathcal{Z}$ を ZFC そのもの、ZFC の同型類、あるいは連続体濃度 $2^{\aleph_0}$ と同一視することではない。
+$\mathcal{Z}$ は、ECA に適合する Solver のうち、それが表現する理論が ZFC と所定の意味で同型となるものを取り出した部分集合として扱う。
+
+また、本稿では「Solver の同一性」と「Solver 同型」、「理論の同型」と「理論のモデル」を区別する。
+CH のモデル分岐そのものは本稿の主題とはせず、後続文書で記述可能となるようそのための型の分離のみを行う。
+\end{abstract}
+
+\section{本稿の位置付け}
+
+ECA_6 では、従来同じ記号で表現されていた公理候補全体と
+Solver を分離し、
+\[
+\Ax,\qquad
+I\subseteq\mathcal{P}(\Ax),\qquad
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+という構造を整理した。
+
+ECA_6 における ECA 適合 Solver の集合を
+\[
+\Solver_I
+=
+\left\{
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\;\middle|\;
+\mathcal{A}_s\in I
+\right\}
+\]
+とする。
+
+また、公理選択写像
+\[
+\mathfrak{A}:\Solver_I\longrightarrow I,
+\qquad
+\mathfrak{A}(s)=\mathcal{A}_s
+\]
+を用いる。
+
+本稿では、この $\Solver_I$ の中から ZFC を表現する Solver を
+取り出すために $\mathcal{Z}$ を定義する。
+
+\section{理論写像の明確化}
+
+\begin{definition}[理論写像]
+ECA に適合する Solver から、それによって表現される理論への写像を
+\[
+\boxed{
+\mathcal{T}:\Solver_I\longrightarrow\Th
+}
+\]
+とする。
+
+各 $s\in\Solver_I$ に対して、
+\[
+\mathcal{T}(s)
+\]
+は Solver
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+の公理選択および推論規則・構成制約によって表現される理論を表す。
+\end{definition}
+
+したがって、
+\[
+\mathcal{T}(s)
+\neq
+\mathcal{A}_s
+\]
+を原則として区別する。
+
+\begin{remark}
+ここで $\mathcal{T}(s)$ を公理集合そのものと同一視しない。
+Solver は
+\[
+(\mathcal{A}_s,\mathcal{R}_s)
+\]
+という構造を持ち、その構造から理論が表現されるためである。
+
+したがって、後続する $\mathcal{Z}$ の定義では「ZFC と同じ公理集合を持つ Solver」という条件ではなく「Solver が表現する理論と ZFC の関係」を条件として用いる。
+\end{remark}
+
+\section{理論の同型}
+
+\subsection{理論間の同型}
+
+\begin{definition}[理論同型]
+二つの理論 $T_1,T_2\in\Th$ について、
+\[
+T_1\cong_{\mathrm{Th}}T_2
+\]
+とは、両理論の言語および理論構造を対応させる適切な構造保存写像が存在することを表す。
+
+特に $\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}$ は、Solver $s$ が表現する理論と ZFC が採用する理論の構造を保つ形で同型であることを表す。
+\end{definition}
+
+ここで必要なのは、$\cong_{\mathrm{Th}}$ を単なる「同じ種類」「同類型」という意味で用いないことである。
+理論同型を厳密に扱うには、理論の言語、論理体系、および何を構造として保存するかを別途明示する必要がある。
+本稿では、その詳細な形式化を後続文書に委ね $\cong_{\mathrm{Th}}$ を「理論としての構造同型」を表す数式として定義する。
+
+\section{$\mathcal{Z}$ の定義}
+
+\begin{definition}[$\mathcal{Z}$]
+ECA における ZFC 表現 Solver の集合を
+\[
+\boxed{
+\mathcal{Z}
+:=
+\left\{
+s\in\Solver_I
+\;\middle|\;
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\right\}
+}
+\]
+と定義する。
+\end{definition}
+
+すなわち、
+\[
+\boxed{
+\mathcal{Z}\subseteq\Solver_I
+}
+\]
+である。
+
+$\mathcal{Z}$ の元は ZFC そのものではなく、
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+という Solver である。
+
+そして各
+\[
+s\in\mathcal{Z}
+\]
+について、
+\[
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+が成立する。
+
+\subsection{定義の意味}
+
+この定義により、
+\[
+\mathcal{Z}
+\]
+は次の三つの対象のいずれとも同一ではない。
+
+\begin{enumerate}
+\item ZFC という理論そのもの：
+\[
+\mathcal{Z}\neq\mathrm{ZFC}.
+\]
+
+\item ZFC と同型な理論の集合：
+\[
+\mathcal{Z}
+\neq
+\left\{
+T\in\Th\mid T\cong_{\mathrm{Th}}\mathrm{ZFC}
+\right\}.
+\]
+
+\item 連続体濃度：
+\[
+|\mathcal{Z}|
+\neq
+2^{\aleph_0}
+\]
+は、この定義だけからは導かれない。
+\end{enumerate}
+
+特に第3点は重要である。
+$\mathcal{Z}$ の定義は、その濃度を指定する定義ではない。
+$|\mathcal{Z}|$ が可算なのか、連続体濃度以上なのか、その他の濃度なのかは $\mathcal{Z}$ を構成する Solver の集合について別途調べる必要がある。
+
+\section{$\mathcal{Z}$ における Solver の区別}
+
+\subsection{Solver の同一性}
+
+ECA_6 の定義より、
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s),
+\qquad
+t=(\mathcal{A}_t,\mathcal{R}_t)
+\]
+について、
+\[
+s=t
+\]
+は
+\[
+\mathcal{A}_s=\mathcal{A}_t
+\quad\land\quad
+\mathcal{R}_s=\mathcal{R}_t
+\]
+によって決まる。
+
+したがって、
+\[
+s\neq t
+\]
+であっても、
+\[
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathcal{T}(t)
+\]
+であることは排除されない。
+
+つまり、異なる Solver が同型な理論を表現することは、
+$\mathcal{Z}$ の定義と矛盾しない。
+
+\subsection{Solver 同型との関係}
+
+さらに、
+\[
+s\cong_{\mathrm{Sol}}t
+\]
+という Solver 同型と
+\[
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathcal{T}(t)
+\]
+という理論同型も区別する。
+
+Solver 同型は Solver 自体の構造に関する関係であり、理論同型は Solver によって表現される理論に関する関係である。
+
+したがって、
+\[
+\boxed{
+s\cong_{\mathrm{Sol}}t
+\quad\text{と}\quad
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathcal{T}(t)
+}
+\]
+は、一般には同じ命題ではない。
+
+後続文書で両者の間に追加の対応関係を導入する場合にはその対応を明示的に定義する。
+
+\section{$\mathcal{Z}$ と公理選択の関係}
+
+各
+\[
+s\in\mathcal{Z}
+\]
+について、
+\[
+\mathfrak{A}(s)=\mathcal{A}_s\in I
+\]
+である。
+
+したがって、
+\[
+\mathfrak{A}\restriction_{\mathcal{Z}}
+:
+\mathcal{Z}\longrightarrow I
+\]
+を考えることができる。
+
+ここで注意すべきなのは、
+\[
+s\neq t
+\]
+から必ず
+\[
+\mathcal{A}_s\neq\mathcal{A}_t
+\]
+が従うわけではないことである。
+
+同一の公理選択
+\[
+\mathcal{A}_s=\mathcal{A}_t
+\]
+を持ちながら、
+\[
+\mathcal{R}_s\neq\mathcal{R}_t
+\]
+によって異なる Solver が構成される可能性がある。
+
+逆に、
+\[
+\mathcal{A}_s\neq\mathcal{A}_t
+\]
+であっても、
+\[
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathcal{T}(t)
+\]
+となる可能性は、理論同型の定義次第で排除されない。
+
+したがって、
+\[
+\boxed{
+\text{公理選択}
+\;\neq\;
+\text{Solver}
+\;\neq\;
+\text{表現される理論}
+}
+\]
+として扱う。
+
+\section{$\mathcal{Z}$ とモデルの区別}
+
+本稿では、
+\[
+\mathcal{T}(s)
+\]
+は理論でありモデルではない。
+
+したがって
+\[
+M\models\mathcal{T}(s)
+\]
+という関係を導入する場合、$M$ は
+$\mathcal{T}(s)$ のモデルとして別個に扱う。
+
+モデルの集合を、必要に応じて
+\[
+\boxed{
+\mathrm{Mod}(\mathcal{T}(s))
+}
+\]
+と表す。
+
+このとき、
+\[
+s\in\mathcal{Z}
+\]
+は
+\[
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+という理論レベルの条件であり、
+\[
+M\models\mathcal{T}(s)
+\]
+はモデルレベルの条件である。
+
+この二つを同一視してはならない。
+
+\begin{remark}
+特に CH については、
+\[
+\mathcal{T}(s)\models\mathrm{CH}
+\]
+という理論の論理的帰結と、
+\[
+M\models\mathcal{T}(s)+\mathrm{CH}
+\]
+というモデルの存在を区別する必要がある。
+
+本稿では CH の分岐そのものを定式化せず、後者のようなモデルを導入できるように理論とモデルの型を分離するところまでを行う。
+\end{remark}
+
+\section{$\mathcal{Z}$ の濃度に関する位置付け}
+
+$\mathcal{Z}$ は Solver の部分集合であるため、その濃度は
+\[
+|\mathcal{Z}|
+\]
+として通常の集合論的濃度によって扱う。
+
+ただし、
+\[
+\mathcal{Z}
+\subseteq
+\Solver_I
+\]
+から直ちに
+\[
+|\mathcal{Z}|=|\Solver_I|
+\]
+が従うわけではない。
+
+また、
+\[
+I\subseteq\mathcal{P}(\Ax)
+\]
+であることから、
+\[
+|\mathcal{P}(\Ax)|
+\]
+の濃度が大きいとしても、
+それだけで
+\[
+|\mathcal{Z}|
+\]
+が同じ濃度になるわけではない。
+
+したがって、後続する連続体濃度の議論では
+\[
+|\Ax|,
+\qquad
+|I|,
+\qquad
+|\Solver_I|,
+\qquad
+|\mathcal{Z}|
+\]
+をそれぞれ独立した対象として追跡する必要がある。
+
+\section{本稿で確定した定義}
+
+本稿ではECA_6 の構造を基礎として、次を確定した。
+
+\begin{enumerate}
+\item ECA に適合する Solver 全体を
+\[
+\Solver_I
+=
+\left\{
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\mid
+\mathcal{A}_s\in I
+\right\}
+\]
+とすること
+
+\item Solver から表現される理論への写像を
+\[
+\mathcal{T}:\Solver_I\to\Th
+\]
+とすること
+
+\item 理論同型を
+\[
+\cong_{\mathrm{Th}}
+\]
+として、Solver 同型
+\[
+\cong_{\mathrm{Sol}}
+\]
+と区別すること
+
+\item $\mathcal{Z}$ を
+\[
+\boxed{
+\mathcal{Z}
+=
+\left\{
+s\in\Solver_I
+\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\right\}
+}
+\]
+と定義すること
+
+\item $\mathcal{Z}$ の元は ZFC そのものではなく、ZFC と理論同型な理論を表現する Solver である
+\item Solver、理論、モデルをそれぞれ別の数学的対象として扱う
+\item $\mathcal{Z}$ の濃度はこの定義だけから決定せず $|\Ax|,\ |I|,\ |\Solver_I|,\ |\mathcal{Z}|$ を分離して後続文書で検討する
+\item CH の議論では、理論レベルの関係とモデルレベルの関係を分離する
+\end{enumerate}
+
+\section{後続する議論}
+
+本稿で定義した $\mathcal{Z}$ を基礎として、後続文書では次の問題を扱うことができる。
+
+\begin{enumerate}
+\item $\mathcal{Z}$ に含まれる Solver の構成方法
+\item 異なる Solver が $\mathcal{Z}$ の異なる元となる条件
+\item $\mathfrak{A}\restriction_{\mathcal{Z}}$ と $\mathcal{T}\restriction_{\mathcal{Z}}$ の関係
+\item $\mathcal{Z}$ の濃度と $2^{\aleph_0}$ との比較
+\item ZFC のモデルにおける CH と $\neg\mathrm{CH}$ の分岐をSolver、理論、モデルの三層に分けて記述すること
+\end{enumerate}
+
+これらは本稿の定義から自動的に導かれるものではなく、それぞれ追加の構成または証明を必要とする。
+
+\end{document}

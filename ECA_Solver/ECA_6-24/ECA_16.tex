@@ -1,0 +1,532 @@
+% ECA_16.tex
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{margin=25mm}
+
+\title{ECA\_16\\$\mathcal R^*$ の全部分集合に対する選択可能性}
+\author{}
+\date{}
+
+\newtheorem{definition}{定義}
+\newtheorem{proposition}{命題}
+\newtheorem{remark}{注意}
+
+\begin{document}
+\maketitle
+
+\section{目的}
+
+ECA\_15では、可算無限公理候補族
+\[
+\mathcal R^*=\{r_n\mid n\in\mathbb N\}
+\]
+について、連続体濃度の議論へ進むためには、単に
+\[
+|\mathcal R^*|=\aleph_0
+\]
+であるだけでは不十分であり、その全部分集合をECAの選択空間 $I$ に接続する必要があることを整理した。
+
+本稿では、このうち第2段階、
+
+\[
+\boxed{
+\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal A_{\mathrm{ZFC}}\cup A\in I
+}
+\]
+
+を中心に検討する。
+
+ここでは、この条件が現在のECAの定義から導かれるのか、それとも追加条件として導入する必要があるのかを区別する。
+
+\section{既存の選択空間}
+
+ECAでは、
+\[
+I\subseteq\mathcal P(\Ax)
+\]
+とする。
+
+各
+\[
+i\in I
+\]
+はECAにおいて許容される一つの公理集合であり、
+\[
+i\subseteq\Ax
+\]
+を満たす。
+
+また、
+\[
+B(i)\subseteq i\subseteq\Ax
+\]
+を維持する。
+
+ここで注意すべきなのは、
+\[
+I\subseteq\mathcal P(\Ax)
+\]
+から
+\[
+I=\mathcal P(\Ax)
+\]
+は導かれないことである。
+
+したがって、
+\[
+A\subseteq\Ax
+\]
+であることだけから
+\[
+A\in I
+\]
+を結論することはできない。
+
+\section{宇宙別の選択可能性}
+
+ECA\_14で導入した
+\[
+\operatorname{Ax}(U)\subseteq\Ax
+\]
+に対して、
+\[
+I(U)
+=
+\{i\in I\mid i\subseteq\operatorname{Ax}(U)\}
+\]
+とする。
+
+したがって、
+\[
+I(U)\subseteq I.
+\]
+
+ここで、
+\[
+A\subseteq\operatorname{Ax}(U)
+\]
+であっても、
+\[
+A\in I(U)
+\]
+は自動的には成立しない。
+
+実際、
+\[
+A\in I(U)
+\iff
+A\in I
+\land
+A\subseteq\operatorname{Ax}(U)
+\]
+である。
+
+\section{$\mathcal R^*$ に対する選択可能性}
+
+可算無限族
+\[
+\mathcal R^*\subseteq\operatorname{Ax}(U)
+\]
+を固定する。
+
+ZFCの基準となる公理集合を
+\[
+\mathcal A_{\mathrm{ZFC}}\subseteq\operatorname{Ax}(U)
+\]
+とする。
+
+このとき、任意の
+\[
+A\subseteq\mathcal R^*
+\]
+に対して
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A
+\]
+は
+\[
+\operatorname{Ax}(U)
+\]
+の部分集合である。
+
+しかし、
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A
+\subseteq\operatorname{Ax}(U)
+\]
+だけでは
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A\in I
+\]
+を導けない。
+
+したがって、次の条件を独立に考える。
+
+\begin{definition}[$\mathcal R^*$ 選択閉包条件]
+\[
+\boxed{
+\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal A_{\mathrm{ZFC}}\cup A\in I
+}
+\]
+を、$\mathcal R^*$ に対する選択閉包条件と呼ぶ。
+\end{definition}
+
+この条件は、
+\[
+\mathcal P(\mathcal R^*)
+\]
+全体をECAの選択空間へ写すための条件である。
+
+\section{選択写像}
+
+選択閉包条件が成立すると、
+\[
+\Gamma:
+\mathcal P(\mathcal R^*)
+\longrightarrow I
+\]
+を
+\[
+\boxed{
+\Gamma(A)=\mathcal A_{\mathrm{ZFC}}\cup A
+}
+\]
+と定義できる。
+
+この写像は単射である。
+
+実際、
+\[
+A\neq A'
+\]
+ならば、
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A
+\neq
+\mathcal A_{\mathrm{ZFC}}\cup A'
+\]
+が必要になるためには、
+\[
+\mathcal R^*\cap\mathcal A_{\mathrm{ZFC}}=\varnothing
+\]
+という条件を置くのが安全である。
+
+この条件の下では、$r\in A\triangle A'$ を取れば、
+$r$ の所属によって両者が異なる。
+
+したがって、
+\[
+\boxed{
+\mathcal R^*\cap\mathcal A_{\mathrm{ZFC}}=\varnothing
+\Longrightarrow
+\Gamma\text{ は単射}
+}
+\]
+である。
+
+\section{重要な区別}
+
+ここで、
+\[
+\mathcal P(\mathcal R^*)\hookrightarrow I
+\]
+が成立したとしても、
+\[
+\mathcal P(\mathcal R^*)\hookrightarrow\mathcal Z
+\]
+はまだ導かれない。
+
+理由は、$I$ の要素は公理集合であり、
+$\mathcal Z$ の要素はSolverであるためである。
+
+したがって、
+\[
+\mathcal P(\mathcal R^*)
+\hookrightarrow I
+\]
+から
+\[
+\mathcal P(\mathcal R^*)
+\hookrightarrow\Solver_I
+\]
+へ進むには、各選択集合に対してSolverを構成する必要がある。
+
+さらに、
+\[
+\mathcal P(\mathcal R^*)
+\hookrightarrow\mathcal Z
+\]
+へ進むには、そのSolverがZFCを表現することを確認する必要がある。
+
+\section{選択空間の全冪集合性との比較}
+
+もし追加条件として
+\[
+I=\mathcal P(\Ax)
+\]
+を採用すれば、
+\[
+A\subseteq\Ax
+\Longrightarrow
+A\in I
+\]
+となる。
+
+この場合、
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A
+\subseteq\Ax
+\]
+から
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A\in I
+\]
+を直接得られる。
+
+しかし、現在のECAは
+\[
+I\subseteq\mathcal P(\Ax)
+\]
+としており、
+\[
+I=\mathcal P(\Ax)
+\]
+を要求していない。
+
+したがって、全冪集合性を新たに仮定することは、
+現在のECAより強い条件となる。
+
+\section{最小条件としての選択閉包}
+
+連続体濃度の議論だけを目的とするなら、
+\[
+I=\mathcal P(\Ax)
+\]
+まで要求する必要はない。
+
+必要なのは、少なくとも対象となる
+\[
+\mathcal P(\mathcal R^*)
+\]
+について、
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A\in I
+\]
+がすべての
+\[
+A\subseteq\mathcal R^*
+\]
+に対して成立することである。
+
+すなわち、
+\[
+\boxed{
+\mathcal P(\mathcal R^*)
+\text{ に対する局所的な選択閉包}
+}
+\]
+で十分である。
+
+これは、
+\[
+I=\mathcal P(\Ax)
+\]
+より弱い条件である。
+
+\section{ECAから導出できるか}
+
+現在の定義から、
+
+\[
+I\subseteq\mathcal P(\Ax)
+\]
+
+は与えられている。
+
+しかし、この包含関係から、
+
+\[
+\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal A_{\mathrm{ZFC}}\cup A\in I
+\]
+
+は導出できない。
+
+したがって、
+
+\[
+\boxed{
+\text{$\mathcal R^*$ 選択閉包条件は、現時点ではECAの定理ではない。}
+}
+\]
+
+これはECA\_15で確認した第1段階の
+\[
+|\mathcal R^*|=\aleph_0
+\]
+とは独立した問題である。
+
+\section{Solver構成との関係}
+
+選択閉包条件が成立した場合、
+各
+\[
+A\subseteq\mathcal R^*
+\]
+に対して
+\[
+i_A
+=
+\mathcal A_{\mathrm{ZFC}}\cup A
+\in I
+\]
+を得る。
+
+すると、
+\[
+\Solver_I
+=
+\{s=(\mathcal A_s,\mathcal R_s)\mid\mathcal A_s\in I\}
+\]
+において、
+\[
+\mathcal A_{s_A}=i_A
+\]
+を満たすSolver $s_A$ を構成することが次の課題となる。
+
+したがって、構造は
+
+\[
+A
+\longmapsto
+i_A
+\longmapsto
+s_A
+\longmapsto
+\mathcal T(s_A)
+\]
+
+となる。
+
+ここで各矢印は別々に検証する必要がある。
+
+\section{濃度に関する帰結}
+
+選択閉包条件と
+\[
+\mathcal R^*\cap\mathcal A_{\mathrm{ZFC}}=\varnothing
+\]
+が成立すれば、
+\[
+\mathcal P(\mathcal R^*)\hookrightarrow I
+\]
+を得る。
+
+さらに
+\[
+|\mathcal R^*|=\aleph_0
+\]
+ならば、
+\[
+|\mathcal P(\mathcal R^*)|
+=
+2^{\aleph_0}.
+\]
+
+したがって、
+\[
+\boxed{
+|I|\geq2^{\aleph_0}
+}
+\]
+が得られる。
+
+ただし、これは
+\[
+|\mathcal Z|\geq2^{\aleph_0}
+\]
+ではない。
+
+$\mathcal Z$ の下界を得るためには、次に
+\[
+A\longmapsto s_A
+\]
+を構成し、さらに
+\[
+s_A\in\mathcal Z
+\]
+を確認する必要がある。
+
+\section{結論}
+
+第2段階の本質は、
+
+\[
+\boxed{
+\mathcal P(\mathcal R^*)
+\text{ の各要素をECAの選択空間 }I\text{ に保持できるか}
+}
+\]
+
+という問題である。
+
+現在の
+\[
+I\subseteq\mathcal P(\Ax)
+\]
+という定義だけでは、この性質は保証されない。
+
+したがって、連続体濃度へ進むためには、
+
+\[
+\boxed{
+\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal A_{\mathrm{ZFC}}\cup A\in I
+}
+\]
+
+を追加条件として採用するか、
+あるいはECAの既存構造からこの条件を導出できることを示す必要がある。
+
+また、
+\[
+I
+\]
+に対して全冪集合性
+\[
+I=\mathcal P(\Ax)
+\]
+を要求する方法もあるが、これは必要以上に強い。
+
+したがって、現段階では
+\[
+\mathcal P(\mathcal R^*)\text{ に対する局所的な選択閉包}
+\]
+を最小条件として位置づける。
+
+次の段階では、この選択された公理集合
+\[
+i_A=\mathcal A_{\mathrm{ZFC}}\cup A
+\]
+から実際に
+\[
+s_A\in\mathcal Z
+\]
+を構成できるか、すなわち第3段階である
+\[
+\boxed{
+\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal T(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+}
+\]
+を検討する。
+
+\end{document}

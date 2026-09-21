@@ -1,0 +1,461 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{hyperref}
+\geometry{margin=25mm}
+
+\title{ECA\_12\\ECAにおける数学的宇宙の定義と入れ子構造}
+\author{}
+\date{}
+
+\newtheorem{definition}{定義}
+\newtheorem{remark}{注意}
+
+\begin{document}
+\maketitle
+
+\section{目的}
+
+本稿では、これまでのECAにおけるSolver集合、理論、数学的宇宙の議論を踏まえ、
+ECAが扱う「数学的宇宙」をより上位の概念として位置づけるための基礎構造を定義する。
+
+これまでの議論では、公理候補全体を
+\[
+\Ax
+\]
+として扱い、
+\[
+I\subseteq\mathcal P(\Ax)
+\]
+から選択可能な公理集合を考えていた。
+しかし、「公理および公理スキームの全体」という定義だけでは、
+異なる公理体系、構成原理、モデル、その他の数学的構成を含む
+より広い数学的宇宙をECAの枠組みの中で位置づけるには十分でない可能性がある。
+
+そこで本稿では、まずECAにおける数学的宇宙を上位概念として導入し、
+その内部に公理的構成要素、数学的宇宙の構成・分類、
+Solverおよび理論を位置づける。
+
+なお、本稿ではまだ
+\[
+\mathcal R^{*}
+\]
+の存在や
+\[
+|\mathcal Z|\geq 2^{\aleph_0}
+\]
+を導かない。
+それらを検討するための上位構造を先に整備することを目的とする。
+
+\section{ECAにおける数学的宇宙}
+
+\begin{definition}[ECAにおける数学的宇宙]
+ECAが数学的対象として取り扱う数学的宇宙の全体を
+\[
+\mathfrak U_{\mathrm{ECA}}
+\]
+と表す。
+
+その要素
+\[
+U\in\mathfrak U_{\mathrm{ECA}}
+\]
+を、ECAにおける一つの数学的宇宙と呼ぶ。
+\end{definition}
+
+ここでいう数学的宇宙は、単一の集合論的構造だけを意味するものではない。
+例えば、集合論において現れる累積階層
+\[
+V
+\]
+や構成可能宇宙
+\[
+L
+\]
+などの構成、また適切なモデルから強制法によって得られる拡大
+\[
+M[G]
+\]
+などを含め、数学的対象を構成・記述するための異なる枠組みを、
+ECAが数学的宇宙として扱う可能性を許容する。
+
+ただし、これらをすべて同じ意味で「公理」と呼ぶものではない。
+本稿では、数学的宇宙そのものと、その宇宙に関係する公理体系・構成原理・
+Solver構造を区別する。
+
+\section{数学的宇宙と公理的構成要素}
+
+数学的宇宙 \(U\) に対して、ECAがその宇宙に関係する公理的構成要素を
+取り扱うための集合を
+\[
+\operatorname{Ax}(U)
+\]
+と表す。
+
+ここで \(\operatorname{Ax}(U)\) は、単に「公理の集合」に限定される必要はなく、
+ECAがその数学的宇宙において公理的選択の候補として扱うことのできる対象を
+含むものとする。
+
+したがって、ECA全体で扱われる公理候補宇宙 \(\Ax\) は、概念的には
+\[
+\Ax
+=
+\bigcup_{U\in\mathfrak U_{\mathrm{ECA}}}
+\operatorname{Ax}(U)
+\]
+という形で捉えることができる。
+
+この式は、現時点で \(\operatorname{Ax}(U)\) の具体的な定義や
+すべての宇宙 \(U\) に対する対応関係が確定していることを意味しない。
+むしろ、従来の \(\Ax\) を数学的宇宙の上位構造から位置づけるための
+概念的な拡張として用いる。
+
+また、現在のECAで用いている
+\[
+I\subseteq\mathcal P(\Ax)
+\]
+および
+\[
+B(i)\subseteq i\subseteq\Ax
+\]
+という構造は維持する。
+
+\section{数学的宇宙における公理体系の分岐}
+
+数学的宇宙を考える場合、ある公理が成立する宇宙だけを最初から固定する必要はない。
+
+例えば選択公理を考えると、概念的には
+\[
+\mathfrak U_{\mathrm{AC}}
+=
+\{U\in\mathfrak U_{\mathrm{ECA}}\mid U\models\mathrm{AC}\}
+\]
+および
+\[
+\mathfrak U_{\neg\mathrm{AC}}
+=
+\{U\in\mathfrak U_{\mathrm{ECA}}\mid U\models\neg\mathrm{AC}\}
+\]
+という分類を考えることができる。
+
+ここで重要なのは、これらをECAの数学的宇宙そのものと同一視しないことである。
+すなわち、
+\[
+\mathfrak U_{\mathrm{AC}},
+\mathfrak U_{\neg\mathrm{AC}}
+\subseteq
+\mathfrak U_{\mathrm{ECA}}
+\]
+と位置づける。
+
+この構造により、ECAは「ACが成立する宇宙」だけでなく、
+「ACが成立しない宇宙」を含めた複数の数学的宇宙を上位から扱うことができる。
+
+\section{「未確定な数学的宇宙」という段階}
+
+ここでいう「未確定」とは、第三の真理値を導入することを意味しない。
+
+すなわち、
+\[
+U\models\mathrm{AC}
+\]
+でも
+\[
+U\models\neg\mathrm{AC}
+\]
+でもない第三種類の宇宙を定義する、という意味ではない。
+
+本稿でいう「未確定」とは、数学的宇宙を構成・分類する段階において、
+その宇宙がACを成立させるものとして特定されているのか、
+ACを成立させないものとして特定されているのかが、
+まだ固定されていない状態を表す。
+
+この段階を概念的に
+\[
+\mathfrak U_{?}
+\]
+と表すなら、
+\[
+\mathfrak U_{?}
+\longrightarrow
+\begin{cases}
+\mathfrak U_{\mathrm{AC}},\\[2mm]
+\mathfrak U_{\neg\mathrm{AC}}
+\end{cases}
+\]
+という分岐を考えることができる。
+
+したがって、
+\[
+\mathfrak U_{?}
+\]
+はACの第三の真理状態を表すものではなく、
+公理的条件をまだ固定していない上位段階を表す記号である。
+
+この考え方はACに限らない。
+任意の公理 \(A\) について、
+\[
+\mathfrak U_{A},
+\qquad
+\mathfrak U_{\neg A}
+\]
+という分岐を考える前に、その公理について条件を固定していない段階を
+考えることができる。
+
+\section{数学的宇宙の入れ子構造の可能性}
+
+ECAにおける数学的宇宙を上位概念として定義すると、
+一つの数学的宇宙の内部に、さらにECAにおける数学的宇宙として扱える
+構造が存在する可能性も考えられる。
+
+この可能性を直ちに「無数の数学的宇宙が存在する」という定理として
+主張することはしない。
+
+まず、ある数学的宇宙
+\[
+U_0\in\mathfrak U_{\mathrm{ECA}}
+\]
+に対して、その内部でECAの数学的宇宙として扱われる宇宙の族を
+\[
+\mathfrak U_{\mathrm{ECA}}(U_0)
+\]
+と表せる場合を考える。
+
+もし
+\[
+U_1\in\mathfrak U_{\mathrm{ECA}}(U_0)
+\]
+が成立するなら、さらに
+\[
+\mathfrak U_{\mathrm{ECA}}(U_1)
+\]
+を考えることができる可能性がある。
+
+その場合、
+\[
+U_2\in\mathfrak U_{\mathrm{ECA}}(U_1)
+\]
+となる宇宙 \(U_2\) を考えることができる。
+
+一般化すれば、
+\[
+\boxed{
+U_{n+1}\in\mathfrak U_{\mathrm{ECA}}(U_n)
+}
+\qquad(n\in\mathbb N)
+\]
+という入れ子構造を記述できる。
+
+したがって、
+\[
+U_0
+\supseteq U_1
+\supseteq U_2
+\supseteq\cdots
+\]
+のような構造を考える可能性が生じる。
+
+ただし、この記法における \(\supseteq\) は、各 \(U_n\) が文字通り
+集合として次の \(U_{n+1}\) を包含することを現時点で主張するものではない。
+厳密には、
+\[
+U_{n+1}\in\mathfrak U_{\mathrm{ECA}}(U_n)
+\]
+という「内部で扱われる宇宙」という関係を基本とする。
+
+また、実際にすべての \(n\in\mathbb N\) についてそのような \(U_n\) が
+存在することも、本稿では仮定しない。
+ここでは、ECAの数学的宇宙概念がこのような入れ子構造を許容する可能性を
+明示することを目的とする。
+
+\section{数学的宇宙、Solver、理論の関係}
+
+ECA_6およびECA_7で定義した構造との関係を整理する。
+
+ECAにおけるSolverを
+\[
+s=(\mathcal A_s,\mathcal R_s)
+\]
+とし、
+\[
+\mathcal A_s\in I
+\]
+を満たすSolver全体を
+\[
+\Solver_I
+=
+\{s=(\mathcal A_s,\mathcal R_s)\mid
+\mathcal A_s\in I\}
+\]
+とする。
+
+また、
+\[
+\mathfrak A:\Solver_I\to I,
+\qquad
+\mathfrak A(s)=\mathcal A_s
+\]
+を公理選択写像とする。
+
+このとき、数学的宇宙はSolverそのものと同一ではない。
+
+概念的には、
+\[
+\mathfrak U_{\mathrm{ECA}}
+\longrightarrow
+\operatorname{Ax}(U)
+\longrightarrow
+I
+\longrightarrow
+\Solver_I
+\]
+という関係を考えることができる。
+
+さらに理論写像
+\[
+\mathcal T:\Solver_I\to\mathrm{Th}
+\]
+によって、
+\[
+s\longmapsto\mathcal T(s)
+\]
+という対応を与える。
+
+したがって、数学的宇宙、公理選択、Solver、理論は、それぞれ異なる
+階層の概念として扱う。
+
+\section{Solverの同一性と理論の同型性}
+
+数学的宇宙を上位概念として導入しても、Solverの同一性についての
+既存の区別は維持する。
+
+Solverについては、
+\[
+s=t
+\]
+と
+\[
+s\cong_{\mathrm{Sol}}t
+\]
+を区別する。
+
+また、理論については
+\[
+\mathcal T(s)\cong_{\mathrm{Th}}\mathcal T(t)
+\]
+を考える。
+
+したがって、
+\[
+s=t,
+\qquad
+s\cong_{\mathrm{Sol}}t,
+\qquad
+\mathcal T(s)\cong_{\mathrm{Th}}\mathcal T(t)
+\]
+は同一の関係ではない。
+
+数学的宇宙の入れ子構造を導入することによっても、
+これらを一つの概念にまとめることはしない。
+
+\section{現段階での位置づけ}
+
+以上を踏まえると、ECAの数学的宇宙について、現段階では次の構造を
+考えることができる。
+
+\[
+\boxed{
+\mathfrak U_{\mathrm{ECA}}
+\supseteq
+\mathfrak U_{\mathrm{AC}},
+\mathfrak U_{\neg\mathrm{AC}}
+}
+\]
+
+また、公理条件をまだ固定していない段階を概念的に
+\[
+\mathfrak U_{?}
+\]
+と表すなら、
+\[
+\mathfrak U_{?}
+\longrightarrow
+\begin{cases}
+\mathfrak U_{\mathrm{AC}},\\
+\mathfrak U_{\neg\mathrm{AC}}
+\end{cases}
+\]
+という分岐を考えることができる。
+
+さらに、一つの宇宙の内部に別のECA数学的宇宙を考える可能性を許容するなら、
+\[
+U_{n+1}\in\mathfrak U_{\mathrm{ECA}}(U_n)
+\]
+という入れ子構造を記述できる。
+
+この上位構造の下で、
+\[
+\operatorname{Ax}(U)
+\]
+および
+\[
+\Ax
+=
+\bigcup_{U\in\mathfrak U_{\mathrm{ECA}}}
+\operatorname{Ax}(U)
+\]
+という公理候補の位置づけを考え、
+そこから
+\[
+I\subseteq\mathcal P(\Ax),
+\qquad
+\Solver_I,
+\qquad
+\mathcal T,
+\qquad
+\mathcal Z
+\]
+へ接続する。
+
+ただし、現段階ではこれらの関係から
+\[
+\mathcal R^{*}
+\]
+の存在を導出してはいない。
+
+\section{次の検討課題}
+
+本稿によって、次の問題を上位構造から検討できるようになる。
+
+\begin{enumerate}
+    \item ECAにおける数学的宇宙 \(\mathfrak U_{\mathrm{ECA}}\) を、
+    どこまで形式的に定義できるか。
+
+    \item 各数学的宇宙 \(U\) に対する
+    \[
+    \operatorname{Ax}(U)
+    \]
+    をどのように定義すれば、現在の \(\Ax\) と整合するか。
+
+    \item 数学的宇宙の入れ子関係
+    \[
+    U_{n+1}\in\mathfrak U_{\mathrm{ECA}}(U_n)
+    \]
+    をECAの構造として実際に許容できるか。
+
+    \item AC、CHその他の公理について、
+    「公理条件を固定していない段階」と「公理条件によって分岐した宇宙」を
+    どのように形式化するか。
+
+    \item その上で、
+    \[
+    \mathcal R^{*}\subseteq\Ax
+    \]
+    がECAの既存構造から追加条件なしに構成できる可能性が
+    どこに残されているかを調べる。
+\end{enumerate}
+
+以上により、\(\mathcal R^{*}\) の構成可能性を直接仮定するのではなく、
+その前提となる「ECAがどのような数学的宇宙を取り扱うのか」を先に整理する。
+
+\end{document}

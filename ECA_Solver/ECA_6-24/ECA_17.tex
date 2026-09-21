@@ -1,0 +1,548 @@
+% ECA_17.tex
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{margin=25mm}
+
+\title{ECA\_17\\選択された公理集合から ZFC 表現 Solver への構成}
+\author{}
+\date{}
+
+\newtheorem{definition}{定義}
+\newtheorem{proposition}{命題}
+\newtheorem{remark}{注意}
+
+\begin{document}
+\maketitle
+
+\section{目的}
+
+ECA\_16では、可算無限族
+\[
+\mathcal R^*=\{r_n\mid n\in\mathbb N\}
+\]
+に対して、各
+\[
+A\subseteq\mathcal R^*
+\]
+から
+\[
+i_A=\mathcal A_{\mathrm{ZFC}}\cup A
+\]
+を構成し、それが
+\[
+i_A\in I
+\]
+となることを第2段階の条件として整理した。
+
+本稿では第3段階として、
+\[
+i_A\in I
+\]
+から実際に
+\[
+s_A\in\mathcal Z
+\]
+を構成できる条件を検討する。
+
+中心となる問いは、
+
+\[
+\boxed{
+\text{選択された公理集合 }i_A
+\text{ から、ZFCを表現するSolver }s_A\text{ を構成できるか。}
+}
+\]
+
+である。
+
+\section{Solverの既存定義}
+
+ECA\_6およびECA\_7の定義を引き継ぎ、
+\[
+s=(\mathcal A_s,\mathcal R_s)
+\]
+とする。
+
+ECAのSolver集合は
+\[
+\Solver_I
+=
+\{s=(\mathcal A_s,\mathcal R_s)\mid
+\mathcal A_s\in I\}.
+\]
+
+また理論写像は
+\[
+\mathcal T:\Solver_I\to\mathrm{Th}
+\]
+であり、
+\[
+\mathcal T(s)
+\]
+はSolver $s$ が表現する理論である。
+
+さらに、
+\[
+\mathcal Z
+=
+\{s\in\Solver_I\mid
+\mathcal T(s)\cong_{\mathrm{Th}}\mathrm{ZFC}\}.
+\]
+
+したがって、ある
+\[
+i_A\in I
+\]
+からSolver $s_A$ を作るには、
+少なくとも
+\[
+\mathcal A_{s_A}=i_A
+\]
+を満たすSolverを構成する必要がある。
+
+\section{Solver規則の役割}
+
+Solverは
+\[
+s_A=(i_A,\mathcal R_A)
+\]
+という形で考えることができる。
+
+ここで、
+\[
+\mathcal R_A
+\]
+は推論規則または構成上の制約を表す。
+
+このとき、
+\[
+\mathcal T(s_A)
+\]
+は単に
+\[
+i_A
+\]
+だけから決まるとは限らない。
+
+したがって、
+\[
+i_A
+\]
+がZFCに対応する公理集合であることと、
+\[
+\mathcal T(i_A,\mathcal R_A)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+であることは別々に確認する必要がある。
+
+\section{固定されたSolver規則による構成}
+
+最も単純な構成として、
+一つの固定されたSolver規則
+\[
+\mathcal R_0
+\]
+を考える。
+
+各
+\[
+A\subseteq\mathcal R^*
+\]
+について、
+\[
+\boxed{
+s_A=(i_A,\mathcal R_0)
+}
+\]
+と定義する。
+
+このとき、
+\[
+\mathcal A_{s_A}=i_A
+\]
+であるため、
+第2段階の条件
+\[
+i_A\in I
+\]
+から
+\[
+s_A\in\Solver_I
+\]
+が得られる。
+
+ただし、
+\[
+s_A\in\mathcal Z
+\]
+を得るにはさらに
+\[
+\mathcal T(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+が必要である。
+
+\section{ZFC保存条件}
+
+\begin{definition}[ZFC保存条件]
+固定された
+\[
+\mathcal A_{\mathrm{ZFC}},
+\qquad
+\mathcal R_0
+\]
+および
+\[
+\mathcal R^*
+\]
+に対し、
+\[
+\boxed{
+\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal T(\mathcal A_{\mathrm{ZFC}}\cup A,\mathcal R_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+}
+\]
+をZFC保存条件と呼ぶ。
+\end{definition}
+
+この条件は、
+\[
+\mathcal R^*
+\]
+の各部分集合を追加しても、対応するSolverの理論がZFCと理論同型であり続けることを要求する。
+
+ここで重要なのは、
+\[
+\mathcal R^*
+\]
+が単に「ZFCと無関係な候補」であることではない。
+
+必要なのは、任意の
+\[
+A\subseteq\mathcal R^*
+\]
+について、
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A
+\]
+から構成されたSolverの理論がZFCを保存することである。
+
+\section{ZFC保存条件と冗長性}
+
+もし各
+\[
+r\in\mathcal R^*
+\]
+が、固定された理論体系の内部ですでに得られる内容を表す候補として扱われ、
+その追加が理論を拡張しないことを保証できるなら、
+ZFC保存条件を満たす候補族を構成できる可能性がある。
+
+ただし、
+\[
+r\in\operatorname{Ax}(U)
+\]
+であることだけから、
+\[
+\mathrm{ZFC}\vdash r
+\]
+や
+\[
+\mathrm{ZFC}\cup\{r\}\equiv\mathrm{ZFC}
+\]
+は導かれない。
+
+したがって、
+「公理候補として存在すること」と
+「ZFCに対して冗長であること」は明確に分離する必要がある。
+
+\section{各部分集合についての保存性}
+
+単一の候補について
+\[
+\mathcal T(\mathcal A_{\mathrm{ZFC}}\cup\{r\},\mathcal R_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+が成立するだけでは十分ではない。
+
+必要なのは、
+\[
+\forall A\subseteq\mathcal R^*
+\]
+について
+\[
+\mathcal T(\mathcal A_{\mathrm{ZFC}}\cup A,\mathcal R_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+である。
+
+したがって、
+個々の候補のZFC保存性と、
+族全体の任意部分集合に対するZFC保存性を区別する。
+
+\section{Solver構成写像}
+
+第2段階と第3段階を同時に満たすと仮定する。
+
+すなわち、
+\[
+\forall A\subseteq\mathcal R^*,
+\quad
+i_A=\mathcal A_{\mathrm{ZFC}}\cup A\in I
+\]
+および
+\[
+\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal T(i_A,\mathcal R_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}.
+\]
+
+このとき、
+\[
+\boxed{
+\Phi:
+\mathcal P(\mathcal R^*)
+\longrightarrow
+\mathcal Z,
+\qquad
+\Phi(A)=(i_A,\mathcal R_0)
+}
+\]
+を定義できる。
+
+さらに、
+\[
+\mathcal R^*\cap\mathcal A_{\mathrm{ZFC}}=\varnothing
+\]
+ならば、
+\[
+A\neq A'
+\Longrightarrow
+i_A\neq i_{A'}
+\]
+である。
+
+したがって、
+\[
+\boxed{
+\Phi\text{ は単射}
+}
+\]
+となる。
+
+\section{連続体濃度への帰結}
+
+もし
+\[
+|\mathcal R^*|=\aleph_0
+\]
+であれば、
+\[
+|\mathcal P(\mathcal R^*)|
+=
+2^{\aleph_0}.
+\]
+
+したがって、
+\[
+\Phi:\mathcal P(\mathcal R^*)\hookrightarrow\mathcal Z
+\]
+が構成できれば、
+\[
+\boxed{
+|\mathcal Z|\geq2^{\aleph_0}
+}
+\]
+を得る。
+
+ここで初めて、ECA\_9およびECA\_10で条件付きに扱っていた
+$\mathcal Z$ の連続体濃度下界が成立する。
+
+ただし、この結論は
+\[
+\mathcal R^*\text{ の存在},
+\]
+選択閉包条件、
+ZFC保存条件、
+およびSolver構成条件がすべて成立した場合の条件付き帰結である。
+
+\section{ECAの既存定義から導出できるか}
+
+現在までの定義から、
+\[
+\mathcal T:\Solver_I\to\mathrm{Th}
+\]
+が存在することは設定されている。
+
+しかし、
+\[
+i\in I
+\]
+ごとに
+\[
+s=(i,\mathcal R)
+\]
+が存在することや、
+固定した
+\[
+\mathcal R_0
+\]
+を用いて常にSolverを構成できることは、現在の定義だけでは保証されていない。
+
+さらに、
+\[
+\mathcal T(i,\mathcal R_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+というZFC保存性も自動的には導かれない。
+
+したがって、
+
+\[
+\boxed{
+\text{第3段階も、現時点ではECAの定理ではない。}
+}
+\]
+
+\section{第3段階に必要な条件の整理}
+
+第3段階を成立させるためには、少なくとも次を確認する必要がある。
+
+\begin{enumerate}
+    \item 各 $A\subseteq\mathcal R^*$ に対して
+    \[
+    i_A=\mathcal A_{\mathrm{ZFC}}\cup A\in I
+    \]
+    が成立する。
+
+    \item 各 $i_A$ に対してSolver
+    \[
+    s_A=(i_A,\mathcal R_A)
+    \]
+    が存在する。
+
+    \item 各 $s_A$ が
+    \[
+    \mathcal T(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+    \]
+    を満たす。
+
+    \item 異なる $A$ が異なるSolverを与える。
+\end{enumerate}
+
+このうち第1項はECA\_16で扱った選択可能性、
+第2項と第3項が本稿の中心である。
+第4項は濃度下界を得るための単射性に関する条件である。
+
+\section{「ZFCを表現する」の意味}
+
+本稿では、
+\[
+\mathcal T(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+をZFC表現の基準として維持する。
+
+したがって、
+\[
+M\models\mathcal T(s)
+\]
+というモデルの存在や、
+\[
+M\models\mathrm{CH}
+\]
+などのモデルレベルの性質は、本稿のZFC保存条件とは別である。
+
+これはECA\_8で整理した
+\[
+\text{Solver}
+\quad\longleftrightarrow\quad
+\text{理論}
+\quad\longleftrightarrow\quad
+\text{モデル}
+\]
+の区別を維持するためである。
+
+\section{結論}
+
+第3段階では、
+\[
+i_A\in I
+\]
+という選択可能性から、
+\[
+s_A\in\mathcal Z
+\]
+というZFC表現Solverの存在へ進むための条件を明確化した。
+
+基本的な構成は、
+\[
+A
+\longmapsto
+i_A
+=
+\mathcal A_{\mathrm{ZFC}}\cup A
+\longmapsto
+s_A
+=
+(i_A,\mathcal R_0)
+\longmapsto
+\mathcal T(s_A)
+\]
+である。
+
+そして、
+\[
+\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal T(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+が成立すれば、
+\[
+\Phi:\mathcal P(\mathcal R^*)\hookrightarrow\mathcal Z
+\]
+へ接続できる。
+
+したがって、
+\[
+|\mathcal R^*|=\aleph_0
+\]
+ならば、
+\[
+|\mathcal Z|\geq2^{\aleph_0}
+\]
+が条件付きで得られる。
+
+しかし、現段階では、
+\[
+\mathcal R^*
+\]
+の存在も、
+選択閉包も、
+ZFC保存性も、
+Solver構成可能性も、
+ECAの既存定義から自動的には導かれていない。
+
+したがって次に必要なのは、
+\[
+\boxed{
+\mathcal R^*
+\text{ の各候補を、どのような数学的構造として
+「ZFC保存的」とみなせるのか}
+}
+\]
+を具体化することである。
+
+特に、
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A
+\]
+と
+\[
+\mathcal A_{\mathrm{ZFC}}
+\]
+が同じ理論を表すための条件を、
+「公理候補の性質」と「Solver規則の性質」に分けて検討する必要がある。
+
+\end{document}

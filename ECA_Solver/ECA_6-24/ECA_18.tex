@@ -1,0 +1,895 @@
+% !TEX program = lualatex
+\documentclass[a4paper,11pt]{ltjsarticle}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\geometry{margin=25mm}
+
+\newtheorem{definition}{定義}[section]
+\newtheorem{proposition}[definition]{命題}
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{example}[definition]{例}
+\newtheorem{counterexample}[definition]{反例}
+\newtheorem{remark}[definition]{注意}
+
+\newcommand{\ECA}{\mathrm{ECA}}
+\newcommand{\Ax}{\mathrm{Ax}}
+\newcommand{\Solver}{\mathsf{Solver}}
+\newcommand{\Th}{\mathrm{Th}}
+\newcommand{\Pow}{\mathcal P}
+\newcommand{\ZFC}{\mathrm{ZFC}}
+
+\title{ECAの構造そのものが連続体濃度を生成できるかを検査するための標準例・反例・検証条件}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{目的}
+
+本書では、ECA（拡張連続性公理）の既存構造そのものが、連続体濃度
+\[
+2^{\aleph_0}
+\]
+に到達するだけの濃度構造を生成し得るかを検査する。
+
+ここでの目的は、連続体仮説
+\[
+2^{\aleph_0}=\aleph_1
+\]
+を証明することではない。また、
+\[
+|\mathcal Z|\ge 2^{\aleph_0}
+\]
+を最初からECAの結果として仮定することもしない。
+
+検査対象は、これまで整理した
+\[
+\mathfrak U_{\mathrm{ECA}}
+\longrightarrow
+\operatorname{Ax}(U)
+\longrightarrow
+\mathcal R^*
+\longrightarrow
+\mathcal P(\mathcal R^*)
+\longrightarrow
+I
+\longrightarrow
+\Solver_I
+\longrightarrow
+\mathcal Z
+\]
+という構造である。
+
+各段階について、既存のECA定義から何が導けるか、何がまだ導けないか、どのような標準例がその構造を実現するか、どのような反例によって過剰な推論を排除できるかを確認する。
+
+\section{現在の基本構造}
+
+ECAでは、数学的宇宙の全体を
+\[
+\mathfrak U_{\mathrm{ECA}}
+\]
+として扱い、その要素を
+\[
+U\in\mathfrak U_{\mathrm{ECA}}
+\]
+とする。
+
+各数学的宇宙に対応する公理候補集合を
+\[
+\operatorname{Ax}(U)
+\]
+とし、ECA全体で扱う公理および公理スキームの候補集合を
+\[
+\Ax
+=
+\bigcup_{U\in\mathfrak U_{\mathrm{ECA}}}\operatorname{Ax}(U)
+\]
+としている。
+
+ただし、この式を文字通り集合の合併として扱うためには、対象となる宇宙や候補集合の集合論的な型を適切に固定する必要がある。
+
+公理選択については
+\[
+I\subseteq\mathcal P(\Ax)
+\]
+とし、
+\[
+i\in I
+\]
+をECAにおける許容された公理集合とする。
+
+さらに
+\[
+B(i)\subseteq i\subseteq\Ax
+\]
+を維持する。
+
+Solverは
+\[
+s=(\mathcal A_s,\mathcal R_s)
+\]
+とし、
+\[
+\Solver_I
+=
+\left\{
+s=(\mathcal A_s,\mathcal R_s)
+\mid
+\mathcal A_s\in I
+\right\}
+\]
+とする。
+
+理論写像は
+\[
+\mathcal T:\Solver_I\to\Th
+\]
+であり、Solver $s$ が表現する理論を
+\[
+\mathcal T(s)
+\]
+とする。
+
+ZFCを表現するSolver集合は
+\[
+\boxed{
+\mathcal Z
+=
+\left\{
+s\in\Solver_I
+\mid
+\mathcal T(s)\cong_{\mathrm{Th}}\ZFC
+\right\}
+}
+\]
+である。
+
+したがって、
+\[
+|\Ax|,\quad |I|,\quad |\Solver_I|,\quad |\mathcal Z|
+\]
+は同一の濃度ではなく、それぞれ別個に追跡する必要がある。
+
+\section{検査の基本原理}
+
+連続体濃度をECAの構造から得る典型的な経路は、可算無限公理候補族
+\[
+\mathcal R^*
+=
+\{r_0,r_1,r_2,\ldots\}
+\]
+を取り出し、
+\[
+|\mathcal R^*|=\aleph_0
+\]
+から
+\[
+|\mathcal P(\mathcal R^*)|
+=
+2^{\aleph_0}
+\]
+を利用することである。
+
+しかし、
+\[
+|\mathcal R^*|=\aleph_0
+\]
+から直ちに
+\[
+|\mathcal Z|\ge2^{\aleph_0}
+\]
+とはならない。
+
+少なくとも次の段階を区別しなければならない。
+\[
+\operatorname{Ax}(U)
+\longrightarrow
+\mathcal R^*
+\longrightarrow
+\mathcal P(\mathcal R^*)
+\longrightarrow
+I
+\longrightarrow
+\Solver_I
+\longrightarrow
+\mathcal Z.
+\]
+
+特に、
+\[
+|\operatorname{Ax}(U)|\ge\aleph_0
+\]
+は公理候補の存在に関する主張であり、
+\[
+|I|\ge2^{\aleph_0}
+\]
+は選択族の濃度に関する主張であり、
+\[
+|\mathcal Z|\ge2^{\aleph_0}
+\]
+はZFC表現Solverの濃度に関する主張である。
+
+これらを同一視してはならない。
+
+\section{標準例1：可算な公理候補族}
+
+まず、
+\[
+\exists U\in\mathfrak U_{\mathrm{ECA}},
+\qquad
+\exists\mathcal R^*\subseteq\operatorname{Ax}(U)
+\]
+について
+\[
+|\mathcal R^*|=\aleph_0
+\]
+となる例を考える。
+
+ここで重要なのは、公理スキームをどのような対象として
+\[
+\operatorname{Ax}(U)
+\]
+に登録するかである。
+
+公理スキームそのものを1個の要素として扱う場合と、そのスキームから得られる個々のインスタンスを公理候補として扱う場合では、集合としての
+\[
+\operatorname{Ax}(U)
+\]
+の構造が異なる。
+
+したがって、ECAの「公理および公理スキーム」という表現だけから、
+\[
+|\operatorname{Ax}(U)|\ge\aleph_0
+\]
+を自動的に導くことはできない。
+
+一方、ある公理スキームの異なるインスタンスを個別の候補として扱う形式化を採用できれば、
+\[
+\mathcal R^*
+=
+\{r_n\mid n\in\mathbb N\}
+\subseteq\operatorname{Ax}(U)
+\]
+という可算族を構成できる可能性がある。
+
+ここでは、その形式化がECAの既存定義から自然に導かれるかを検査対象とする。
+
+\section{標準例2：可算族の冪集合}
+
+可算無限族
+\[
+\mathcal R^*=\{r_n\mid n\in\mathbb N\}
+\]
+が得られたと仮定する。
+
+このときCantorの定理から
+\[
+|\mathcal P(\mathcal R^*)|
+=
+2^{|\mathcal R^*|}
+=
+2^{\aleph_0}
+\]
+である。
+
+したがって、
+\[
+A\subseteq\mathcal R^*
+\]
+ごとに異なる対象をECAの後段へ送ることができれば、連続体濃度を持つ族を生成するための数学的基礎は存在する。
+
+しかし、
+\[
+\mathcal P(\mathcal R^*)
+\]
+の存在と、
+\[
+\mathcal P(\mathcal R^*)\subseteq I
+\]
+は別の事実である。
+
+\section{標準例3：選択族への埋め込み}
+
+\[
+\mathcal A_{\mathrm{ZFC}}\subseteq\Ax,
+\qquad
+\mathcal R^*\cap\mathcal A_{\mathrm{ZFC}}=\varnothing
+\]
+とする。
+
+各
+\[
+A\subseteq\mathcal R^*
+\]
+について
+\[
+i_A
+=
+\mathcal A_{\mathrm{ZFC}}\cup A
+\]
+を定める。
+
+ここで
+\[
+\boxed{
+\forall A\subseteq\mathcal R^*,
+\qquad
+i_A\in I
+}
+\]
+が成立すれば、
+\[
+\Gamma:
+\mathcal P(\mathcal R^*)\to I,
+\qquad
+\Gamma(A)=i_A
+\]
+を定義できる。
+
+\[
+\mathcal R^*\cap\mathcal A_{\mathrm{ZFC}}=\varnothing
+\]
+なら
+\[
+A\neq B
+\Longrightarrow
+i_A\neq i_B
+\]
+であるから、
+\[
+\Gamma
+\]
+は単射となる。
+
+したがって、
+\[
+\boxed{
+|I|\ge2^{\aleph_0}
+}
+\]
+が得られる。
+
+ただし、これはまだ
+\[
+|\mathcal Z|\ge2^{\aleph_0}
+\]
+を意味しない。
+
+\section{反例1：$I$ が小さい場合}
+
+\begin{counterexample}
+\[
+\operatorname{Ax}(U)
+\]
+に可算無限集合
+\[
+\mathcal R^*
+\]
+が存在しても、
+\[
+I=\{\mathcal A_{\mathrm{ZFC}}\}
+\]
+とすることは、現在の
+\[
+I\subseteq\mathcal P(\Ax)
+\]
+という定義だけからは排除されない。
+
+この場合、
+\[
+\mathcal P(\mathcal R^*)
+\]
+は確かに連続体濃度を持つが、選択可能な公理集合の族は増えない。
+
+したがって、
+\[
+|\operatorname{Ax}(U)|\ge\aleph_0
+\]
+だけから
+\[
+|I|\ge2^{\aleph_0}
+\]
+を導くことはできない。
+\end{counterexample}
+
+\section{反例2：$I$ が大きくても $\mathcal Z$ が小さい場合}
+
+\begin{counterexample}
+\[
+|I|\ge2^{\aleph_0}
+\]
+であっても、ZFCを表現するSolverに対応する選択が1つしかない場合、
+\[
+|\mathcal Z|=1
+\]
+となり得る。
+
+すなわち、
+\[
+|I|\ge2^{\aleph_0}
+\not\Rightarrow
+|\mathcal Z|\ge2^{\aleph_0}.
+\]
+\end{counterexample}
+
+したがって、\(\mathcal Z\) の濃度を検査するには、選択族の大きさだけでなく、
+\[
+\mathcal T(s)\cong_{\mathrm{Th}}\ZFC
+\]
+を維持したまま異なるSolverを構成できるかを確認する必要がある。
+
+\section{標準例4：ZFC保存族}
+
+可算無限族
+\[
+\mathcal R^*
+=
+\{r_n\mid n\in\mathbb N\}
+\]
+と、固定したSolver規則部分
+\[
+\mathcal R_0
+\]
+を考える。
+
+各
+\[
+A\subseteq\mathcal R^*
+\]
+について
+\[
+s_A
+=
+\left(
+\mathcal A_{\mathrm{ZFC}}\cup A,
+\mathcal R_0
+\right)
+\]
+を定める。
+
+このとき、次の条件を検査する。
+\begin{align}
+&\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal A_{\mathrm{ZFC}}\cup A\in I,
+\tag{S2}\\
+&\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal T(s_A)
+\cong_{\mathrm{Th}}\ZFC.
+\tag{S3}
+\end{align}
+
+(S2) は選択可能性、(S3) はZFC保存性を表す。
+
+さらに
+\[
+\mathcal R^*\cap\mathcal A_{\mathrm{ZFC}}
+=
+\varnothing
+\]
+なら、
+\[
+A\neq B
+\Longrightarrow
+s_A\neq s_B
+\]
+である。
+
+したがって、
+\[
+\Phi:
+\mathcal P(\mathcal R^*)\to\mathcal Z,
+\qquad
+\Phi(A)=s_A
+\]
+は単射となる。
+
+よって、これらの条件が実際に構成できれば、
+\[
+\boxed{
+|\mathcal Z|
+\ge
+2^{\aleph_0}
+}
+\]
+が得られる。
+
+ここでも、この不等式は現段階でECAから自動的に得られた定理ではなく、(S2)、(S3)等の成立を確認した場合の帰結である。
+
+\section{検査項目：ZFC保存性の意味}
+
+(S3) を成立させるには、各
+\[
+r\in\mathcal R^*
+\]
+が単独で「ZFCを壊さない」だけでは足りない。
+
+必要なのは、
+\[
+\boxed{
+\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal T
+\left(
+\mathcal A_{\mathrm{ZFC}}\cup A,\mathcal R_0
+\right)
+\cong_{\mathrm{Th}}
+\ZFC
+}
+\]
+である。
+
+つまり、\(\mathcal R^*\) の各要素をどのように選んでも、選択された全体がZFCと同型な理論を表現し続ける必要がある。
+
+この検査では、少なくとも以下を分離する必要がある。
+\begin{enumerate}
+  \item ZFCの定理であること。
+  \item ZFCの公理として既に採用されていること。
+  \item ECAの$\Ax$に公理候補として登録されていること。
+  \item その候補を追加しても理論が保存されること。
+  \item 任意の部分集合を同時に追加しても理論が保存されること。
+\end{enumerate}
+
+特に
+\[
+\ZFC\vdash r
+\]
+から直ちに
+\[
+r\in\Ax
+\]
+とはならない。
+
+したがって、「ZFCの定理を大量に持ってくればよい」という議論だけでは、ECA内部の
+\[
+\mathcal R^*\subseteq\Ax
+\]
+を構成したことにはならない。
+
+\section{標準例5：Solver構造側からの濃度生成}
+
+公理選択を変えずに、
+\[
+\mathcal A_s=\mathcal A_t
+\]
+でありながら
+\[
+\mathcal R_s\neq\mathcal R_t
+\]
+となるSolverを考えることもできる。
+
+例えば
+\[
+s_R=(\mathcal A_0,\mathcal R_R)
+\]
+という族を構成し、
+\[
+R\neq R'
+\Longrightarrow
+\mathcal R_R\neq\mathcal R_{R'}
+\]
+かつ
+\[
+\mathcal T(s_R)
+\cong_{\mathrm{Th}}
+\ZFC
+\]
+を成立させられれば、Solverそのものの濃度を増加させることができる。
+
+この場合、\(\mathfrak A\) の像は増加しない可能性がある。
+
+したがって、
+\[
+\left|\operatorname{Im}
+(\mathfrak A|_{\mathcal Z})\right|
+\]
+と
+\[
+|\mathcal Z|
+\]
+を分離して追跡する必要がある。
+
+\section{検査項目：$\mathcal Z$ のファイバー分解}
+
+\[
+\mathcal Z_A
+=
+\left\{
+s\in\mathcal Z
+\mid
+\mathfrak A(s)=A
+\right\}
+\]
+と定義する。
+
+すると
+\[
+\mathcal Z
+=
+\bigcup_{A\in
+\operatorname{Im}(\mathfrak A|_{\mathcal Z})}
+\mathcal Z_A.
+\]
+
+ここで、
+\[
+\left|\operatorname{Im}
+(\mathfrak A|_{\mathcal Z})\right|
+\]
+は異なる公理選択の数を表し、
+\[
+|\mathcal Z_A|
+\]
+は1つの公理選択に対して存在する異なるSolver構造の数を表す。
+
+したがって、
+\[
+|\mathcal Z|\ge2^{\aleph_0}
+\]
+となる経路は、少なくとも概念的には、
+\[
+\left|\operatorname{Im}
+(\mathfrak A|_{\mathcal Z})\right|
+\ge2^{\aleph_0}
+\]
+による場合と、
+\[
+\exists A\quad
+|\mathcal Z_A|\ge2^{\aleph_0}
+\]
+による場合とに分けて検査できる。
+
+さらに両方が組み合わさる可能性もある。
+
+\section{反例3：同じ公理選択にすべてが潰れる場合}
+
+\begin{counterexample}
+異なる候補集合
+\[
+A\neq B
+\]
+を用意しても、それらを同じSolverとして識別するような構造を採用すれば、
+\[
+s_A=s_B
+\]
+となる可能性がある。
+
+この場合、
+\[
+\mathcal P(\mathcal R^*)
+\]
+から\(\mathcal Z\)への単射は成立しない。
+
+したがって、連続体濃度を得るには、単に異なる選択を列挙するだけでなく、
+\[
+A\neq B
+\Longrightarrow
+s_A\neq s_B
+\]
+を保証する必要がある。
+
+ECA_6で定義したSolverの構造としては、
+\[
+s=(\mathcal A_s,\mathcal R_s)
+\]
+であるため、特に
+\[
+\mathcal A_{s_A}\neq\mathcal A_{s_B}
+\]
+または
+\[
+\mathcal R_{s_A}\neq\mathcal R_{s_B}
+\]
+を利用してSolverの非同一性を確認できる。
+\end{counterexample}
+
+\section{上界の検査}
+
+\(\mathcal Z\subseteq\Solver_I\) であるため、
+\[
+\boxed{
+|\mathcal Z|
+\le
+|\Solver_I|
+}
+\]
+は直ちに得られる。
+
+一方、
+\[
+|\Solver_I|\le2^{\aleph_0}
+\]
+を現在のECAから導く根拠はまだ確立されていない。
+
+したがって、連続体濃度の下界を構成できたとしても、
+\[
+|\mathcal Z|=2^{\aleph_0}
+\]
+とは直ちには言えない。
+
+現段階での一般的な範囲は、条件付きで
+\[
+\boxed{
+2^{\aleph_0}
+\le
+|\mathcal Z|
+\le
+|\Solver_I|
+}
+\]
+という形に留める。
+
+上界をさらに狭めるには、
+\[
+|\Ax|,\quad |I|,\quad |\Solver_I|
+\]
+の濃度を別途固定・評価する必要がある。
+
+\section{標準検査表}
+
+今後の検証は次の順序で行う。
+\begin{enumerate}
+  \item \textbf{数学的宇宙の検査}
+  \[
+  U\in\mathfrak U_{\mathrm{ECA}}
+  \]
+  が適切に形式化されているか。
+
+  \item \textbf{公理候補集合の検査}
+  \[
+  \operatorname{Ax}(U)
+  \]
+  が集合として定義され、可算族を取り出せるか。
+
+  \item \textbf{可算族の検査}
+  \[
+  \mathcal R^*\subseteq\operatorname{Ax}(U),
+  \qquad
+  |\mathcal R^*|=\aleph_0
+  \]
+  が構成できるか。
+
+  \item \textbf{冪集合の検査}
+  \[
+  |\mathcal P(\mathcal R^*)|=2^{\aleph_0}
+  \]
+  をECAの後段へ接続できるか。
+
+  \item \textbf{選択可能性の検査}
+  \[
+  \forall A\subseteq\mathcal R^*,
+  \quad
+  \mathcal A_{\mathrm{ZFC}}\cup A\in I
+  \]
+  を既存構造から得られるか。
+
+  \item \textbf{Solver構成の検査}
+  \[
+  s_A=(\mathcal A_{\mathrm{ZFC}}\cup A,\mathcal R_0)
+  \]
+  を各$A$について構成できるか。
+
+  \item \textbf{ZFC保存性の検査}
+  \[
+  \forall A\subseteq\mathcal R^*,
+  \quad
+  \mathcal T(s_A)\cong_{\mathrm{Th}}\ZFC
+  \]
+  が成立するか。
+
+  \item \textbf{単射性の検査}
+  \[
+  A\neq B\Longrightarrow s_A\neq s_B
+  \]
+  を確認できるか。
+
+  \item \textbf{上界の検査}
+  \[
+  |\Solver_I|
+  \]
+  を評価し、
+  \[
+  |\mathcal Z|
+  \]
+  の上界をどこまで狭められるかを調べる。
+\end{enumerate}
+
+\section{現段階で確認できることと未確認事項}
+
+現在のECA構造から確実に分離して述べられるのは、次の点である。
+\begin{enumerate}
+  \item 可算無限集合\(\mathcal R^*\)が存在すれば、
+  \[
+  |\mathcal P(\mathcal R^*)|=2^{\aleph_0}
+  \]
+  である。
+
+  \item しかし、現在の
+  \[
+  I\subseteq\mathcal P(\Ax)
+  \]
+  だけでは、すべての部分集合が選択可能であるとは言えない。
+
+  \item さらに、\(I\) の濃度が大きくても、ZFCを表現するSolverの濃度が大きいとは限らない。
+
+  \item \(\mathcal Z\) の連続体濃度以上の下界には、
+  \[
+  \mathcal P(\mathcal R^*)\hookrightarrow\mathcal Z
+  \]
+  のような明示的な単射が必要である。
+
+  \item \(\mathcal Z\) の上界については、
+  \[
+  |\mathcal Z|\le|\Solver_I|
+  \]
+  が得られるが、\(|\Solver_I|\) 自体の上界はまだ固定されていない。
+\end{enumerate}
+
+したがって、現時点では
+\[
+|\mathcal Z|\ge2^{\aleph_0}
+\]
+をECAの確定した定理として記述することはできない。
+
+一方で、これまでの構造化によって、この不等式を得るために必要な条件はかなり明確になっている。
+
+\section{今後の検証方針}
+
+今後は、\(\mathcal R^*\) の存在を外部から仮定するのではなく、まず
+\[
+\operatorname{Ax}(U)
+\]
+の形式化から検査する。
+
+特に、
+\[
+\boxed{
+\text{公理スキーム}
+\longrightarrow
+\text{個別の公理候補}
+}
+\]
+という対応がECAの構造内で自然に定義できるかを確認する。
+
+その上で、
+\[
+\operatorname{Ax}(U)
+\supseteq
+\mathcal R^*
+\]
+を構成し、
+\[
+\mathcal P(\mathcal R^*)
+\longrightarrow
+I
+\longrightarrow
+\Solver_I
+\longrightarrow
+\mathcal Z
+\]
+という経路を順に検査する。
+
+ここで重要なのは、各段階を独立した命題として扱うことである。
+\[
+\boxed{
+\begin{array}{c}
+|\mathcal R^*|=\aleph_0\\[2mm]
+\Downarrow\\
+|\mathcal P(\mathcal R^*)|=2^{\aleph_0}\\[2mm]
+\Downarrow\quad\text{（選択可能性が必要）}\\
+|I|\ge2^{\aleph_0}\\[2mm]
+\Downarrow\quad\text{（ZFC保存性とSolver非同一性が必要）}\\
+|\mathcal Z|\ge2^{\aleph_0}
+\end{array}
+}
+\]
+
+この図の各矢印は自動的な含意ではなく、それぞれ固有の検証条件を持つ。
+
+したがって、本書の目的は「連続体濃度をECAに導入すること」ではなく、\textbf{ECAが既に持つ構造だけから連続体濃度が生成されるか否かを、標準例と反例を用いて判定可能な形にすること}にある。
+
+\end{document}

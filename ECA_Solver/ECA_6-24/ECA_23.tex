@@ -1,0 +1,283 @@
+\documentclass[a4paper,11pt]{ltjsarticle}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\geometry{margin=25mm}
+\title{ECA_23 \(\mathcal{R}^*\) の部分集合に対する ZFC 保存条件}
+\author{}
+\date{}
+\newtheorem{definition}{定義}
+\newtheorem{proposition}{命題}
+\begin{document}
+\maketitle
+
+\section{目的}
+ECA_22 までにより、可算無限公理候補族
+\[
+\mathcal{R}^*=\{r_n\mid n\in\mathbb N\}
+\]
+を考えたとき、Stage 2 は
+\[
+i_A=\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\qquad(A\subseteq\mathcal{R}^*)
+\]
+という選択可能性の問題として整理された。
+
+本稿では Stage 3、
+\[
+i_A\in I\longrightarrow s_A\in\mathcal{Z}
+\]
+を検査する。各 \(r_n\) が個別に ZFC と両立することだけでは不十分であり、任意の \(A\subseteq\mathcal{R}^*\) について
+\[
+\mathcal{T}(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+を保証する必要がある。
+
+\section{Stage 3 の基本設定}
+Stage 2 で
+\[
+i_A=\mathcal{A}_{\mathrm{ZFC}}\cup A
+\]
+が \(I\) に属するとする。固定した推論規則・構成制約を
+\[
+\mathcal{R}_0
+\]
+とし、
+\[
+s_A=(i_A,\mathcal{R}_0)
+\]
+と定義する。
+
+理論写像
+\[
+\mathcal{T}:\Solver_I\to\mathrm{Th}
+\]
+に対して、
+\[
+\mathcal{Z}=
+\left\{
+s\in\Solver_I\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\right\}
+\]
+であるから、Stage 3 の条件は
+\[
+\boxed{
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{T}(i_A,\mathcal{R}_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+}
+\]
+となる。
+
+\section{個別的保存と族全体の保存}
+候補 \(r\in\mathcal{R}^*\) について
+\[
+\mathcal{T}(\mathcal{A}_{\mathrm{ZFC}}\cup\{r\},\mathcal{R}_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+が成立しても、一般には
+\[
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{T}(\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+は導けない。
+
+複数の候補を同時に追加することで新しい結論が生じる可能性があるためである。
+
+\begin{definition}
+\(\mathcal{R}^*\) が \(\mathcal{A}_{\mathrm{ZFC}}\) および \(\mathcal{R}_0\) に関して \textbf{ZFC 保存族}であるとは、
+\[
+\boxed{
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{T}(\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+}
+\]
+が成立することとする。
+\end{definition}
+
+\section{保存条件の強さ}
+\(A=\varnothing\) も対象なので、
+\[
+\mathcal{T}(\mathcal{A}_{\mathrm{ZFC}},\mathcal{R}_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+が必要である。また \(A=\mathcal{R}^*\) も対象なので、
+\[
+\mathcal{T}(\mathcal{A}_{\mathrm{ZFC}}\cup\mathcal{R}^*,\mathcal{R}_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+も必要である。さらに有限部分集合だけでなく、可算無限部分集合を含むすべての \(A\subseteq\mathcal{R}^*\) が対象になる。
+
+\section{理論同型と無矛盾性の区別}
+\[
+\mathcal{T}(\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+と単なる無矛盾性条件を同一視してはならない。
+
+無矛盾であることだけでは、本稿の \(\mathcal{Z}\) の定義に必要な理論同型性を保証しない。
+
+\section{モデルによる条件との区別}
+理論とモデルを区別する。
+\[
+M\models\mathcal{T}(s_A)
+\]
+はモデルについての条件であり、
+\[
+\mathcal{T}(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+は理論についての条件である。
+
+したがって、
+\[
+\exists M\,
+(M\models\mathcal{T}(s_A)\land M\models\mathrm{CH})
+\]
+が成立しても、それだけから \(s_A\in\mathcal{Z}\) は導かれない。
+
+\section{Solver の推論規則を固定する意味}
+\[
+s_A=(i_A,\mathcal{R}_0)
+\]
+として \(\mathcal{R}_0\) を固定するのは、今回の検証における変化を公理選択部分に限定するためである。
+
+もし
+\[
+s_A=(i_A,\mathcal{R}_A)
+\]
+として推論規則・構成制約まで変更すると、公理選択と Solver 構造の差を同時に扱うことになる。
+
+これは ECA の一般定理ではなく、Stage 3 を明確に検証するための設定である。
+
+\section{Stage 2 と Stage 3}
+Stage 2:
+\[
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I.
+\]
+
+Stage 3:
+\[
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{T}(\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}.
+\]
+
+前者により \(s_A\in\Solver_I\) が成立し、後者により \(s_A\in\mathcal{Z}\) が成立する。したがって、
+\[
+\boxed{\forall A\subseteq\mathcal{R}^*,\quad s_A\in\mathcal{Z}}
+\]
+を得るための二段階条件として整理できる。
+
+\section{連続体濃度への接続}
+さらに
+\[
+|\mathcal{R}^*|=\aleph_0,
+\qquad
+\mathcal{R}^*\cap\mathcal{A}_{\mathrm{ZFC}}=\varnothing
+\]
+を仮定する。
+
+\[
+\Phi:\mathcal{P}(\mathcal{R}^*)\to\mathcal{Z},
+\qquad
+\Phi(A)=
+(\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0)
+\]
+と定義する。
+
+\(A\neq B\) なら
+\[
+\mathcal{A}_{\mathrm{ZFC}}\cup A
+\neq
+\mathcal{A}_{\mathrm{ZFC}}\cup B
+\]
+なので \(\Phi\) は単射である。従って、上記条件がすべて成立すれば
+\[
+\boxed{
+|\mathcal{Z}|
+\ge
+|\mathcal{P}(\mathcal{R}^*)|
+=
+2^{\aleph_0}
+}
+\]
+となる。
+
+これは条件付き結果であり、ECA の現行定義から自動的に得られる結果ではない。
+
+\section{CH との分離}
+ここで得られる
+\[
+|\mathcal{Z}|\ge2^{\aleph_0}
+\]
+は
+\[
+2^{\aleph_0}=\aleph_1
+\]
+を主張しない。したがって、\(\mathcal{Z}\) の濃度問題と CH は別の命題として扱う。
+
+\section{現時点で未保証の事項}
+現行 ECA の定義だけから、次の全てが自動的に得られるとは言えない。
+\[
+|\mathcal{R}^*|=\aleph_0,
+\]
+\[
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I,
+\]
+\[
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{T}(\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}.
+\]
+
+ECA_19 は第一段階、ECA_20--ECA_22 は第二段階、本稿は第三段階を担当する。
+
+\section{今後の検証点}
+Stage 3 を具体化するには、
+\begin{enumerate}
+\item \(r\in\mathcal{R}^*\) が ZFC 保存候補となるための条件。
+\item 個々の候補の保存性から族全体の保存性を導く条件。
+\item
+\[
+\mathcal{T}(\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0)
+\]
+と
+\[
+\mathcal{T}(\mathcal{A}_{\mathrm{ZFC}},\mathcal{R}_0)
+\]
+の同型を構成する方法。
+\item Solver の理論表現と通常の理論における保存性との関係。
+\item これらが ECA の既存構造から導出できるか、追加条件として明示すべきか。
+\end{enumerate}
+
+\section{結論}
+Stage 3 の本質は、各 \(r_n\) が単独で ZFC と両立することではない。必要なのは、
+\[
+\boxed{
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{T}(\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+}
+\]
+という族全体の ZFC 保存性である。
+
+この条件と Stage 2 を合わせることで、
+\[
+\mathcal{P}(\mathcal{R}^*)\hookrightarrow\mathcal{Z}
+\]
+という連続体濃度の下界へ条件付きで接続できる。
+
+\end{document}

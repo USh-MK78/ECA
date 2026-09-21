@@ -1,0 +1,601 @@
+\documentclass[a4paper,11pt]{jsarticle}
+
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{geometry}
+\usepackage{hyperref}
+
+\geometry{margin=25mm}
+
+\newtheorem{definition}{定義}[section]
+\newtheorem{proposition}[definition]{命題}
+\newtheorem{remark}[definition]{注意}
+\newtheorem{example}[definition]{例}
+
+\newcommand{\Solver}{\mathcal{S}}
+\newcommand{\Ax}{S_{\mathrm{ax}}}
+\newcommand{\Sel}{I}
+\newcommand{\Th}{\mathrm{Th}}
+
+\title{ECA_6\\公理候補集合と Solver 構造の再定義}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+本稿では、ECA_5 までに用いられてきた「全公理集合」$S$、「公理選択空間」$I$、および Solver 集合 $\mathcal{S}$ の関係を整理し、後続する $\mathcal{Z}$ の再定義に必要となる基礎構造を定める。
+
+従来の文書では、同一の記号 $S$ が「公理または公理スキームの全体」と Solver の表現の双方に用いられる場合があり、また $I$ についても公理選択空間と評価写像の双方の記法が現れていた。
+本稿では、特に公理候補の全体と Solver を別の数学的対象として扱う。
+
+本稿の目的は ZFC の再定義、$\mathcal{Z}$ の濃度決定、連続体濃度 $2^{\aleph_0}$ の導出、または CH のモデル分岐を行うことではない。
+それらに先立って、何を一つの Solver とし、どのような構造の違いを Solver の違いとして扱うかを明確にすることを目的とする。
+\end{abstract}
+
+\section{本稿の位置付け}
+
+ECA_1 では、$S$ を「Solver集合（全公理集合）」とし、各元を一つの公理または公理スキームとして扱っていた。
+また、公理選択空間について $I\subseteq\mathcal{P}(S)$ が導入され、公理集合に測度を与える構成が行われている。
+
+一方、後続文書では Solver 自体が $s=(\mathcal{A}_s,\mathcal{R}_s)$ という「公理選択および推論規則・構成制約の組」として表現されている。
+さらに $\mathcal{T}:\mathcal{S}\longrightarrow\mathrm{Th}$ によって Solver が表現する数学的構造を対応させるための仕組みが導入されている。
+
+したがって本稿では、これらを混同しないため
+\[
+\boxed{
+\text{公理候補の全体}
+\quad\longrightarrow\quad
+\text{公理選択}
+\quad\longrightarrow\quad
+\text{Solver}
+}
+\]
+という一連の構造を明示する。
+
+\section{公理・公理スキームの全体集合}
+
+\subsection{定義}
+
+\begin{definition}[公理候補全体]
+ECA が取り扱う公理および公理スキームの全体を
+\[
+\boxed{\Ax}
+\]
+と表す。
+
+すなわち、$a\in\Ax$ は一つの公理または公理スキームを表す。
+\end{definition}
+
+ここで $\Ax$ は Solver そのものではない。
+$\Ax$ は、ECA において公理選択の対象となる候補の全体を表す。
+ECA_1 における「全公理集合 $S$」は、本稿ではこの $\Ax$ に対応するものとして整理する。
+
+\subsection{記号分離の理由}
+
+従来の記述では、$S$ が公理候補の全体を表す一方、後続の Solver 集合では
+\[
+S=(\mathcal{A}_S,\mathcal{R}_S)
+\]
+という形も現れていた。
+
+この二つを同じ記号 $S$ で表すと、対象の型の混同を生じさせる可能性がある。
+
+したがって、本稿以降では原則として
+\[
+\Ax
+\]
+を公理候補全体に、
+\[
+s,\ t,\ldots
+\]
+を個々の Solver に、
+\[
+\Solver
+\]
+を Solver 全体に用いる。
+
+\begin{remark}
+ここで $\Ax$ を「公理基底集合」とは呼ばない。
+本稿で扱うのは、特定の理論の基底となる最小集合ではなく、ECA において選択対象となり得る公理および公理スキームの全体だからである。
+したがって「公理候補全体」または「公理・公理スキームの全体」という名称を用いる。
+\end{remark}
+
+\section{公理選択空間}
+
+\subsection{定義}
+
+\begin{definition}[公理選択空間]
+公理候補全体 $\Ax$ に対する公理選択空間を
+\[
+\boxed{\Sel\subseteq\mathcal{P}(\Ax)}
+\]
+と定める。
+
+各
+\[
+i\in\Sel
+\]
+は、ECA において採用され得る公理集合を表す。
+\end{definition}
+
+これは従来文書の $I\subseteq\mathcal{P}(S)$ を公理候補全体と Solver の記号を分離した形で書き直したものである。
+
+したがって、これは
+\[
+i\in\Sel
+\quad\Longrightarrow\quad
+i\subseteq\Ax
+\]
+である。
+
+\subsection{離散的要素集合}
+
+既存の ECA 文書では、公理選択 $i$ に対して
+\[
+B(i)\subseteq i
+\]
+を満たす離散的要素集合が導入されている。
+
+本稿でもこの関係を維持し、
+\[
+\boxed{B(i)\subseteq i\subseteq\Ax}
+\]
+とする。
+
+\begin{remark}
+ここで $B(i)$ は後続する離散評価に用いられる要素集合であり、本稿の目的は $B(i)$ の評価方法を変更及び再定義することではない。
+$B(i)$ は公理選択 $i$ から得られる離散的要素集合として、既存の ECA との接続を維持する。
+\end{remark}
+
+\section{Solver の基本構造}
+
+\subsection{定義}
+
+\begin{definition}[Solver]
+Solver を
+\[
+\boxed{
+s=(\mathcal{A}_s,\mathcal{R}_s)
+}
+\]
+という構造として定義する。
+
+ここで、
+\begin{align}
+\mathcal{A}_s &: \text{Solver $s$ が採用する公理集合},\\
+\mathcal{R}_s &: \text{Solver $s$ に付随する推論規則・構成制約}
+\end{align}
+を表す。
+\end{definition}
+
+この定義により、Solver は単なる公理集合ではない。
+
+すなわち、
+\[
+s\neq\mathcal{A}_s
+\]
+であり、一般には
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+として二つの構成要素を持つ。
+
+\subsection{ECA に適合する Solver}
+
+\begin{definition}[Solver--ECA 適合条件]
+Solver
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+が ECA の公理選択空間 $\Sel$ に適合するとは、すなわち
+\[
+\boxed{
+\mathcal{A}_s\in\Sel
+}
+\]
+が成立することをいう。
+\end{definition}
+
+したがって、ECA に適合する Solver 全体を
+\[
+\boxed{
+\Solver_{\Sel}
+=
+\left\{
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\;\middle|\;
+\mathcal{A}_s\in\Sel
+\right\}
+}
+\]
+と定義する。
+
+以後、文脈上 ECA に適合する Solver のみを扱う場合は $\Solver_{\Sel}$ を単に $\Solver$ と記す。
+
+\section{Solver の構成要素を取り出す写像}
+
+\subsection{公理選択写像}
+
+\begin{definition}[公理選択写像]
+ECA に適合する Solver
+\[
+s\in\Solver_{\Sel}
+\]
+に対して、
+\[
+\mathfrak{A}:\Solver_{\Sel}\longrightarrow\Sel
+\]
+を
+\[
+\boxed{
+\mathfrak{A}(s):=\mathcal{A}_s
+}
+\]
+によって定義する。
+
+以下、
+\[
+i_s:=\mathfrak{A}(s)=\mathcal{A}_s
+\]
+と記す。
+\end{definition}
+
+この写像によって、
+\[
+s\longmapsto\mathcal{A}_s
+\]
+という Solver から公理選択への対応が明示される。
+
+したがって、
+\[
+\boxed{
+\mathfrak{A}:\Solver_{\Sel}\to\Sel
+}
+\]
+は、Solver と ECA の公理選択空間を接続する基本的な写像である。
+
+\subsection{Solver の二つの基本成分}
+
+各 Solver $s$ に対して、
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+であることから、少なくとも次の二つの構造を区別する。
+
+\begin{enumerate}
+\item 公理選択構造
+\[
+\mathcal{A}_s=\mathfrak{A}(s),
+\]
+\item 推論・構成構造
+\[
+\mathcal{R}_s.
+\]
+\end{enumerate}
+
+したがって、二つの Solver $s,t$ に対して、
+\[
+\mathcal{A}_s\neq\mathcal{A}_t
+\]
+である場合と、
+\[
+\mathcal{A}_s=\mathcal{A}_t
+\quad\text{かつ}\quad
+\mathcal{R}_s\neq\mathcal{R}_t
+\]
+である場合は、いずれも Solver の構造が異なる可能性を持つ。
+
+この区別は、後に $\mathcal{Z}$ の元を比較する際に重要となる。
+
+\section{Solver の同一性と Solver 同型}
+
+\subsection{Solver としての同一性}
+
+Solver を構造
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+として扱う以上、二つの Solver が文字通り同一であることと、二つの Solver が同型であることを区別する必要がある。
+
+\begin{definition}[Solver の同一性]
+二つの Solver
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s),
+\qquad
+t=(\mathcal{A}_t,\mathcal{R}_t)
+\]
+について、
+\[
+\boxed{
+s=t
+\iff
+\mathcal{A}_s=\mathcal{A}_t
+\ \land\
+\mathcal{R}_s=\mathcal{R}_t
+}
+\]
+とする。
+\end{definition}
+
+これは Solver の構成要素が完全に一致することを意味する。
+
+\subsection{Solver 同型}
+
+一方、既存の ECA 文書では Solver 同型について、
+単なる集合論的全単射ではなく、Solver に付随する構造を保存する写像として
+\[
+T:\Solver_1\overset{\sim}{\longrightarrow}\Solver_2
+\]
+を導入している。
+
+本稿ではこの考え方を引き継ぎ、Solver 同型を次のように扱う。
+
+\begin{definition}[Solver 同型]
+二つの Solver 構造
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s),
+\qquad
+t=(\mathcal{A}_t,\mathcal{R}_t)
+\]
+について、
+\[
+\boxed{
+s\cong_{\mathrm{Sol}}t
+}
+\]
+とは、$\mathcal{A}_s,\mathcal{R}_s$ によって構成される Solver の構造と $\mathcal{A}_t,\mathcal{R}_t$ によって構成される Solver の構造との間に、当該構造を保存する同型写像が存在することをいう。
+\end{definition}
+
+ここでいう「構造を保存する」とは、少なくとも Solver の公理選択構造および推論規則・構成制約に対応する構造が同型写像によって保たれることを意味する。
+
+\begin{remark}
+本稿では、Solver 同型を単なる「同類型の集合」とは表現しない。
+これは「同類型」は集合論的な同一性や構造保存写像の存在を特定しないためである。
+また、Solver 同型の完全な形式化には $\mathcal{R}_s$ がどのような数学的構造として定義されるか、およびその構造に対して何を「保存する」とするかを明示する必要がある。
+この詳細は、後続文書で必要になった段階で定式化する。
+\end{remark}
+
+\section{Solver の構造差を記述するための三層}
+
+本稿の定義から、Solver の差異は少なくとも次の三つの観点から区別できる。
+
+\subsection{公理選択の差}
+
+\[
+\mathcal{A}_s\neq\mathcal{A}_t.
+\]
+
+この場合、二つの Solver は異なる公理選択を持つ。
+
+\subsection{推論・構成構造の差}
+
+\[
+\mathcal{A}_s=\mathcal{A}_t,
+\qquad
+\mathcal{R}_s\neq\mathcal{R}_t.
+\]
+
+この場合、公理選択が同一であっても Solver の構造は同一とは限らない。
+
+\subsection{表現上の差}
+
+Solver 同型
+\[
+s\cong_{\mathrm{Sol}}t
+\]
+が成立する場合、$s$ と $t$ は文字通り同一の Solver である必要はない。
+
+したがって、
+\[
+s=t
+\]
+と
+\[
+s\cong_{\mathrm{Sol}}t
+\]
+は異なる概念として扱う。
+
+現在の ECA 文書では Representation Independence も Solver 同型に対応して評価構造が可換することによって記述されている。
+したがって、Solver の表現上の差と、Solver が持つ構造そのものの差を区別することが必要である。
+
+\section{公理選択と Solver の関係}
+
+以上をまとめると、ECA における基本構造は
+\[
+\boxed{
+\Ax
+\supseteq
+i_s=\mathfrak{A}(s)
+\qquad
+\text{for }s\in\Solver_{\Sel}
+}
+\]
+で表すことができる。
+
+より明示的には、
+\[
+\boxed{
+\Ax
+\longleftarrow
+\Sel
+\longleftarrow
+\Solver_{\Sel}
+}
+\]
+という包含・写像関係を持つ。
+
+ここで
+\[
+\Sel\subseteq\mathcal{P}(\Ax)
+\]
+であり、
+\[
+\mathfrak{A}:\Solver_{\Sel}\to\Sel
+\]
+によって Solver の公理選択成分が取り出される。
+
+さらに各 Solver は
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+であるため、
+\[
+\boxed{
+\Solver_{\Sel}
+\ni s
+\longmapsto
+\left(
+\mathfrak{A}(s),\mathcal{R}_s
+\right)
+}
+\]
+という複合的な構造を持つ。
+
+\section{理論との接続に関する予備的整理}
+
+後続文書では Solver が表現する理論を
+\[
+\mathcal{T}:\Solver\longrightarrow\Th
+\]
+によって対応させる。
+
+本稿では $\mathcal{T}$ 自体の再定義は行わないが、
+\[
+\mathcal{T}(s)
+\]
+が単なる
+\[
+\mathcal{A}_s
+\]
+ではないことは言及しておく。
+
+すなわち、
+\[
+\boxed{
+\mathcal{T}(s)
+=
+\mathcal{T}(\mathcal{A}_s,\mathcal{R}_s)
+}
+\]
+として、Solver の公理選択および推論規則・構成制約によって表現される理論を対応させる。
+
+したがって、少なくとも概念上は
+\[
+s
+\overset{\mathfrak{A}}{\longmapsto}
+\mathcal{A}_s
+\]
+と
+\[
+s
+\overset{\mathcal{T}}{\longmapsto}
+\mathcal{T}(s)
+\]
+を別々の対応として扱う必要がある。
+
+この区別によって
+\[
+\text{公理選択} \qquad \text{と} \qquad \text{Solver が表現する理論}
+\]
+を同一視することを避ける。
+
+\section{本稿で確定した構造}
+
+本稿では、以後の $\mathcal{Z}$ の再定義に先立ち、次の構造を確定した。
+
+\begin{enumerate}
+\item ECA が扱う公理および公理スキームの全体を
+\[
+\Ax
+\]
+とする。
+
+\item 公理選択空間を
+\[
+\Sel\subseteq\mathcal{P}(\Ax)
+\]
+とする。
+
+\item 各公理選択
+\[
+i\in\Sel
+\]
+は採用され得る公理集合を表す。
+
+\item Solver を
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+とする。
+
+\item ECA に適合する Solver は
+\[
+\mathcal{A}_s\in\Sel
+\]
+を満たす。
+
+\item ECA に適合する Solver 全体を
+\[
+\Solver_{\Sel}
+=
+\{s=(\mathcal{A}_s,\mathcal{R}_s)\mid
+\mathcal{A}_s\in\Sel\}
+\]
+とする。
+
+\item Solver の公理選択成分を $\mathfrak{A}(s)=\mathcal{A}_s$ によって取り出す。
+\item Solver の同一性 $s=t$ と Solver 同型 $s\cong_{\mathrm{Sol}}t$ を区別する。
+\item Solver の構造差について公理選択、推論・構成構造、および表現上の差を区別して扱う。
+\item Solver が表現する $\mathcal{T}(s)$ は公理選択 $\mathcal{A}_s$ そのものとは同一視せず、Solver の構造から得られるものとして後続文書で扱う。
+\end{enumerate}
+
+\section{後続する $\mathcal{Z}$ の再定義に向けた注意}
+
+本稿では、まだ $\mathcal{Z}$ そのものを定義していない。
+
+その理由は、$\mathcal{Z}$ を定義するためには少なくとも
+\[
+\Ax,\qquad
+\Sel,\qquad
+\Solver_{\Sel},\qquad
+\mathcal{T}
+\]
+の関係を先に確定しておく必要があるためである。
+
+特に、
+\[
+\mathcal{T}(s)\cong\mathrm{ZFC}
+\]
+という条件を用いる場合には「Solver が ZFC そのものである」という意味ではなく 「Solver $s$ が表現する数学的構造 $\mathcal{T}(s)$ と ZFC との間にどのような同型関係を要求するのかを明示する必要がある。
+
+また、後続する濃度の議論では
+\[
+|\Solver_{\Sel}|,
+\qquad
+|\mathcal{Z}|,
+\qquad
+|\mathcal{P}(\Ax)|
+\]
+などの対象を混同しないことが必要である。
+
+したがって $\mathcal{Z}$ の定義および $2^{\aleph_0}$ との関係は、本稿で確定した構造を前提として別途定式化する。
+
+\section*{既存 ECA 文書との対応}
+
+本稿において示された構造は、既存の ECA 文書に現れる以下の記述を $\mathcal{Z}$ の定義に伴い改めて整理したものである。
+
+\begin{itemize}
+\item ECA_1 における「全公理集合」と公理・公理スキームの記述
+\item ECA_1 における $I\subseteq\mathcal{P}(S)$ という公理選択空間
+\item 後続文書における $s=(\mathcal{A}_s,\mathcal{R}_s)$という Solver 構造
+\item Solver--ECA 適合条件 $\mathcal{A}_s\in I$
+\item 公理選択写像 $\mathfrak{A}(s)=\mathcal{A}_s$
+\item Solver 同型および Representation Independence に関する既存の構造
+\end{itemize}
+
+本稿では、これらを記号の衝突を避けながら一つの文書として整理したものである。
+
+\end{document}
