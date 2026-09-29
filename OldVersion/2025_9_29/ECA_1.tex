@@ -1,0 +1,506 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{amsthm}
+\usepackage{luatexja}
+\usepackage{geometry}
+\geometry{left=25mm,right=25mm,top=25mm,bottom=25mm}
+
+\title{Solver集合から測度を構成するまで}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{1 目的}
+Solver集合 $S$（全公理集合）から始めて
+\[
+(S,\mathcal{F},\mu)
+\]
+という可測空間・測度を構成し、公理選択空間 $I\subseteq\mathcal{P}(S)$ の任意元 $i$ に対して $\mu(i)\in[0,1]$ を割り当てる過程を示す。
+必要に応じてパラメータ化による微分可能性も導入する。
+
+\section{2 出発点：Solver集合}
+\subsection{2.1 定義}
+$S$ を \emph{Solver集合}（全公理集合）とする。
+各元 $s\in S$ は一つの公理または公理スキームを表す。
+一般に $|S|$ は任意の基数を取りうるものとする。
+
+\section{3基本族の選択と σ-代数の生成}
+測度を定義するために、まず $S$ 上の族（アルジェブラまたは半環）を選ぶ。
+
+\paragraph{設問.}
+実用的選択として次を取ることが多い：
+\[
+\mathcal{G} := \{\, A \subseteq S \mid A \text{ は有限集合（または可算で特定の条件を満たす集合）}\,\}.
+\]
+この $\mathcal{G}$ は集合演算に関して代数（ring）を成す（有限和・差に関して閉じる）。
+
+\paragraph{σ-代数の生成}
+\[
+\mathcal{F} := \sigma(\mathcal{G})
+\]
+を $\mathcal{G}$ によって生成される σ-代数とする。これにより $(S,\mathcal{F})$ は可測空間となる。
+
+\section{初期測度（前測度）の定義}
+\subsection*{重み関数による構成}
+一つの自然な方法は、個々の公理に重みを割り当てることである。
+重み関数を
+\[
+w: S \to [0,\infty)
+\]
+と取り、任意の有限集合 $A=\{s_1,\dots,s_n\}\in\mathcal{G}$ に対して
+\[
+\mu_0(A) := \sum_{k=1}^n w(s_k)
+\]
+を定める。
+この $\mu_0$ は有限加法性を満たす前測度（pre-measure）となる（適切な条件で非負かつ空集合に 0 を割り当てる）。
+
+\paragraph{備考}
+$S$ が可算でない場合や $\sum_{s\in S} w(s)=\infty$ となる場合は正規化に注意が必要である（後述）。
+
+\section{Carathéodory 拡張定理による拡張}
+前測度 $\mu_0$ を $\mathcal{G}$ 上に定めたとき、Carathéodory の拡張定理を用いて $\mu_0$ を生成 σ-代数 $\mathcal{F}=\sigma(\mathcal{G})$ 上の測度 $\mu$ に一意的に拡張できる（適当な σ-有限性の仮定を付ける）。
+
+\paragraph{要約手順}
+\begin{enumerate}
+  \item $\mu_0$ を $\mathcal{G}$ に対して定義する。
+  \item 外測度 $\mu^*$ を
+  \[
+  \mu^*(E) := \inf\Big\{ \sum_{n=1}^\infty \mu_0(G_n)\ \Big|\ E\subseteq\bigcup_{n} G_n,\ G_n\in\mathcal{G}\Big\}
+  \]
+  により定義する。
+  \item Carathéodory の可測性条件により可測集合族を取り出し、そこで $\mu^*$ を測度 $\mu$ として制限する。
+\end{enumerate}
+
+結果として $\mu$ は $\mathcal{F}$ 上の非負測度となる。
+
+\section{正規化と値域の調整}
+公理選択空間 $I\subseteq\mathcal{P}(S)$ の元に対して値を $[0,1]$ に限定するため、以下のいずれかの方法を採る。
+
+\subsection*{(A) 全測度の有限性と確率測度への正規化}
+もし $\mu(S)<\infty$ ならば
+\[
+\tilde\mu(A) := \frac{\mu(A)}{\mu(S)}
+\]
+と定めれば $\tilde\mu$ は確率測度（$\tilde\mu(S)=1$）となり、各 $i\in I$ に対して $\tilde\mu(i)\in[0,1]$ が得られる。
+
+\subsection*{(B) 重み関数を確率重みとして最初から定義}
+もし重み関数 $w$ をパラメータ $\theta$ に依存させ
+\[
+w_\theta(s)\ge0,\qquad Z(\theta):=\sum_{s\in S} w_\theta(s)\in(0,\infty)
+\]
+が成立するようにとれば
+\[
+\mu_\theta(A):=\frac{\sum_{s\in A} w_\theta(s)}{Z(\theta)}
+\]
+は直接確率測度となる（ただし合計が収束するための条件が必要）。
+
+\section{公理選択空間への適用}
+既に定義した $\mu$（または $\tilde\mu,\mu_\theta$）を用いて公理選択空間 $I\subseteq\mathcal{P}(S)$ の任意元 $i$ に対して
+\[
+\mu(i)\in[0,1]
+\]
+を割り当てる。
+これにより $I$ の各元は測度値を持つ。
+
+\section{パラメータ化と微分可能性}
+\paragraph{パラメータ化.}
+重み関数を滑らかなパラメータ $\theta\in\Theta\subset\mathbb{R}^n$ に依存させる：
+\[
+w_\theta: S \to [0,\infty),\qquad \theta\mapsto w_\theta(s)
+\]
+を各 $s$ に対して $C^k$（あるいは解析的）関数とする。
+かつ正規化定数 $Z(\theta)=\sum_{s\in S} w_\theta(s)$ が局所的に有限であると仮定する。
+
+\paragraph{微分可能性}
+このとき確率測度
+\[
+\mu_\theta(A)=\frac{\sum_{s\in A} w_\theta(s)}{Z(\theta)}
+\]
+は $\theta$ に関して $C^k$（微分可能）である。
+特に個々の $i\in I$ に対して
+\[
+\theta \mapsto \mu_\theta(i)
+\]
+は $C^k$ 関数であり、必要に応じて微分を取り扱える（例えば勾配やヘッセ行列を用いた解析が可能）。
+
+\paragraph{数値表現精度}
+実用的な要請として $\mu(i)$ を小数点第3位まで出力したい場合は、数値的評価において $\mu_\theta(i)$ を四捨五入して $0.001$ 単位で表現すれば良い。
+理論上の測度は連続実数値を持つが、出力精度は任意に制御可能である。
+
+\section*{備考（数学的な条件）}
+\begin{itemize}
+  \item Carathéodory拡張のためには前測度が σ-有限であるなどの仮定を置くと拡張が確実となる。
+  \item $S$ が極めて大規模（巨大基数級）の場合、無条件に $\sum_{s\in S} w_\theta(s)$ を扱うのは困難であり、局所的に可算な部分集合での取り扱い等の工夫が必要である。
+  \item 測度の正規化・有限化をどのように扱うかは、ECA の定義に従う（本稿では扱わない）。
+\end{itemize}
+
+\section*{結論}
+以上により、Solver集合 $S$ から出発して基底族 $\mathcal{G}$ を取り、前測度を与えて Carathéodory によって拡張することで $(S,\mathcal{F},\mu)$ を構成できる。
+さらに重み関数をパラメータ化することで、公理選択空間 $I$ の各元に対する値 $\mu(i)\in[0,1]$ を滑らかに（微分可能に）与えることが可能である。
+
+
+
+
+
+\section{Solver集合に対する基数・指数重み付けとσ-有限性・測度収束の厳密条件}
+
+\section*{目的}
+Solver集合 $S$（全公理集合）に対して、基数や指数を用いた具体的な重み関数の例を示し、巨大基数を含む場合に成り立つようにするための σ-有限性と測度収束に関する厳密条件を定式化する。これにより前稿で提示した Carathéodory による測度構成の実効条件を明確にする。
+
+\section{前提}
+$S$ は「公理あるいは公理スキームの全集合」とする。各元 $s\in S$ に対して、その 「基数的クラス」 や 「ランク」 といった集合論的メタデータを割り当て得ると仮定する（具体的な割当ては理論上与えられるものとする）。ここではそのようなメタデータを用いて重みを定める。
+
+\section{基数・指数重み関数の具体例}
+\subsection*{前提となる写像}
+まず、任意の $s\in S$ に対し次の二つの写像を仮定する：
+\[
+\kappa:S\to\Card \quad(\text{基数クラス}),
+\qquad
+r:S\to\Ord \quad(\text{ランク／秩序付け})
+\]
+ただし $\Card$ は基数のクラス、$\Ord$ は順序数（Ordinals）である。これらは $S$ の各元に対するラベル付けであり、理論側で自然に与えられるものとする。
+
+\subsection{重みの基本方針}
+重み関数は
+\[
+w_\theta:S\to[0,\infty)
+\]
+であり、パラメータ $\theta$ に依存して調整可能とする。ここでは $\theta$ を有限次元の実数ベクトル（例えば $\theta=(\alpha,\beta,\dots)\in\mathbb{R}^n$）として扱う。代表的な形を以下に示す。
+
+\subsection{例 1：基数による冪重み}
+基数 $\kappa(s)$ に基づく逆冪重みを取る例：
+\[
+w_\alpha^{(\mathrm{card})}(s) \;=\; C(\alpha)\,\big(\, \mathrm{size}(\kappa(s)) \,\big)^{-\alpha},
+\]
+ここで $\alpha>0$ は実パラメータ、$\mathrm{size}(\kappa)$ は基数 $\kappa$ を正実数に埋め込むための写像（後述）であり、$C(\alpha)>0$ は正規化に用いる定数（必要ならば後で定める）。  
+この形は、基数が「大きい」ほど重みが小さくなることを意味する。
+
+\paragraph{埋め込みについて}
+基数 $\kappa$ は直接実数ではないため、実解析的重みを与えるために基数クラスを実数に埋める写像
+\[
+\mathrm{size}:\Card\to(0,\infty)
+\]
+を予め選ぶ。自然な選択肢は例えば
+\[
+\mathrm{size}(\aleph_\alpha)=2^{\alpha}\quad\text{や}\quad \mathrm{size}(\kappa)=\mathrm{cf}(\kappa)
+\]
+等（理論に沿って定める）。重要なのは埋め込みが単調増加であること（大きな基数に大きな実数を割り当てる）であれば十分である。
+
+\subsection{例 2：ランクに基づく指数減衰重み}
+ランク $r(s)\in\Ord$ を用いて指数的減衰を与える例：
+\[
+w_{\alpha}^{(\mathrm{exp})}(s) \;=\; \exp\big(-\alpha\,\mathrm{ind}(r(s))\big),
+\]
+ここで $\mathrm{ind}:\Ord\to[0,\infty)$ は順序数を非負実数に変換する単調写像（例えば順序数を初めの可算順序でインデクス化するか、ランクごとに整数インデックスを与える）である。$\alpha>0$ は減衰率である。指数関数は急速減衰を与えるため、合計収束を確保しやすい。
+
+\subsection{例 3：混合基数–指数重み}
+基数と指数を組合せた形：
+\[
+w_{\alpha,\beta}(s)
+= \frac{\exp\big(-\alpha\,\mathrm{ind}(r(s))\big)}{\big(\mathrm{size}(\kappa(s))\big)^{\beta}},
+\qquad \alpha,\beta>0.
+\]
+この形はランクで指数的に絞りつつ、基数に対して多段階で逆冪を掛けることで非常に柔軟な収束調整が可能となる。
+
+\section{正規化と有限化条件}
+確率測度を得るには正規化定数
+\[
+Z(\theta):=\sum_{s\in S} w_\theta(s)
+\]
+が有限であることが望ましい（直接正規化法）。しかし $S$ が巨大基数級の場合、一律の有限和は成り立たないことが多い。そこで二つの取りうる戦略を提示する。
+
+\subsection*{戦略 A：直接正規化（可算和が合理的な場合）}
+もし $S$ が可算であるか、重み付けにより実際に
+$\sum_{s\in S} w_\theta(s)<\infty$
+が成立するならば、確率測度
+\[
+\mu_\theta(A):=\frac{\sum_{s\in A} w_\theta(s)}{Z(\theta)}
+\]
+を直接定義できる。
+
+\subsection*{戦略 B：σ-有限分解と局所的正規化}
+一般には次を仮定することで測度構成を可能にする。
+
+\begin{definition}[σ-有限性（分解形）]
+集合 $S$ は可測族 $\mathcal{F}$ に関して σ-有限であるとは、
+可算個の可測集合列 $\{S_n\}_{n\in\mathbb{N}}\subset\mathcal{F}$ が存在して
+\[
+S=\bigcup_{n=1}^\infty S_n,
+\qquad \mu_0(S_n)<\infty\quad(\forall n).
+\]
+ここで $\mu_0$ は前測度として各有限集合に与えた値（例えば部分和）である。
+\end{definition}
+
+現実的な手続きとしては、基数ごとやランクごとにクラス分解
+\[
+S=\bigsqcup_{\lambda\in\Lambda} C_\lambda
+\]
+を用意し、各クラス $C_\lambda$ に局所的な重み定数 $c_\lambda$ を与えて
+\[
+w_\theta(s)=c_\lambda\cdot \tilde w_\theta(s),\qquad s\in C_\lambda,
+\]
+とし、$\sum_{\lambda\in\Lambda} c_\lambda<\infty$ を確保することで全体の σ-有限性を得る方法が有効である。たとえば
+\[
+c_\lambda = 2^{-|\lambda|}
+\]
+のように指数的に減衰する係数を与える。
+
+\section{Carathéodory 拡張に必要な仮定（前測度のσ-有限性）}
+Carathéodory による前測度 $\mu_0$ から測度 $\mu$ への一意的な拡張を確実にするためには、一般に次の仮定が必要である：
+
+\begin{itemize}
+  \item 前測度 $\mu_0$ が $\sigma$-有限であること（あるいは有限和で覆われること）：すなわち、$S$ を可算に分割して各ブロックの $\mu_0$ が有限になること。
+  \item $\mu_0$ が非負であり、空集合に $0$ を割り当てること。
+\end{itemize}
+
+この仮定の下では、$\mu_0$ は生成された σ-代数 $\mathcal{F}=\sigma(\mathcal{G})$ 上に一意的に拡張される。
+
+\section{測度収束の厳密条件}
+本節では、測度や被測関数列の収束を扱う際に用いる主要な定理・条件を列挙し、ECA（あるいはその運用）において何を要求すべきかを明確にする。
+
+\subsection*{集合列に対する単調収束（集合版）}
+もし可測集合列 $\{A_n\}$ が単調増加（$A_n\subseteq A_{n+1}$）であれば、
+\[
+\mu\Big(\bigcup_{n=1}^\infty A_n\Big)=\lim_{n\to\infty}\mu(A_n)
+\]
+が成り立つ（単調性と可測性のもとで自明）。
+
+\subsection*{関数列に対するモノトーン収束定理（MCT）}
+可測関数列 $f_n\ge0$ が $f_n\uparrow f$（点wise 単調増加）ならば
+\[
+\lim_{n\to\infty} \int f_n\,d\mu = \int \lim_{n\to\infty} f_n \,d\mu = \int f\,d\mu.
+\]
+
+\subsection*{有界収束あるいは優収束（DCT）}
+関数列 $f_n$ が可測であり、ある可積分関数 $g\in L^1(\mu)$ が存在して $|f_n|\le g$ を満たすならば
+\[
+\lim_{n\to\infty} \int f_n\,d\mu = \int \lim_{n\to\infty} f_n \,d\mu.
+\]
+この DCT を用いるためには、重みのパラメータ化 $\theta\mapsto w_\theta$ によって誘導される関数列が上からある可積分関数で被覆されることを確認する必要がある。
+
+\subsection*{測度収束の実用的な要求（本稿における明示的条件）}
+本稿の設定で $\mu_\theta(i)$（$i\in I$）が滑らかに $\theta$ に依存し、かつ計算上の収束が保証されるためには、以下のような技術条件を要求する：
+
+\begin{enumerate}
+  \item \textbf{局所的可換合成性（local summability）:} 任意の $\theta$ の小さな近傍 $U\ni\theta$ に対し、存在する可測分解 $\{S_n\}$ で各
+  \[
+  \sup_{\theta'\in U}\sum_{s\in S_n} w_{\theta'}(s) < \infty
+  \]
+  が成立する。これにより $Z(\theta')$ の局所一様収束が保証される。
+  \item \textbf{パラメータ化の $C^k$ 性:} $w_\theta(s)$ が $\theta$ に関して $C^k$（あるいは解析的）であり、微分と和の交換が妥当となるよう被積分関数の一様束縛（被覆関数）が存在すること（DCT による交換条件）。
+  \item \textbf{σ-有限性:} 前節で述べたように $\mu_0$ が σ-有限であること。特に巨大基数成分を持つ場合は、基数クラスごとに局所的に減衰係数 $c_\lambda$ を与えて可算和で被覆すること。
+\end{enumerate}
+
+\section{実用例（設計指針）}
+\begin{itemize}
+  \item ランクが定まる（例えば可算順序でインデックス化できる）部分 $S_{\mathrm{cnt}}\subset S$ は指数重み $w(s)=\exp(-\alpha\cdot\mathrm{ind}(r(s)))$ で処理する。
+  \item 非可算あるいは巨大基数に由来するクラスには、クラス毎に係数 $c_\lambda$ を与え、$\sum_\lambda c_\lambda<\infty$ を保証する。これにより全体の正規化と σ-有限性を確保する。
+  \item パラメータ空間 $\Theta$ を有限次元かつ凸集合として定め、$w_\theta(s)$ が $\theta$ に関して $C^k$ であるよう設計する。これにより $\theta\mapsto\mu_\theta(i)$ の微分可能性を確保できる。
+\end{itemize}
+
+\section*{備考}
+本資料は Solver集合 $S$ から始めて測度を構成するための実用的かつ厳密な指針を与えることを目的とした。細部（たとえば基数埋め込み $\mathrm{size}(\cdot)$ の選び方や巨大基数レベルでの厳密な集合論的取り扱い）は、お使いの理論的仮定（ZFC 拡張、巨大基数公理の採否等）に依存するので、必要なら別稿でさらに形式化する。
+
+
+\section{基数埋め込み $\mathrm{size}(\cdot)$ の具体例と数学的要請}
+
+\section*{目的}
+Solver集合 $S$ に対して重み関数 $w_\theta(s)$ を構成する際、基数 $\kappa(s)$ を実数に埋め込む必要がある。
+ここでは基数埋め込み
+\[
+\mathrm{size}:\Card\to (0,\infty)
+\]
+をどのように定義すべきかを厳密に議論し、実際に利用可能な具体例を体系化する。
+
+\section{基数埋め込みの要請}
+基数 $\kappa$ を実数へと写す写像 $\mathrm{size}$ は以下を満たすことが要請される：
+
+\begin{enumerate}
+  \item \textbf{単調性}：
+  \[
+  \kappa_1 < \kappa_2 \implies \mathrm{size}(\kappa_1) < \mathrm{size}(\kappa_2).
+  \]
+
+  \item \textbf{非退化性}：$\mathrm{size}(\kappa)>0$（特に $\aleph_0$ に正値）。
+
+  \item \textbf{解析的扱いやすさ}：指数重みや逆冪重みに利用可能な形。
+  
+  \item \textbf{巨大基数に対する拡張性}：強非可算基数にも定義できる。
+\end{enumerate}
+
+\section{具体例 1：指数的埋め込み}
+最も自然な例は
+\[
+\mathrm{size}(\aleph_\alpha)=2^\alpha.
+\]
+これは $\alpha$ を順序数とし、$2^\alpha$ を通常の順序数冪として扱う。
+可算 $\alpha$ については実数に埋め込めるが、非可算 $\alpha$ については外挿が必要となる。
+
+\section{具体例 2：共終数による埋め込み}
+\[
+\mathrm{size}(\kappa)=\mathrm{cf}(\kappa)
+\]
+とする例。共終数 $\mathrm{cf}(\kappa)$ は通常可算順序数となるため実数化が容易である。
+
+\section{具体例 3：指数–共終数混合型}
+巨大基数に対しては単一の方法では対応できないため、次のような式をとる。
+\[
+\mathrm{size}(\aleph_\alpha)=2^{\mathrm{cf}(\aleph_\alpha)}.
+\]
+
+\section{具体例 4：階層的埋め込み}
+基数階層ごとに別パラメータを導入し
+\[
+\mathrm{size}(\aleph_\alpha)=\exp\big(\beta_\alpha\cdot \alpha\big),\qquad \beta_\alpha>0.
+\]
+とする。
+
+\section{総括}
+以上の具体的はすべてSolver集合を測度で表現する際の重み関数において有効であり、巨大基数を扱う際にも連続性と解析性を維持できる。
+
+
+
+
+
+
+\section{巨大基数クラスのためのフィルタおよびイデアルと $\sigma$-有限化手法}
+
+\section*{目的}
+Solver集合 $S$ が巨大基数級のクラスを含む場合、通常の分割では $\sigma$-有限性を確保できない。
+この節では巨大基数クラスを扱うためのフィルタおよびイデアルと分解手法を定式化する。
+
+\section{巨大基数クラスの問題設定}
+$S$ が次を含むとする：
+\[
+S = \bigsqcup_{\lambda\in\Lambda} C_\lambda
+\]
+ただし $\Lambda$ を巨大基数クラスとし、$C_\lambda$ を基数クラスとする。
+
+通常の和
+\[
+\sum_{\lambda\in\Lambda} c_\lambda
+\]
+は定義不能となりうるため「可算部分の抽出」が必要になる。
+
+\section{フィルタによる選択}
+巨大な添字集合 $\Lambda$ に対し、フィルタ $\mathcal{F}$ を導入し
+\[
+\Lambda_0 = \{\lambda_1,\lambda_2,\dots\},\qquad \Lambda_0\in\mathcal{F}
+\]
+のように「測度に用いる可算部分」を抽出する。
+
+良い選択は 「可算フィルタ」：
+\[
+A_1,A_2,\dots\in\mathcal{F} \implies \bigcap_{n=1}^\infty A_n \in\mathcal{F}.
+\]
+
+\section{イデアルを用いて除外する集合の定義}
+巨大基数部分をイデアル $\mathcal{I}$ で除外する：
+\[
+\lambda\in\mathcal{I} \implies C_\lambda\text{ のときは測度0 とみなす}.
+\]
+
+\section{σ-有限化の定義}
+次のようにして σ-有限性を確保する：
+
+\[
+S_n = \bigcup_{\lambda \in A_n} C_\lambda,\qquad A_n\in\mathcal{F},~~~A_1\supset A_2\supset A_3\supset\dots
+\]
+
+各 $S_n$ の局所測度が有限になるように重みを
+\[
+c_\lambda = 2^{-k(\lambda)}
+\]
+と定める（$k$ は可算順序数化されたインデックス写像）。
+
+\section{応用}
+前測度は
+\[
+\mu_0(A)=\sum_{\lambda\in A\cap\Lambda_0} \sum_{s\in A\cap C_\lambda} w_\theta(s).
+\]
+これにより σ-有限性が保証され、Carathéodory拡張が可能となる。
+
+
+
+\section{パラメータ化した重み $w_\theta$ の微分可能性と和・微分交換の条件}
+
+\section*{目的}
+この節ではSolver集合 $S$ に対して重み関数
+\[
+w_\theta:S\to[0,\infty)
+\]
+がパラメータ $\theta$ に関して微分可能であること、および確率測度
+\[
+\mu_\theta(A)=\frac{\sum_{s\in A} w_\theta(s)}{Z(\theta)}
+\]
+において「微分と和の交換」が成立する条件を述べる。
+
+\section{前提}
+\[
+\theta\in\Theta\subset\mathbb{R}^d,\qquad w_\theta(s)\in C^k(\Theta)
+\]
+であると仮定する。
+
+\section{必要条件 1：一様可積分性（DCT 用）}
+次を満たす関数 $g:S\to[0,\infty)$ が存在する：
+
+\[
+| \partial_\theta^m w_\theta(s) | \le g(s), \qquad \forall \theta\in U,~|m|\le k.
+\]
+
+\[
+\sum_{s\in S} g(s) < \infty.
+\]
+
+これにより DCT の仮定が満たされる。
+
+\section{必要条件 2：分母 $Z(\theta)$ の微分可能性}
+\[
+Z(\theta)=\sum_{s\in S} w_\theta(s)
+\]
+
+が収束し、かつ
+
+\[
+\partial_\theta Z(\theta)
+= \sum_{s\in S} \partial_\theta w_\theta(s)
+\]
+
+が許される条件は DCT により保証される。
+
+\section{必要条件 3：商の微分公式の適用}
+\[
+\mu_\theta(A)
+= \frac{N_A(\theta)}{Z(\theta)},\qquad
+N_A(\theta)=\sum_{s\in A} w_\theta(s)
+\]
+
+両方が $C^k$ であれば
+\[
+\partial_\theta\mu_\theta(A)
+= \frac{\partial_\theta N_A(\theta)\cdot Z(\theta)
+ - N_A(\theta)\cdot \partial_\theta Z(\theta)}{Z(\theta)^2}
+\]
+が成立する。
+
+\section{必要条件 4：巨大基数に対する局所収束}
+巨大基数を含む場合は各分解ブロック $S_n$ 上で
+\[
+\sup_{\theta\in U}\sum_{s\in S_n} w_\theta(s) < \infty
+\]
+が必要となる。
+これは「巨大基数クラスのためのフィルタおよびイデアルと $\sigma$-有限化手法」で述べたフィルタおよびイデアルの節を確認することでより具体的に理解できる。
+
+\section{結果}
+上記条件が成立すれば
+\[
+\theta \mapsto \mu_\theta(i)
+\]
+は $C^k$ クラスの関数となる。
+
+
+
+
+\end{document}

@@ -1,9 +1,10 @@
 \documentclass[11pt]{article}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{geometry}
+\usepackage{luatexja}
 \geometry{margin=25mm}
 
-\title{拡張連続性公理とSolver集合、連続体仮説}
+\title{拡張連続性公理における公理体系間の構造}
 \author{}
 \date{}
 
@@ -14,315 +15,844 @@
 \begin{document}
 \maketitle
 
-\section{1. Solver集合と拡張連続性公理による一般連続体仮説および特異基数問題の再定式化}
+\section{1. ECAにおける公理体系の対象化}
 
 \subsection{1.1 序論}
 
-連続体仮説（Continuum Hypothesis, CH）および一般連続体仮説（Generalized Continuum Hypothesis, GCH）は、ZFC集合論の内部において長年研究されてきた中心的問題である。
-特に、G\"odel および Cohen によって CH が ZFC から独立であることが示されて以降、これらの命題は「真偽未決定な命題」として扱われることが通例となった。
-しかしこの扱いは、暗黙のうちに \emph{ZFC という理論を一意的な前提} と見なし、その過程を無視している。
-ここではSolver集合および拡張連続性公理（Extended Continuum Axiom, ECA）の枠組みを用いることで、これが CH・GCH・特異基数問題の理解を妨げていたことを示す。
+連続体仮説（Continuum Hypothesis, CH）および一般連続体仮説
+（Generalized Continuum Hypothesis, GCH）は、集合論における重要な命題である。
+特に CH が ZFC から独立であることが示されて以降、CH は ZFC を前提とした
+複数の公理体系との関係において研究されてきた。
 
-\subsection{1.2 Solver集合と公理の枠組み}
-\subsubsection{1.2.1 Solver集合の定義}
-Solver集合を次のように定義する：
+ECA では、この関係をさらに一段抽象化し、命題そのものだけでなく、
+その命題を扱う公理体系そのものを数学的対象として扱う。
+
+したがって、本稿の基本的な構造は
+
 \[
-\mathcal{S} = \{ S \mid S = (\mathcal{A}_S, \mathcal{R}_S) \}
+\text{命題}
+\longrightarrow
+\text{公理体系}
+\longrightarrow
+\text{公理体系の集合・構造}
+\longrightarrow
+\text{公理体系間の関係}
+\longrightarrow
+\text{構造の評価}
 \]
-ここで、$\mathcal{A}_S$ は公理の選択集合、$\mathcal{R}_S$ は推論規則および構成制約の集合である。
-各 $S \in \mathcal{S}$ は公理そのものではなく、公理を定義するための集まり (集合) を表す。
 
-\subsubsection{1.2.2 公理写像}
+である。
 
-公理写像を次で定義する：
+CH はこの構造を具体的に扱うための重要な例であるが、
+ECA の対象は CH に限定されない。
+
+\subsection{1.2 公理体系の対象化}
+
+公理体系を
+
 \[
-\mathcal{T} : \mathcal{S} \to \mathrm{Th}
+\Sigma=\{\sigma_1,\sigma_2,\ldots\}
 \]
-$\mathcal{T}(S)$ は Solver $S$ によって表現される公理集合を表す。
-矛盾や写像が定義できないなどの場合、$\mathcal{T}(S)$ は未定義とする。
 
-\subsubsection{1.2.3 評価関数と拡張連続性公理}
-拡張連続性公理に基づき、評価関数
+とする。
+各 $\sigma_i$ は公理または公理スキームを表す。
+
+ここで重要なのは、$\Sigma$ を単に命題を扱うための前提として扱うのではなく、
+集合論的対象として扱うことである。
+
+したがって、複数の公理体系
+
 \[
-I : \mathcal{S} \to [0,1]
+\Sigma_1,\Sigma_2,\ldots
 \]
-を導入する。$I(S)$ は、$\mathcal{T}(S)$ が内部無矛盾性、推論閉包性、構成可能性をどの程度満たすかを測度として表す。
 
-\subsection{1.3 ZFC の Solver 集合上での位置づけ}
-ZFC を生成する Solver 全体の集合を
+を同一の数学的枠組みの中で比較することができる。
+
+\subsection{1.3 Solver集合}
+
+ECA では、公理体系を構成する公理的要素をまとめた基礎集合を
+Solver集合として
+
 \[
-\mathcal{Z} = \{ S \in \mathcal{S} \mid \mathcal{T}(S) \cong \mathrm{ZFC} \}
+S
 \]
-と定義する。このとき重要な点は、$\mathcal{Z}$ が一般に単一要素ではなく、複数の Solver からなる集合となることである。
 
-したがって、「ZFC」という理論は Solver 集合上の同型類として理解され、その内部命題の振る舞いは、生成に用いられた Solver 集合の公理選択に依存しうる。
-
-\subsection{1.4 一般連続体仮説の構造的欠点}
-一般連続体仮説（GCH）は次を主張する：
-\[
-\forall \kappa \ (\kappa \text{ が無限基数} \Rightarrow 2^\kappa = \kappa^+)
-\]
-これは任意の無限基数 $\kappa$ に対し、$\kappa$ とその冪集合の濃度の間に中間的基数が存在しないことを全称的に要求する命題である。
-しかしこの主張は、$\kappa$ が正則基数であるか特異基数であるかを区別しない。冪集合演算 $2^\kappa$ の挙動がこの区別に強く依存するにもかかわらず、GCH は単一の規則を全ての無限基数に適用している点に構造的欠陥を持つ。
-
-\subsection{1.5 特異基数における冪集合問題}
-特異基数 $\kappa$ に対する $2^\kappa$ の濃度は、ZFC の内部では完全に決定されていない。この問題は Singular Cardinals Hypothesis (SCH) や Shelah の PCF 理論によって部分的に解明されているが、依然として一般的な決定原理は存在しない。
-この未解決性は、ZFC が不完全であることを意味するのではなく、冪集合操作が \emph{極限基数に対してどのような構成規則を持つか} が理論内部で明示されていないことに起因する。
-
-\subsection{1.6 Solver集合による統一的説明}
-Solver集合の枠組みでは、冪集合演算は ZFC に固有の操作ではなく、各 Solver 集合によって定義される構成規則として扱われる。
-
-このとき次が成立する：
-\begin{itemize}
-  \item 正則基数に関する冪集合の挙動は、多くの Solver において比較的一様である。
-  \item 特異基数に関する冪集合の挙動は、Solver が許容する極限構成規則に強く依存する。
-\end{itemize}
-
-その結果、GCH を満たす Solver 集合と特異基数において GCH が破れる Solver 集合が同一の $\mathcal{Z}$ 内に存在するといったことが起こる。
-したがってSolver集合におけるGCHの破綻や特異基数の冪集合問題は、集合の性質ではなく \emph{Solver 集合における公理選択の差異} に由来するものとして説明できる。
-
-\subsection{1.7 結論}
-本稿では、Solver集合と拡張連続性公理の枠組みを用いることで、一般連続体仮説の構造的欠点および特異基数における冪集合濃度の未解決性が、共通の原因――すなわち冪集合操作を Solver 非依存な全称命題として扱った点――に由来することを示した。
-この視点において、CH や GCH はもはや単なる真偽未決定命題ではなく、Solver 集合上の構成規則を分類する命題として再解釈される。
-
-\section{2 特異基数における冪集合写像と ZFC+GCH が Solver 集合に課す制約}
-
-\subsection{2.1 序論}
-前稿では、一般連続体仮説（GCH）および特異基数における冪集合濃度の未解決性が冪集合操作を Solver 非依存な全称命題として扱った点に起因することを示した。
-本稿ではさらに一歩進め、特異基数 $\kappa$ に対する $2^\kappa$ を Solver 集合上の写像として明示的に定義し、その結果として ZFC+GCH が Solver 集合上で極端に強い制約を課すことを定理として示す。
-
-\subsection{2.2 Solver 集合と基数生成の再確認}
-Solver 集合 $\mathcal{S}$、公理写像 $\mathcal{T}$、評価関数 $I$ は既に定義されているものとする。
-以降、ZFC を生成する Solver の集合を
-\[
-\mathcal{Z} = \{ S \in \mathcal{S} \mid \mathcal{T}(S) \cong \mathrm{ZFC} \}
-\]
 と表す。
 
-\subsection{2.3 特異基数と極限構成}
-\begin{definition}[特異基数]
-基数 $\kappa$ が特異基数であるとは、$\kappa$ が無限基数であり
-\[
-\mathrm{cf}(\kappa) < \kappa
-\]
-を満たすことをいう。
-\end{definition}
-
-特異基数 $\kappa$ は、増大する基数列 $\langle \kappa_i \mid i < \mathrm{cf}(\kappa) \rangle$ の極限として表される。
-この極限構成が冪集合演算に本質的な影響を与える。
-
-\subsection{2.4 冪集合写像の Solver 上での定義}
-\begin{definition}[Solver 上の冪集合写像]
-特異基数 $\kappa$ に対し、Solver 集合上の写像
-\[
-\mathcal{P}_\kappa : \mathcal{Z} \to \mathrm{Card}
-\]
-を次で定義する：
-\[
-\mathcal{P}_\kappa(S) = \left| \mathcal{P}^S(\kappa) \right|
-\]
-ここで $\mathcal{P}^S(\kappa)$ は、Solver $S$ が許容する構成規則の下で生成される $\kappa$ の部分集合全体を表す。
-\end{definition}
-
-この定義において、$\mathcal{P}_\kappa(S)$ は集合論的対象ではなく Solver に依存する値である。
-
-\subsection{2.5 特異基数における依存性構造}
-
-特異基数の場合、$\mathcal{P}_\kappa(S)$ は次の要素に依存する：
-\begin{itemize}
-  \item $\kappa$ を表す増大基数列の選択
-  \item 極限段階で許容される合成操作
-  \item 下位基数 $\kappa_i$ に対する冪集合規則
-\end{itemize}
-
-この依存性は正則基数の場合には消失するが、特異基数では本質的である。
-
-\subsection{2.6 ZFC+GCH が課す制約}
-ZFC+GCH を生成する Solver の集合を
-\[
-\mathcal{Z}_{\mathrm{GCH}} = \{ S \in \mathcal{Z} \mid \mathcal{T}(S) \models \mathrm{GCH} \}
-\]
-と定義する。
-
-GCH は任意の無限基数 $\kappa$ に対し
-\[
-\mathcal{P}_\kappa(S) = \kappa^+
-\]
-を要求する。
-
-\begin{theorem}[ZFC+GCH の Solver 制約]
-特異基数 $\kappa$ に対し、$S \in \mathcal{Z}_{\mathrm{GCH}}$ であるためには、Solver $S$ は次の制約を同時に満たさなければならない：
-\begin{enumerate}
-  \item 任意の下位基数 $\kappa_i < \kappa$ に対する冪集合規則が一様であること。
-  \item 極限段階における合成操作が $\kappa^+$ を超える新たな部分集合を生成しないこと。
-  \item 異なる極限表現によって $\mathcal{P}_\kappa(S)$ の値が変化しないこと。
-\end{enumerate}
-このとき、これらの条件を満たす Solver は $\mathcal{Z}$ の中で極めて限られた部分集合を成す。
-\end{theorem}
-
-\subsection{2.7 定理の意味}
-上記定理が示すのは、ZFC+GCH が特異基数において要求する冪集合の振る舞いが、Solver に対して非常に強い一様性条件を課すという事実である。これは ZFC 単体では現れない制約であり、GCH を追加することによって初めて発生する。
-したがって、GCH は単なる基数算術の仮説ではなく、Solver の構成自由度を大幅に削減する選別条件として機能する。
-
-\subsection{2.8 結論}
-本稿では特異基数における $2^\kappa$ を Solver 集合上の写像として定式化し、その枠組みの中で ZFC+GCH が Solver 集合に極端な制約を課すことを定理として示した。
-この結果は、特異基数の冪集合問題が未解決である理由を説明すると同時に、GCH が Solver 集合上で例外的な位置を占めることを明確にするものである。
-
-\section*{3 補足事項：基数クラス $\mathrm{Card}$ について}
-本稿で用いる $\mathrm{Card}$ は、ZFC における通常の基数（cardinal number）のクラスを表すものとする。
-すなわち、$\mathrm{Card}$ は集合の濃度を同値類として表現した対象全体のクラスであり、
-順序型としての基数、あるいは選択公理のもとで定義される標準的な基数概念を前提とする。
-
-本稿において $\mathrm{Card}$ 自体の構造や性質を拡張・修正することは行わない。
-$\mathrm{Card}$ はあくまで、Solver 集合上で定義される写像や評価の値域として用いられる補助的な対象である。
-
-特に、$\mathcal{P}_\kappa(S) \in \mathrm{Card}$ のような表記は、
-ある Solver $S$ のもとで許容される冪集合構成の結果として得られる濃度を、
-ZFC 的意味での基数として記述しているに過ぎない。
-これは、冪集合や基数が Solver に依存して再定義されることを意味するものではない。
-
-\section{4 補足 : ZFCを解き直す}
-
-\subsection{4.1 Ⅰ. 前提の再定義（ECA）}
-\subsubsection{4.1.1 定義 1（Solver集合）}
-
-Solver集合を次で定義する：
-\[
-\mathcal{S} = \{ S \mid S = (\mathcal{A}_S, \mathcal{R}_S) \}
-\]
-
-ここで $\mathcal{A}_S$を公理の選択集合、$\mathcal{R}_S$ を推論規則・構成制約の集合とする。
-重要な点として、各Sは「公理そのもの」ではなく「ある公理の集まり」であること。
-
-\subsubsection{4.1.2 定義 2（公理写像）}
-各Solver集合 $S$ に対し、次のような写像を定義する：
+各
 
 \[
-\mathcal{T} : \mathcal{S} \to \text{Th}
+s\in S
 \]
 
-ここで $\mathcal{T}(S)$ をSolver集合 $S$ によって表現される公理集合とし、矛盾の場合は未定義とする。
+は一つの公理または公理スキームを表す。
 
-\subsubsection{4.1.3 定義 3（公理選択空間の測度）}
-
-拡張連続性公理に基づき、次の測度式を定義する：
+公理体系 $\Sigma$ は $S$ の部分集合として
 
 \[
-I : \mathcal{S} \to [0,1]
+\Sigma\subseteq S
 \]
 
-ここで $I(S)$ は $\mathcal{T}(S)$ が無矛盾であり、かつ集合演算に関して閉じて定義可能であることを表す。
+と表すことができる。
 
-
-\subsubsection{4.1.4 定義 4（極大 Solver集合）}
+これにより、複数の公理体系を
 
 \[
-S \in \mathcal{S}
-\text{ が極大である} \iff
-\forall S' \in \mathcal{S},\;
-S \subsetneq S' \Rightarrow I(S') \le I(S)
+\Sigma_1,\Sigma_2,\ldots\subseteq S
 \]
 
-これは純粋に「公理の追加によって評価値が上がらない」という定義である。
+として同一の集合論的対象の上で扱うことができる。
 
-\subsection{4.2 Ⅱ. 拡張連続性公理上におけるZFCの再定義}
+ここで Solver という名称は説明上の名称であり、
+数学的には集合 $S$ およびその部分集合として定義される公理体系を扱う。
 
-\subsubsection{定義 5（ZFC_ECA）}
-\[
-\text{ZFC\_ECA} = \{ S \in \mathcal{S} \mid S \text{ は極大であり}\; \mathcal{T}(S) \text{ が ZFC の公理集合と同型} \}
-\]
+\subsection{1.4 公理体系の族}
 
-ここで重要なのは、まず「ZFCは前提ではない」ということ、次にZFCは「Solver集合 $S$ における測度 $\mathcal{I}$ に関する極大点として定義される」ということである。
-
-\subsection{4.3 Ⅲ. 各公理の解釈}
-\subsubsection{4.3.1 外延性公理}
-外延性を含む Solver集合 $S$ は次を満たす：
+扱う公理体系全体を
 
 \[
-\forall x,y \in \mathcal{T}(S),\;
-\left(\forall z\,(z \in x \leftrightarrow z \in y) \Rightarrow x = y \right)
+\mathscr{A}\subseteq\mathcal{P}(S)
 \]
 
-これは $\mathcal{T}(S)$ において「全く同じ要素からなる2つの集合は等しい」ことを主張する。
-同値だが異なる要素を同時に保持するSolver集合は測度上において値が低下する。
+とする。
 
-\subsubsection{4.3.2 空集合公理}
+ここで $\mathcal{P}(S)$ は $S$ の冪集合である。
 
-空集合公理を含む Solver集合は次の式 : 
+各
 
 \[
-\exists x\,\forall y\,(y \notin x)
+\Sigma\in\mathscr{A}
 \]
 
-を満たす。
+は一つの公理体系を表す。
 
-これは $\mathcal{T}(S)$ において、要素を持たない集合が存在することを要求する。
-すなわち集合における最小元が存在することを表す。
-Solver集合においては、空集合公理は「初期段階が $\mathcal{T}(S)$ 内で閉じて定義可能である」ということである。
+この構成により、ECA の対象は個々の公理から
+公理体系の集合へ拡張される。
 
-\subsubsection{4.3.3 ペア集合公理}
+\section{2. 公理体系間の構造}
 
-Solver集合に次式を用いると : 
+\subsection{2.1 拡張関係}
+
+公理体系 $\Sigma$ に公理または公理スキームを追加した体系を
+$\Sigma'$ とする。
+
+公理の追加は集合の包含として
+
+\[
+\Sigma\subseteq\Sigma'
+\]
+
+と表すことができる。
+
+この包含関係は、公理体系間の基本的な構造の一つである。
+
+\subsection{2.2 共通部分}
+
+二つの公理体系 $\Sigma_1,\Sigma_2$ に共通する公理的要素は
+
+\[
+\Sigma_1\cap\Sigma_2
+\]
+
+で表される。
+
+より一般に、拡張された公理体系の族
+$\{\Sigma'_O\}_{O\in\mathcal{O}}$ に対して、
+
+\[
+C=\bigcap_{O\in\mathcal{O}}\Sigma'_O
+\]
+
+を考えることができる。
+
+また、基準となる公理体系 $\Sigma$ とその拡張 $\Sigma'_O$ に対して、
+
+\[
+Z_O=\Sigma\cap\Sigma'_O
+\]
+
+を定義する。
+
+$Z_O$ は、基準となる公理体系とその拡張に共通して保持される公理的要素の集合である。
+
+\subsection{2.3 差集合}
+
+公理体系 $\Sigma_1$ に含まれ、$\Sigma_2$ には含まれない公理的要素は
+
+\[
+\Sigma_1\setminus\Sigma_2
+\]
+
+によって表される。
+
+したがって、
+
+\[
+\Sigma_1\cap\Sigma_2,\qquad
+\Sigma_1\setminus\Sigma_2,\qquad
+\Sigma_1\subseteq\Sigma_2
+\]
+
+を用いることで、公理体系間の共通部分、差異、および拡張関係を
+集合論的に記述できる。
+
+\section{3. ZFCを公理体系の集合として扱う}
+
+\subsection{3.1 ZFCに対応する公理体系}
+
+ZFCを構成する公理集合を
+
+\[
+\Sigma_{\mathrm{ZFC}}
+\]
+
+と表す。
+
+ECAでは、まずこの公理体系を一つの集合として対象化する。
+
+さらに、ZFCと同一の公理的内容を表す体系を同一の対象として扱う必要がある場合には、
+対応関係を別途定義する。
+
+したがって、
+
+\[
+\mathscr{A}_{\mathrm{ZFC}}
+\subseteq
+\mathscr{A}
+\]
+
+を、ZFCに対応する公理体系の族として考えることができる。
+
+ここで、異なる記述形式や構成上の差異をどの範囲で同一視するかは、
+採用する同値関係の定義に依存する。
+
+\subsection{3.2 $\mathcal{Z}$ の位置付け}
+
+ZFCに対応する公理体系を集めた集合を
+
+\[
+\mathcal{Z}\subseteq\mathscr{A}
+\]
+
+とする。
+
+$\mathcal{Z}$ は「ZFCという一つの記号」を対象とするものではなく、
+ECAの枠組みにおいてZFCに対応する公理体系を集合として対象化したものである。
+
+このため、$\mathcal{Z}$ を調べる際には、その要素の数、濃度、
+包含関係、および各要素間の共通部分などを追跡することができる。
+
+\section{4. CHおよびGCHの公理体系間での位置付け}
+
+\subsection{4.1 CH}
+
+連続体仮説を
+
+\[
+\mathrm{CH}
+\]
+
+と表す。
+
+CHを含む公理体系の一例を
+
+\[
+\Sigma_{\mathrm{ZFC+CH}}
+\]
+
+とし、CHの否定を含む体系を
+
+\[
+\Sigma_{\mathrm{ZFC+\neg CH}}
+\]
+
+とする。
+
+これらを
+
+\[
+\Sigma_{\mathrm{ZFC+CH}},
+\quad
+\Sigma_{\mathrm{ZFC+\neg CH}}
+\subseteq S
+\]
+
+として扱うことで、CHそのものだけでなく、
+CHを含む公理体系とCHを含まない公理体系の構造を比較できる。
+
+ここで対象となるのは「CHが真か偽か」という単独の評価だけではなく、
+
+\[
+\Sigma_{\mathrm{ZFC+CH}}
+\quad\text{と}\quad
+\Sigma_{\mathrm{ZFC+\neg CH}}
+\]
+
+が基礎体系とどのような関係を持つかという構造である。
+
+\subsection{4.2 GCH}
+
+一般連続体仮説は
+
+\[
+\forall\kappa\,
+\left(
+\kappa\text{ が無限基数}
+\Rightarrow
+2^\kappa=\kappa^+
+\right)
+\]
+
+と表される。
+
+GCHについても、GCHを含む公理体系を
+
+\[
+\Sigma_{\mathrm{ZFC+GCH}}
+\]
+
+と表し、GCHを含まない、またはその否定を含む体系との関係を
+公理体系間の構造として扱うことができる。
+
+したがって、GCHの問題も公理体系の集合およびその間の関係として
+記述できる。
+
+\section{5. 特異基数と冪集合構造}
+
+\subsection{5.1 特異基数}
+
+基数 $\kappa$ が特異基数であるとは、
+
+\[
+\operatorname{cf}(\kappa)<\kappa
+\]
+
+を満たす無限基数であることをいう。
+
+特異基数は、より小さい基数の増大列の極限として表される。
+
+このため、特異基数における冪集合の構造を扱う場合には、
+単に $\kappa$ の濃度だけでなく、その極限構造を含めて扱う必要がある。
+
+\subsection{5.2 公理体系ごとの冪集合構造}
+
+公理体系 $\Sigma$ における $\kappa$ の部分集合の集合を、
+その体系において扱われる冪集合構造として
+
+\[
+\mathcal{P}^{\Sigma}(\kappa)
+\]
+
+と表す。
+
+その濃度を
+
+\[
+\left|\mathcal{P}^{\Sigma}(\kappa)\right|
+\]
+
+とする。
+
+ここで重要なのは、これは通常の冪集合演算そのものを再定義する記号ではなく、
+公理体系 $\Sigma$ の内部で扱われる対象を公理体系と対応付けて記述するための表記である。
+
+したがって、異なる公理体系
+
+\[
+\Sigma_1,\Sigma_2
+\]
+
+について、それぞれに対応する冪集合構造を比較することができる。
+
+\subsection{5.3 GCHを満たす公理体系}
+
+GCHを含む公理体系では、
+
+\[
+2^\kappa=\kappa^+
+\]
+
+という関係が各無限基数 $\kappa$ について要求される。
+
+ECAでは、この条件を単独の基数算術としてのみ扱うのではなく、
+この条件を含む公理体系と、それ以外の公理体系との構造として扱う。
+
+したがって、例えば
+
+\[
+\mathscr{A}_{\mathrm{GCH}}
+=
+\left\{
+\Sigma\in\mathscr{A}
+\mid
+\Sigma\text{ は GCH を含む}
+\right\}
+\]
+
+のような部分族を考えることができる。
+
+ただし、ここで「含む」という関係をどのように形式化するかは、
+公理体系の表現と同値関係の定義に依存する。
+
+\section{6. 公理体系の濃度}
+
+ECAにおいて公理体系そのものを数学的対象とする場合、
+個々の公理体系の濃度を追跡することができる。
+
+\subsection{6.1 個々の公理体系の濃度}
+
+公理体系 $\Sigma$ に対して
+
+\[
+|\Sigma|
+\]
+
+をその濃度とする。
+
+複数の公理体系については
+
+\[
+|\Sigma_1|,\quad|\Sigma_2|,\quad\ldots
+\]
+
+を比較できる。
+
+\subsection{6.2 公理体系の族の濃度}
+
+公理体系の族 $\mathscr{A}$ に対して、
+
+\[
+|\mathscr{A}|
+\]
+
+をその濃度とする。
+
+特に
+
+\[
+\mathcal{Z}\subseteq\mathscr{A}
+\]
+
+である場合には、
+
+\[
+|\mathcal{Z}|
+\]
+
+を考えることができる。
+
+ここで、
+
+\[
+|S|,\qquad
+|\Sigma|,\qquad
+|\mathscr{A}|,\qquad
+|\mathcal{Z}|
+\]
+
+はそれぞれ異なる対象の濃度であり、混同してはならない。
+
+\section{7. 構造の評価}
+
+\subsection{7.1 評価量の位置付け}
+
+公理体系と公理体系間の構造が定義された後、
+その構造を評価するための量を導入する。
+
+ECAでは、数値的評価に用いる量として
+
+\[
+B,\quad I,\quad K,\quad C
+\]
+
+を区別して扱う。
+
+これらは、公理体系を表す集合記号
+$\Sigma,\mathcal{Z},\mathscr{A}$ などとは異なる役割を持つ。
+
+\subsection{7.2 構造整合性}
+
+基準となる公理体系 $\Sigma$ と拡張 $\Sigma'_O$ に対して
+
+\[
+Z_O=\Sigma\cap\Sigma'_O
+\]
+
+を考える。
+
+この共通部分を用いて、保持された公理的構造を評価する量を
+構造整合性 $I$ とする。
+
+有限の場合には
+
+\[
+I_O=
+\frac{|Z_O|}{|\Sigma|}
+\]
+
+という比率を考えることができる。
+
+測度を導入した場合には、
+
+\[
+I_O=
+\frac{\mu(Z_O)}{\mu(\Sigma)}
+\]
+
+という形式を考えることができる。
+
+これらは評価形式であり、公理体系そのものの定義とは区別する。
+
+\subsection{7.3 公理分散値}
+
+公理体系間に共通する公理的要素のまとまりを評価する量として、
+公理分散値 $K$ を導入する。
+
+$K$ の具体的な定義は、対象とする公理体系の族と、
+共通要素をどのように評価するかに応じて定式化する。
+
+したがって、本稿では $K$ の最終的な具体式を
+公理体系の基本定義より先に固定しない。
+
+\subsection{7.4 共通部分}
+
+公理体系の族に対する共通部分は集合論的には
+
+\[
+C=\bigcap_{O\in\mathcal{O}}\Sigma'_O
+\]
+
+のように表すことができる。
+
+この集合論的な $C$ と、数値評価に用いる記号とは文脈を分けて扱う。
+
+\section{8. 離散形式と連続形式}
+
+構造評価は、まず公理体系間の構造が定義された後に導入される。
+
+離散形式として
+
+\[
+T_{\mathrm{overlay}}
+=
+\frac{1}{N}
+\sum_i B_iI_iK_i
+\]
+
+を用いる。
+
+また、連続形式として
+
+\[
+T_{\mathrm{overlay}}
+=
+\int_0^1 B(x)I(x)K(x)\,dx
+\]
+
+を用いる。
+
+これらは、公理体系の構造を評価するための二つの表現形式である。
+
+したがって、
+
+\[
+\text{公理体系の対象化}
+\rightarrow
+\text{公理体系間の構造}
+\rightarrow
+\text{構造の評価}
+\rightarrow
+\text{離散形式・連続形式}
+\]
+
+という順序を維持する。
+
+\section{9. ECAにおける測度の位置付け}
+
+測度は、対象化された公理体系または公理体系の族を評価する必要がある場合に導入できる。
+
+例えば、公理体系の族 $\mathscr{A}$ 上に適切な可測構造を定め、
+
+\[
+(\mathscr{A},\mathcal{F},\mu)
+\]
+
+という測度空間を構成することができる。
+
+このとき、$\mu$ は公理体系そのものを定義するための基本概念ではなく、
+公理体系間の構造を数値的に評価するための構造として位置付けられる。
+
+同様に、正規化された評価を必要とする場合には、
+
+\[
+\widetilde{\mu}(A)
+=
+\frac{\mu(A)}{\mu(\mathscr{A})}
+\]
+
+のような形式を考えることができる。
+
+ただし、測度の具体的な構成、可測族、正規化条件については、
+対象となる公理体系の族と評価形式を定めた後に個別に定式化する。
+
+\section{10. ZFCを「解き直す」という位置付け}
+
+ECAにおいて「ZFCを解き直す」とは、
+ZFCを既知の唯一の前提として固定したまま別の計算を行うことではない。
+
+まず、
+
+\[
+\Sigma_{\mathrm{ZFC}}
+\]
+
+を一つの公理体系として対象化する。
+
+その上で、
+
+\[
+\Sigma_{\mathrm{ZFC+CH}},
+\qquad
+\Sigma_{\mathrm{ZFC+\neg CH}},
+\qquad
+\Sigma_{\mathrm{ZFC+GCH}}
+\]
+
+などの拡張体系を同じ枠組みに置き、
+
+\[
+\Sigma_{\mathrm{ZFC}}
+\subseteq
+\Sigma_{\mathrm{ZFC+CH}},
+\]
+
+\[
+\Sigma_{\mathrm{ZFC}}
+\subseteq
+\Sigma_{\mathrm{ZFC+\neg CH}},
+\]
+
+\[
+\Sigma_{\mathrm{ZFC}}
+\subseteq
+\Sigma_{\mathrm{ZFC+GCH}}
+\]
+
+のような関係を対象化する。
+
+このように、公理体系を固定された背景ではなく
+数学的対象として扱うことが、
+ECAにおける「解き直す」の基本的な意味である。
+
+\section{11. 各ZFC公理の位置付け}
+
+ECAの枠組みでは、ZFCを構成する各公理も、
+公理体系を構成する要素として扱うことができる。
+
+\subsection{11.1 外延性公理}
+
+外延性公理は
+
+\[
+\forall x,y\,
+\left(
+\forall z\,(z\in x\leftrightarrow z\in y)
+\Rightarrow x=y
+\right)
+\]
+
+と表される。
+
+これを公理体系 $\Sigma$ の要素として扱うことで、
+外延性公理を含む体系と含まない体系の構造を比較できる。
+
+\subsection{11.2 空集合公理}
+
+空集合の存在は
+
+\[
+\exists x\,\forall y\,(y\notin x)
+\]
+
+と表される。
+
+これも公理体系を構成する要素として扱う。
+
+\subsection{11.3 ペア集合公理}
+
+ペア集合公理は
 
 \[
 \forall x,y\,\exists z\,\forall w
-(w \in z \leftrightarrow (w=x \lor w=y))
+\left(
+w\in z\leftrightarrow(w=x\lor w=y)
+\right)
 \]
 
-これは有限集合が $\mathcal{T}(S)$ 上で閉じている集合であることを要求する。
+と表される。
 
-\subsubsection{4.3.4 和集合公理}
-和集合公理で考える場合では次の式が成り立つ。
+\subsection{11.4 和集合公理}
+
+和集合公理は
 
 \[
 \forall x\,\exists y\,\forall z
-(z \in y \leftrightarrow \exists u (z \in u \land u \in x))
+\left(
+z\in y\leftrightarrow
+\exists u\,(z\in u\land u\in x)
+\right)
 \]
 
-これは $\mathcal{T}(S)$ において、集合 $x$ に属する各集合の要素全体を集めた集合が存在することを要求する。
-すなわち、集合の集合に対して一次の和集合操作が閉じて定義可能であることを表す。
-Solver集合においては、和集合公理は集合における階数の一段階の降下操作が $\mathcal{T}(S)$ 内で許容されることを意味する。
+と表される。
 
-\subsubsection{4.3.5 冪集合公理}
-冪集合公理においては次の式が成り立つ。
+\subsection{11.5 冪集合公理}
+
+冪集合公理は
 
 \[
-\forall x\,\exists y\,\forall z (z \in y \leftrightarrow z \subseteq x)
+\forall x\,\exists y\,\forall z
+\left(
+z\in y\leftrightarrow z\subseteq x
+\right)
 \]
 
-これはSolver集合に置き換えて考えた場合、部分集合全体が $\mathcal{T}(S)$ 集合上において対象となる集合が存在することを指す。
+と表される。
 
-\subsubsection{4.3.6 無限公理}
-無限集合では次式が成り立つ。
+ECAでは、この公理を含む体系を対象化することにより、
+冪集合構造を含む公理体系間の関係を追跡できる。
+
+\subsection{11.6 無限公理}
+
+無限公理は例えば
 
 \[
-\exists x(\varnothing \in x \land \forall y(y \in x \Rightarrow y \cup \{y\} \in x))
+\exists x
+\left(
+\varnothing\in x
+\land
+\forall y\,
+\left(
+y\in x\Rightarrow y\cup\{y\}\in x
+\right)
+\right)
 \]
 
-これは有限閉包しか持たないSolver集合を排除する。
+と表される。
 
+\subsection{11.7 分出公理図式・置換公理図式}
 
-\subsubsection{4.3.7 分出・置換公理}
-どちらも、定義可能な写像または述語に基づいて集合の存在が $\mathcal{T}(S)$ 内に制限されることを要求する。
-無制限な集合の成立を防ぐため、原則として公理図式として定式化される。
+分出公理図式および置換公理図式は、
+定義可能な述語または写像に基づく集合の構成を公理体系に導入する。
 
-\subsubsection{4.3.8 正則性公理}
-また、正則性公理においては次の式が成り立つ。
+ECAでは、これらを個々の公理的要素として扱う場合と、
+公理図式全体を一つの構造として扱う場合を区別する必要がある。
+
+\subsection{11.8 正則性公理}
+
+正則性公理は
 
 \[
-\forall x (x \neq \varnothing \Rightarrow \exists y (y \in x \land x \cap y = \varnothing))
+\forall x
+\left(
+x\neq\varnothing
+\Rightarrow
+\exists y\,
+(y\in x\land x\cap y=\varnothing)
+\right)
 \]
 
-これは、集合の「無限降下列」（例: $A_{1}\ni A_{2}\ni A_{3}\ni \dots $）や、「自分自身を含む集合」（例: $A\in A$）といったパラドックスを引き起こす数学的矛盾を生み出さないことを集合に要求する。
+と表される。
 
-\subsubsection{4.3.9 選択公理}
-選択公理では次式が成り立つ。
+これも公理体系を構成する公理的要素として対象化する。
+
+\subsection{11.9 選択公理}
+
+選択公理についても、その公理的内容を
+公理体系 $\Sigma$ の要素として扱う。
+
+その具体的な論理式の形式は、採用する言語と定式化に依存するため、
+ECAでは公理体系の表現形式を固定した上で記述する。
+
+\section{12. 結論}
+
+ECAの基本対象は、単独の命題ではなく、
+その命題を扱う公理体系を数学的対象として構成したものである。
+
+その構造は
 
 \[
-\forall X \bigl((\forall x \in X, x \neq \varnothing) \Rightarrow \exists f : X \to \bigcup X \bigr)
+S
+\longrightarrow
+\mathcal{P}(S)
+\longrightarrow
+\mathscr{A}
 \]
 
-これは $\mathcal{T}(S)$ において空でない集合族に対し、それぞれの要素を一つずつ選ぶ集合操作が定義可能であることを要求する。
-Solver集合においては、選択公理は $\mathcal{T}(S)$ 内で定義可能な写像によって集合族の直積的構成が実現できることを意味する。
+として表すことができる。
 
+ここで、
+
+\[
+S
+\]
+
+は公理的要素を対象化するSolver集合、
+
+\[
+\mathcal{P}(S)
+\]
+
+はその部分集合全体、
+
+\[
+\mathscr{A}\subseteq\mathcal{P}(S)
+\]
+
+は実際に対象とする公理体系の族である。
+
+さらに、公理体系間について
+
+\[
+\Sigma_1\subseteq\Sigma_2,
+\qquad
+\Sigma_1\cap\Sigma_2,
+\qquad
+\Sigma_1\setminus\Sigma_2
+\]
+
+などの集合論的関係を定義する。
+
+この構造を基礎として、CH、GCH、特異基数における冪集合問題などを
+公理体系間の関係として扱うことができる。
+
+その後に、
+
+\[
+B,\quad I,\quad K,\quad C
+\]
+
+などの評価量を導入し、最終的に
+
+\[
+T_{\mathrm{overlay}}
+=
+\frac{1}{N}\sum_i B_iI_iK_i
+\]
+
+および
+
+\[
+T_{\mathrm{overlay}}
+=
+\int_0^1B(x)I(x)K(x)\,dx
+\]
+
+という離散形式・連続形式へ進む。
+
+したがって、ECAにおける連続性は、
+公理体系を数学的対象として構成した後の構造評価の一形式として位置付けられる。
+
+本稿は、この公理体系の対象化と公理体系間の構造を、
+以後の濃度追跡、Solver集合の構造、および評価形式の定式化へ接続するための
+基礎文書として位置付ける。
 \end{document}
