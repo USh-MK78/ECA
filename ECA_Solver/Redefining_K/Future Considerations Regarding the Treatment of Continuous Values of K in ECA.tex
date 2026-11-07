@@ -1,0 +1,60 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage[margin=25mm]{geometry}
+\usepackage{luatexja}
+\usepackage{luatexja-fontspec}
+\setmainjfont{HaranoAjiMincho}
+\setsansjfont{HaranoAjiGothic}
+\title{ECAにおける公理配置指標 $K$\\連続値の取扱いに関する今後の検討事項}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+
+\section{本節の位置づけ}
+
+本節は、現行の $W_K$ の代数的検証で用いた連続値 $x_z(a)\in[0,1]$ について、今後検討すべき事項を整理するものである。ここでの連続値は、現段階では計算上の値として扱う。各値が ECA において何を表し、どのような条件で正当化されるかについては、本節では確定しない。
+
+また、本節は、既に確認した $W_K$ の代数的関係を変更するものではない。連続値の ECA 上の位置づけを、現行式に先立って仮定することもない。
+
+\section{今後の検討事項}
+
+\begin{enumerate}
+  \item \textbf{連続値 $x_z(a)$ の定義域と対象}\par
+  $x_z(a)\in[0,1]$ を、公理 $a$ と Solver $z$ の組に対応する値として置いたとき、その値がどの数学的対象から定まるのかを明確にする。単に区間内の値を割り当てることと、ECA 内でその値を導出・正当化できることを区別する。
+
+  \item \textbf{連続値と公理の配置との対応}\par
+  $x_z(a)$ が、公理 $a$ の Solver 集合上での配置をどのように表すのかを検討する。特に、配置・配置間の関係・分離という $K$ の一連の役割を、各 $x_z(a)$ の値だけで表現できる範囲と、追加の関係情報を要する範囲とを区別する。
+
+  \item \textbf{区間構成の根拠と適用条件}\par
+  $I_u=[0,u]$ といった区間による表現について、区間を導入する数学的根拠と適用条件を検討する。区間の共通部分・差集合・対称差から得られる数値関係が代数的に成立することと、その区間構成が ECA の対象を適切に表すことは、別の論点として扱う。
+
+  \item \textbf{Solver 集合上の集約方法}\par
+  現行の
+  \[
+    \operatorname{Mean}_{z\in\mathcal{Z}} f(z)
+    =\frac{1}{|\mathcal{Z}|}\sum_{z\in\mathcal{Z}}f(z)
+  \]
+  は、有限かつ空でない Solver 集合に対する等重み平均である。無限の Solver 集合、重みが等しくない場合、または測度を用いる場合への拡張は、この式から自動的に導かれるものではない。必要性と条件を独立に検討する。
+
+  \item \textbf{可測性と非可測の場合}\par
+  測度による集約を採用する場合、対象となる関数・集合の可測性と、非可測な場合の扱いを明示する。測度だけでは扱えない場合を、既定の数値規則によって暗黙に処理しない。
+
+  \item \textbf{現行の $W_K$ との整合性}\par
+  連続値に関する意味づけを進める際には、現行の
+  \[
+    W_K(a)=P(a)+\frac{1}{n-1}
+    \sum_{\substack{b\in\mathcal{A}\\b\ne a}}
+    D_{\mathrm{old}}(a\mid b),\qquad n=|\mathcal{A}|>1,
+  \]
+  および既に確認した $D_{\mathrm{old}}$、$D_{\mathrm{int}}$、$G$ の関係を区別して扱う。特に、$D_{\mathrm{old}}$ を $D_{\mathrm{int}}$ に置き換えることは、表記上の変更ではなく評価値を変え得る変更である。
+
+  \item \textbf{数値例の位置づけ}\par
+  連続値を用いる数値例は、計算規則の性質を調べるための例として提示できる。ただし、その例で得られた値や順位を、連続値の ECA 上の正当性が確立したことの根拠としては扱わない。
+\end{enumerate}
+
+\section{現段階での取扱い}
+
+以上は今後の検討事項であり、現段階で結論を与えるものではない。先に確定した $W_K$ の代数的性質と、公理配置指標 $K$ における連続値の ECA 上の正当化とを分離して検討する。
+
+\end{document}

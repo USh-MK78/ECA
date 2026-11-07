@@ -1,0 +1,195 @@
+\documentclass[a4paper,11pt]{ltjsarticle}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs,array}
+\usepackage[margin=25mm]{geometry}
+\title{ECAにおける公理配置指標 $K$ の定義と検証\textemdash 現行定義に基づく改訂版}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+
+\section{本稿の位置づけと改訂方針}
+本稿は、Solver集合上における公理の配置・関係・分離を数値化する指標 $K$ について、現段階での定義、代数的に確定した関係、および適用上の制約を整理する。
+$K$ を統計学的な分散・分散値として扱わない。また、連続値 $x_z(a)\in[0,1]$ のECAにおける意味づけは、$K$ の構造を十分に詰めた後に検討する事項として保留する。本稿の連続値に関する計算は、現時点では代数的な検証であり、配置値の意味論的正当化を主張するものではない。
+
+既存文書に記載された $R_K$、方式 $K_A,K_B$、およびその比較式は、それらの式を前提とした検証記録として読む必要がある。
+本稿で扱う現行の検討対象 $W_K$ は、方向付き差分 $D_{\mathrm{old}}$ を用いる別の定式化である。両者を同一の定義として混用してはならない。旧方式の結果を歴史的記録として保持する場合には、旧方式に基づく式・数値例であることを明記する。
+
+\section{Solver集合と公理の配置}
+Solver集合を $\mathcal{Z}$ とし、各 $z\in\mathcal{Z}$ に対応する公理集合を $\mathcal{A}_z$ とする。公理 $a$ を含むSolverの集合を
+\[
+\mathcal{Z}_a=\{z\in\mathcal{Z}\mid a\in\mathcal{A}_z\}
+\]
+と定義する。公理集合 $A$ のすべての公理を含むSolverの集合は
+\[
+\mathcal{Z}_A=\bigcap_{a\in A}\mathcal{Z}_a
+=\{z\in\mathcal{Z}\mid A\subseteq\mathcal{A}_z\}
+\]
+である。
+公理の配置を表す補助写像として
+\[
+\Phi_{\mathcal{Z}}:\mathcal{A}\to\mathcal{P}(\mathcal{Z}),\qquad
+\Phi_{\mathcal{Z}}(a)=\mathcal{Z}_a
+\]
+を用いる。この写像は公理とSolver集合上の配置との対応であり、写像そのものを $K$ と同一視しない。
+
+\section{有限Solver集合上の数値化}
+\subsection{平均と配置値}
+本稿の基本的な代数検証では、$\mathcal{Z}$ は有限かつ空でないものとする。任意の関数 $f$ に対し、等重み平均を
+\[
+\operatorname{Mean}_{z\in\mathcal{Z}}f(z)
+=\frac{1}{|\mathcal{Z}|}\sum_{z\in\mathcal{Z}}f(z)
+\]
+と定義する。各公理の配置値は
+\[
+P(a)=\operatorname{Mean}_{z\in\mathcal{Z}}x_z(a)
+\]
+である。二値の所属指示関数を扱う場合は
+\[
+x_z(a)=\begin{cases}1 &(a\in\mathcal{A}_z),\\0 &(a\notin\mathcal{A}_z),\end{cases}
+\]
+とする。一方、現行の連続値検討では、計算上の仮定として $x_z(a)\in[0,1]$ を許す。二値の場合はこの連続値範囲の特殊例であるが、連続値がECAにおいて何を表すかは本稿では確定しない。
+
+\subsection{方向付き差分と積の平均}
+公理 $a,b$ に対して、現行検討で用いる方向付き差分を
+\[
+D_{\mathrm{old}}(a\mid b)
+=\operatorname{Mean}_{z\in\mathcal{Z}}
+\bigl[x_z(a)(1-x_z(b))\bigr]
+\]
+と定義する。また、積の平均を
+\[
+Q(a,b)=\operatorname{Mean}_{z\in\mathcal{Z}}
+\bigl[x_z(a)x_z(b)\bigr]
+\]
+と置く。すると定義から
+\[
+\boxed{D_{\mathrm{old}}(a\mid b)=P(a)-Q(a,b)}
+\]
+が成立する。従って
+\[
+D_{\mathrm{old}}(a\mid b)-D_{\mathrm{old}}(b\mid a)=P(a)-P(b)
+\]
+である。一般に $D_{\mathrm{old}}$ は方向付きであり、対称とは限らない。
+
+\subsection{対称差と方向付き差分の関係}
+数値化された対称差を
+\[
+S(a,b)=\operatorname{Mean}_{z\in\mathcal{Z}}
+\lvert x_z(a)-x_z(b)\rvert
+\]
+とする。また
+\[
+D_{\mathrm{int}}(a\mid b)=\operatorname{Mean}_{z\in\mathcal{Z}}
+\max(x_z(a)-x_z(b),0)
+\]
+および
+\[
+G(a,b)=\operatorname{Mean}_{z\in\mathcal{Z}}\left[
+\min(x_z(a),x_z(b))\bigl(1-\max(x_z(a),x_z(b))\bigr)\right]
+\]
+と定める。任意の $u,v\in[0,1]$ について
+\[
+u(1-v)=\max(u-v,0)+\min(u,v)(1-\max(u,v))
+\]
+が成立するため、
+\[
+\boxed{D_{\mathrm{old}}(a\mid b)=D_{\mathrm{int}}(a\mid b)+G(a,b)}
+\]
+を得る。さらに
+\[
+\boxed{D_{\mathrm{old}}(a\mid b)+D_{\mathrm{old}}(b\mid a)=S(a,b)+2G(a,b)}
+\]
+である。
+
+$G(a,b)$ は対称かつ非負であり、等重み平均のもとでは
+\[
+0\le G(a,b)\le\frac14
+\]
+を満たす。$G(a,b)>0$ であるための必要十分条件は、少なくとも一つの $z\in\mathcal{Z}$ について、$x_z(a)$ と $x_z(b)$ がともに開区間 $(0,1)$ に属することである。すべての配置値が二値なら $G(a,b)=0$ となる。
+したがって、$D_{\mathrm{old}}$ を $D_{\mathrm{int}}$ に置き換えることは単なる代数的な書き換えではなく、一般に評価値を変える。
+
+\section{現行の $W_K$ の定義}
+比較対象となる有限公理集合を $\mathcal{A}$、その要素数を $n=|\mathcal{A}|$ とし、対象公理 $a\in\mathcal{A}$ に対して、$n>1$ の場合
+\[
+\boxed{
+W_K(a)=P(a)+\frac{1}{n-1}
+\sum_{\substack{b\in\mathcal{A}\\b\ne a}}
+D_{\mathrm{old}}(a\mid b)
+}
+\tag{1}
+\]
+とする。比較対象が存在しない $n=1$ の場合は、比較項を $0$ とする規則により
+\[
+W_K(a)=P(a)
+\tag{2}
+\]
+とする。
+
+式 (1) に $D_{\mathrm{old}}(a\mid b)=P(a)-Q(a,b)$ を代入すると、$n>1$ について
+\[
+\boxed{
+W_K(a)=2P(a)-\frac{1}{n-1}
+\sum_{\substack{b\in\mathcal{A}\\b\ne a}}Q(a,b)
+}
+\tag{3}
+\]
+を得る。式 (1) と式 (3) は同一の定義を表す変形式であり、別々の評価方式ではない。
+
+\subsection{値域と解釈上の制約}
+$x_z(a)\in[0,1]$ ならば $P(a),D_{\mathrm{old}}(a\mid b),Q(a,b)\in[0,1]$ であり、$n>1$ について
+\[
+0\le W_K(a)\le2
+\]
+が成立する。$W_K$ は一般に $[0,1]$ に収まるとは限らないため、必要に応じて最大値による正規化を検討する。ただし、正規化は $\max_{a\in\mathcal{A}}W_K(a)>0$ のときに限り
+\[
+K(a)=\frac{W_K(a)}{\max_{b\in\mathcal{A}}W_K(b)}
+\tag{4}
+\]
+と定義できる。最大値が $0$ の場合、式 (4) は未定義であり、別途規則を定める必要がある。正規化後の $K$ は同一の公理集合内で共通の正の分母を用いるため、$W_K$ と同じ順位を持つ。
+
+\section{現行式から導かれる基本性質}
+\subsection{平均差分による表現}
+$n>1$ のとき、
+\[
+M_n(a)=\frac{1}{n-1}\sum_{\substack{b\in\mathcal{A}\\b\ne a}}
+D_{\mathrm{old}}(a\mid b)
+\]
+と置けば、$W_K(a)=P(a)+M_n(a)$ である。以降の集合変更に関する式は、Solver集合、既存公理の配置値、既存の関係値を固定する制御条件のもとで導出する。この固定条件を外し、Solver集合や既存の配置値まで変化させる場合には、各項の変化を別途加える必要がある。
+
+\subsection{区間による代替式との違い}
+区間 $I_u=[0,u]$ の長さを用いると、
+\[
+\mu(I_u\cap I_v)=\min(u,v),\qquad
+\mu(I_u\setminus I_v)=\max(u-v,0),\qquad
+\mu(I_u\triangle I_v)=|u-v|
+\]
+となる。しかし、この区間構成から得られる $D_{\mathrm{int}}$ は $D_{\mathrm{old}}$ と一般には異なる。差は
+\[
+W_K(a)-W_K^{\mathrm{int}}(a)
+=\frac{1}{n-1}\sum_{b\ne a}G(a,b)\in[0,1/4]
+\]
+である（$n>1$）。従って、区間差分を使う式は元の $W_K$ の無害な書き換えではない。既に検証された数値例では、置換により正規化後の順位が変化し得ることも確認されているため、元の定義を出発点として保持する。
+
+\section{現段階での確定事項と保留事項}
+\begin{enumerate}
+\item $K$ の対象は、Solver集合上における公理の配置・関係・分離であり、統計的分散ではない。
+\item $\Phi_{\mathcal{Z}}$ は配置を表す補助写像であり、$K$ そのものではない。
+\item 現行の $W_K$ は式 (1) で定義され、式 (3) はその同値な変形式である。
+\item $D_{\mathrm{old}}$ と $D_{\mathrm{int}}$ は一般に異なる。$G$ はその差を表す非負の補正項である。
+\item Solver集合や既存配置値を固定した公理集合変更の検証と、それら自体が変わる場合の検証は区別する。
+\item $x_z(a)\in[0,1]$ を使う連続値検討のECA上の意味づけ、および配置値の正当化は保留する。
+\item $W_K$ の正規化は最大値が正の場合に限る。最大値が $0$ の場合の規則は未確定である。
+\item 非有限Solver集合、非可測集合を含む場合、あるいは等重み平均を置けない場合への拡張は、本稿の有限平均の結論だけからは確定しない。
+\end{enumerate}
+
+\section{現時点での結論}
+再構築したKは、Solver集合上における公理の配置・配置間の関係・分離を扱う指標として位置づけられる。
+これまでの検証では、Kの導出に必要となる (W_K) について、方向性を持つ差の構造、対称差との関係、補正項による差異、公理集合の追加・削除に伴う変化、正規化による値および順位の変化など、複数の数学的性質が導出・確認されている。これらはKの定義を再構築する過程で得られた数学的な成果であり、単なる概念的な位置づけにとどまるものではない。
+これらの成果を踏まえると、Kは「公理数や公理体系の構造的な整合性」だけでは捉えられない、Solver集合上での公理の配置・関係・分離という側面をECAの数値的な枠組みに組み込む役割を担う。
+さらに、$T_{\mathrm{overlay}}$ においては、この側面がBおよびIと組み合わされることで、異なる構造的側面を統合して扱う構成要素となる。
+
+なお、連続値 $x_z(a)\in[0,1]$ のECAにおける正当化については、今後の議題として意図的に保留しており、今回の結論において再び未解決事項として取り上げるものではない。
+以上は、これまでに得られた数学的な検証結果と再構築したKの定義に基づくECA上の役割を整理したものである。
+
+\end{document}

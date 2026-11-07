@@ -1,0 +1,373 @@
+%メイン文書への差し込み節 : K
+\section{K：公理分散値}
+
+$K$ は、Solver集合上における公理の配置・関係・分離を記述するための量として導入する。
+
+各Solver $z\in\mathcal{Z}$ に対して、そのSolverに含まれる公理構造を $\mathcal{A}_z$ とする。
+Kの定式化ではこの $\mathcal{A}_z$ を対象とし、推論規則および構成制約を表す $\mathcal{R}_z$ は直接の対象としない。
+
+ある公理 $a$ に対して、
+
+\[
+\mathcal{Z}_a = \{z\in\mathcal{Z}\mid a\in\mathcal{A}_z\}
+\]
+
+を定義する。$\mathcal{Z}_a$ は、公理 $a$ がSolver集合 $\mathcal{Z}$ 上にどのように配置されているかを表す。
+
+複数の公理からなる公理集合 $A\subseteq\mathcal{A}$ に対しては、
+
+\[
+\mathcal{Z}_a = \bigcap_{a\in A}\mathcal{Z}_a
+\]
+
+とする。このとき、
+
+\[
+\mathcal{Z}_a = \{z\in\mathcal{Z}\mid A\subseteq\mathcal{A}_z\}
+\]
+
+が成り立つ。したがって $\mathcal{Z}_a$ は、$A$ に含まれるすべての公理を同時に含むSolverの集合を表す。
+
+特に、二つの公理 $a,b$ に対しては、
+
+\[
+\mathcal{Z}_a\cap\mathcal{Z}_b
+\]
+
+が両者を共通して含むSolverの集合となり、
+
+\[
+\mathcal{Z}_a\cap\mathcal{Z}_b=\varnothing
+\]
+
+であれば、両者を同時に含むSolverが存在しないことを表す。また、
+
+\[
+\mathcal{Z}_a\subseteq\mathcal{Z}_b
+\]
+
+であれば、
+
+\[
+a\in\mathcal{A}_z\Rightarrow b\in\mathcal{A}_z
+\]
+
+がすべての $z\in\mathcal{Z}$ について成立する。
+
+このように、複数の公理に関する共通性、配置の重なり、包含および分離は、各公理のSolver集合上の配置から自然に導出される。
+
+したがって、Kにおける公理の配置構造は、
+
+\[
+\{\mathcal{Z}_a\mid a\in\mathcal{A}\}
+\]
+
+を基本とし、必要に応じて
+
+\[
+\bigcap_{a\in A}\mathcal{Z}_a
+\]
+
+などの共配置構造を考えることで記述できる。
+
+ここで、$|\mathcal{Z}_a|$ のような量は公理がどの程度の数のSolverに現れるかを表すが、それだけではSolver集合上の配置そのものを表すことはできない。
+したがって、ここでは配置の規模と配置の構造は区別する必要がある。
+
+Kは、これらのSolver集合上の公理配置構造を基礎として「公理要素のまとまり」や「配置関係および分離の程度」を記述する。
+
+%この一文については別文書に言及する形にする
+具体的な数値化は、対象とするSolver集合の構造および導入する測度に応じて定めるものとする。
+
+\subsection{Solver構造を基礎としたKの定式化}
+
+Kの定式化では、各Solver $z\in\mathcal{Z}$ に付随する公理構造 $\mathcal{A}_z$ を対象とする。
+推論規則および構成制約を表す $\mathcal{R}_z$ は、Kが記述する公理の配置・関係・分離とは異なる構造であるため、この段階では対象に含めない。
+複数のSolver $\{z_1,\ldots,z_N\}\in\mathcal{Z}$ に対しては、共通する公理要素を $\bigcap_{j=1}^{N}\mathcal{A}_{z_j}$ として表現できる。
+
+各Solver $z\in\mathcal{Z}$ に対して、そのSolverが含む公理構造は
+
+\[
+z\in\mathcal{Z}
+\quad\longmapsto\quad
+\mathcal{A}_z
+\]
+
+によって表される。ここでは、Solverに既に付随している公理構造 $\mathcal{A}_z$ をKの対象として利用する。
+
+複数のSolver $\{z_1,\ldots,z_N\}\in\mathcal{Z}$ を考えると、それぞれの公理構造は
+
+\[
+\mathcal{A}_{z_1},\ldots,\mathcal{A}_{z_N}
+\]
+
+として与えられる。このとき、これらのSolverに共通して含まれる公理要素は
+
+\[
+\bigcap_{j=1}^{N}\mathcal{A}_{z_j}
+\]
+
+によって表現できる。この集合は、選択したSolver群において共通して存在する公理要素の集合である。
+
+したがって、現在のKの定義において複数の公理集合 $i_1,\ldots,i_N\in I$ の共通部分
+
+\[
+\bigcap_{j=1}^{N}i_j
+\]
+
+を考えていた構造は、Solver集合 $\mathcal{Z}$ の側からは
+
+\[
+\bigcap_{j=1}^{N}\mathcal{A}_{z_j}
+\]
+
+として表現できる。
+これはSolver集合上において「どの公理要素がどのSolverに配置され、複数のSolver間でどの公理要素が共通して存在するのか」を集合として記述できることを表している。
+
+\subsection{Solver集合上における比較対象と写像}
+
+Solver集合 $\mathcal{Z}$ 上における公理の配置を比較するため、まず特定の公理要素がどのSolverに含まれているかを考える。公理要素 $a$ に対して
+
+\[
+\mathcal{Z}_a = \{z\in\mathcal{Z}\mid a\in\mathcal{A}_z\}
+\]
+
+を定める。これは、公理 $a$ を含むSolverの集合を表す。
+
+同様に、別の公理要素 $b$ に対して
+
+\[
+\mathcal{Z}_b = \{z\in\mathcal{Z}\mid b\in\mathcal{A}_z\}
+\]
+
+と定める。
+
+このとき、二つの公理要素 $a$ と $b$ のSolver集合上における配置を比較するために、
+
+\[
+\mathcal{Z}_a\cap\mathcal{Z}_b
+\]
+
+を考えることができる。この集合は、$a$ と $b$ の両方を公理構造に含むSolverの集合であり、二つの公理要素がSolver集合上で共通して配置されている部分を表す。
+
+一方、
+
+\[
+\mathcal{Z}_a\setminus\mathcal{Z}_b
+\]
+
+は $a$ を含むが $b$ を含まないSolverの集合であり
+
+\[
+\mathcal{Z}_b\setminus\mathcal{Z}_a
+\]
+
+は $b$ を含むが $a$ を含まないSolverの集合である。したがって、これらの集合によって、公理要素間の共通配置だけでなく、一方のみに存在する配置や公理要素間の分離も記述できる。
+
+特に
+
+\[
+\mathcal{Z}_a\cap\mathcal{Z}_b=\varnothing
+\]
+
+である場合、対象としているSolver集合 $\mathcal{Z}$ の範囲では、$a$ と $b$ は同一のSolver上に共存しない。
+このことは、公理要素間の分離を集合として直接表現していることを表す。
+
+また、Solver側から複数の公理構造を比較すると
+
+\[
+\bigcap_{j=1}^{N}\mathcal{A}_{z_j}
+\]
+
+によって、Solver $\{z_1,\ldots,z_N\}$ に共通する公理要素を表現できる。
+これは公理要素側から見た $\mathcal{Z}_a$ と対応している。実際に、次の
+
+\[
+a\in\bigcap_{j=1}^{N}\mathcal{A}_{z_j}
+\iff
+\{z_1,\ldots,z_N\}\subseteq\mathcal{Z}_a
+\]
+
+が成り立つ。
+
+したがって「複数のSolverを選択して共通する公理要素を見る」ことと「公理要素を固定して、その公理要素を含むSolverを見る」ことは「同一のSolver集合上の構造を異なる方向から記述し、またそれを表現できる」ことを表している。
+
+この対応を明示するため、対象とする公理要素全体の集合を $\mathcal{A}$ とし
+
+\[
+\Phi_{\mathcal{Z}}:\mathcal{A}\to\mathcal{P}(\mathcal{Z})
+\]
+
+を
+
+\[
+\Phi_{\mathcal{Z}}(a) = \mathcal{Z}_a = \{z\in\mathcal{Z}\mid a\in\mathcal{A}_z\}
+\]
+
+によって定義する。
+
+この写像は、公理要素 $a$ を入力として、その公理要素が配置されているSolverの集合を返す。
+したがって
+
+%これは違う
+%\[
+%\mathcal{A}
+%\xrightarrow{\ \Phi_{\mathcal{Z}}\ }
+%\mathcal{P}(\mathcal{Z})
+%\]
+
+%修正後
+\[
+\mathcal{A}
+\xrightarrow{\Phi_{\mathcal{Z}}}
+\mathcal{P}(\mathcal{Z})
+\]
+
+によって、公理要素のSolver集合上における配置を明示的に表現できる。
+
+ここで $\Phi_{\mathcal{Z}}$ 自体をKとするわけではない。
+$\Phi_{\mathcal{Z}}$ は、厳密には「公理要素の配置をSolver集合上で表すためのものであり、Kはその配置・関係・分離を記述するための量」として定式化されるためである。
+
+したがって、この段階では
+
+\[
+\mathcal{Z}_a,\qquad
+\mathcal{Z}_b,\qquad
+\mathcal{Z}_a\cap\mathcal{Z}_b
+\]
+
+および
+
+\[
+\Phi_{\mathcal{Z}}:\mathcal{A}\to\mathcal{P}(\mathcal{Z})
+\]
+
+を、Kを定量化するための基礎的な数学的構造として扱う。
+
+\subsection{KにおけるSolver集合上の公理配置と関係}
+
+Kは、Solver集合上における公理の配置・関係・分離を記述するための量として位置付けられる。
+ここで中心となるのは、公理要素間の距離そのものではなく、各公理要素がSolver集合 $\mathcal{Z}$ 上でどのように配置されているかという構造である。
+
+各Solver $z\in\mathcal{Z}$ に対して公理構造 $\mathcal{A}_z$ を考えると、ある公理要素 $a$ がどのSolverに含まれているかを
+
+\[
+\mathcal{Z}_a = \{z\in\mathcal{Z}\mid a\in\mathcal{A}_z\}
+\]
+
+によって表現できる。したがって、$\mathcal{Z}_a$ は公理要素 $a$ のSolver集合上における配置を表す。
+
+この対応を
+
+\[
+\Phi_{\mathcal{Z}}:\mathcal{A}\to\mathcal{P}(\mathcal{Z})
+\]
+
+および
+
+\[
+\Phi_{\mathcal{Z}}(a) = \mathcal{Z}_a
+\]
+
+として表すことで、公理要素をSolver集合上の部分集合へ対応させることができる。
+
+ここでKの主な対象となるのは、個々の公理要素に対応する $\mathcal{Z}_a$ の構造である。
+例えば、$\mathcal{Z}_a$ の大きさや $\mathcal{Z}$ 全体に対する占有範囲を調べることで、公理要素がどの程度のSolverに現れるかを記述できる。
+ただし、同じ大きさの $\mathcal{Z}_a$ であっても、Solver集合上での実際の配置が異なる可能性があるため、単純な濃度だけでは公理の配置を十分に記述できない。
+
+そこで、他の公理要素との関係を補助的に考える。二つの公理要素 $a,b\in\mathcal{A}$ に対して、
+
+\[
+\mathcal{Z}_a\cap\mathcal{Z}_b
+\]
+
+は、$a$ と $b$ の両方を公理構造に含むSolverの集合であり、両公理の共通配置を表す。
+
+また、
+
+\[
+\mathcal{Z}_a\setminus\mathcal{Z}_b
+\]
+
+および
+
+\[
+\mathcal{Z}_b\setminus\mathcal{Z}_a
+\]
+
+は、それぞれ一方の公理要素だけが配置されているSolverの集合である。したがって、
+
+\[
+\mathcal{Z}_a\triangle\mathcal{Z}_b = (\mathcal{Z}_a\setminus\mathcal{Z}_b) \cup (\mathcal{Z}_b\setminus\mathcal{Z}_a)
+\]
+
+によって、二つの公理要素のSolver集合上における配置の相違を表現できる。
+
+さらに、
+
+\[
+\mathcal{Z}_a\subseteq\mathcal{Z}_b
+\]
+
+であれば、
+
+\[
+a\in\mathcal{A}_z
+\implies
+b\in\mathcal{A}_z
+\]
+
+が対象とする全ての $z\in\mathcal{Z}$ について成立する。このような包含関係も、公理要素間の配置関係を記述する構造として利用できる。
+
+一方、
+
+\[
+\mathcal{Z}_a\cap\mathcal{Z}_b=\varnothing
+\]
+
+であれば、対象とするSolver集合 $\mathcal{Z}$ の範囲において、$a$ と $b$ は同一のSolver上に共存しない。この場合、両公理要素はSolver集合上で完全に分離されている。
+
+したがって、Kにおける公理間の関係は、単純な距離として導入する必要はなく、
+
+\[
+\mathcal{Z}_a\cap\mathcal{Z}_b,
+\qquad
+\mathcal{Z}_a\setminus\mathcal{Z}_b,
+\qquad
+\mathcal{Z}_b\setminus\mathcal{Z}_a,
+\qquad
+\mathcal{Z}_a\triangle\mathcal{Z}_b
+\]
+
+などの集合構造によって、共通配置・固有配置・配置の相違・分離を記述することができる。
+
+この公理間の関係はKの中心そのものではなく、各公理要素の配置を理解するための補助的な構造として位置付けられる。
+例えば「二つの公理要素が同じSolverに配置されるか、常に異なるSolverに配置されるか、あるいは一方が存在するSolverの大部分に他方も存在するか」といった関係から「公理体系間の類似性や相違性、さらにはSolver集合上における異なる配置構造」を検討することができる。
+
+したがって、Kの数学的構造は概念的には
+
+\[
+\boxed{
+\text{公理のSolver集合上での配置}
+}
+\]
+
+を主対象とし、
+
+\[
+\boxed{
+\text{公理間の関係・分離}
+}
+\]
+
+をその配置を分析するための補助的な構造として扱い、Solver集合 $\mathcal{Z}$ 上に配置された公理構造全体を対象として、その配置・関係・分離を記述するための構造 (また、より正確には量) として位置付けられる。
+
+% 定式化済みのため、ここから先は言及する必要はない (変わりに次の文書の内容を提示すべきだろう)
+この段階では、まだこれらの構造を単一の数値へ変換する具体的な定式化は行わない。まずは、
+
+\[
+\{\mathcal{Z}_a\mid a\in\mathcal{A}\}
+\]
+
+という公理配置全体の構造を調べ、個々の $\mathcal{Z}_a$ が他の $\mathcal{Z}_b$ とどのような関係を持つのかを整理する必要がある。その上で、Kとしてどの構造を定量化すべきかを決定する。
+
+したがってKは、Solver集合 $\mathcal{Z}$ 上に配置された公理構造全体を対象として、その配置・関係・分離を記述するための構造 (また、より正確には量) として位置付けられる。

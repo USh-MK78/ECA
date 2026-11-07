@@ -1,0 +1,374 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\title{ECAにおけるKの定義と数値化}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{目的と位置付け}
+
+本稿は、拡張連続性公理（ECA）におけるKについて、これまでの議論で確定した概念、集合論的定義、数値化の式、および数値評価に関する規則を整理するものである。
+
+Kは統計学的な量ではない。Solver集合上における公理の配置、公理間の関係、およびそこから生じる分離を記述し、数値化するECA固有の量である。本稿では、Kの概念的な位置付けと、確定した数式・計算規則とを一体として記載する。
+
+\section{Kの基本的な定義}
+
+Kは、Solver集合上における公理の配置・関係・分離を記述する量である。
+
+「配置」は、公理がSolver集合のどの部分に対応するかを表す。「関係」は、複数の公理に対応する部分集合がどのように重なり、包含され、あるいは異なるかを表す。「分離」は、それらの配置や関係から生じる相違を表す。
+
+したがって、Kは公理の個数や共通部分の大きさだけを単独で評価するものではない。公理単体の配置と、公理間の関係を組み合わせて評価する。
+
+Kを統計学的な分散として解釈しない。「公理分散値」という従来の呼称を用いる場合も、統計学的な分散を意味するものではない。名称の検討とは独立に、Kの概念的な定義はSolver集合上の公理配置・関係・分離に基づく。
+
+\section{Solver集合上の公理配置}
+
+Solver集合を $\mathcal{Z}$ とし、各Solver $z\in\mathcal{Z}$ に対応する公理集合を $\mathcal{A}_z$ とする。
+
+公理 $a$ に対して、その公理を含むSolverの集合を
+\[
+\mathcal{Z}_a
+=
+\{z\in\mathcal{Z}\mid a\in\mathcal{A}_z\}
+\]
+と定義する。
+
+複数の公理からなる集合 $A\subseteq\mathcal{A}$ に対しては、
+\[
+\mathcal{Z}_A
+=
+\bigcap_{a\in A}\mathcal{Z}_a
+=
+\{z\in\mathcal{Z}\mid A\subseteq\mathcal{A}_z\}
+\]
+とする。
+
+これにより、公理単体の配置だけでなく、複数の公理が同時に含まれるSolverの集合も扱える。
+
+公理をSolver集合の部分集合に対応付ける写像を
+\[
+\Phi_{\mathcal{Z}}:\mathcal{A}\to\mathcal{P}(\mathcal{Z}),
+\qquad
+\Phi_{\mathcal{Z}}(a)=\mathcal{Z}_a
+\]
+と定義する。この写像は配置情報を与えるものであり、写像そのものがKなのではない。
+
+\section{公理間の配置関係と分離}
+
+公理 $a,b\in\mathcal{A}$ に対して、共通配置を
+\[
+C(a,b)=\mathcal{Z}_a\cap\mathcal{Z}_b
+\]
+と定義する。また、方向性のある差を
+\[
+D(a\mid b)=\mathcal{Z}_a\setminus\mathcal{Z}_b
+\]
+と定義する。一般に、
+\[
+D(a\mid b)\ne D(b\mid a)
+\]
+である。
+
+さらに、対称差を
+\[
+S(a,b)=\mathcal{Z}_a\triangle\mathcal{Z}_b
+\]
+と定義する。したがって、
+\[
+S(a,b)=D(a\mid b)\cup D(b\mid a)
+\]
+である。
+
+これらはそれぞれ共通配置、方向性のある差、および配置全体の相違を表す。Kの数値化では、これらを組み合わせて評価する。
+
+\section{配置情報の数値化}
+
+有限のSolver集合を考え、Solver $z$ と公理 $a$ に対する所属値を
+\[
+x_z(a)\in\{0.0,1.0\}
+\]
+とする。$x_z(a)=1.0$ は $a\in\mathcal{A}_z$ を、$x_z(a)=0.0$ は $a\notin\mathcal{A}_z$ を表す。
+
+Solver集合上の算術平均を $\operatorname{Mean}_z$ と表記し、公理単体の配置値を
+\[
+P(a)=\operatorname{Mean}_z x_z(a)
+\]
+とする。
+
+共通配置、方向性のある差、対称差の数値は、それぞれ
+\[
+C(a,b)
+=
+\operatorname{Mean}_z\bigl[x_z(a)x_z(b)\bigr],
+\]
+\[
+D(a\mid b)
+=
+\operatorname{Mean}_z\bigl[x_z(a)(1.0-x_z(b))\bigr],
+\]
+\[
+S(a,b)
+=
+\operatorname{Mean}_z\bigl[|x_z(a)-x_z(b)|\bigr]
+\]
+とする。集合としての $C,D,S$ と、数値化後の $C,D,S$ は文脈に応じて区別する。
+
+\section{確定したKの数値化の式}
+
+公理間の配置関係を
+\[
+R_K(a,b)
+=
+\operatorname{Mean}\bigl(
+C(a,b),D(a\mid b),S(a,b)
+\bigr)
+\]
+と定義する。
+
+公理 $a$ のKの数値を
+\[
+\boxed{
+\widetilde K(a)
+=
+\operatorname{Mean}\left(
+P(a),
+\operatorname{Mean}_{b\ne a}R_K(a,b)
+\right)
+}
+\]
+と定義する。
+
+この式は、公理単体の配置値 $P(a)$ と、他の公理との配置関係を表す平均値を組み合わせる。ここでの二重の平均は定義の一部であり、式を別の形に置き換えて解釈してはならない。
+
+定義から、
+\[
+P(a)=C(a,b)+D(a\mid b)
+\]
+および
+\[
+S(a,b)=D(a\mid b)+D(b\mid a)
+\]
+が成り立つ。したがって、
+\[
+R_K(a,b)
+=
+\frac{P(a)+D(a\mid b)+D(b\mid a)}{3}
+\]
+とも表せる。
+
+この式は一般に対称ではない。実際、
+\[
+R_K(a,b)-R_K(b,a)
+=
+\frac{P(a)-P(b)}{3}
+\]
+である。よって、$R_K(a,b)$ を対称な関係量として扱わず、方向性を保持する。
+
+各入力値が $[0,1]$ に属するため、平均によって得られる $\widetilde K(a)$ も $[0,1]$ に属する。
+
+\section{正規化とゼロの場合}
+
+必要な場合、全公理についての最大値を用いて
+\[
+K(a)
+=
+\frac{\widetilde K(a)}
+{\max_{b\in\mathcal{A}}\widetilde K(b)}
+\]
+と正規化する。ただし、この式は分母が正である場合に適用する。
+
+有限かつ空でないSolver集合を前提とし、すべての公理について $\widetilde K(a)=0$ であるならば、非負性と平均の定義から、すべての公理について $P(a)=0$ となる。すなわち、評価対象の公理はいずれもSolver集合内のどのSolverにも現れない。この場合は正規化式の分母がゼロになるため、通常の除算を適用しない。
+
+\section{最小・最大・平均および差の評価}
+
+有限の公理集合 $A_0$ に対し、
+\[
+K_{\min}(A_0)=\min_{a\in A_0}K(a),
+\]
+\[
+K_{\mathrm{mean}}(A_0)
+=
+\frac{1}{|A_0|}\sum_{a\in A_0}K(a),
+\]
+\[
+K_{\max}(A_0)=\max_{a\in A_0}K(a)
+\]
+とする。このとき、
+\[
+K_{\min}(A_0)
+\le K_{\mathrm{mean}}(A_0)
+\le K_{\max}(A_0)
+\]
+が成り立つ。
+
+範囲の大きさを
+\[
+R_K(A_0)=K_{\max}(A_0)-K_{\min}(A_0)
+\]
+とし、平均値から最小値・最大値までの差を
+\[
+\delta_-(A_0)=K_{\mathrm{mean}}(A_0)-K_{\min}(A_0),
+\]
+\[
+\delta_+(A_0)=K_{\max}(A_0)-K_{\mathrm{mean}}(A_0)
+\]
+とする。
+
+公理間の絶対差と方向性のある差は、それぞれ
+\[
+d(a,b)=|K(a)-K(b)|,
+\qquad
+d_{\to}(a,b)=K(a)-K(b)
+\]
+と区別する。また、$A_0$ 内の異なる公理間の最小差を
+\[
+d_{\min}(A_0)
+=
+\min_{\substack{a,b\in A_0\\a\ne b}}
+|K(a)-K(b)|
+\]
+とする。
+
+これらの量を通じて、平均値だけでは表現できない範囲、方向性、および最小の差を評価する。
+
+\section{区間評価と許容誤差}
+
+Kの値を一意に確定できない場合には、単一の近似値へ無理に置き換えず、区間として扱う。各公理について
+\[
+K(a)\in[k_a^-,k_a^+],
+\qquad
+\Delta K(a)=k_a^+-k_a^-
+\]
+とする。
+
+有限の公理集合 $A_0=\{a_1,\ldots,a_n\}$ に対し、最小値・平均値・最大値の保守的な区間評価は
+\[
+K_{\min}(A_0)
+\in
+\left[\min_i k_i^-,\min_i k_i^+\right],
+\]
+\[
+K_{\mathrm{mean}}(A_0)
+\in
+\left[
+\frac1n\sum_i k_i^-,
+\frac1n\sum_i k_i^+
+\right],
+\]
+\[
+K_{\max}(A_0)
+\in
+\left[\max_i k_i^-,\max_i k_i^+\right]
+\]
+である。これらは保守的な区間であり、各区間の端点が同時に実現可能であることを意味しない。
+
+範囲の差については、
+\[
+R_K(A_0)\in
+\left[
+\max\left(0,\max_i k_i^--\min_i k_i^+\right),
+\max_i k_i^+-\min_i k_i^-
+\right]
+\]
+とする。
+
+方向性のある差については、
+\[
+K(a)-K(b)
+\in[k_a^--k_b^+,\,k_a^+-k_b^-]
+\]
+とする。
+
+許容誤差 $\varepsilon$ は、あらかじめ定めた基準として用いる。区間幅が許容誤差以下であれば近似的な単一値の採用を認め得るが、中点を必ず採用することを意味しない。中点
+\[
+\widehat K(a)=\frac{k_a^-+k_a^+}{2}
+\]
+は近似値の候補であり、区間を保持することと区別する。
+
+近似を採用する場合には、最小・最大・平均および方向性のある差が近似によって損なわれないかを確認する。
+
+\section{測度を用いる場合}
+
+Solver集合が有限でない場合などには、適切な測度 $\mu$ を用いることができる。$\mathcal{Z}_a$ が可測で、$0<\mu(\mathcal{Z})<\infty$ である場合、
+\[
+P(a)=\frac{\mu(\mathcal{Z}_a)}{\mu(\mathcal{Z})}
+\]
+とすることができる。
+
+正規化測度
+\[
+\nu(E)=\frac{\mu(E)}{\mu(\mathcal{Z})}
+\]
+を用いると、可測集合 $E\subseteq\mathcal{Z}$ に対して $0\le\nu(E)\le1$ となる。
+
+可測な配置集合について、
+\[
+d_\nu(a,b)=\nu(\mathcal{Z}_a\triangle\mathcal{Z}_b)
+\]
+と定めれば、
+\[
+d_\nu(a,b)
+=
+\nu(\mathcal{Z}_a)+\nu(\mathcal{Z}_b)
+-2\nu(\mathcal{Z}_a\cap\mathcal{Z}_b)
+\]
+が成り立つ。この量は測度ゼロの差を区別できないため、一般には距離ではなく擬距離である。
+
+非可測性は、選択した測度空間に対する可測性として判定する。必要に応じて外測度・内測度を用い、
+\[
+\mu^*(E)
+=
+\inf\{\mu(M):M\in\mathcal{F},\ E\subseteq M\},
+\]
+\[
+\mu_*(E)
+=
+\sup\{\mu(N):N\in\mathcal{F},\ N\subseteq E\}
+\]
+とする。正規化された全体測度が $\mu(\mathcal{Z})=1$ の場合、
+\[
+0\le\mu_*(E)\le\mu^*(E)\le1
+\]
+である。外測度は、すべての部分集合について加法的であるとは限らないため、対称差などの量は対象となる集合ごとに評価する。
+
+\section{B・Iとの関係}
+
+Kは、ECAにおける数値的評価の一要素であり、BおよびIと組み合わせて扱う。重ね合わせの評価式は
+\[
+T_{\mathrm{overlay}}
+=
+\frac1N\sum_{i=1}^{N}B_iI_iK_i
+\]
+であり、連続的な評価形式は
+\[
+T_{\mathrm{overlay}}
+=
+\int_0^1B(x)I(x)K(x)\,dx
+\]
+である。
+
+B・I・Kはそれぞれ異なる役割を持つ。Kを統計学的な量に置き換えることはしない。Kによる配置・関係・分離の評価は、Iと組み合わせることで複合Solver集合からの要素の抽出に利用できる。また、Kによる分離が明確に離散的である場合には、Bと組み合わせてIによる評価対象からの除外を推定することもできる。
+
+\section{確定事項の要約}
+
+\begin{enumerate}[label=\arabic*.]
+    \item KはSolver集合上の公理配置・配置間の関係・分離を記述するECA固有の量である。
+    \item Kを統計学や統計学的な分散に結び付けない。
+    \item 公理単体の配置と、複数の公理間の関係を組み合わせて評価する。
+    \item 共通配置、方向性のある差、対称差を区別し、その関係を数値化に用いる。
+    \item Kの数値化には、確定した $R_K(a,b)$ および $\widetilde K(a)$ の式を用いる。
+    \item 数値評価では平均だけでなく、最小・最大・平均、方向性のある差、最小差を考慮する。
+    \item 数値の一意性が保証されない場合には区間評価を保持し、許容誤差を近似判断の基準とする。
+    \item KはBおよびIと組み合わせて評価するが、K固有の役割を他の指標に還元しない。
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,2134 @@
+\documentclass[a4paper,11pt]{ltjsarticle}
+
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[margin=25mm]{geometry}
+
+\title{ECAにおける公理配置指標 $K$ の二方式比較と検証}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+%1
+\section{本稿の目的と位置づけ}
+
+本稿では、Solver集合上における公理の配置・関係・分離を記述する
+指標 $K$ について、これまでに確定した定義と計算規則を整理する。
+さらに、既に得られた数値例を用いて、二つの評価方式の挙動と、
+公理体系の保持率を表す指標 $I$ との関係を検討する。
+
+本稿では、$K$ を統計学的な分散や統計量として扱わない。
+$K$ が対象とするのは、Solver集合上での公理の配置、他の公理との関係、
+およびそれらの分離である。
+
+また、$I$ と $K$ は異なる対象を評価する指標である。
+両者の数値が同時に変化したとしても、そのことだけから因果関係を
+導くことはできない。
+
+\section{Solver集合と公理の配置}
+
+\subsection{基本的な定義}
+
+Solver集合を $\mathcal{Z}$ とし、各 $z\in\mathcal{Z}$ に対応する
+公理集合を $\mathcal{A}_z$ とする。
+
+公理 $a$ を含む Solver の集合を
+\begin{equation}
+  \mathcal{Z}_a
+  =
+  \{z\in\mathcal{Z}\mid a\in\mathcal{A}_z\}
+\end{equation}
+と定義する。
+
+公理集合 $A$ のすべての公理を含む Solver の集合は
+\begin{equation}
+  \mathcal{Z}_A
+  =
+  \bigcap_{a\in A}\mathcal{Z}_a
+  =
+  \{z\in\mathcal{Z}\mid A\subseteq\mathcal{A}_z\}
+\end{equation}
+で与えられる。
+
+公理の配置を記述する写像として
+\begin{equation}
+  \Phi_{\mathcal{Z}}:
+  \mathcal{A}\longrightarrow\mathcal{P}(\mathcal{Z}),
+  \qquad
+  \Phi_{\mathcal{Z}}(a)=\mathcal{Z}_a
+\end{equation}
+を用いる。ここで、$\mathcal{P}(\mathcal{Z})$ は
+$\mathcal{Z}$ の冪集合である。
+
+この写像は公理と Solver 集合上の配置との対応を表すものであり、
+写像そのものを $K$ と同一視するものではない。
+
+\subsection{公理間の関係}
+
+公理 $a,b$ に対し、次の集合を定義する。
+\begin{align}
+  C(a,b)
+  &=\mathcal{Z}_a\cap\mathcal{Z}_b,\\
+  D(a\mid b)
+  &=\mathcal{Z}_a\setminus\mathcal{Z}_b,\\
+  D(b\mid a)
+  &=\mathcal{Z}_b\setminus\mathcal{Z}_a,\\
+  S(a,b)
+  &=\mathcal{Z}_a\triangle\mathcal{Z}_b.
+\end{align}
+
+ここで、$\triangle$ は対称差を表す。
+
+それぞれは、順に次の関係を記述する。
+
+\begin{itemize}
+  \item $C(a,b)$：両方の公理を含む Solver の集合。
+  \item $D(a\mid b)$：$a$ を含むが $b$ を含まない Solver の集合。
+  \item $D(b\mid a)$：$b$ を含むが $a$ を含まない Solver の集合。
+  \item $S(a,b)$：$a$ と $b$ の所属状態が異なる Solver の集合。
+\end{itemize}
+
+これらにより、公理の共存、片方向の分離、および対称的な分離を
+一つの枠組みで記述できる。
+
+\section{有限 Solver 集合における数値化}
+
+\subsection{所属指示値}
+
+有限 Solver 集合について、各公理 $a$ の所属指示値を
+\begin{equation}
+  x_z(a)=
+  \begin{cases}
+    1.0 & (a\in\mathcal{A}_z),\\
+    0.0 & (a\notin\mathcal{A}_z)
+  \end{cases}
+\end{equation}
+とする。
+
+Solver 集合上の平均を
+\begin{equation}
+  \operatorname{Mean}_{z\in\mathcal{Z}} f(z)
+  =
+  \frac{1}{|\mathcal{Z}|}
+  \sum_{z\in\mathcal{Z}}f(z)
+\end{equation}
+と表記する。
+
+公理 $a$ の配置値を
+\begin{equation}
+  P(a)
+  =
+  \operatorname{Mean}_{z\in\mathcal{Z}}x_z(a)
+\end{equation}
+と定義する。
+
+二つの公理について、先に定義した集合関係を数値化すると
+\begin{align}
+  C(a,b)
+  &=
+  \operatorname{Mean}_{z\in\mathcal{Z}}
+  [x_z(a)x_z(b)],\\
+  D(a\mid b)
+  &=
+  \operatorname{Mean}_{z\in\mathcal{Z}}
+  [x_z(a)(1.0-x_z(b))],\\
+  D(b\mid a)
+  &=
+  \operatorname{Mean}_{z\in\mathcal{Z}}
+  [x_z(b)(1.0-x_z(a))],\\
+  S(a,b)
+  &=
+  \operatorname{Mean}_{z\in\mathcal{Z}}
+  [|x_z(a)-x_z(b)|]
+\end{align}
+となる。
+
+以下では、これらの記号を集合の意味と区別する必要がある場合、
+数値化された値を同じ記号で表すものとする。
+
+\subsection{基本的な関係式}
+
+定義から、次の関係が成立する。
+\begin{align}
+  P(a)&=C(a,b)+D(a\mid b),\\
+  P(b)&=C(a,b)+D(b\mid a),\\
+  S(a,b)&=D(a\mid b)+D(b\mid a).
+\end{align}
+
+したがって、共存、片方向の分離、対称差は互いに独立した値ではない。
+それぞれの定義と上記の関係を保ったまま、$K$ の計算に用いる。
+
+\section{$K$ の確定した基本定義}
+
+\subsection{公理間の関係値}
+
+公理 $a,b$ の関係値を
+\begin{equation}
+  R_K(a,b)
+  =
+  \operatorname{Mean}
+  \bigl(C(a,b),D(a\mid b),S(a,b)\bigr)
+\end{equation}
+と定義する。ここで、引数を三つ取る $\operatorname{Mean}$ は
+三値の算術平均を表す。
+
+従って、
+\begin{equation}
+  R_K(a,b)
+  =
+  \frac{
+    C(a,b)+D(a\mid b)+S(a,b)
+  }{3}
+\end{equation}
+である。
+
+基本的な関係式を代入すれば、
+\begin{equation}
+  R_K(a,b)
+  =
+  \frac{
+    P(a)+D(a\mid b)+D(b\mid a)
+  }{3}
+\end{equation}
+とも表せる。
+
+なお、一般には
+\begin{equation}
+  R_K(a,b)-R_K(b,a)
+  =
+  \frac{P(a)-P(b)}{3}
+\end{equation}
+であるため、$R_K$ は必ずしも対称ではない。
+
+\subsection{対象公理の基本評価値}
+
+対象公理を $a$ とし、比較対象となる公理集合を $A$ とする。
+$a\in A$ かつ $|A|\geq 2$ を仮定し、
+平均関係値を
+\begin{equation}
+  M_A(a)
+  =
+  \frac{1}{|A|-1}
+  \sum_{\substack{b\in A\\b\ne a}}R_K(a,b)
+\end{equation}
+と定義する。
+
+確定した基本評価値は
+\begin{equation}
+  \boxed{
+  \widetilde{K}(a)
+  =
+  \operatorname{Mean}
+  \left(
+    P(a),
+    \operatorname{Mean}_{b\in A,\ b\ne a}R_K(a,b)
+  \right)
+  }
+\end{equation}
+である。すなわち、
+\begin{equation}
+  \boxed{
+  K_A(a)=\frac{P(a)+M_A(a)}{2}
+  }
+\end{equation}
+となる。
+
+以下では、比較集合を明示する必要がある場合に $K_A(a)$ と記す。
+この基本定義を方式 A と呼ぶ。
+
+各入力値が $[0,1]$ に属する有限の場合、
+\begin{equation}
+  P(a),R_K(a,b),M_A(a),K_A(a)\in[0,1]
+\end{equation}
+が成立する。
+
+\section{二方式の比較}
+
+\subsection{方式 A と方式 B}
+
+方式 A は、対象公理の配置値と平均関係値を等しい重みで組み合わせる。
+\begin{equation}
+  K_A(a)=\frac{P(a)+M_A(a)}{2}
+\end{equation}
+
+比較対象数を $r=|A|$ とし、方式 B を次のように定める。
+\begin{equation}
+  \boxed{
+  K_B(a)
+  =
+  \frac{
+    P(a)+\displaystyle\sum_{\substack{b\in A\\b\ne a}}R_K(a,b)
+  }{r}
+  }
+\end{equation}
+
+$M_A(a)$ を用いれば、
+\begin{equation}
+  K_B(a)
+  =
+  \frac{P(a)+(r-1)M_A(a)}{r}
+\end{equation}
+となる。
+
+方式 B は、配置値 $P(a)$ と各関係値を一括して平均する方式である。
+そのため、$P(a)$ の重みは $1/r$、関係値全体の重みは
+$(r-1)/r$ となる。
+
+一方、方式 A では、配置値と平均関係値の重みはそれぞれ $1/2$ である。
+
+方式 A は確定した基本定義を維持する。
+方式 B は、比較対象を個別に含めた平均による特殊化として比較するものであり、
+方式 A を置き換えるものではない。
+
+\subsection{二方式の差}
+
+差を
+\begin{equation}
+  \Delta_{AB}(a)=K_B(a)-K_A(a)
+\end{equation}
+と定義する。
+
+両方式の式を代入すると、
+\begin{align}
+  \Delta_{AB}(a)
+  &=
+  \frac{P(a)+(r-1)M_A(a)}{r}
+  -\frac{P(a)+M_A(a)}{2}\\
+  &=
+  \boxed{
+  \frac{r-2}{2r}
+  \bigl(M_A(a)-P(a)\bigr)
+  }.
+\end{align}
+
+従って、$r=2$ ならば
+\begin{equation}
+  K_A(a)=K_B(a),\qquad \Delta_{AB}(a)=0
+\end{equation}
+である。
+
+また、$r>2$ では、両方式の差は配置値 $P(a)$ と平均関係値
+$M_A(a)$ の差に依存する。
+
+$\Delta_{AB}(a)$ は両方式から導かれる値であり、独立した情報を
+自動的に追加するわけではない。ただし、配置値と平均関係値の不一致を
+比較対象数に応じて評価する補助的な指標として検討できる。
+
+\section{比較対象の拡張に関する式}
+
+既存の比較対象を $R$、追加する比較対象を $N$ とし、
+\begin{equation}
+  |R|=r,\qquad |N|=q,\qquad
+  a\in R,\qquad N\cap R=\varnothing
+\end{equation}
+とする。
+
+既存の平均関係値を $M_R(a)$、追加対象に対する平均関係値を
+\begin{equation}
+  M_N(a)=\frac1q\sum_{b\in N}R_K(a,b)
+\end{equation}
+とすれば、拡張後の平均関係値は
+\begin{equation}
+  M_{R\cup N}(a)
+  =
+  \frac{(r-1)M_R(a)+qM_N(a)}{r+q-1}
+\end{equation}
+となる。
+
+拡張後の方式 A は
+\begin{equation}
+  K_A'(a)
+  =
+  \frac12
+  \left[
+    P(a)+
+    \frac{(r-1)M_R(a)+qM_N(a)}{r+q-1}
+  \right]
+\end{equation}
+であり、方式 B は
+\begin{equation}
+  K_B'(a)
+  =
+  \frac{
+    P(a)+(r-1)M_R(a)+qM_N(a)
+  }{r+q}
+\end{equation}
+である。
+
+配置値 $P(a)$ と既存の比較対象に対する関係値を固定した場合、
+方式 A の変化は
+\begin{equation}
+  \boxed{
+  K_A'(a)-K_A(a)
+  =
+  \frac{q}{2(r+q-1)}
+  \bigl(M_N(a)-M_R(a)\bigr)
+  }
+\end{equation}
+となる。
+
+方式 B の変化は
+\begin{equation}
+  \boxed{
+  K_B'(a)-K_B(a)
+  =
+  \frac{q}{r+q}
+  \bigl(M_N(a)-K_B(a)\bigr)
+  }
+\end{equation}
+となる。
+
+したがって、$M_N(a)=M_R(a)$ のとき、方式 A は変化しない。
+一方、方式 B は比較対象数の増加によって配置値と関係値の重みが変わるため、
+必ずしも不変ではない。
+
+\section{検証例 I：Solver 集合を固定して比較対象を変更する}
+
+\subsection{設定}
+
+Solver 集合を
+\begin{equation}
+  \mathcal{Z}=\{z_1,z_2,z_3,z_4\}
+\end{equation}
+とし、各 Solver の公理集合を次のように定める。
+\begin{align}
+  \mathcal{A}_{z_1}&=\{a,b,c,e\},\\
+  \mathcal{A}_{z_2}&=\{a,b,d\},\\
+  \mathcal{A}_{z_3}&=\{b,c,e\},\\
+  \mathcal{A}_{z_4}&=\{d,e\}.
+\end{align}
+
+対象公理を $a$ とし、比較集合を
+\begin{equation}
+  A_0=\{a,b,c\},\qquad
+  A_1=\{a,b,c,e\}
+\end{equation}
+とする。
+
+\subsection{配置値と関係値}
+
+対象公理の配置値は
+\begin{equation}
+  P(a)=\frac24=\frac12
+\end{equation}
+である。
+
+各比較公理に対する関係値は次のとおりとなる。
+\begin{align}
+  R_K(a,b)&=\frac14,\\
+  R_K(a,c)&=\frac13,\\
+  R_K(a,e)&=\frac5{12}.
+\end{align}
+
+従って、比較集合 $A_0$ では
+\begin{equation}
+  M_{A_0}(a)
+  =
+  \frac12\left(\frac14+\frac13\right)
+  =\frac7{24}
+\end{equation}
+である。これより
+\begin{align}
+  K_{A_0}(a)
+  &=\frac12\left(\frac12+\frac7{24}\right)
+    =\frac{19}{48}\\
+  &\approx0.395833333\ldots,\\
+  K_{B,A_0}(a)
+  &=\frac{\frac12+\frac14+\frac13}{3}
+    =\frac{13}{36}\\
+  &\approx0.361111111\ldots,\\
+  \Delta_{AB,A_0}(a)
+  &=-\frac5{144}\\
+  &\approx-0.034722222\ldots.
+\end{align}
+
+比較集合 $A_1$ では
+\begin{equation}
+  M_{A_1}(a)
+  =
+  \frac13\left(\frac14+\frac13+\frac5{12}\right)
+  =\frac13
+\end{equation}
+となる。従って
+\begin{align}
+  K_{A_1}(a)
+  &=\frac12\left(\frac12+\frac13\right)
+    =\frac5{12}\\
+  &\approx0.416666666\ldots,\\
+  K_{B,A_1}(a)
+  &=\frac{\frac12+\frac14+\frac13+\frac5{12}}4
+    =\frac38\\
+  &=0.375,\\
+  \Delta_{AB,A_1}(a)
+  &=-\frac1{24}\\
+  &\approx-0.041666666\ldots.
+\end{align}
+
+\subsection{結果と解釈}
+
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+指標 & $A_0$ & $A_1$ & 変化\\
+\midrule
+$P(a)$ & $0.5$ & $0.5$ & $0$\\
+$M_A(a)$ & $0.291666\ldots$ & $0.333333\ldots$ & $+0.041666\ldots$\\
+$K_A(a)$ & $0.395833\ldots$ & $0.416666\ldots$ & $+0.020833\ldots$\\
+$K_B(a)$ & $0.361111\ldots$ & $0.375$ & $+0.013888\ldots$\\
+$\Delta_{AB}(a)$ & $-0.034722\ldots$ & $-0.041666\ldots$ & $-0.006944\ldots$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Solver 集合の構造を固定しても、比較対象の変更だけで
+平均関係値、方式 A、方式 B、および両方式の差が変化し得る。
+
+この例は比較対象の変更による影響を示すものであり、
+拡張前後の公理体系の保持率 $I$ を直接比較する検証ではない。
+
+\section{検証例 II：$I$ を固定して Solver 集合の構造を変更する}
+
+\subsection{公理体系と保持率}
+
+拡張前後の公理体系を
+\begin{equation}
+  \Sigma=\{a,b,c\},\qquad
+  \Sigma'=\{a,b,d,e\}
+\end{equation}
+とする。
+
+保持される公理は
+\begin{equation}
+  \Sigma\cap\Sigma'=\{a,b\}
+\end{equation}
+であるから、保持率は
+\begin{equation}
+  I(\Sigma,\Sigma')
+  =
+  \frac{|\Sigma\cap\Sigma'|}{|\Sigma|}
+  =\frac23
+  \approx0.666666\ldots
+\end{equation}
+となる。
+
+この公理体系と保持率は、以下の Solver 集合の変更前後で固定する。
+
+\subsection{変更前の Solver 集合}
+
+検証例 I と同じく、
+\begin{align}
+  \mathcal{A}_{z_1}&=\{a,b,c,e\},\\
+  \mathcal{A}_{z_2}&=\{a,b,d\},\\
+  \mathcal{A}_{z_3}&=\{b,c,e\},\\
+  \mathcal{A}_{z_4}&=\{d,e\}
+\end{align}
+とする。
+
+比較集合は
+\begin{equation}
+  A_0=\{a,b,c\}
+\end{equation}
+に固定する。
+
+変更前の評価値は
+\begin{align}
+  P(a)&=\frac12,\\
+  M_{A_0}(a)&=\frac7{24},\\
+  K_A(a)&=\frac{19}{48}
+    \approx0.395833333\ldots,\\
+  K_B(a)&=\frac{13}{36}
+    \approx0.361111111\ldots,\\
+  \Delta_{AB}(a)&=-\frac5{144}
+    \approx-0.034722222\ldots
+\end{align}
+である。
+
+\subsection{変更後の Solver 集合}
+
+変更後は次のようにする。
+\begin{align}
+  \mathcal{A}'_{z_1}&=\{a,b,c,e\},\\
+  \mathcal{A}'_{z_2}&=\{a,d\},\\
+  \mathcal{A}'_{z_3}&=\{b,c,e\},\\
+  \mathcal{A}'_{z_4}&=\{b,d,e\}.
+\end{align}
+
+Solver の個数は変わらない。比較集合も引き続き
+$A_0=\{a,b,c\}$ とする。
+
+変更後の配置値は
+\begin{equation}
+  P'(a)=\frac24=\frac12
+\end{equation}
+であり、変更前と同じである。
+
+一方、関係値は
+\begin{align}
+  R_K'(a,b)&=\frac5{12},\\
+  R_K'(a,c)&=\frac13
+\end{align}
+となるため、
+\begin{equation}
+  M_{A_0}'(a)
+  =
+  \frac12\left(\frac5{12}+\frac13\right)
+  =\frac38
+\end{equation}
+である。
+
+従って、
+\begin{align}
+  K_A'(a)
+  &=\frac12\left(\frac12+\frac38\right)
+    =\frac7{16}\\
+  &=0.4375,\\
+  K_B'(a)
+  &=\frac{\frac12+\frac5{12}+\frac13}{3}
+    =\frac5{12}\\
+  &\approx0.416666666\ldots,\\
+  \Delta_{AB}'(a)
+  &=-\frac1{48}\\
+  &\approx-0.020833333\ldots
+\end{align}
+となる。
+
+\subsection{結果と解釈}
+
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+指標 & 変更前 & 変更後 & 変化\\
+\midrule
+$I$ & $2/3$ & $2/3$ & $0$\\
+$P(a)$ & $0.5$ & $0.5$ & $0$\\
+$M_A(a)$ & $0.291666\ldots$ & $0.375$ & $+0.083333\ldots$\\
+$K_A(a)$ & $0.395833\ldots$ & $0.4375$ & $+0.041666\ldots$\\
+$K_B(a)$ & $0.361111\ldots$ & $0.416666\ldots$ & $+0.055555\ldots$\\
+$\Delta_{AB}(a)$ & $-0.034722\ldots$ & $-0.020833\ldots$ & $+0.013888\ldots$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+この例では、$I$ と $P(a)$ が一定であるにもかかわらず、
+平均関係値と二方式の評価値は変化した。
+
+これは、$I$ が公理体系間で保持される公理の割合を評価する一方、
+$K$ は Solver 集合上での公理の配置と関係を評価するためである。
+
+したがって、$I$ の値だけから $K$ の値を一意に決定することはできない。
+また、両者の同時変化だけから因果関係を導くこともできない。
+
+\section{ここまでの確定事項}
+
+本稿で整理した確定事項は次のとおりである。
+
+\begin{enumerate}
+  \item $K$ は、Solver 集合上における公理の配置・関係・分離を記述する。
+  \item 公理の配置値 $P(a)$、関係値 $R_K(a,b)$、平均関係値 $M_A(a)$
+        を用いて、確定した基本評価値
+        $K_A(a)=(P(a)+M_A(a))/2$ を定義する。
+  \item 方式 B は、配置値と各関係値を一括して平均する比較方式であり、
+        方式 A の基本定義を置き換えるものではない。
+  \item 二方式の差は
+        $\Delta_{AB}(a)=\frac{r-2}{2r}(M_A(a)-P(a))$
+        と表せる。
+  \item 比較対象の変更だけでも、$K_A$、$K_B$、$\Delta_{AB}$ は変化し得る。
+  \item Solver 集合上の配置を変更すれば、$I$ と $P(a)$ が一定であっても
+        $K_A$ と $K_B$ が変化し得る。
+  \item $I$ と $K$ は異なる対象を評価するため、両者の関係は
+        個別に計算した上で検証しなければならない。
+\end{enumerate}
+%1
+
+% 2
+\section{Solver集合の構造変化に対する $K_A$ と $K_B$ の検証}
+\label{sec:K-structural-verification}
+
+\subsection{検証の目的と基本式}
+
+本節では、Solver集合上における公理の配置・関係・分離を評価する指標 $K$ について、基本方式 $K_A$ と比較方式 $K_B$ がSolver集合の構造変化に対してどのように応答するかを検証する。
+
+有限なSolver集合
+\[
+\mathcal{Z}=\{z_1,\ldots,z_n\}
+\]
+を考え、公理 $a$ の所属を表す指示関数を
+\[
+x_z(a)=
+\begin{cases}
+1 & (a\in\mathcal{A}_z),\\
+0 & (a\notin\mathcal{A}_z)
+\end{cases}
+\]
+とする。公理 $a$ の配置値を
+\[
+P(a)=\frac{1}{n}\sum_{z\in\mathcal{Z}}x_z(a)
+\]
+と定める。また、二つの公理 $a,b$ の所属の相違を
+\[
+S(a,b)=\frac{1}{n}\sum_{z\in\mathcal{Z}}
+\lvert x_z(a)-x_z(b)\rvert
+\]
+とする。
+
+これまでに定めた関係評価値は
+\[
+R_K(a,b)=\frac{P(a)+S(a,b)}{3}
+\]
+である。比較対象となる公理集合を $A$、その要素数を
+$r=|A|\geq 2$ とし、対象公理 $a\in A$ に対する平均関係値を
+\[
+M_A(a)=
+\frac{1}{r-1}
+\sum_{\substack{b\in A\\b\ne a}}R_K(a,b)
+\]
+とする。
+
+本節で比較する二つの方式は、次のとおりである。
+\[
+\boxed{
+K_A(a)=\frac{P(a)+M_A(a)}{2}
+}
+\tag{1}
+\]
+\[
+\boxed{
+K_B(a)=
+\frac{P(a)+(r-1)M_A(a)}{r}
+}
+\tag{2}
+\]
+
+ここで、$K_A$ を基本方式、$K_B$ を比較方式とする。両者は異なる重み付けを用いるため、同一のSolver集合に対しても異なる値を返し得る。
+
+両方式の差を
+\[
+\Delta_{AB}(a)=K_B(a)-K_A(a)
+\]
+と定義すると、
+\[
+\boxed{
+\Delta_{AB}(a)=
+\frac{r-2}{2r}\bigl(M_A(a)-P(a)\bigr)
+}
+\tag{3}
+\]
+が得られる。
+
+以下では、これらの式を前提として、構造変化に伴う不変性と変化の条件を検証する。
+
+\subsection{配置値と平均関係値の変化}
+
+二つのSolver構造間における変化量を
+\[
+\delta P=P'(a)-P(a),\qquad
+\delta M=M'_A(a)-M_A(a)
+\]
+とする。このとき、式 (1)、(2) より、
+\[
+\boxed{
+\delta K_A(a)=\frac{\delta P+\delta M}{2}
+}
+\tag{4}
+\]
+および
+\[
+\boxed{
+\delta K_B(a)=
+\frac{\delta P+(r-1)\delta M}{r}
+}
+\tag{5}
+\]
+が成立する。
+
+したがって、各方式の値が不変となる条件は、それぞれ
+\[
+\boxed{\delta M=-\delta P}
+\tag{6}
+\]
+および
+\[
+\boxed{
+\delta M=-\frac{\delta P}{r-1}
+}
+\tag{7}
+\]
+である。
+
+方式 $K_A$ の不変条件は比較対象数 $r$ に依存しない。一方、方式 $K_B$ の不変条件は $r$ に依存する。
+
+\subsection{固定されたSolver集合における比較対象集合の変更}
+
+まず、Solver集合自体を固定し、比較対象集合だけを変更する場合を考える。
+
+\[
+\mathcal{Z}=\{z_1,z_2,z_3,z_4\}
+\]
+とし、各Solverの公理集合を
+\[
+\begin{aligned}
+\mathcal{A}_{z_1}&=\{a,b,c,e\},\\
+\mathcal{A}_{z_2}&=\{a,b,d\},\\
+\mathcal{A}_{z_3}&=\{b,c,e\},\\
+\mathcal{A}_{z_4}&=\{d,e\}
+\end{aligned}
+\]
+とする。対象公理を $a$ とし、
+\[
+A_0=\{a,b,c\},\qquad
+A_1=\{a,b,c,e\}
+\]
+を比較する。
+
+このとき、
+\[
+P(a)=\frac12
+\]
+であり、
+\[
+R_K(a,b)=\frac14,\qquad
+R_K(a,c)=\frac13,\qquad
+R_K(a,e)=\frac5{12}
+\]
+となる。
+
+比較対象集合が $A_0$ の場合、
+\[
+M_{A_0}(a)=\frac{7}{24},
+\]
+したがって、
+\[
+K_A(a)=\frac{19}{48}
+\approx 0.395833333\ldots,
+\]
+\[
+K_B(a)=\frac{13}{36}
+\approx 0.361111111\ldots,
+\]
+\[
+\Delta_{AB}(a)=-\frac5{144}
+\approx -0.034722222\ldots
+\]
+である。
+
+一方、比較対象集合が $A_1$ の場合、
+\[
+M_{A_1}(a)=\frac13,
+\]
+したがって、
+\[
+K_A(a)=\frac5{12}
+\approx 0.416666666\ldots,
+\]
+\[
+K_B(a)=\frac38=0.375,
+\]
+\[
+\Delta_{AB}(a)=-\frac1{24}
+\approx -0.041666666\ldots
+\]
+となる。
+
+この例では、Solver集合を変更しなくても、比較対象集合の変更によって $M_A(a)$、$K_A(a)$、$K_B(a)$ および両方式の差が変化する。
+
+したがって、$K$ の値を比較する際には、Solver集合の構造だけでなく、比較対象集合も固定されているかどうかを区別する必要がある。
+
+\subsection{構造整合性指標 $I$ と $K$ の独立性}
+
+有限な公理体系 $\Sigma,\Sigma'$ に対し、保持される公理集合を
+\[
+R=\Sigma\cap\Sigma'
+\]
+とする。元の公理体系 $\Sigma$ が有限で空でない場合、構造整合性指標を
+\[
+I(\Sigma,\Sigma')
+=\frac{|\Sigma\cap\Sigma'|}{|\Sigma|}
+\tag{8}
+\]
+とする。
+
+ここで、$I$ は元の公理体系から保持された公理の割合を評価する。一方、$K$ はSolver集合上における公理の配置・関係・分離を評価する。したがって、両者は異なる対象を評価する。
+
+\subsubsection{同じ $I$ でも $K$ が変化する場合}
+
+次の二つの公理体系を考える。
+\[
+\Sigma=\{a,b,c\},\qquad
+\Sigma'=\{a,b,d,e\}.
+\]
+このとき、
+\[
+I(\Sigma,\Sigma')=\frac23.
+\]
+
+先ほどのSolver構造を用い、比較対象集合を
+\[
+A_0=\{a,b,c\}
+\]
+に固定する。構造を変更する前は、
+\[
+P(a)=\frac12,\quad
+M_{A_0}(a)=\frac7{24},
+\]
+\[
+K_A(a)=\frac{19}{48},\qquad
+K_B(a)=\frac{13}{36}.
+\]
+
+次に、Solver集合を
+\[
+\begin{aligned}
+\mathcal{A}_{z_1}&=\{a,b,c,e\},\\
+\mathcal{A}_{z_2}&=\{a,d\},\\
+\mathcal{A}_{z_3}&=\{b,c,e\},\\
+\mathcal{A}_{z_4}&=\{b,d,e\}
+\end{aligned}
+\]
+に変更する。この場合も $P(a)=1/2$ だが、
+\[
+R_K(a,b)=\frac5{12},\qquad
+R_K(a,c)=\frac13
+\]
+となり、
+\[
+M_{A_0}(a)=\frac38.
+\]
+
+よって、
+\[
+K_A(a)=\frac7{16}=0.4375,
+\]
+\[
+K_B(a)=\frac5{12}
+\approx 0.416666666\ldots
+\]
+となる。
+
+$I$ と $P(a)$ が同じでも、他の公理との関係が変われば $K$ は変化し得る。したがって、$I$ だけから $K$ を決定することはできない。
+
+\subsubsection{異なる $I$ でも $K$ が変化しない場合}
+
+同じ
+\[
+\Sigma=\{a,b,c\}
+\]
+に対して、
+\[
+\Sigma'_1=\{a,b,d,e\},\qquad
+\Sigma'_2=\{a,d,e\}
+\]
+を考える。このとき、
+\[
+I(\Sigma,\Sigma'_1)=\frac23,\qquad
+I(\Sigma,\Sigma'_2)=\frac13.
+\]
+
+一方、Solver集合と比較対象集合 $A_0=\{a,b,c\}$ を固定すれば、
+\[
+P(a)=\frac12,\qquad
+M_{A_0}(a)=\frac7{24}
+\]
+は変化しない。したがって、
+\[
+K_A(a)=\frac{19}{48},\qquad
+K_B(a)=\frac{13}{36}
+\]
+も変化しない。
+
+さらに、Solver集合自体を変更した場合でも、対象公理 $a$ と比較対象公理 $b,c$ の所属ベクトルが保存されれば、これらの評価値は変化しない。例えば、次の構造を考える。
+\[
+\begin{aligned}
+\mathcal{A}_{z_1}&=\{a,b,c,d\},\\
+\mathcal{A}_{z_2}&=\{a,b,e\},\\
+\mathcal{A}_{z_3}&=\{b,c,d\},\\
+\mathcal{A}_{z_4}&=\{d,e\}.
+\end{aligned}
+\]
+この構造では、$a,b,c$ の所属ベクトルは変更前と同じであるため、$P(a)$、$M_{A_0}(a)$、$K_A(a)$、$K_B(a)$ はすべて同じ値を保つ。
+
+以上より、$I$ の変化は必ずしも $K$ の変化を意味せず、逆に $I$ が一定であることも $K$ の不変性を保証しない。
+
+\subsection{個々の関係値の変化と平均による相殺}
+
+次に、個々の関係値が変化しても、その平均が変化しない場合を考える。
+
+比較対象集合を $A=\{a,b,c\}$ とし、次の二つの構造を用いる。
+
+構造 1：
+\[
+\begin{aligned}
+x(a)&=(1,1,0,0),\\
+x(b)&=(1,1,1,0),\\
+x(c)&=(1,0,0,1).
+\end{aligned}
+\]
+
+構造 2：
+\[
+\begin{aligned}
+x(a)&=(1,1,0,0),\\
+x(b)&=(1,0,0,1),\\
+x(c)&=(1,1,1,0).
+\end{aligned}
+\]
+
+両構造で
+\[
+P(a)=\frac12
+\]
+である。
+
+構造 1 では、
+\[
+R_K(a,b)=\frac14,\qquad
+R_K(a,c)=\frac13.
+\]
+構造 2 では、
+\[
+R_K(a,b)=\frac13,\qquad
+R_K(a,c)=\frac14.
+\]
+
+個々の関係値は入れ替わるが、
+\[
+M_A(a)=\frac12\left(\frac14+\frac13\right)
+=\frac7{24}
+\]
+は両構造で同じである。したがって、
+\[
+K_A(a)=\frac{19}{48},\qquad
+K_B(a)=\frac{13}{36}
+\]
+も不変となる。
+
+この例は、$K$ が個々の関係値をそのまま保持する指標ではなく、それらを平均して集約する指標であることを示す。同じ $K$ の値から、元の関係構造が一意に定まるわけではない。
+
+\subsection{配置値と平均関係値の相殺による不変性}
+
+\subsubsection{方式 $K_A$ のみが不変となる場合}
+
+比較対象集合を $A=\{a,b,c\}$ とする。
+
+構造 1：
+\[
+x(a)=(1,0,0,0),\qquad
+x(b)=x(c)=(0,1,1,1).
+\]
+このとき、
+\[
+P(a)=\frac14,\qquad
+R_K(a,b)=R_K(a,c)=\frac5{12},
+\]
+\[
+M_A(a)=\frac5{12}.
+\]
+したがって、
+\[
+K_A(a)=\frac13,\qquad
+K_B(a)=\frac{13}{36}.
+\]
+
+構造 2：
+\[
+x(a)=x(b)=x(c)=(1,1,0,0).
+\]
+このとき、
+\[
+P(a)=\frac12,\qquad
+R_K(a,b)=R_K(a,c)=\frac16,
+\]
+\[
+M_A(a)=\frac16.
+\]
+したがって、
+\[
+K_A(a)=\frac13,\qquad
+K_B(a)=\frac5{18}.
+\]
+
+この二構造間では、
+\[
+\delta P=\frac14,\qquad
+\delta M=-\frac14.
+\]
+よって、
+\[
+\delta K_A=\frac{\delta P+\delta M}{2}=0
+\]
+となる一方、$K_B$ は変化する。
+
+つまり、配置値の増加と平均関係値の減少が同じ大きさであれば、方式 $K_A$ では両者が相殺される。
+
+\subsubsection{方式 $K_B$ のみが不変となる場合}
+
+同じ構造 1 を出発点とし、次の構造 2 を考える。
+\[
+\begin{aligned}
+x(a)&=(1,1,0,0),\\
+x(b)&=(1,1,0,0),\\
+x(c)&=(1,0,1,1).
+\end{aligned}
+\]
+
+このとき、
+\[
+P(a)=\frac12,
+\]
+\[
+R_K(a,b)=\frac16,\qquad
+R_K(a,c)=\frac5{12},
+\]
+\[
+M_A(a)=\frac7{24}.
+\]
+
+したがって、
+\[
+K_A(a)=\frac{19}{48},\qquad
+K_B(a)=\frac{13}{36}.
+\]
+
+出発点と比較すると、
+\[
+\delta P=\frac14,\qquad
+\delta M=-\frac18.
+\]
+比較対象数は $r=3$ であるため、
+\[
+\delta K_B
+=\frac{\delta P+2\delta M}{3}
+=0.
+\]
+一方、$K_A$ は不変ではない。
+
+この例は、方式 $K_B$ では配置値と平均関係値の変化が、比較対象数に応じた重み付けによって相殺され得ることを示す。
+
+\subsection{方式間の差が不変となる場合}
+
+方式間の差は式 (3) より、
+\[
+\Delta_{AB}(a)=
+\frac{r-2}{2r}\bigl(M_A(a)-P(a)\bigr)
+\]
+で与えられる。$r>2$ であれば、二つの構造間で
+\[
+\boxed{\delta M=\delta P}
+\tag{9}
+\]
+が成立すると、$\Delta_{AB}(a)$ は不変となる。
+
+具体例として、比較対象集合 $A=\{a,b,c\}$ を考える。
+
+構造 1：
+\[
+\begin{aligned}
+x(a)&=(1,1,0,0),\\
+x(b)&=(1,0,0,0),\\
+x(c)&=(1,0,0,0).
+\end{aligned}
+\]
+このとき、
+\[
+P(a)=\frac12,\qquad
+S(a,b)=S(a,c)=\frac14.
+\]
+したがって、
+\[
+R_K(a,b)=R_K(a,c)=\frac14,
+\qquad
+M_A(a)=\frac14.
+\]
+よって、
+\[
+K_A(a)=\frac38,\qquad
+K_B(a)=\frac13,\qquad
+\Delta_{AB}(a)=-\frac1{24}.
+\]
+
+構造 2：
+\[
+\begin{aligned}
+x(a)&=(1,0,0,0),\\
+x(b)&=(1,0,0,0),\\
+x(c)&=(1,1,1,0).
+\end{aligned}
+\]
+このとき、
+\[
+P(a)=\frac14,\qquad
+S(a,b)=0,\qquad
+S(a,c)=\frac12.
+\]
+したがって、
+\[
+R_K(a,b)=\frac1{12},\qquad
+R_K(a,c)=\frac14,
+\]
+\[
+M_A(a)=\frac16.
+\]
+よって、
+\[
+K_A(a)=\frac5{24},\qquad
+K_B(a)=\frac7{36},\qquad
+\Delta_{AB}(a)=-\frac1{72}.
+\]
+
+この具体例は、差の不変性を示すものではない。式 (9) の条件を満たしていないため、差が変化している。したがって、式 (9) を実例に適用する際には、配置値と平均関係値の変化量を個別に確認する必要がある。
+
+\subsection{比較対象数 $r$ による不変条件の違い}
+
+式 (6)、(7) から、方式 $K_A$ と方式 $K_B$ の不変条件は比較対象数に応じて異なる。
+
+\begin{center}
+\begin{tabular}{c|c|c}
+\hline
+比較対象数 & $K_A$ の不変条件 & $K_B$ の不変条件\\
+\hline
+$r=2$ & $\delta M=-\delta P$
+      & $\delta M=-\delta P$\\
+$r=3$ & $\delta M=-\delta P$
+      & $\delta M=-\delta P/2$\\
+$r=4$ & $\delta M=-\delta P$
+      & $\delta M=-\delta P/3$\\
+一般の $r$ & $\delta M=-\delta P$
+            & $\delta M=-\delta P/(r-1)$\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{$r=2$ の場合}
+
+比較対象集合を $A=\{a,b\}$ とし、
+\[
+x(a)=(1,0,0,0),\qquad
+x(b)=(0,1,1,1)
+\]
+とする。このとき、
+\[
+P(a)=\frac14,\qquad
+M_A(a)=\frac5{12},
+\]
+\[
+K_A(a)=K_B(a)=\frac13.
+\]
+
+次に、
+\[
+x(a)=x(b)=(1,1,0,0)
+\]
+とする。このとき、
+\[
+P(a)=\frac12,\qquad
+M_A(a)=\frac16,
+\]
+\[
+K_A(a)=K_B(a)=\frac13.
+\]
+
+$r=2$ では、式 (1)、(2) が同一となるため、
+\[
+K_A(a)=K_B(a)
+\]
+が常に成立する。したがって、この場合には両方式の差は常にゼロであり、方式間の差による比較は意味を持たない。
+
+\subsubsection{$r=3$ の場合}
+
+比較対象集合を $A=\{a,b,c\}$ とする。構造 1 を
+\[
+\begin{aligned}
+x(a)&=(1,0,0,0),\\
+x(b)&=x(c)=(0,1,1,1)
+\end{aligned}
+\]
+とし、構造 2 を
+\[
+\begin{aligned}
+x(a)&=x(b)=(1,1,0,0),\\
+x(c)&=(1,0,1,1)
+\end{aligned}
+\]
+とする。
+
+構造 1 では、
+\[
+P(a)=\frac14,\qquad M_A(a)=\frac5{12},
+\]
+\[
+K_A(a)=\frac13,\qquad K_B(a)=\frac{13}{36}.
+\]
+
+構造 2 では、
+\[
+P(a)=\frac12,\qquad M_A(a)=\frac7{24},
+\]
+\[
+K_A(a)=\frac{19}{48},\qquad K_B(a)=\frac{13}{36}.
+\]
+
+このとき、
+\[
+\delta P=\frac14,\qquad
+\delta M=-\frac18
+=-\frac{\delta P}{2}.
+\]
+したがって、方式 $K_B$ の値は不変である一方、方式 $K_A$ の値は変化する。
+
+\subsubsection{$r=4$ の場合}
+
+比較対象集合を $A=\{a,b,c,d\}$ とする。構造 1 を
+\[
+\begin{aligned}
+x(a)&=(1,0,0,0),\\
+x(b)&=x(c)=x(d)=(0,1,1,1)
+\end{aligned}
+\]
+とする。このとき、
+\[
+P(a)=\frac14,\qquad M_A(a)=\frac5{12},
+\]
+\[
+K_A(a)=\frac13,\qquad K_B(a)=\frac38.
+\]
+
+構造 2 を
+\[
+\begin{aligned}
+x(a)&=x(b)=(1,1,0,0),\\
+x(c)&=(1,0,1,0),\\
+x(d)&=(0,0,1,1)
+\end{aligned}
+\]
+とする。このとき、
+\[
+P(a)=\frac12,
+\]
+\[
+R_K(a,b)=\frac16,\qquad
+R_K(a,c)=\frac13,\qquad
+R_K(a,d)=\frac12.
+\]
+よって、
+\[
+M_A(a)=\frac13,
+\]
+\[
+K_A(a)=\frac5{12},\qquad K_B(a)=\frac38.
+\]
+
+この場合、
+\[
+\delta P=\frac14,\qquad
+\delta M=-\frac1{12}
+=-\frac{\delta P}{3}.
+\]
+したがって、方式 $K_B$ は不変であり、方式 $K_A$ は変化する。
+
+\subsection{比較対象数の追加による平均関係値の変化}
+
+既存の比較対象集合を $R$、追加する公理集合を $N$ とし、
+\[
+|R|=r,\qquad |N|=q,\qquad R\cap N=\varnothing
+\]
+とする。対象公理 $a$ は $R$ に属するものとする。
+
+追加する公理集合に対する平均関係値を
+\[
+M_N(a)=\frac1q\sum_{b\in N}R_K(a,b)
+\]
+と定義する。ただし、$q\geq1$ とする。
+
+このとき、比較対象集合を $R\cup N$ に変更した後の平均関係値は
+\[
+\boxed{
+M_{R\cup N}(a)=
+\frac{(r-1)M_R(a)+qM_N(a)}{r+q-1}
+}
+\tag{10}
+\]
+となる。
+
+したがって、基本方式の変更後の値は
+\[
+\boxed{
+K'_A(a)=
+\frac12\left[
+P(a)+
+\frac{(r-1)M_R(a)+qM_N(a)}{r+q-1}
+\right]
+}
+\tag{11}
+\]
+であり、比較方式の変更後の値は
+\[
+\boxed{
+K'_B(a)=
+\frac{
+P(a)+(r-1)M_R(a)+qM_N(a)
+}{r+q}
+}
+\tag{12}
+\]
+となる。
+
+追加前の値を $K_A(a)$、$K_B(a)$ とすると、
+\[
+\boxed{
+K'_A(a)-K_A(a)=
+\frac{q}{2(r+q-1)}
+\bigl(M_N(a)-M_R(a)\bigr)
+}
+\tag{13}
+\]
+および
+\[
+\boxed{
+K'_B(a)-K_B(a)=
+\frac{q}{r+q}
+\bigl(M_N(a)-K_B(a)\bigr)
+}
+\tag{14}
+\]
+が成立する。
+
+式 (13) より、追加する公理群に対する平均関係値が既存の平均関係値と等しい場合、方式 $K_A$ の値は変化しない。一方、式 (14) より、方式 $K_B$ が不変となる条件は
+\[
+M_N(a)=K_B(a)
+\]
+である。
+
+したがって、比較対象集合への公理の追加は、単に平均関係値を変えるだけではなく、各方式が用いる重み付けにも影響する。
+
+\subsection{検証結果の総括}
+
+本節の検証により、次の事項が確認された。
+
+\begin{enumerate}
+\item Solver集合を固定していても、比較対象集合の変更によって
+      $M_A(a)$、$K_A(a)$、$K_B(a)$ は変化し得る。
+
+\item 構造整合性指標 $I$ が同じでも $K$ が変化する場合があり、
+      逆に $I$ が変化しても $K$ が変化しない場合がある。
+      これは、$I$ と $K$ が異なる対象を評価するためである。
+
+\item 個々の関係値が変化しても、その平均が同じであれば、
+      $P(a)$ が不変である限り、$K_A(a)$ と $K_B(a)$ は不変となる。
+      したがって、同じ評価値が同一のSolver構造を一意に定めるわけではない。
+
+\item 方式 $K_A$ の不変条件は
+      $\delta M=-\delta P$ であり、比較対象数に依存しない。
+
+\item 方式 $K_B$ の不変条件は
+      $\delta M=-\delta P/(r-1)$ であり、比較対象数に依存する。
+
+\item $r=2$ では両方式が一致する。$r>2$ では両方式の重み付けが異なり、
+      一方が不変でも他方が変化する場合がある。
+
+\item 方式間の差 $\Delta_{AB}(a)$ が不変となる条件は、
+      $r>2$ のとき $\delta M=\delta P$ である。
+      この条件は、各方式の値がそれぞれ不変となる条件とは異なる。
+
+\item 比較対象集合に公理を追加した場合、平均関係値は既存部分と追加部分の
+      加重平均となる。方式 $K_A$ と方式 $K_B$ では不変条件が異なるため、
+      追加による変化を両方式で別々に評価する必要がある。
+\end{enumerate}
+
+以上より、方式 $K_A$ と方式 $K_B$ は、同じ配置値と関係値を用いながらも、
+異なる集約規則を持つことが確認された。両方式の差は単なる計算上の差ではなく、
+比較対象数と配置値・平均関係値の相対的な変化に依存する。
+
+ただし、これらの性質だけから一方の方式が他方より優れていると結論することはできない。
+どちらを基本方式として採用するかは、$K$ にどのような評価上の役割を持たせるかという
+ECA上の位置付けに基づいて判断する必要がある。
+
+\section{定義の補完・適用条件および検証例の訂正}
+\label{sec:K-definitions-and-caveats}
+
+\subsection{本補足の目的}
+
+本節では、前節までの $K_A$ および $K_B$ の検証について、
+数式内で使用した各量の定義、定義間の関係、適用条件および
+検証結果を解釈する際の注意点を明示する。
+
+また、方式間の差 $\Delta_{AB}$ の不変性に関する前節の検証について、
+提示した所属ベクトルが目的の条件を満たしていない例が含まれていたため、
+その例を訂正し、条件を満たす具体例を改めて示す。
+
+本節で扱う有限Solver集合上の定義と、測度を用いる場合の拡張とは区別する。
+測度による拡張については、必要な条件を満たす場合に限って言及する。
+
+\subsection{有限Solver集合上の基本定義}
+
+\subsubsection{Solver集合と公理の所属}
+
+有限かつ空でないSolver集合を
+\[
+\mathcal{Z}=\{z_1,z_2,\ldots,z_n\},
+\qquad n=|\mathcal{Z}|\geq 1
+\]
+とする。各Solver $z\in\mathcal{Z}$ に対応する公理集合を
+$\mathcal{A}_z$ とする。
+
+公理 $a$ の所属を表す指示関数を
+\[
+x_z(a)=
+\begin{cases}
+1 & \text{if }a\in\mathcal{A}_z,\\
+0 & \text{if }a\notin\mathcal{A}_z
+\end{cases}
+\]
+と定義する。
+
+このとき、公理 $a$ の配置値を
+\[
+\boxed{
+P(a)=\frac{1}{n}\sum_{z\in\mathcal{Z}}x_z(a)
+}
+\tag{15}
+\]
+とする。したがって、
+\[
+0\leq P(a)\leq 1
+\]
+が成立する。
+
+$P(a)$ は、有限Solver集合において公理 $a$ が所属するSolverの割合を表す。
+これは公理の重要度や、公理体系全体に対する整合性を直接表す値ではない。
+
+\subsubsection{共通配置値}
+
+公理 $a,b$ の共通配置値を
+\[
+\boxed{
+C(a,b)=
+\frac{1}{n}
+\sum_{z\in\mathcal{Z}}x_z(a)x_z(b)
+}
+\tag{16}
+\]
+と定義する。
+
+同値な集合表現は
+\[
+C(a,b)=
+\frac{|\mathcal{Z}_a\cap\mathcal{Z}_b|}{|\mathcal{Z}|},
+\]
+ただし、
+\[
+\mathcal{Z}_a=
+\{z\in\mathcal{Z}\mid a\in\mathcal{A}_z\}
+\]
+である。
+
+$C(a,b)$ は、両公理が同時に所属するSolverの割合を表す。
+したがって、
+\[
+C(a,b)=C(b,a)
+\]
+であり、
+\[
+0\leq C(a,b)\leq\min\{P(a),P(b)\}
+\]
+が成立する。
+
+\subsubsection{方向付き分離値}
+
+公理 $a$ が所属する一方で、公理 $b$ が所属しないSolverの割合を
+\[
+\boxed{
+D(a\mid b)=
+\frac{1}{n}
+\sum_{z\in\mathcal{Z}}
+x_z(a)\bigl(1-x_z(b)\bigr)
+}
+\tag{17}
+\]
+と定義する。
+
+集合表現では、
+\[
+D(a\mid b)=
+\frac{|\mathcal{Z}_a\setminus\mathcal{Z}_b|}
+{|\mathcal{Z}|}
+\]
+である。
+
+一般に、
+\[
+D(a\mid b)\ne D(b\mid a)
+\]
+であり、両者を区別する必要がある。
+
+配置値との関係は
+\[
+\boxed{
+P(a)=C(a,b)+D(a\mid b)
+}
+\tag{18}
+\]
+および
+\[
+\boxed{
+P(b)=C(a,b)+D(b\mid a)
+}
+\tag{19}
+\]
+である。
+
+\subsubsection{対称差に基づく分離値}
+
+公理 $a,b$ の所属が異なるSolverの割合を
+\[
+\boxed{
+S(a,b)=
+\frac{1}{n}\sum_{z\in\mathcal{Z}}
+|x_z(a)-x_z(b)|
+}
+\tag{20}
+\]
+と定義する。
+
+集合表現では、
+\[
+S(a,b)=
+\frac{|\mathcal{Z}_a\triangle\mathcal{Z}_b|}
+{|\mathcal{Z}|}
+\]
+である。ここで、
+\[
+\mathcal{Z}_a\triangle\mathcal{Z}_b
+=
+(\mathcal{Z}_a\setminus\mathcal{Z}_b)
+\cup
+(\mathcal{Z}_b\setminus\mathcal{Z}_a)
+\]
+は対称差を表す。
+
+$S(a,b)$ は対称であり、
+\[
+S(a,b)=S(b,a)
+\]
+が成立する。また、式 (17) より、
+\[
+\boxed{
+S(a,b)=D(a\mid b)+D(b\mid a)
+}
+\tag{21}
+\]
+が成立する。
+
+したがって、
+\[
+0\leq S(a,b)\leq 1
+\]
+である。
+
+\subsection{関係評価値 $R_K$ の定義と簡約}
+
+前節までの関係評価値を、共通配置値、方向付き分離値、
+対称差に基づく分離値の算術平均として定義する。
+\[
+\boxed{
+R_K(a,b)=
+\frac{C(a,b)+D(a\mid b)+S(a,b)}{3}
+}
+\tag{22}
+\]
+
+式 (18) および式 (21) より、
+\[
+\begin{aligned}
+C(a,b)+D(a\mid b)&=P(a),\\
+D(a\mid b)+S(a,b)
+&=2D(a\mid b)+D(b\mid a)
+\end{aligned}
+\]
+が成立する。特に、
+\[
+\begin{aligned}
+C(a,b)+D(a\mid b)+S(a,b)
+&=P(a)+D(b\mid a)+D(a\mid b)\\
+&=P(a)+S(a,b).
+\end{aligned}
+\]
+
+よって、
+\[
+\boxed{
+R_K(a,b)=\frac{P(a)+S(a,b)}{3}
+}
+\tag{23}
+\]
+が導かれる。
+
+式 (22) と式 (23) は、同じ関係評価値の異なる表現である。
+式 (23) は、式 (22) に含まれる量の間に成立する恒等式を利用した簡約であり、
+別個の評価規則を導入するものではない。
+
+なお、式 (22) では共通配置値、方向付き分離値、対称差に基づく分離値を
+等しい重みで平均している。この重み付けは定義の一部であり、
+数学的な恒等式だけから必然的に決まるものではない。
+
+\subsection{比較対象集合と平均関係値}
+
+比較対象となる公理集合を $A$ とし、
+\[
+a\in A,\qquad r=|A|\geq 2
+\]
+とする。$A$ は重複を含まない有限集合である。
+
+対象公理 $a$ と、それ以外の各公理との関係評価値の平均を
+\[
+\boxed{
+M_A(a)=
+\frac{1}{r-1}
+\sum_{\substack{b\in A\\b\ne a}}R_K(a,b)
+}
+\tag{24}
+\]
+と定義する。
+
+$M_A(a)$ は、対象公理 $a$ と比較対象集合内の他の公理との関係評価値を
+算術平均したものである。
+
+式 (23) を代入すると、
+\[
+\boxed{
+M_A(a)=
+\frac{P(a)+
+\displaystyle\frac{1}{r-1}
+\sum_{\substack{b\in A\\b\ne a}}S(a,b)}
+{3}
+}
+\tag{25}
+\]
+を得る。
+
+ここで、対象公理 $a$ の配置値 $P(a)$ は、平均を取る対象公理の数にかかわらず
+同一のSolver集合に対して一定である。一方、$M_A(a)$ は比較対象集合 $A$ に依存する。
+
+\subsection{方式 $K_A$ および $K_B$ の定義域と性質}
+
+前節までの定義を用い、基本方式と比較方式を
+\[
+\boxed{
+K_A(a)=\frac{P(a)+M_A(a)}{2}
+}
+\tag{26}
+\]
+および
+\[
+\boxed{
+K_B(a)=
+\frac{P(a)+(r-1)M_A(a)}{r}
+}
+\tag{27}
+\]
+とする。
+
+有限Solver集合上では、
+\[
+0\leq P(a)\leq 1,\qquad
+0\leq S(a,b)\leq 1
+\]
+であるため、式 (23) より
+\[
+0\leq R_K(a,b)\leq\frac23.
+\]
+したがって、
+\[
+0\leq M_A(a)\leq\frac23
+\]
+が成立する。
+
+よって、両方式について
+\[
+0\leq K_A(a)\leq\frac56,
+\qquad
+0\leq K_B(a)\leq\frac56
+\]
+が成立する。
+
+この上限は、定義から得られる一般的な評価であり、すべての端点が実際に達成されることを主張するものではない。
+
+方式間の差は
+\[
+\begin{aligned}
+\Delta_{AB}(a)
+&=K_B(a)-K_A(a)\\
+&=\frac{P(a)+(r-1)M_A(a)}{r}
+-\frac{P(a)+M_A(a)}{2}\\
+&=\boxed{
+\frac{r-2}{2r}\bigl(M_A(a)-P(a)\bigr)
+}.
+\end{aligned}
+\tag{28}
+\]
+
+したがって、
+\[
+|\Delta_{AB}(a)|
+\leq \frac{r-2}{2r}\cdot\frac23
+\leq\frac13
+\qquad (r\geq 2)
+\]
+が成立する。ここでは、より粗い一般上界を用いている。
+
+$r=2$ では、
+\[
+K_A(a)=K_B(a)=\frac{P(a)+M_A(a)}{2}
+\]
+となる。したがって、
+\[
+\Delta_{AB}(a)=0
+\]
+であり、方式間の差を用いた比較は、この場合には両方式の違いを示さない。
+
+\subsection{変化量と不変条件の適用範囲}
+
+二つのSolver構造間の変化量を
+\[
+\delta P=P'(a)-P(a),\qquad
+\delta M=M'_A(a)-M_A(a)
+\]
+とする。ただし、比較対象数 $r$ は両構造間で同一とする。
+
+この条件の下で、
+\[
+\delta K_A(a)=\frac{\delta P+\delta M}{2}
+\]
+および
+\[
+\delta K_B(a)=
+\frac{\delta P+(r-1)\delta M}{r}
+\]
+が成立する。
+
+したがって、
+\[
+\delta K_A(a)=0
+\iff
+\delta M=-\delta P
+\tag{29}
+\]
+および
+\[
+\delta K_B(a)=0
+\iff
+\delta M=-\frac{\delta P}{r-1}
+\tag{30}
+\]
+である。
+
+また、$r>2$ では、
+\[
+\delta\Delta_{AB}(a)=0
+\iff
+\delta M=\delta P
+\tag{31}
+\]
+となる。
+
+ここで、式 (29)--(31) は比較対象数 $r$ が変化しない場合の条件である。
+比較対象集合に公理を追加するなどして $r$ 自体が変化する場合には、
+係数も変化するため、これらの条件をそのまま適用することはできない。
+その場合は、追加後の定義式から改めて計算する必要がある。
+
+\subsection{方式間の差の不変性に関する検証例の訂正}
+
+前節の「方式間の差が不変となる場合」において、最初に提示した具体例は、
+実際には
+\[
+\delta M=\delta P
+\]
+を満たしていなかった。そのため、当該例は方式間の差の不変性を示す例としては
+不適切である。本項では、その例に代えて、条件を満たす構造を示す。
+
+比較対象集合を
+\[
+A=\{a,b,c\}
+\]
+とする。
+
+\subsubsection{構造 1}
+
+所属ベクトルを
+\[
+x(a)=x(b)=x(c)=(1,0,0,0)
+\]
+とする。このとき、
+\[
+P(a)=\frac14,\qquad
+S(a,b)=S(a,c)=0.
+\]
+したがって、
+\[
+R_K(a,b)=R_K(a,c)=\frac1{12},
+\]
+\[
+M_A(a)=\frac1{12}.
+\]
+
+よって、
+\[
+K_A(a)=
+\frac12\left(\frac14+\frac1{12}\right)
+=\frac16,
+\]
+\[
+K_B(a)=
+\frac{\frac14+2\cdot\frac1{12}}{3}
+=\frac5{36},
+\]
+\[
+\Delta_{AB}(a)
+=\frac5{36}-\frac16
+=-\frac1{36}.
+\]
+
+\subsubsection{構造 2}
+
+次に、所属ベクトルを
+\[
+x(a)=x(b)=(1,1,0,0),\qquad
+x(c)=(0,0,1,1)
+\]
+とする。このとき、
+\[
+P(a)=\frac12,\qquad
+S(a,b)=0,\qquad S(a,c)=1.
+\]
+したがって、
+\[
+R_K(a,b)=\frac16,\qquad
+R_K(a,c)=\frac12,
+\]
+\[
+M_A(a)=\frac12\left(\frac16+\frac12\right)
+=\frac13.
+\]
+
+よって、
+\[
+K_A(a)=
+\frac12\left(\frac12+\frac13\right)
+=\frac5{12},
+\]
+\[
+K_B(a)=
+\frac{\frac12+2\cdot\frac13}{3}
+=\frac7{18},
+\]
+\[
+\Delta_{AB}(a)
+=\frac7{18}-\frac5{12}
+=-\frac1{36}.
+\]
+
+二つの構造間では、
+\[
+\delta P=\frac12-\frac14=\frac14
+\]
+および
+\[
+\delta M=\frac13-\frac1{12}=\frac14
+\]
+が成立する。したがって、
+\[
+\delta M=\delta P
+\]
+であり、式 (31) の条件が満たされている。
+
+実際、
+\[
+\Delta_{AB}(a)=-\frac1{36}
+\]
+は両構造で不変である。
+
+一方、各方式の値そのものは不変ではない。
+\[
+K_A(a):\quad \frac16\longrightarrow\frac5{12},
+\]
+\[
+K_B(a):\quad \frac5{36}\longrightarrow\frac7{18}.
+\]
+
+この例は、両方式の値がそれぞれ変化していても、両方式の差が不変となり得ることを示している。
+
+\subsection{比較対象集合に公理を追加する場合の条件}
+
+既存の比較対象集合を $R$、追加する公理集合を $N$ とし、
+\[
+|R|=r\geq2,\qquad |N|=q\geq1,\qquad
+R\cap N=\varnothing
+\]
+とする。対象公理 $a$ は $R$ に属するものとする。
+
+追加する公理との平均関係値を
+\[
+M_N(a)=\frac1q\sum_{b\in N}R_K(a,b)
+\]
+と定義する。この定義は $q\geq1$ を必要とする。
+
+追加後の平均関係値は
+\[
+\boxed{
+M_{R\cup N}(a)=
+\frac{(r-1)M_R(a)+qM_N(a)}{r+q-1}
+}
+\tag{32}
+\]
+となる。
+
+これより、
+\[
+\boxed{
+K'_A(a)-K_A(a)=
+\frac{q}{2(r+q-1)}
+\bigl(M_N(a)-M_R(a)\bigr)
+}
+\tag{33}
+\]
+および
+\[
+\boxed{
+K'_B(a)-K_B(a)=
+\frac{q}{r+q}
+\bigl(M_N(a)-K_B(a)\bigr)
+}
+\tag{34}
+\]
+が成立する。
+
+したがって、追加後の比較対象数を用いて評価する場合には、
+$K_A$ と $K_B$ の不変条件が異なる。
+
+ただし、式 (32)--(34) は、Solver集合自体を固定し、
+既存の公理間の関係値および対象公理の配置値が変わらない場合の式である。
+Solver集合の構造も同時に変更する場合には、$P(a)$ や既存の関係値も変化し得るため、
+追加前後のすべての値を再計算しなければならない。
+
+\subsection{測度を用いる場合の適用条件}
+
+本節までの定義は、有限Solver集合に対するものである。
+測度を用いる場合には、有限集合の要素数を単純に測度へ置き換えるだけでは不十分であり、
+対象集合と測度の定義域を明示する必要がある。
+
+例えば、Solver集合 $\mathcal{Z}$ 上の測度 $\mu$ を用いる場合、
+\[
+0<\mu(\mathcal{Z})<\infty
+\]
+を仮定し、各集合 $\mathcal{Z}_a$、共通部分および差集合が測度可能であるとする。
+このとき、
+\[
+P(a)=\frac{\mu(\mathcal{Z}_a)}{\mu(\mathcal{Z})},
+\]
+\[
+C(a,b)=
+\frac{\mu(\mathcal{Z}_a\cap\mathcal{Z}_b)}
+{\mu(\mathcal{Z})},
+\]
+\[
+D(a\mid b)=
+\frac{\mu(\mathcal{Z}_a\setminus\mathcal{Z}_b)}
+{\mu(\mathcal{Z})},
+\]
+\[
+S(a,b)=
+\frac{\mu(\mathcal{Z}_a\triangle\mathcal{Z}_b)}
+{\mu(\mathcal{Z})}
+\]
+と定義できる。
+
+これらの集合が測度可能であれば、有限の場合と同様に、
+\[
+P(a)=C(a,b)+D(a\mid b)
+\]
+および
+\[
+S(a,b)=D(a\mid b)+D(b\mid a)
+\]
+が成立し、式 (23) の簡約も維持される。
+
+ただし、Solver集合上の測度と、公理体系の集合上で構造整合性指標 $I$ を計算するための測度は、
+定義上同一であるとは限らない。両者を同じ測度として扱う場合には、
+その対応関係を別途定義する必要がある。
+
+また、測度を持たない集合や、測度可能性が確認されていない集合に対して、
+上記の比率を無条件に適用することはできない。
+
+\subsection{構造整合性指標 $I$ に関する注意点}
+
+有限な公理体系 $\Sigma$ に対して、
+\[
+I(\Sigma,\Sigma')
+=\frac{|\Sigma\cap\Sigma'|}{|\Sigma|}
+\]
+を用いる場合、分母がゼロにならないよう
+\[
+|\Sigma|>0
+\]
+を仮定する。
+
+この定義は、元の公理体系 $\Sigma$ に含まれる公理のうち、
+$\Sigma'$ にも含まれる公理の割合を表す。したがって、一般に
+\[
+I(\Sigma,\Sigma')\ne I(\Sigma',\Sigma)
+\]
+であり、両者を区別する必要がある。
+
+また、$\Sigma\subseteq\Sigma'$ が成立する場合には $I=1$ となるが、
+逆に $I=1$ であることから直ちに $\Sigma\subseteq\Sigma'$ が成立すると結論するには、
+対象とする公理体系の扱いに応じた条件が必要である。
+少なくとも、ここでの有限集合の定義では、
+$|\Sigma\cap\Sigma'|=|\Sigma|$ から得られるのは
+$\Sigma\subseteq\Sigma'$ である。
+
+$I$ は公理体系間で保持される公理の割合を表し、
+$K_A$ および $K_B$ はSolver集合上の配置と関係を集約する。
+したがって、両者を同一の評価量として扱わず、それぞれの定義に従って計算する。
+
+\subsection{検証結果を解釈する際の注意点}
+
+以上の定義と検証から、次の点に注意する必要がある。
+
+\begin{enumerate}
+\item $P(a)$ は対象公理の所属割合であり、
+      公理の重要度、正当性、真偽または公理体系全体の整合性を
+      直接表す量ではない。
+
+\item $R_K(a,b)$ は、定義された三つの量を等しい重みで平均した評価値である。
+      簡約式を用いる場合でも、元の定義とその導出関係を保持する。
+
+\item $M_A(a)$ は比較対象集合 $A$ に依存する。
+      比較対象集合が異なる値を直接比較する場合には、
+      その集合の違いを明示する必要がある。
+
+\item $K_A(a)$ と $K_B(a)$ は異なる重み付けを採用する。
+      一方の値が不変であることから、他方の値も不変であるとは結論できない。
+
+\item $\Delta_{AB}(a)$ の不変性は、両方式の値の不変性を意味しない。
+      $r>2$ では、差の不変条件は $\delta M=\delta P$ である。
+
+\item 比較対象数 $r$ が変化する場合には、$K_B$ の重みも変化する。
+      その場合は、$r$ を固定した変化量の式だけでは不十分であり、
+      変更後の定義式を用いて再計算する。
+
+\item 同じ $K$ の値を与えるSolver構造が複数存在し得る。
+      したがって、$K$ の値だけから元のSolver構造を一意に復元できるとは限らない。
+
+\item 有限Solver集合上で成立した式を、無限Solver集合や測度を持たない集合に
+      無条件に適用しない。測度による定義を採用する場合には、
+      測度の定義域、正規化条件および測度可能性を明示する。
+\end{enumerate}
+
+以上をもって、本節で用いる各量の定義、定義間の関係、
+不変条件の適用範囲および検証例の訂正を明示した。
+
+%2
+
+\end{document}
