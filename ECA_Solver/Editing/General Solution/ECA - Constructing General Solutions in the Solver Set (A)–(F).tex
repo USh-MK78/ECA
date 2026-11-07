@@ -705,14 +705,14 @@ Solver の構造を保存する写像であることをいう。
 特に、公理選択および推論規則・構成制約に対応する構造が
 
 \begin{equation}
-    T_{\mathcal A}:
+    T_{\mathcal{A}}:
     \Aset_{S_1}
     \overset{\sim}{\longrightarrow}
     \Aset_{S_2},
 \end{equation}
 
 \begin{equation}
-    T_{\mathcal R}:
+    T_{\mathcal{R}}:
     \Rset_{S_1}
     \overset{\sim}{\longrightarrow}
     \Rset_{S_2}
@@ -1148,12 +1148,12 @@ $\Phi$ はまず、
 すなわち、評価に必要な情報を表す集合を
 
 \begin{equation}
-    \mathcal E(S)
+    \mathcal{E}(S)
 \end{equation}
 
 とする。
 
-ここで $\mathcal E(S)$ は Solver $S$ から得られる
+ここで $\mathcal{E}(S)$ は Solver $S$ から得られる
 評価に必要なデータの集合または構造を表す。
 
 このとき、評価空間 $X$ は少なくとも
@@ -1264,7 +1264,7 @@ ECA の既存文書では、$I$ が
 という評価量として用いられる一方、
 
 \begin{equation}
-    I\subseteq\mathcal P(S)
+    I\subseteq\mathcal{P}(S)
 \end{equation}
 
 という公理選択空間を表す記号としても用いられている。
@@ -1462,7 +1462,7 @@ Solver に対して評価構造を対応させる一般的な写像を
 
 \begin{equation}
     \boxed{
-        \mathcal G:
+        \mathcal{G}:
         \Solver
         \longrightarrow
         X
@@ -1472,19 +1472,19 @@ Solver に対して評価構造を対応させる一般的な写像を
 
 とする。
 
-ここで $\mathcal G$ は、Solver に最終的な数値を直接対応させる
+ここで $\mathcal{G}$ は、Solver に最終的な数値を直接対応させる
 写像ではない。
 
 任意の $S\in\Solver$ に対して、
 
 \begin{equation}
-    \mathcal G(S)\in X
+    \mathcal{G}(S)\in X
 \end{equation}
 
 であり、
 
 \begin{equation}
-    \mathcal G(S)
+    \mathcal{G}(S)
 \end{equation}
 
 は Solver $S$ が持つ評価構造を一般解として表現する。
@@ -1495,7 +1495,7 @@ Solver に対して評価構造を対応させる一般的な写像を
     \boxed{
         S
         \longmapsto
-        \mathcal G(S)
+        \mathcal{G}(S)
         \in X
     }
     \label{eq:B-general-solution-structure}
@@ -1504,14 +1504,14 @@ Solver に対して評価構造を対応させる一般的な写像を
 を一般解の基本構造とする。
 
 \begin{remark}
-ここで $\mathcal G$ の存在を無条件に主張しているわけではない。
+ここで $\mathcal{G}$ の存在を無条件に主張しているわけではない。
 
 (B) では一般解が存在する場合に満たすべき写像の型と、
 その評価空間を定義する。
 
 \begin{equation}
     \exists\,
-    \mathcal G:
+    \mathcal{G}:
     \Solver\to X
 \end{equation}
 
@@ -1565,7 +1565,7 @@ Solver に対して評価構造を対応させる一般的な写像を
 \begin{equation}
     g
     :=
-    \Psi\circ\mathcal G
+    \Psi\circ\mathcal{G}
     \label{eq:B-composed-evaluation}
 \end{equation}
 
@@ -1586,7 +1586,7 @@ Solver に対して評価構造を対応させる一般的な写像を
     \boxed{
         g(S)
         =
-        \Psi(\mathcal G(S))
+        \Psi(\mathcal{G}(S))
     }
     \label{eq:B-scalar-evaluation}
 \end{equation}
@@ -1598,7 +1598,7 @@ Solver に対して評価構造を対応させる一般的な写像を
 \begin{equation}
     \boxed{
         \Solver
-        \xrightarrow{\mathcal G}
+        \xrightarrow{\mathcal{G}}
         X
         \xrightarrow{\Psi}
         \R
@@ -1622,7 +1622,7 @@ Solver に対して評価構造を対応させる一般的な写像を
 と一般解
 
 \begin{equation}
-    \mathcal G:\Solver\to X
+    \mathcal{G}:\Solver\to X
 \end{equation}
 
 は、同じ型を持つ場合があるが、その意味を同一視する必要はない。
@@ -1638,7 +1638,7 @@ $\Phi$ は Solver の評価構造を評価空間上に表現する写像であ�
 一方、
 
 \begin{equation}
-    \mathcal G(S)
+    \mathcal{G}(S)
 \end{equation}
 
 は、その評価構造を ECA における一般解として表現する。
@@ -1646,7 +1646,7 @@ $\Phi$ は Solver の評価構造を評価空間上に表現する写像であ�
 両者が同一の構造を表す場合には、
 
 \begin{equation}
-    \mathcal G(S)
+    \mathcal{G}(S)
     =
     \Phi(S)
     \qquad
@@ -1658,7 +1658,7 @@ $\Phi$ は Solver の評価構造を評価空間上に表現する写像であ�
 しかし、一般解の定義として
 
 \begin{equation}
-    \mathcal G=\Phi
+    \mathcal{G}=\Phi
 \end{equation}
 
 を要求する必要はない。
@@ -1668,7 +1668,7 @@ $\Phi$ は Solver の評価構造を評価空間上に表現する写像であ�
 \begin{equation}
     \Phi
     \quad\text{および}\quad
-    \mathcal G
+    \mathcal{G}
 \end{equation}
 
 が同じ評価構造を表現する場合には、その対応を別途明示する。
@@ -1702,14 +1702,14 @@ $\Phi$ は Solver の評価構造を評価空間上に表現する写像であ�
 さらに、複数の評価対象を一つのクラスまたは集合
 
 \begin{equation}
-    \mathfrak Y
+    \mathfrak{Y}
 \end{equation}
 
 として扱う場合には、
 
 \begin{equation}
     \Phi:
-    \mathfrak Y
+    \mathfrak{Y}
     \longrightarrow
     X
     \label{eq:B-general-object-evaluation}
@@ -1834,7 +1834,7 @@ Representation Independence の基礎となる。
 または
 
 \begin{equation}
-    \mathcal G:
+    \mathcal{G}:
     \Solver
     \longrightarrow
     (X,\Sigma_X)
@@ -1935,7 +1935,7 @@ Representation Independence の基礎となる。
 
     \item 評価構造を一般解として表現する写像
     \begin{equation}
-        \mathcal G:\Solver\to X
+        \mathcal{G}:\Solver\to X
     \end{equation}
 
     \item 評価空間から最終評価値を取り出す写像
@@ -1945,7 +1945,7 @@ Representation Independence の基礎となる。
 
     \item 最終評価関数
     \begin{equation}
-        g=\Psi\circ\mathcal G.
+        g=\Psi\circ\mathcal{G}.
     \end{equation}
 \end{enumerate}
 
@@ -1954,7 +1954,7 @@ Representation Independence の基礎となる。
 \begin{equation}
     \boxed{
         \Solver
-        \xrightarrow{\mathcal G}
+        \xrightarrow{\mathcal{G}}
         X
         \xrightarrow{\Psi}
         \R
@@ -2001,7 +2001,7 @@ ECA の評価量がこの座標系で表現可能な場合の具体的評価と�
 写像
 
 \begin{equation}
-    \mathcal G:
+    \mathcal{G}:
     \Solver
     \longrightarrow
     X
@@ -2024,7 +2024,7 @@ ECA の評価量がこの座標系で表現可能な場合の具体的評価と�
     \boxed{
         g
         :=
-        \Psi\circ\mathcal G
+        \Psi\circ\mathcal{G}
     }
     \label{eq:C-evaluation-function}
 \end{equation}
@@ -2045,7 +2045,7 @@ ECA の評価量がこの座標系で表現可能な場合の具体的評価と�
 \begin{equation}
     g(S)
     =
-    \Psi\!\left(\mathcal G(S)\right)
+    \Psi\!\left(\mathcal{G}(S)\right)
 \end{equation}
 
 である。
@@ -2093,7 +2093,7 @@ ECA の評価量がこの座標系で表現可能な場合の具体的評価と�
 ここで $\Sigma_X$ は
 
 \begin{equation}
-    \Sigma_X\subseteq\mathcal P(X)
+    \Sigma_X\subseteq\mathcal{P}(X)
 \end{equation}
 
 を満たす $\sigma$-代数である。
@@ -2171,14 +2171,14 @@ Solver 集合 $\Solver$ に対して $\sigma$-代数
 特に、(B) の一般解
 
 \begin{equation}
-    \mathcal G:
+    \mathcal{G}:
     \Solver\to X
 \end{equation}
 
 が可測写像となることを要求する場合、
 
 \begin{equation}
-    \mathcal G:
+    \mathcal{G}:
     (\Solver,\Sigma_{\Solver})
     \longrightarrow
     (X,\Sigma_X)
@@ -2193,7 +2193,7 @@ Solver 集合 $\Solver$ に対して $\sigma$-代数
 に対して
 
 \begin{equation}
-    \mathcal G^{-1}(A)
+    \mathcal{G}^{-1}(A)
     \in
     \Sigma_{\Solver}
 \end{equation}
@@ -2204,7 +2204,7 @@ Solver 集合 $\Solver$ に対して $\sigma$-代数
 
 \begin{equation}
     \boxed{
-        \mathcal G
+        \mathcal{G}
         \text{ は可測}
     }
     \label{eq:C-G-measurable}
@@ -2227,7 +2227,7 @@ Solver 集合 $\Solver$ に対して $\sigma$-代数
 について、$\R$ に Borel $\sigma$-代数
 
 \begin{equation}
-    \mathcal B(\R)
+    \mathcal{B}(\R)
 \end{equation}
 
 を与える。
@@ -2238,13 +2238,13 @@ Solver 集合 $\Solver$ に対して $\sigma$-代数
     \Psi:
     (X,\Sigma_X)
     \longrightarrow
-    (\R,\mathcal B(\R))
+    (\R,\mathcal{B}(\R))
 \end{equation}
 
 が可測であるとは、任意の
 
 \begin{equation}
-    A\in\mathcal B(\R)
+    A\in\mathcal{B}(\R)
 \end{equation}
 
 について
@@ -2279,19 +2279,19 @@ Solver 集合 $\Solver$ に対して $\sigma$-代数
 \begin{equation}
     g
     =
-    \Psi\circ\mathcal G
+    \Psi\circ\mathcal{G}
 \end{equation}
 
 と定義した。
 
-ここで $\mathcal G$ および $\Psi$ がともに可測であるならば、
+ここで $\mathcal{G}$ および $\Psi$ がともに可測であるならば、
 合成写像 $g$ も可測である。
 
 \begin{proposition}[評価関数の可測性]
 \label{prop:C-measurability}
 
 \begin{equation}
-    \mathcal G:
+    \mathcal{G}:
     (\Solver,\Sigma_{\Solver})
     \longrightarrow
     (X,\Sigma_X)
@@ -2303,7 +2303,7 @@ Solver 集合 $\Solver$ に対して $\sigma$-代数
     \Psi:
     (X,\Sigma_X)
     \longrightarrow
-    (\R,\mathcal B(\R))
+    (\R,\mathcal{B}(\R))
 \end{equation}
 
 が可測であるとする。
@@ -2313,7 +2313,7 @@ Solver 集合 $\Solver$ に対して $\sigma$-代数
 \begin{equation}
     g
     =
-    \Psi\circ\mathcal G
+    \Psi\circ\mathcal{G}
 \end{equation}
 
 は
@@ -2322,7 +2322,7 @@ Solver 集合 $\Solver$ に対して $\sigma$-代数
     g:
     (\Solver,\Sigma_{\Solver})
     \longrightarrow
-    (\R,\mathcal B(\R))
+    (\R,\mathcal{B}(\R))
 \end{equation}
 
 として可測である。
@@ -2333,7 +2333,7 @@ Solver 集合 $\Solver$ に対して $\sigma$-代数
 任意の Borel 集合
 
 \begin{equation}
-    A\in\mathcal B(\R)
+    A\in\mathcal{B}(\R)
 \end{equation}
 
 を取る。
@@ -2348,10 +2348,10 @@ $\Psi$ の可測性より、
 
 である。
 
-さらに $\mathcal G$ の可測性より、
+さらに $\mathcal{G}$ の可測性より、
 
 \begin{equation}
-    \mathcal G^{-1}
+    \mathcal{G}^{-1}
     \left(
         \Psi^{-1}(A)
     \right)
@@ -2366,10 +2366,10 @@ $\Psi$ の可測性より、
 \begin{align}
     g^{-1}(A)
     &=
-    (\Psi\circ\mathcal G)^{-1}(A)
+    (\Psi\circ\mathcal{G})^{-1}(A)
     \\
     &=
-    \mathcal G^{-1}
+    \mathcal{G}^{-1}
     \left(
         \Psi^{-1}(A)
     \right).
@@ -2429,7 +2429,7 @@ $A$ は任意の Borel 集合だったので、
 特に、ECA の評価構造が
 
 \begin{equation}
-    \mathcal G(S)
+    \mathcal{G}(S)
     =
     \left(
         B(S),
@@ -2544,7 +2544,7 @@ $g$ が
 \begin{equation}
     (\Solver,\Sigma_{\Solver})
     \longrightarrow
-    ([0,\infty),\mathcal B([0,\infty)))
+    ([0,\infty),\mathcal{B}([0,\infty)))
 \end{equation}
 
 として可測であるとき、
@@ -2937,7 +2937,7 @@ ECA において最終評価が
 
 \begin{equation}
     \Solver
-    \xrightarrow{\mathcal G}
+    \xrightarrow{\mathcal{G}}
     X
     \xrightarrow{\Psi}
     \R
@@ -2962,7 +2962,7 @@ ECA において最終評価が
 \begin{equation}
     g
     =
-    \Psi\circ\mathcal G
+    \Psi\circ\mathcal{G}
 \end{equation}
 
 の
@@ -3012,9 +3012,9 @@ ECA において最終評価が
 
 \begin{enumerate}
     \item
-    $\mathcal G$ および $\Psi$ が可測であるという仮定から、
+    $\mathcal{G}$ および $\Psi$ が可測であるという仮定から、
     \[
-        g=\Psi\circ\mathcal G
+        g=\Psi\circ\mathcal{G}
     \]
     が可測であること。
 
@@ -3040,7 +3040,7 @@ ECA において最終評価が
     が成立すること。
 
     \item
-    $\mathcal G$ の存在そのもの、
+    $\mathcal{G}$ の存在そのもの、
     $\Psi$ の可測性そのもの、
     \[
         0<
@@ -3555,7 +3555,7 @@ $\mathcal{G}$ は
     \Psi:
     (X,\Sigma_X)
     \longrightarrow
-    (\R,\mathcal B(\R))
+    (\R,\mathcal{B}(\R))
 \end{equation}
 
 が可測ならば、(C) の命題より
@@ -3577,7 +3577,7 @@ $\mathcal{G}$ は
         &\xrightarrow{\mathcal{G}}&
         (X,\Sigma_X)
         &\xrightarrow{\Psi}&
-        (\R,\mathcal B(\R))
+        (\R,\mathcal{B}(\R))
         \\[2mm]
         &&
         \Downarrow
@@ -4953,9 +4953,9 @@ ECA において既に与えられている離散形式は
 (A)--(D) において定義された Solver 集合を
 
 \begin{equation}
-    \mathcal S
+    \mathcal{S}
     =
-    \{S\mid S=(\mathcal A_S,\mathcal R_S)\}
+    \{S\mid S=(\mathcal{A}_S,\mathcal{R}_S)\}
     \label{eq:F-solver-set}
 \end{equation}
 
@@ -4964,7 +4964,7 @@ ECA において既に与えられている離散形式は
 各
 
 \begin{equation}
-    S\in\mathcal S
+    S\in\mathcal{S}
 \end{equation}
 
 は、公理選択および推論規則・構成制約によって定まる Solver
@@ -4980,7 +4980,7 @@ ECA において既に与えられている離散形式は
 
 \begin{equation}
     \Phi:
-    \mathcal S
+    \mathcal{S}
     \longrightarrow
     X
     \label{eq:F-general-evaluation-map}
@@ -5016,13 +5016,13 @@ ECA において既に与えられている離散形式は
 (A)--(D) において定義された可測空間を
 
 \begin{equation}
-    (I,\mathcal F)
+    (I,\mathcal{F})
 \end{equation}
 
 とし、その正規化測度を
 
 \begin{equation}
-    \mu:\mathcal F\to[0,1]
+    \mu:\mathcal{F}\to[0,1]
 \end{equation}
 
 とする。
@@ -5039,7 +5039,7 @@ ECA において既に与えられている離散形式は
 有限段階 $N$ における Solver 集合の細分化を
 
 \begin{equation}
-    \mathcal P_N
+    \mathcal{P}_N
     =
     \left\{
         E_1^{(N)},
@@ -5058,10 +5058,10 @@ ECA において既に与えられている離散形式は
     E_j^{(N)}
 \end{equation}
 
-は $\mathcal F$ の元であり、
+は $\mathcal{F}$ の元であり、
 
 \begin{equation}
-    E_j^{(N)}\in\mathcal F
+    E_j^{(N)}\in\mathcal{F}
 \end{equation}
 
 を満たす。
@@ -5248,7 +5248,7 @@ ECA において既に与えられている離散形式は
 \begin{equation}
     \boxed{
         \left\|
-        \mathcal P_N
+        \mathcal{P}_N
         \right\|_\mu
         :=
         \max_{1\leq j\leq N}
@@ -5266,7 +5266,7 @@ ECA において既に与えられている離散形式は
 \begin{equation}
     \boxed{
         \left\|
-        \mathcal P_N
+        \mathcal{P}_N
         \right\|_\mu
         \longrightarrow
         0
@@ -5298,7 +5298,7 @@ ECA において既に与えられている離散形式は
 
 \begin{equation}
     \left\|
-    \mathcal P_N
+    \mathcal{P}_N
     \right\|_\mu
     =
     \max_j
@@ -5316,11 +5316,11 @@ ECA において既に与えられている離散形式は
 \begin{proposition}[細分化列の存在]
 \label{prop:F-partition-existence}
 
-(A)--(D) によって構成された可測空間 $(I,\mathcal F)$ に対して、
-各 $N\in\mathbb N$ について
+(A)--(D) によって構成された可測空間 $(I,\mathcal{F})$ に対して、
+各 $N\in\mathbb{N}$ について
 
 \begin{equation}
-    \mathcal P_N
+    \mathcal{P}_N
     =
     \left\{
         E_1^{(N)},
@@ -5334,7 +5334,7 @@ ECA において既に与えられている離散形式は
 すなわち、
 
 \begin{equation}
-    E_j^{(N)}\in\mathcal F,
+    E_j^{(N)}\in\mathcal{F},
 \end{equation}
 
 \begin{equation}
@@ -5382,7 +5382,7 @@ ECA において既に与えられている離散形式は
 前命題による細分化列
 
 \begin{equation}
-    \{\mathcal P_N\}_{N=1}^{\infty}
+    \{\mathcal{P}_N\}_{N=1}^{\infty}
 \end{equation}
 
 を考える。
@@ -5391,7 +5391,7 @@ ECA において既に与えられている離散形式は
 
 \begin{equation}
     \left\|
-    \mathcal P_N
+    \mathcal{P}_N
     \right\|_\mu
     \longrightarrow0
 \end{equation}
@@ -5483,7 +5483,7 @@ ECA において既に与えられている離散形式は
 
 \begin{equation}
     \left\|
-    \mathcal P_N
+    \mathcal{P}_N
     \right\|_\mu
     \longrightarrow0
 \end{equation}
@@ -5554,7 +5554,7 @@ ECA において既に与えられている離散形式は
 また、
 
 \begin{equation}
-    \mathcal P_N
+    \mathcal{P}_N
     =
     \left\{
         E_1^{(N)},
@@ -5607,7 +5607,7 @@ ECA において既に与えられている離散形式は
 
 \begin{equation}
     \left\|
-    \mathcal P_N
+    \mathcal{P}_N
     \right\|_\mu
     =
     \max_j
@@ -5667,7 +5667,7 @@ ECA において既に与えられている離散形式は
 
 \begin{equation}
     \left\|
-    \mathcal P_N
+    \mathcal{P}_N
     \right\|_\mu
     \longrightarrow0
 \end{equation}
@@ -5716,7 +5716,7 @@ ECA において既に導入されている離散式および連続式との関�
 
 \begin{equation}
     \left\|
-    \mathcal P_N
+    \mathcal{P}_N
     \right\|_\mu
     =
     \max_j\frac1N
@@ -5731,7 +5731,7 @@ ECA において既に導入されている離散式および連続式との関�
 \begin{equation}
     \lim_{N\to\infty}
     \left\|
-    \mathcal P_N
+    \mathcal{P}_N
     \right\|_\mu
     =
     \lim_{N\to\infty}
@@ -5777,7 +5777,7 @@ ECA において既に導入されている離散式および連続式との関�
 
 \begin{equation}
     \left\|
-    \mathcal P_N
+    \mathcal{P}_N
     \right\|_\mu
     =
     \max_j
@@ -5846,7 +5846,7 @@ ECA において既に導入されている離散式および連続式との関�
 
 \begin{equation}
     \left\|
-    \mathcal P_N
+    \mathcal{P}_N
     \right\|_\mu
     =
     \max_j
@@ -5921,7 +5921,7 @@ ECA において既に導入されている離散式および連続式との関�
 (F) では、その評価構造を有限段階において細分化し、
 
 \begin{equation}
-    \mathcal P_N
+    \mathcal{P}_N
     =
     \left\{
         E_1^{(N)},
@@ -5972,7 +5972,7 @@ ECA において既に導入されている離散式および連続式との関�
     可測分割
 
     \begin{equation}
-        \mathcal P_N
+        \mathcal{P}_N
     \end{equation}
 
     を考え、その測度要素
@@ -5990,7 +5990,7 @@ ECA において既に導入されている離散式および連続式との関�
 
     \begin{equation}
         \left\|
-        \mathcal P_N
+        \mathcal{P}_N
         \right\|_\mu
         =
         \max_j
@@ -6004,7 +6004,7 @@ ECA において既に導入されている離散式および連続式との関�
 
     \begin{equation}
         \left\|
-        \mathcal P_N
+        \mathcal{P}_N
         \right\|_\mu
         \to0
     \end{equation}
@@ -6024,7 +6024,7 @@ ECA において既に導入されている離散式および連続式との関�
 
     \begin{equation}
         \left\|
-        \mathcal P_N
+        \mathcal{P}_N
         \right\|_\mu
         \to0
     \end{equation}
@@ -6091,7 +6091,7 @@ ECA において既に導入されている離散式および連続式との関�
 
 \begin{equation}
     \left\|
-    \mathcal P_N
+    \mathcal{P}_N
     \right\|_\mu
     =
     \max_j\Delta\mu_j^{(N)}
@@ -6124,7 +6124,7 @@ ECA において既に導入されている離散式および連続式との関�
 
 \begin{equation}
     \left\|
-    \mathcal P_N
+    \mathcal{P}_N
     \right\|_\mu
     =
     \frac1N
@@ -7158,12 +7158,12 @@ $X$ および評価写像を構成した。
 Solver 集合を
 
 \begin{equation}
-    \mathcal S
+    \mathcal{S}
     =
     \left\{
         s
         \mid
-        s=(\mathcal A_s,\mathcal R_s)
+        s=(\mathcal{A}_s,\mathcal{R}_s)
     \right\}
     \label{eq:H-solver}
 \end{equation}
@@ -7173,13 +7173,13 @@ Solver 集合を
 ここで、
 
 \begin{equation}
-    \mathcal A_s
+    \mathcal{A}_s
 \end{equation}
 
 は Solver $s$ において採用される公理の選択集合、
 
 \begin{equation}
-    \mathcal R_s
+    \mathcal{R}_s
 \end{equation}
 
 は推論規則および構成制約の集合を表す。
@@ -7187,8 +7187,8 @@ Solver 集合を
 また、Solver $s$ によって表現される理論を与える写像を
 
 \begin{equation}
-    \mathcal T:
-    \mathcal S
+    \mathcal{T}:
+    \mathcal{S}
     \longrightarrow
     \mathrm{Th}
     \label{eq:H-theory-map}
@@ -7199,7 +7199,7 @@ Solver 集合を
 したがって、
 
 \begin{equation}
-    \mathcal T(s)
+    \mathcal{T}(s)
 \end{equation}
 
 は公理集合そのものではなく、Solver $s$ の公理選択および
@@ -7209,8 +7209,8 @@ Solver 集合を
 
 \begin{equation}
     \boxed{
-        \mathcal G:
-        \mathcal S
+        \mathcal{G}:
+        \mathcal{S}
         \longrightarrow
         X
     }
@@ -7229,7 +7229,7 @@ ECA における公理選択空間を
 \begin{equation}
     I
     \subseteq
-    \mathcal P(S)
+    \mathcal{P}(S)
     \label{eq:H-axiom-space}
 \end{equation}
 
@@ -7269,11 +7269,11 @@ Solver の公理選択成分と ECA の公理選択空間を接続するため�
 
 \begin{definition}[Solver--ECA 適合条件]
 \label{def:H-compatible}
-Solver $s\in\mathcal S$ が ECA の公理選択空間 $I$ に適合するとは、
+Solver $s\in\mathcal{S}$ が ECA の公理選択空間 $I$ に適合するとは、
 
 \begin{equation}
     \boxed{
-        \mathcal A_s\in I
+        \mathcal{A}_s\in I
     }
     \label{eq:H-compatible}
 \end{equation}
@@ -7285,12 +7285,12 @@ Solver $s\in\mathcal S$ が ECA の公理選択空間 $I$ に適合するとは�
 
 \begin{equation}
     \boxed{
-        \mathcal S_I
+        \mathcal{S}_I
         :=
         \left\{
-            s\in\mathcal S
+            s\in\mathcal{S}
             \mid
-            \mathcal A_s\in I
+            \mathcal{A}_s\in I
         \right\}
     }
     \label{eq:H-compatible-solvers}
@@ -7309,14 +7309,14 @@ Solver $s\in\mathcal S$ が ECA の公理選択空間 $I$ に適合するとは�
 ECA に適合する Solver
 
 \begin{equation}
-    s\in\mathcal S_I
+    s\in\mathcal{S}_I
 \end{equation}
 
 に対して、
 
 \begin{equation}
-    \mathfrak A:
-    \mathcal S_I
+    \mathfrak{A}:
+    \mathcal{S}_I
     \longrightarrow
     I
 \end{equation}
@@ -7325,9 +7325,9 @@ ECA に適合する Solver
 
 \begin{equation}
     \boxed{
-        \mathfrak A(s)
+        \mathfrak{A}(s)
         :=
-        \mathcal A_s
+        \mathcal{A}_s
     }
     \label{eq:H-axiom-reconstruction}
 \end{equation}
@@ -7340,9 +7340,9 @@ ECA に適合する Solver
     \boxed{
         i_s
         :=
-        \mathfrak A(s)
+        \mathfrak{A}(s)
         =
-        \mathcal A_s
+        \mathcal{A}_s
     }
     \label{eq:H-is}
 \end{equation}
@@ -7354,7 +7354,7 @@ ECA に適合する Solver
 与えられるものではなく、Solver
 
 \begin{equation}
-    s=(\mathcal A_s,\mathcal R_s)
+    s=(\mathcal{A}_s,\mathcal{R}_s)
 \end{equation}
 
 の内部構造に含まれる公理選択成分から直接得られる。
@@ -7370,8 +7370,8 @@ ECA に適合する Solver
 写像
 
 \begin{equation}
-    \mathfrak A:
-    \mathcal S_I
+    \mathfrak{A}:
+    \mathcal{S}_I
     \longrightarrow
     I
 \end{equation}
@@ -7384,15 +7384,15 @@ ECA に適合する Solver
 任意の
 
 \begin{equation}
-    s\in\mathcal S_I
+    s\in\mathcal{S}_I
 \end{equation}
 
 を取る。
 
-$\mathcal S_I$ の定義より、
+$\mathcal{S}_I$ の定義より、
 
 \begin{equation}
-    \mathcal A_s\in I
+    \mathcal{A}_s\in I
 \end{equation}
 
 が成立する。
@@ -7400,9 +7400,9 @@ $\mathcal S_I$ の定義より、
 したがって、
 
 \begin{equation}
-    \mathfrak A(s)
+    \mathfrak{A}(s)
     :=
-    \mathcal A_s
+    \mathcal{A}_s
 \end{equation}
 
 は $I$ の元を与える。
@@ -7410,23 +7410,23 @@ $\mathcal S_I$ の定義より、
 また、Solver は
 
 \begin{equation}
-    s=(\mathcal A_s,\mathcal R_s)
+    s=(\mathcal{A}_s,\mathcal{R}_s)
 \end{equation}
 
 として定義されているため、同一の Solver $s$ に対する
-$\mathcal A_s$ はその定義によって一意に定まる。
+$\mathcal{A}_s$ はその定義によって一意に定まる。
 
 よって、
 
 \begin{equation}
-    \mathfrak A(s)=\mathcal A_s
+    \mathfrak{A}(s)=\mathcal{A}_s
 \end{equation}
 
-は各 $s\in\mathcal S_I$ に対して一意に定まり、
+は各 $s\in\mathcal{S}_I$ に対して一意に定まり、
 
 \begin{equation}
-    \mathfrak A:
-    \mathcal S_I\to I
+    \mathfrak{A}:
+    \mathcal{S}_I\to I
 \end{equation}
 
 は well-defined である。
@@ -7435,21 +7435,21 @@ $\mathcal A_s$ はその定義によって一意に定まる。
 
 
 %------------------------------------------------------------
-\subsection{(H.6) $\mathcal T(s)$ と公理選択の関係}
+\subsection{(H.6) $\mathcal{T}(s)$ と公理選択の関係}
 \label{subsec:H6}
 
 Solver
 
 \begin{equation}
-    s=(\mathcal A_s,\mathcal R_s)
+    s=(\mathcal{A}_s,\mathcal{R}_s)
 \end{equation}
 
 に対して、
 
 \begin{equation}
-    \mathcal T(s)
+    \mathcal{T}(s)
     =
-    \mathcal T(\mathcal A_s,\mathcal R_s)
+    \mathcal{T}(\mathcal{A}_s,\mathcal{R}_s)
     \label{eq:H-theory-decomposition}
 \end{equation}
 
@@ -7458,7 +7458,7 @@ Solver
 ここで重要なのは、
 
 \begin{equation}
-    \mathcal T(s)
+    \mathcal{T}(s)
 \end{equation}
 
 から公理集合を単純な集合論的逆像として復元する必要はない
@@ -7467,13 +7467,13 @@ Solver
 Solver の定義そのものが
 
 \begin{equation}
-    s=(\mathcal A_s,\mathcal R_s)
+    s=(\mathcal{A}_s,\mathcal{R}_s)
 \end{equation}
 
 を与えているため、公理選択成分は
 
 \begin{equation}
-    \mathcal A_s
+    \mathcal{A}_s
 \end{equation}
 
 として直接抽出できる。
@@ -7484,9 +7484,9 @@ Solver の定義そのものが
     \boxed{
         i_s
         =
-        \mathfrak A(s)
+        \mathfrak{A}(s)
         =
-        \mathcal A_s
+        \mathcal{A}_s
     }
     \label{eq:H-theory-axiom}
 \end{equation}
@@ -7497,16 +7497,16 @@ Solver の定義そのものが
 
 \begin{equation}
     \boxed{
-        \mathcal T(s)
+        \mathcal{T}(s)
         =
-        \mathcal T(i_s,\mathcal R_s)
+        \mathcal{T}(i_s,\mathcal{R}_s)
     }
     \label{eq:H-theory-is}
 \end{equation}
 
 と表現できる。
 
-ここで $\mathcal T(s)$ は理論を表し、
+ここで $\mathcal{T}(s)$ は理論を表し、
 $i_s$ はその Solver における公理選択を表す。
 
 両者を同一視しないことが重要である。
@@ -7536,9 +7536,9 @@ Solver として同値であっても、その内部表現が異なることは
 から直ちに
 
 \begin{equation}
-    \mathcal A_s
+    \mathcal{A}_s
     =
-    \mathcal A_t
+    \mathcal{A}_t
 \end{equation}
 
 を要求する必要はない。
@@ -7555,7 +7555,7 @@ Solver として同値であっても、その内部表現が異なることは
     \boxed{
         s\sim_{\mathrm{Sol}}t
         \Longrightarrow
-        \mathfrak A(s)\sim_I\mathfrak A(t)
+        \mathfrak{A}(s)\sim_I\mathfrak{A}(t)
     }
     \label{eq:H-solver-axiom-equivalence}
 \end{equation}
@@ -7584,10 +7584,10 @@ ECA における公理選択の評価構造が保存されることを意味す�
 
 が成立する。
 
-したがって、Solver $s\in\mathcal S_I$ に対応する公理選択
+したがって、Solver $s\in\mathcal{S}_I$ に対応する公理選択
 
 \begin{equation}
-    i_s=\mathfrak A(s)
+    i_s=\mathfrak{A}(s)
 \end{equation}
 
 について、
@@ -7605,7 +7605,7 @@ ECA における公理選択の評価構造が保存されることを意味す�
 \begin{definition}[Solver の離散評価構造]
 \label{def:H-discrete-structure}
 
-Solver $s\in\mathcal S_I$ に対して、その離散評価構造を
+Solver $s\in\mathcal{S}_I$ に対して、その離散評価構造を
 
 \begin{equation}
     \boxed{
@@ -7613,7 +7613,7 @@ Solver $s\in\mathcal S_I$ に対して、その離散評価構造を
         :=
         B(i_s)
         =
-        B(\mathfrak A(s))
+        B(\mathfrak{A}(s))
     }
     \label{eq:H-Ds}
 \end{equation}
@@ -7947,10 +7947,10 @@ Solver $s$ に対して、連続評価を成立させる測度空間を
 \subsection{(H.13) 離散評価と連続評価の統一}
 \label{subsec:H13}
 
-Solver $s\in\mathcal S_I$ に対して、
+Solver $s\in\mathcal{S}_I$ に対して、
 
 \begin{equation}
-    i_s=\mathfrak A(s)
+    i_s=\mathfrak{A}(s)
 \end{equation}
 
 と置く。
@@ -7981,7 +7981,7 @@ Solver $s\in\mathcal S_I$ に対して、
     \begin{aligned}
         i_s
         &=
-        \mathfrak A(s),
+        \mathfrak{A}(s),
         \\[1mm]
         D_s
         &=
@@ -8026,15 +8026,15 @@ Solver $s\in\mathcal S_I$ に対して、
 (G) において定義された一般解
 
 \begin{equation}
-    \mathcal G:
-    \mathcal S
+    \mathcal{G}:
+    \mathcal{S}
     \longrightarrow
     X
 \end{equation}
 
 を考える。
 
-Solver $s\in\mathcal S_I$ に対して、離散評価および連続評価を
+Solver $s\in\mathcal{S}_I$ に対して、離散評価および連続評価を
 一般解へ入力する構成写像
 
 \begin{equation}
@@ -8048,7 +8048,7 @@ Solver $s\in\mathcal S_I$ に対して、離散評価および連続評価を
 
 \begin{equation}
     \boxed{
-        \mathcal G(s)
+        \mathcal{G}(s)
         =
         \Phi_s
         \left(
@@ -8135,7 +8135,7 @@ $\Phi_s$ が第2変数に非自明に依存するとは、
 Solver
 
 \begin{equation}
-    s\in\mathcal S_I
+    s\in\mathcal{S}_I
 \end{equation}
 
 が中間 Solver であるとは、以下の条件を満たすことをいう。
@@ -8148,9 +8148,9 @@ Solver
     \begin{equation}
         i_s
         =
-        \mathfrak A(s)
+        \mathfrak{A}(s)
         =
-        \mathcal A_s
+        \mathcal{A}_s
         \in I
     \end{equation}
 
@@ -8198,7 +8198,7 @@ Solver
     一般解が
 
     \begin{equation}
-        \mathcal G(s)
+        \mathcal{G}(s)
         =
         \Phi_s
         \left(
@@ -8232,12 +8232,12 @@ Solver
 \begin{theorem}[中間 Solver 構造定理]
 \label{thm:H-middle-solver}
 
-$s\in\mathcal S_I$ とする。
+$s\in\mathcal{S}_I$ とする。
 
 さらに、
 
 \begin{equation}
-    \mathcal G(s)
+    \mathcal{G}(s)
     =
     \Phi_s
     \left(
@@ -8326,7 +8326,7 @@ $s\in\mathcal S_I$ とする。
 この場合、
 
 \begin{equation}
-    \mathcal G(s)
+    \mathcal{G}(s)
     =
     \Psi_s(E_{\mathrm c}(s))
 \end{equation}
@@ -8387,7 +8387,7 @@ $s\in\mathcal S_I$ とする。
 この場合、
 
 \begin{equation}
-    \mathcal G(s)
+    \mathcal{G}(s)
     =
     \Psi'_s(E_{\mathrm d}(s))
 \end{equation}
@@ -8409,7 +8409,7 @@ $s\in\mathcal S_I$ とする。
     \boxed{
         s\text{ が中間 Solver}
         \iff
-        \mathcal G(s)
+        \mathcal{G}(s)
         \text{ が離散評価・連続評価の双方に
         非自明に依存する}
     }
@@ -8421,21 +8421,21 @@ $s\in\mathcal S_I$ とする。
 
 
 %------------------------------------------------------------
-\subsection{(H.17) $\mathcal T(s)$ と二つの評価経路}
+\subsection{(H.17) $\mathcal{T}(s)$ と二つの評価経路}
 \label{subsec:H17}
 
 Solver $s$ に対して、
 
 \begin{equation}
-    s=(\mathcal A_s,\mathcal R_s)
+    s=(\mathcal{A}_s,\mathcal{R}_s)
 \end{equation}
 
 および
 
 \begin{equation}
-    \mathcal T(s)
+    \mathcal{T}(s)
     =
-    \mathcal T(\mathcal A_s,\mathcal R_s)
+    \mathcal{T}(\mathcal{A}_s,\mathcal{R}_s)
 \end{equation}
 
 である。
@@ -8443,16 +8443,16 @@ Solver $s$ に対して、
 さらに、
 
 \begin{equation}
-    i_s=\mathcal A_s
+    i_s=\mathcal{A}_s
 \end{equation}
 
 であるから、
 
 \begin{equation}
     \boxed{
-        \mathcal T(s)
+        \mathcal{T}(s)
         =
-        \mathcal T(i_s,\mathcal R_s)
+        \mathcal{T}(i_s,\mathcal{R}_s)
     }
     \label{eq:H-theory-path}
 \end{equation}
@@ -8627,7 +8627,7 @@ ECA における離散形式
 中間 Solver $s$ においては、
 
 \begin{equation}
-    i_s=\mathcal A_s
+    i_s=\mathcal{A}_s
 \end{equation}
 
 を起点として、
@@ -8672,7 +8672,7 @@ ECA における離散形式
 を介して、
 
 \begin{equation}
-    \mathcal G(s)
+    \mathcal{G}(s)
     =
     \Phi_s
     \left(
@@ -8705,8 +8705,8 @@ ECA における離散形式
 (G) において一般解は
 
 \begin{equation}
-    \mathcal G:
-    \mathcal S
+    \mathcal{G}:
+    \mathcal{S}
     \longrightarrow
     X
 \end{equation}
@@ -8738,14 +8738,14 @@ ECA における離散形式
             E_{\mathrm c}(s)
         \right)
         \longrightarrow
-        \mathcal G(s)
+        \mathcal{G}(s)
     }
     \label{eq:H-G-connection}
 \end{equation}
 
 という構造が得られる。
 
-ここで、$\mathcal G$ 自体は (G) で定義された一般解写像であり、
+ここで、$\mathcal{G}$ 自体は (G) で定義された一般解写像であり、
 (H) において新たに定義されるものではない。
 
 
@@ -8761,18 +8761,18 @@ ECA における離散形式
     Solver $s$ の公理選択成分
 
     \begin{equation}
-        \mathcal A_s
+        \mathcal{A}_s
     \end{equation}
 
     と ECA の公理選択空間 $I$ を接続するため、
 
     \begin{equation}
-        \mathcal S_I
+        \mathcal{S}_I
         =
         \left\{
-            s\in\mathcal S
+            s\in\mathcal{S}
             \mid
-            \mathcal A_s\in I
+            \mathcal{A}_s\in I
         \right\}
     \end{equation}
 
@@ -8782,9 +8782,9 @@ ECA における離散形式
     ECA に適合する Solver について、
 
     \begin{equation}
-        \mathfrak A(s)
+        \mathfrak{A}(s)
         =
-        \mathcal A_s
+        \mathcal{A}_s
     \end{equation}
 
     により公理選択復元写像を構成し、その well-defined 性を
@@ -8796,9 +8796,9 @@ ECA における離散形式
     \begin{equation}
         i_s
         =
-        \mathfrak A(s)
+        \mathfrak{A}(s)
         =
-        \mathcal A_s
+        \mathcal{A}_s
     \end{equation}
 
     が一意に定まる。
@@ -8855,7 +8855,7 @@ ECA における離散形式
     \begin{equation}
         s\text{ が中間 Solver}
         \iff
-        \mathcal G(s)
+        \mathcal{G}(s)
         \text{ が離散評価・連続評価の双方に
         非自明に依存する}
     \end{equation}
@@ -8875,13 +8875,13 @@ ECA に固有の前提として置かれている事項は区別する必要が�
 特に、
 
 \begin{equation}
-    \mathcal A_s\in I
+    \mathcal{A}_s\in I
 \end{equation}
 
 という Solver--ECA 適合条件は、Solver の一般定義
 
 \begin{equation}
-    s=(\mathcal A_s,\mathcal R_s)
+    s=(\mathcal{A}_s,\mathcal{R}_s)
 \end{equation}
 
 のみから自動的に従うものではない。
@@ -8890,12 +8890,12 @@ ECA に固有の前提として置かれている事項は区別する必要が�
 
 \begin{equation}
     \boxed{
-        \mathcal S_I
+        \mathcal{S}_I
         =
         \left\{
-            s\in\mathcal S
+            s\in\mathcal{S}
             \mid
-            \mathcal A_s\in I
+            \mathcal{A}_s\in I
         \right\}
     }
 \end{equation}
@@ -8914,7 +8914,7 @@ ECA に固有の前提として置かれている事項は区別する必要が�
 (A) において Solver 集合の数学的構造を定義し、
 
 \begin{equation}
-    s=(\mathcal A_s,\mathcal R_s)
+    s=(\mathcal{A}_s,\mathcal{R}_s)
 \end{equation}
 
 という基本表現を与えた。
@@ -8922,8 +8922,8 @@ ECA に固有の前提として置かれている事項は区別する必要が�
 (B)--(D) において評価空間および一般解
 
 \begin{equation}
-    \mathcal G:
-    \mathcal S\to X
+    \mathcal{G}:
+    \mathcal{S}\to X
 \end{equation}
 
 を構成した。
@@ -8936,11 +8936,11 @@ ECA に固有の前提として置かれている事項は区別する必要が�
 (G) において、一般解を
 
 \begin{equation}
-    \mathcal S
-    \xrightarrow{\mathcal G}
+    \mathcal{S}
+    \xrightarrow{\mathcal{G}}
     X
     \xrightarrow{\Psi}
-    \mathbb R
+    \mathbb{R}
 \end{equation}
 
 という評価構造として整理した。
@@ -8957,7 +8957,7 @@ ECA に固有の前提として置かれている事項は区別する必要が�
         \longrightarrow
         (E_{\mathrm d}(s),E_{\mathrm c}(s))
         \longrightarrow
-        \mathcal G(s)
+        \mathcal{G}(s)
     }
     \label{eq:H-complete-chain}
 \end{equation}
@@ -8968,7 +8968,7 @@ ECA に固有の前提として置かれている事項は区別する必要が�
 
 \begin{equation}
     \boxed{
-        \mathcal G(s)
+        \mathcal{G}(s)
         =
         \Phi_s
         \left(
@@ -8989,7 +8989,7 @@ ECA に固有の前提として置かれている事項は区別する必要が�
 
 \begin{equation}
     \boxed{
-        s=(\mathcal A_s,\mathcal R_s)
+        s=(\mathcal{A}_s,\mathcal{R}_s)
     }
 \end{equation}
 
@@ -8999,9 +8999,9 @@ ECA に固有の前提として置かれている事項は区別する必要が�
     \boxed{
         i_s
         =
-        \mathfrak A(s)
+        \mathfrak{A}(s)
         =
-        \mathcal A_s
+        \mathcal{A}_s
     }
 \end{equation}
 
@@ -9054,7 +9054,7 @@ ECA に固有の前提として置かれている事項は区別する必要が�
 
 \begin{equation}
     \boxed{
-        \mathcal G(s)
+        \mathcal{G}(s)
         =
         \Phi_s
         \left(

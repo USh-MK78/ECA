@@ -579,7 +579,7 @@ Solver の評価構造を保持する空間を $X$ とする。
 Solver $S$ から得られる評価情報を
 
 \begin{equation}
-    \mathcal E(S)
+    \mathcal{E}(S)
 \end{equation}
 
 とする。
@@ -846,7 +846,7 @@ ECA の既存定義
     \EvalMap:
     (X,\Sigma_X)
     \longrightarrow
-    (\R,\mathcal B(\R))
+    (\R,\mathcal{B}(\R))
 \end{equation}
 
 が可測ならば、
@@ -862,7 +862,7 @@ ECA の既存定義
 任意の
 
 \begin{equation}
-    A\in\mathcal B(\R)
+    A\in\mathcal{B}(\R)
 \end{equation}
 
 を取る。
@@ -1539,7 +1539,7 @@ $\Phi$ は仮定により
 可測空間
 
 \begin{equation}
-    (I,\mathcal F,\mu)
+    (I,\mathcal{F},\mu)
 \end{equation}
 
 を考え、
@@ -1553,7 +1553,7 @@ $\Phi$ は仮定により
 有限段階 $N$ の可測分割を
 
 \begin{equation}
-    \mathcal P_N
+    \mathcal{P}_N
     =
     \{E_1^{(N)},\ldots,E_N^{(N)}\}
 \end{equation}
@@ -1561,7 +1561,7 @@ $\Phi$ は仮定により
 とし、
 
 \begin{equation}
-    E_j^{(N)}\in\mathcal F,
+    E_j^{(N)}\in\mathcal{F},
 \end{equation}
 
 \begin{equation}
@@ -1609,7 +1609,7 @@ $\Phi$ は仮定により
 \subsection{F.2 測度メッシュ}
 
 \begin{equation}
-    \left\|\mathcal P_N\right\|_\mu
+    \left\|\mathcal{P}_N\right\|_\mu
     :=
     \max_{1\leq j\leq N}
     \Delta\mu_j^{(N)}
@@ -1621,7 +1621,7 @@ $\Phi$ は仮定により
 
 \begin{equation}
     \boxed{
-        \left\|\mathcal P_N\right\|_\mu
+        \left\|\mathcal{P}_N\right\|_\mu
         \longrightarrow0
         \qquad(N\to\infty)
     }
@@ -1694,7 +1694,7 @@ $\Phi$ は仮定により
 
 \begin{theorem}[測度付き離散評価の極限]
 $f$ が適切な測度空間上で積分可能であり、
-分割列 $\{\mathcal P_N\}$ が対応する積分の近似列として収束するならば、
+分割列 $\{\mathcal{P}_N\}$ が対応する積分の近似列として収束するならば、
 
 \begin{equation}
     \lim_{N\to\infty}
@@ -1770,7 +1770,7 @@ $ f=B I K $ を代入すれば、
 \begin{equation}
     \text{ECA の任意の Solver 集合}
     \Longrightarrow
-    \left\|\mathcal P_N\right\|_\mu\to0
+    \left\|\mathcal{P}_N\right\|_\mu\to0
 \end{equation}
 
 を現段階で証明したわけではない。
@@ -1778,7 +1778,7 @@ $ f=B I K $ を代入すれば、
 一様正規化の場合には、
 
 \begin{equation}
-    \left\|\mathcal P_N\right\|_\mu
+    \left\|\mathcal{P}_N\right\|_\mu
     =
     \frac1N
     \longrightarrow0
@@ -1789,7 +1789,7 @@ $ f=B I K $ を代入すれば、
 一方、一般の測度では、
 
 \begin{equation}
-    \left\|\mathcal P_N\right\|_\mu
+    \left\|\mathcal{P}_N\right\|_\mu
     =
     \max_j\mu(E_j^{(N)})
 \end{equation}
@@ -2000,7 +2000,7 @@ Solver
 に対して ECA の公理選択空間
 
 \begin{equation}
-    I\subseteq\mathcal P(S)
+    I\subseteq\mathcal{P}(S)
 \end{equation}
 
 を考える。
@@ -2035,7 +2035,7 @@ Solver $s$ が ECA に適合するとは、
 
 \begin{definition}[公理選択復元写像]
 \begin{equation}
-    \mathfrak A:
+    \mathfrak{A}:
     \Solver_I\to I
 \end{equation}
 
@@ -2043,7 +2043,7 @@ Solver $s$ が ECA に適合するとは、
 
 \begin{equation}
     \boxed{
-        \mathfrak A(s)
+        \mathfrak{A}(s)
         :=
         \Aset_s
     }
@@ -2056,7 +2056,7 @@ Solver $s$ が ECA に適合するとは、
 \begin{equation}
     i_s
     :=
-    \mathfrak A(s)
+    \mathfrak{A}(s)
     =
     \Aset_s
 \end{equation}
@@ -2065,7 +2065,7 @@ Solver $s$ が ECA に適合するとは、
 \end{definition}
 
 \begin{proposition}[公理選択復元写像の well-defined 性]
-$\mathfrak A$ は well-defined である。
+$\mathfrak{A}$ は well-defined である。
 \end{proposition}
 
 \begin{proof}
@@ -2091,13 +2091,13 @@ $\Solver_I$ の定義より、
 したがって、
 
 \begin{equation}
-    \mathfrak A(s)=\Aset_s
+    \mathfrak{A}(s)=\Aset_s
 \end{equation}
 
 は $I$ の唯一の元として定まり、
 
 \begin{equation}
-    \mathfrak A:\Solver_I\to I
+    \mathfrak{A}:\Solver_I\to I
 \end{equation}
 
 は well-defined である。
@@ -2110,9 +2110,9 @@ $\Solver_I$ の定義より、
 Solver の理論を
 
 \begin{equation}
-    \mathcal T(s)
+    \mathcal{T}(s)
     =
-    \mathcal T(\Aset_s,\Rset_s)
+    \mathcal{T}(\Aset_s,\Rset_s)
 \end{equation}
 
 とする。
@@ -2121,9 +2121,9 @@ $ i_s=\Aset_s $ だから、
 
 \begin{equation}
     \boxed{
-        \mathcal T(s)
+        \mathcal{T}(s)
         =
-        \mathcal T(i_s,\Rset_s)
+        \mathcal{T}(i_s,\Rset_s)
     }
 \end{equation}
 
@@ -2132,12 +2132,12 @@ $ i_s=\Aset_s $ だから、
 ここで重要なのは、
 
 \begin{equation}
-    \mathcal T(s)=i_s
+    \mathcal{T}(s)=i_s
 \end{equation}
 
 とはならないことである。
 
-$\mathcal T(s)$ は理論であり、
+$\mathcal{T}(s)$ は理論であり、
 $i_s$ はその Solver の公理選択である。
 
 %------------------------------------------------------------
@@ -2432,7 +2432,7 @@ $s$ が中間 Solver であるとは、
 \item
 
 \begin{equation}
-    i_s=\mathfrak A(s)=\Aset_s\in I
+    i_s=\mathfrak{A}(s)=\Aset_s\in I
 \end{equation}
 
 である。
@@ -2669,9 +2669,9 @@ Solver
 であるから、
 
 \begin{equation}
-    \mathcal T(s)
+    \mathcal{T}(s)
     =
-    \mathcal T(i_s,\Rset_s)
+    \mathcal{T}(i_s,\Rset_s)
 \end{equation}
 
 である。
@@ -2740,7 +2740,7 @@ Solver
 \begin{equation}
     i_s
     =
-    \mathfrak A(s)
+    \mathfrak{A}(s)
     =
     \Aset_s
 \end{equation}
@@ -2910,7 +2910,7 @@ ECA に適合する Solver について、
 \begin{equation}
     i_s
     =
-    \mathfrak A(s)
+    \mathfrak{A}(s)
     =
     \Aset_s
 \end{equation}
@@ -2949,7 +2949,7 @@ ECA に適合する Solver について、
     \boxed{
     \text{任意の ECA Solver 集合}
     \Longrightarrow
-    \left\|\mathcal P_N\right\|_\mu\to0
+    \left\|\mathcal{P}_N\right\|_\mu\to0
     }
 \end{equation}
 
