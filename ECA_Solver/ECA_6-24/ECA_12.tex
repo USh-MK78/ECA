@@ -4,20 +4,23 @@
 \usepackage{hyperref}
 \geometry{margin=25mm}
 
-\title{ECA\_12\\ECAにおける数学的宇宙の定義と入れ子構造}
+% ECA_12～17
+\title{ECAにおける数学的宇宙の定義について}
 \author{}
 \date{}
 
 \newtheorem{definition}{定義}
+\newtheorem{proposition}{命題}
 \newtheorem{remark}{注意}
 
 \begin{document}
 \maketitle
 
+\section{ECA\_12 ECAにおける数学的宇宙の定義と入れ子構造}
+
 \section{目的}
 
-本稿では、これまでのECAにおけるSolver集合、理論、数学的宇宙の議論を踏まえ、
-ECAが扱う「数学的宇宙」をより上位の概念として位置づけるための基礎構造を定義する。
+本稿では、ECAにおけるSolver集合、数学的構造、数学的宇宙の議論を踏まえ、ECAが扱う「数学的宇宙」をより上位の概念として位置づけるための基礎構造を定義する。
 
 これまでの議論では、公理候補全体を
 \[
@@ -25,63 +28,34 @@ ECAが扱う「数学的宇宙」をより上位の概念として位置づけ�
 \]
 として扱い、
 \[
-I\subseteq\mathcal P(\Ax)
+I\subseteq\mathcal{P}(\Ax)
 \]
 から選択可能な公理集合を考えていた。
-しかし、「公理および公理スキームの全体」という定義だけでは、
-異なる公理体系、構成原理、モデル、その他の数学的構成を含む
-より広い数学的宇宙をECAの枠組みの中で位置づけるには十分でない可能性がある。
+しかし、「公理および公理スキームの全体」という定義だけでは、異なる公理体系、構成原理、モデル、その他の数学的構成を含む、より広い数学的宇宙をECAの枠組みの中で位置づけるには十分でない可能性がある。
 
-そこで本稿では、まずECAにおける数学的宇宙を上位概念として導入し、
-その内部に公理的構成要素、数学的宇宙の構成・分類、
-Solverおよび理論を位置づける。
-
-なお、本稿ではまだ
-\[
-\mathcal R^{*}
-\]
-の存在や
-\[
-|\mathcal Z|\geq 2^{\aleph_0}
-\]
-を導かない。
-それらを検討するための上位構造を先に整備することを目的とする。
+そこで本稿では、まずECAにおける数学的宇宙を上位概念として導入し、その内部に公理的構成要素、数学的宇宙の構成・分類、Solverおよび数学的構造を位置づける。
 
 \section{ECAにおける数学的宇宙}
 
 \begin{definition}[ECAにおける数学的宇宙]
 ECAが数学的対象として取り扱う数学的宇宙の全体を
 \[
-\mathfrak U_{\mathrm{ECA}}
+\mathfrak{U}_{\mathrm{ECA}}
 \]
 と表す。
 
 その要素
 \[
-U\in\mathfrak U_{\mathrm{ECA}}
+U\in\mathfrak{U}_{\mathrm{ECA}}
 \]
 を、ECAにおける一つの数学的宇宙と呼ぶ。
 \end{definition}
 
 ここでいう数学的宇宙は、単一の集合論的構造だけを意味するものではない。
-例えば、集合論において現れる累積階層
-\[
-V
-\]
-や構成可能宇宙
-\[
-L
-\]
-などの構成、また適切なモデルから強制法によって得られる拡大
-\[
-M[G]
-\]
-などを含め、数学的対象を構成・記述するための異なる枠組みを、
-ECAが数学的宇宙として扱う可能性を許容する。
+例えば、集合論において現れる累積階層 $V$ や構成可能宇宙 $L$ などの構成、また適切なモデルから強制法によって得られる拡大 $M[G]$ などを含め、数学的対象を構成・記述するための異なる枠組みを、ECAが数学的宇宙として扱う可能性を許容することを意味する。
 
-ただし、これらをすべて同じ意味で「公理」と呼ぶものではない。
-本稿では、数学的宇宙そのものと、その宇宙に関係する公理体系・構成原理・
-Solver構造を区別する。
+ただし、これらをすべてを同じ意味で「公理」と呼ぶものではない。
+本稿では、数学的宇宙そのものと、その宇宙に関係する公理体系・構成原理・Solver構造について区別し、それぞれの観点から論じる。
 
 \section{数学的宇宙と公理的構成要素}
 
@@ -100,7 +74,7 @@ ECAがその数学的宇宙において公理的選択の候補として扱う�
 \[
 \Ax
 =
-\bigcup_{U\in\mathfrak U_{\mathrm{ECA}}}
+\bigcup_{U\in\mathfrak{U}_{\mathrm{ECA}}}
 \operatorname{Ax}(U)
 \]
 という形で捉えることができる。
@@ -112,7 +86,7 @@ ECAがその数学的宇宙において公理的選択の候補として扱う�
 
 また、現在のECAで用いている
 \[
-I\subseteq\mathcal P(\Ax)
+I\subseteq\mathcal{P}(\Ax)
 \]
 および
 \[
@@ -126,25 +100,25 @@ B(i)\subseteq i\subseteq\Ax
 
 例えば選択公理を考えると、概念的には
 \[
-\mathfrak U_{\mathrm{AC}}
+\mathfrak{U}_{\mathrm{AC}}
 =
-\{U\in\mathfrak U_{\mathrm{ECA}}\mid U\models\mathrm{AC}\}
+\{U\in\mathfrak{U}_{\mathrm{ECA}}\mid U\models\mathrm{AC}\}
 \]
 および
 \[
-\mathfrak U_{\neg\mathrm{AC}}
+\mathfrak{U}_{\neg\mathrm{AC}}
 =
-\{U\in\mathfrak U_{\mathrm{ECA}}\mid U\models\neg\mathrm{AC}\}
+\{U\in\mathfrak{U}_{\mathrm{ECA}}\mid U\models\neg\mathrm{AC}\}
 \]
 という分類を考えることができる。
 
 ここで重要なのは、これらをECAの数学的宇宙そのものと同一視しないことである。
 すなわち、
 \[
-\mathfrak U_{\mathrm{AC}},
-\mathfrak U_{\neg\mathrm{AC}}
+\mathfrak{U}_{\mathrm{AC}},
+\mathfrak{U}_{\neg\mathrm{AC}}
 \subseteq
-\mathfrak U_{\mathrm{ECA}}
+\mathfrak{U}_{\mathrm{ECA}}
 \]
 と位置づける。
 
@@ -152,8 +126,41 @@ B(i)\subseteq i\subseteq\Ax
 「ACが成立しない宇宙」を含めた複数の数学的宇宙を上位から扱うことができる。
 
 \section{「未確定な数学的宇宙」という段階}
+本稿でいう「未確定」とは「数学的宇宙を構成・分類する段階において、その宇宙がACを成立させるものとして特定されているのか、或いはACを成立させないものとして特定されているのかが定まっていない状態」を表す。
 
-ここでいう「未確定」とは、第三の真理値を導入することを意味しない。
+この段階を概念的に
+\[
+\mathfrak{U}_{?}
+\]
+と表すなら、
+\[
+\mathfrak{U}_{?}
+\longrightarrow
+\begin{cases}
+\mathfrak{U}_{\mathrm{AC}},\\[2mm]
+\mathfrak{U}_{\neg\mathrm{AC}}
+\end{cases}
+\]
+という分岐を考えることができる。
+
+したがって、
+\[
+\mathfrak{U}_{?}
+\]
+はACの第三の真理状態を表すものではなく、
+公理的条件をまだ固定していない上位段階を表す記号である。
+
+この考え方はACに限らない。
+任意の公理 \(A\) について、
+\[
+\mathfrak{U}_{A},
+\qquad
+\mathfrak{U}_{\neg A}
+\]
+という分岐を考える前に、その公理について条件を固定していない段階を
+考えることができる。
+
+なお、ここでいう「未確定」は第三の真理値を導入することを意味しない。
 
 すなわち、
 \[
@@ -163,88 +170,48 @@ U\models\mathrm{AC}
 \[
 U\models\neg\mathrm{AC}
 \]
-でもない第三種類の宇宙を定義する、という意味ではない。
 
-本稿でいう「未確定」とは、数学的宇宙を構成・分類する段階において、
-その宇宙がACを成立させるものとして特定されているのか、
-ACを成立させないものとして特定されているのかが、
-まだ固定されていない状態を表す。
+でもない第三種類の宇宙を定義する、という意味ではないことに留意する。
 
-この段階を概念的に
-\[
-\mathfrak U_{?}
-\]
-と表すなら、
-\[
-\mathfrak U_{?}
-\longrightarrow
-\begin{cases}
-\mathfrak U_{\mathrm{AC}},\\[2mm]
-\mathfrak U_{\neg\mathrm{AC}}
-\end{cases}
-\]
-という分岐を考えることができる。
-
-したがって、
-\[
-\mathfrak U_{?}
-\]
-はACの第三の真理状態を表すものではなく、
-公理的条件をまだ固定していない上位段階を表す記号である。
-
-この考え方はACに限らない。
-任意の公理 \(A\) について、
-\[
-\mathfrak U_{A},
-\qquad
-\mathfrak U_{\neg A}
-\]
-という分岐を考える前に、その公理について条件を固定していない段階を
-考えることができる。
 
 \section{数学的宇宙の入れ子構造の可能性}
 
-ECAにおける数学的宇宙を上位概念として定義すると、
-一つの数学的宇宙の内部に、さらにECAにおける数学的宇宙として扱える
-構造が存在する可能性も考えられる。
-
-この可能性を直ちに「無数の数学的宇宙が存在する」という定理として
-主張することはしない。
+ECAにおける数学的宇宙を上位概念として定義すると、一つの数学的宇宙の内部に、さらにECAにおける数学的宇宙として扱える構造が存在する可能性 (無数の数学的宇宙が存在する可能性) も考えることができる。
 
 まず、ある数学的宇宙
 \[
-U_0\in\mathfrak U_{\mathrm{ECA}}
+U_0\in\mathfrak{U}_{\mathrm{ECA}}
 \]
 に対して、その内部でECAの数学的宇宙として扱われる宇宙の族を
 \[
-\mathfrak U_{\mathrm{ECA}}(U_0)
+\mathfrak{U}_{\mathrm{ECA}}(U_0)
 \]
 と表せる場合を考える。
 
 もし
 \[
-U_1\in\mathfrak U_{\mathrm{ECA}}(U_0)
+U_1\in\mathfrak{U}_{\mathrm{ECA}}(U_0)
 \]
 が成立するなら、さらに
 \[
-\mathfrak U_{\mathrm{ECA}}(U_1)
+\mathfrak{U}_{\mathrm{ECA}}(U_1)
 \]
 を考えることができる可能性がある。
 
 その場合、
 \[
-U_2\in\mathfrak U_{\mathrm{ECA}}(U_1)
+U_2\in\mathfrak{U}_{\mathrm{ECA}}(U_1)
 \]
 となる宇宙 \(U_2\) を考えることができる。
 
 一般化すれば、
 \[
 \boxed{
-U_{n+1}\in\mathfrak U_{\mathrm{ECA}}(U_n)
+U_{n+1}\in\mathfrak{U}_{\mathrm{ECA}}(U_n)
 }
 \qquad(n\in\mathbb N)
 \]
-という入れ子構造を記述できる。
+という式を記述できる。
 
 したがって、
 \[
@@ -255,45 +222,41 @@ U_0
 \]
 のような構造を考える可能性が生じる。
 
-ただし、この記法における \(\supseteq\) は、各 \(U_n\) が文字通り
-集合として次の \(U_{n+1}\) を包含することを現時点で主張するものではない。
+ただし、この数式における $\supseteq$ は、各 $U_n$ が文字通り集合として次の $U_{n+1}$ を包含することを現時点で主張するものではない。
 厳密には、
 \[
-U_{n+1}\in\mathfrak U_{\mathrm{ECA}}(U_n)
+U_{n+1}\in\mathfrak{U}_{\mathrm{ECA}}(U_n)
 \]
 という「内部で扱われる宇宙」という関係を基本とする。
 
-また、実際にすべての \(n\in\mathbb N\) についてそのような \(U_n\) が
-存在することも、本稿では仮定しない。
-ここでは、ECAの数学的宇宙概念がこのような入れ子構造を許容する可能性を
-明示することを目的とする。
+また、実際にすべての $n\in\mathbb N$ についてそのような $U_n$ が存在することも、本稿では仮定しない。
+ここでは、ECAの数学的宇宙概念がこのような入れ子構造を許容する可能性を明示することを目的とする。
 
-\section{数学的宇宙、Solver、理論の関係}
-
+\section{数学的宇宙、Solver、数学的構造の関係}
 ECA_6およびECA_7で定義した構造との関係を整理する。
 
 ECAにおけるSolverを
 \[
-s=(\mathcal A_s,\mathcal R_s)
+s=(\mathcal{A}_s,\mathcal{R}_s)
 \]
 とし、
 \[
-\mathcal A_s\in I
+\mathcal{A}_s\in I
 \]
 を満たすSolver全体を
 \[
 \Solver_I
 =
-\{s=(\mathcal A_s,\mathcal R_s)\mid
-\mathcal A_s\in I\}
+\{s=(\mathcal{A}_s,\mathcal{R}_s)\mid
+\mathcal{A}_s\in I\}
 \]
 とする。
 
 また、
 \[
-\mathfrak A:\Solver_I\to I,
+\mathfrak{A}:\Solver_I\to I,
 \qquad
-\mathfrak A(s)=\mathcal A_s
+\mathfrak{A}(s)=\mathcal{A}_s
 \]
 を公理選択写像とする。
 
@@ -301,7 +264,7 @@ s=(\mathcal A_s,\mathcal R_s)
 
 概念的には、
 \[
-\mathfrak U_{\mathrm{ECA}}
+\mathfrak{U}_{\mathrm{ECA}}
 \longrightarrow
 \operatorname{Ax}(U)
 \longrightarrow
@@ -311,23 +274,21 @@ I
 \]
 という関係を考えることができる。
 
-さらに理論写像
+さらに数学的構造写像
 \[
-\mathcal T:\Solver_I\to\mathrm{Th}
+\mathcal{T}:\Solver_I\to\mathrm{Th}
 \]
 によって、
 \[
-s\longmapsto\mathcal T(s)
+s\longmapsto\mathcal{T}(s)
 \]
 という対応を与える。
 
-したがって、数学的宇宙、公理選択、Solver、理論は、それぞれ異なる
-階層の概念として扱う。
+したがって、数学的宇宙、公理選択、Solver、数学的構造は、それぞれ異なる階層の概念として扱う。
 
-\section{Solverの同一性と理論の同型性}
+\section{Solverの同一性と数学的構造の同型性}
 
-数学的宇宙を上位概念として導入しても、Solverの同一性についての
-既存の区別は維持する。
+数学的宇宙を上位概念として導入しても、Solverの同一性についての既存の区別は維持する。
 
 Solverについては、
 \[
@@ -339,9 +300,9 @@ s\cong_{\mathrm{Sol}}t
 \]
 を区別する。
 
-また、理論については
+また、数学的構造については
 \[
-\mathcal T(s)\cong_{\mathrm{Th}}\mathcal T(t)
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathcal{T}(t)
 \]
 を考える。
 
@@ -351,111 +312,1812 @@ s=t,
 \qquad
 s\cong_{\mathrm{Sol}}t,
 \qquad
-\mathcal T(s)\cong_{\mathrm{Th}}\mathcal T(t)
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathcal{T}(t)
 \]
 は同一の関係ではない。
 
-数学的宇宙の入れ子構造を導入することによっても、
-これらを一つの概念にまとめることはしない。
+数学的宇宙の入れ子構造を導入することによっても、これらを一つの概念にまとめることはしない。
 
 \section{現段階での位置づけ}
-
-以上を踏まえると、ECAの数学的宇宙について、現段階では次の構造を
-考えることができる。
+以上を踏まえると、ECAの数学的宇宙について、現段階では次の構造を考えることができる。
 
 \[
 \boxed{
-\mathfrak U_{\mathrm{ECA}}
+\mathfrak{U}_{\mathrm{ECA}}
 \supseteq
-\mathfrak U_{\mathrm{AC}},
-\mathfrak U_{\neg\mathrm{AC}}
+\mathfrak{U}_{\mathrm{AC}},
+\mathfrak{U}_{\neg\mathrm{AC}}
 }
 \]
 
 また、公理条件をまだ固定していない段階を概念的に
 \[
-\mathfrak U_{?}
+\mathfrak{U}_{?}
 \]
 と表すなら、
 \[
-\mathfrak U_{?}
+\mathfrak{U}_{?}
 \longrightarrow
 \begin{cases}
-\mathfrak U_{\mathrm{AC}},\\
-\mathfrak U_{\neg\mathrm{AC}}
+\mathfrak{U}_{\mathrm{AC}},\\
+\mathfrak{U}_{\neg\mathrm{AC}}
 \end{cases}
 \]
 という分岐を考えることができる。
 
 さらに、一つの宇宙の内部に別のECA数学的宇宙を考える可能性を許容するなら、
 \[
-U_{n+1}\in\mathfrak U_{\mathrm{ECA}}(U_n)
+U_{n+1}\in\mathfrak{U}_{\mathrm{ECA}}(U_n)
 \]
-という入れ子構造を記述できる。
+という数学的に入れ子となる構造を数式として記述できる。
 
-この上位構造の下で、
+この上位構造の下で
+
 \[
 \operatorname{Ax}(U)
 \]
+
 および
 \[
-\Ax
-=
-\bigcup_{U\in\mathfrak U_{\mathrm{ECA}}}
-\operatorname{Ax}(U)
+\Ax = \bigcup_{U\in\mathfrak{U}_{\mathrm{ECA}}} \operatorname{Ax}(U)
 \]
-という公理候補の位置づけを考え、
-そこから
+
+という公理候補の位置づけを考え、そこから
+
 \[
-I\subseteq\mathcal P(\Ax),
+I\subseteq\mathcal{P}(\Ax),
 \qquad
 \Solver_I,
 \qquad
-\mathcal T,
+\mathcal{T},
 \qquad
-\mathcal Z
+\mathcal{Z}
 \]
 へ接続する。
 
-ただし、現段階ではこれらの関係から
+ただし、これらの関係から
 \[
-\mathcal R^{*}
+\mathcal{R}^{*}
 \]
-の存在を導出してはいない。
+の存在を導出すべきではない。
 
 \section{次の検討課題}
 
-本稿によって、次の問題を上位構造から検討できるようになる。
+本稿によって、次の問題を上位構造から考えることができるようになる。
 
 \begin{enumerate}
-    \item ECAにおける数学的宇宙 \(\mathfrak U_{\mathrm{ECA}}\) を、
-    どこまで形式的に定義できるか。
-
-    \item 各数学的宇宙 \(U\) に対する
-    \[
-    \operatorname{Ax}(U)
-    \]
-    をどのように定義すれば、現在の \(\Ax\) と整合するか。
-
-    \item 数学的宇宙の入れ子関係
-    \[
-    U_{n+1}\in\mathfrak U_{\mathrm{ECA}}(U_n)
-    \]
-    をECAの構造として実際に許容できるか。
-
-    \item AC、CHその他の公理について、
-    「公理条件を固定していない段階」と「公理条件によって分岐した宇宙」を
-    どのように形式化するか。
-
-    \item その上で、
-    \[
-    \mathcal R^{*}\subseteq\Ax
-    \]
-    がECAの既存構造から追加条件なしに構成できる可能性が
-    どこに残されているかを調べる。
+    \item ECAにおける数学的宇宙 \(\mathfrak{U}_{\mathrm{ECA}}\) をどこまで形式的に定義できるか
+    \item 各数学的宇宙 \(U\) に対する $\operatorname{Ax}(U)$ をどのように定義すれば、現在の \(\Ax\) と整合・到達できるか
+    \item 数学的宇宙の入れ子関係 $U_{n+1}\in\mathfrak{U}_{\mathrm{ECA}}(U_n)$ をECAの構造として実際に許容できるか
+    \item AC、CHその他の公理について「公理条件を固定していない段階」と「公理条件によって分岐した宇宙」をどのように形式化するか
+    \item その上で $\mathcal{R}^{*}\subseteq\Ax$ がECAの既存構造から追加条件なしに構成できる可能性がどこに残されているかを調べる
 \end{enumerate}
 
-以上により、\(\mathcal R^{*}\) の構成可能性を直接仮定するのではなく、
-その前提となる「ECAがどのような数学的宇宙を取り扱うのか」を先に整理する。
+\(\mathcal{R}^{*}\) の構成可能性を直接仮定するのではなく、その前提となる「ECAがどのような数学的宇宙を取り扱うのか」を先に整理することで、その後の構成可能性について踏み込んだ定義付けが可能となる。
+
+
+
+
+\section{ECA\_13 数学的宇宙と公理候補宇宙の形式化}
+
+\section{目的}
+ECA\_12で導入した
+\[
+\mathfrak{U}_{\mathrm{ECA}}
+\]
+を基礎として、数学的宇宙と公理候補宇宙の関係を一段具体化する。
+特に、個々の数学的宇宙に関係する公理候補と、ECA全体で扱う公理候補
+\(\Ax\)、さらに選択可能な公理集合 \(I\) を区別する。
+本稿ではまだ \(\mathcal{R}^*\) の存在や
+\(|\mathcal{Z}|\ge2^{\aleph_0}\) を導出しない。
+
+\section{ECAにおける数学的宇宙}
+ECAが数学的対象として取り扱う数学的宇宙の全体を
+\[
+\mathfrak{U}_{\mathrm{ECA}}
+\]
+とし、
+\[
+U\in\mathfrak{U}_{\mathrm{ECA}}
+\]
+を一つのECA数学的宇宙とする。
+ここで \(V,L,M[G]\) のような異なる数学的構成を扱う可能性を許容する。
+ただし、数学的宇宙、そこで成立する公理体系、モデル、Solverを同一概念とはしない。
+
+\section{宇宙別公理候補}
+\begin{definition}
+各 \(U\in\mathfrak{U}_{\mathrm{ECA}}\) に対して、ECAがその数学的宇宙に関係する
+公理的選択候補として扱う対象の集合を
+\[
+\operatorname{Ax}(U)
+\]
+と表す。
+\end{definition}
+
+\(\operatorname{Ax}(U)\) は単に「宇宙 \(U\) の内部にある公理」を意味するのではなく、
+ECAがその宇宙に関係して公理的構成要素として扱う候補を表す。
+
+概念的にはECA全体の公理候補を
+\[
+\boxed{
+\Ax=
+\bigcup_{U\in\mathfrak{U}_{\mathrm{ECA}}}\operatorname{Ax}(U)
+}
+\]
+と表す。
+
+この式は現時点で \(\operatorname{Ax}(U)\) の完全な定義が確定していることを意味しない。
+また、現在の
+\[
+I\subseteq\mathcal{P}(\Ax)
+\]
+を維持するため、基本構造では \(\Ax\) を集合として扱う。
+数学的宇宙の全体を無制限な集合として仮定することは本稿では行わない。
+
+\section{公理候補と選択可能集合}
+\(\Ax\) はECAが扱う公理候補の全体であり、\(I\) はその中から実際に選択可能な
+公理集合の族である：
+\[
+I\subseteq\mathcal{P}(\Ax).
+\]
+各 \(i\in I\) について
+\[
+i\subseteq\Ax
+\]
+であり、従来の構造
+\[
+B(i)\subseteq i\subseteq\Ax
+\]
+を維持する。
+
+したがって、
+\[
+a\in\Ax
+\]
+から
+\[
+\{a\}\in I
+\]
+が自動的に従うわけではない。
+公理候補として存在することと、選択可能性は別の概念である。
+
+\section{数学的宇宙と選択可能性}
+宇宙 \(U\) に対して
+\[
+\operatorname{Ax}(U)
+\]
+が定まっても、
+\[
+\operatorname{Ax}(U)\subseteq I
+\]
+とはならない。
+両者の要素の型が異なるためである。
+
+宇宙 \(U\) に関係する候補だけから構成される選択可能集合の族は、概念的には
+\[
+\{i\in I\mid i\subseteq\operatorname{Ax}(U)\}
+\]
+と表せる。
+
+\section{公理条件による数学的宇宙の分類}
+任意の公理 \(A\) について、
+\[
+\mathfrak{U}_A
+=
+\{U\in\mathfrak{U}_{\mathrm{ECA}}\mid U\models A\},
+\qquad
+\mathfrak{U}_{\neg A}
+=
+\{U\in\mathfrak{U}_{\mathrm{ECA}}\mid U\models\neg A\}
+\]
+を考えることができる。
+
+特に選択公理について、
+\[
+\mathfrak{U}_{\mathrm{AC}}
+=
+\{U\in\mathfrak{U}_{\mathrm{ECA}}\mid U\models\mathrm{AC}\},
+\]
+\[
+\mathfrak{U}_{\neg\mathrm{AC}}
+=
+\{U\in\mathfrak{U}_{\mathrm{ECA}}\mid U\models\neg\mathrm{AC}\}
+\]
+とする。
+
+これらは
+\[
+\mathfrak{U}_{\mathrm{AC}},
+\mathfrak{U}_{\neg\mathrm{AC}}
+\subseteq\mathfrak{U}_{\mathrm{ECA}}
+\]
+として位置づける。
+
+\section{公理条件を固定していない段階}
+ここで「未確定」とは第三の真理値を意味しない。
+\[
+U\models A
+\]
+でも
+\[
+U\models\neg A
+\]
+でもない第三種類の宇宙を導入するわけではない。
+
+「未確定」とは、数学的宇宙を構成・分類する段階において、
+\(A\) を成立させる条件も \(\neg A\) を成立させる条件もまだ固定していない
+段階を表す。
+
+これを概念的に
+\[
+\mathfrak{U}_{?}
+\]
+と表すなら、
+\[
+\boxed{
+\mathfrak{U}_{?}
+\longrightarrow
+\begin{cases}
+\mathfrak{U}_A,\\
+\mathfrak{U}_{\neg A}
+\end{cases}}
+\]
+という分岐を考えられる。
+
+したがって \(\mathfrak{U}_?\) は、ACの第三状態ではなく、
+公理条件を固定する前段階を表す。
+
+\section{数学的宇宙の入れ子構造の可能性}
+ECAの数学的宇宙概念が、ある数学的宇宙の内部にさらにECA数学的宇宙を
+扱うことを排除しない場合、入れ子構造を考えることができる。
+
+まず
+\[
+U_0\in\mathfrak{U}_{\mathrm{ECA}}
+\]
+に対し、
+\[
+\mathfrak{U}_{\mathrm{ECA}}(U_0)
+\]
+を \(U_0\) の内部でECAの数学的宇宙として扱われる宇宙の族とする。
+
+もし
+\[
+U_1\in\mathfrak{U}_{\mathrm{ECA}}(U_0)
+\]
+なら、さらに
+\[
+\mathfrak{U}_{\mathrm{ECA}}(U_1)
+\]
+を考える可能性が生じる。
+
+一般には
+\[
+\boxed{
+U_{n+1}\in\mathfrak{U}_{\mathrm{ECA}}(U_n)
+}
+\qquad(n\in\mathbb N)
+\]
+という入れ子構造を記述できる。
+
+これは「無数の数学的宇宙が存在する」という定理ではない。
+現段階では、このような構造をECAが許容する可能性を記述している。
+
+なお、
+\[
+U_0\supseteq U_1\supseteq U_2\supseteq\cdots
+\]
+と書く場合にも、集合としての包含関係を自動的に主張するものではなく、
+基本関係は
+\[
+U_{n+1}\in\mathfrak{U}_{\mathrm{ECA}}(U_n)
+\]
+である。
+
+\section{Solverおよび数学的構造との接続}
+Solverを
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+とし、
+\[
+\Solver_I
+=
+\{s=(\mathcal{A}_s,\mathcal{R}_s)\mid\mathcal{A}_s\in I\}
+\]
+とする。
+公理選択写像は
+\[
+\mathfrak{A}:\Solver_I\to I,
+\qquad
+\mathfrak{A}(s)=\mathcal{A}_s
+\]
+である。
+
+数学的構造写像を
+\[
+\mathcal{T}:\Solver_I\to\mathrm{Th}
+\]
+とする。
+
+したがって概念的には
+\[
+U
+\longrightarrow
+\operatorname{Ax}(U)
+\longrightarrow
+i
+\longrightarrow
+s
+\longrightarrow
+\mathcal{T}(s)
+\]
+という階層を考えられる。
+ただし、この矢印をすべて一意な写像として確定したわけではない。
+
+また、
+\[
+s=t,\qquad
+s\cong_{\mathrm{Sol}}t,\qquad
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathcal{T}(t)
+\]
+はそれぞれ異なる関係として維持する。
+
+\section{\(\mathcal{Z}\)との接続}
+ECA\_7で定義した
+\[
+\mathcal{Z}
+=
+\{s\in\Solver_I\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}\}
+\]
+を維持する。
+
+よって
+\[
+\mathcal{Z}\subseteq\Solver_I
+\]
+であり、\(\mathcal{Z}\) の要素は数学的宇宙そのものではなくSolverである。
+
+したがって、
+\[
+|\Ax|,\quad |I|,\quad|\Solver_I|,\quad|\mathcal{Z}|
+\]
+は引き続き別々に追跡する必要がある。
+
+\section{\(\mathcal{R}^*\)の検討への準備}
+ECA\_10--11で扱った
+\[
+\mathcal{R}^*=\{r_0,r_1,r_2,\ldots\}\subseteq\Ax
+\]
+について、次段階では直接その存在を仮定するのではなく、
+\[
+U\in\mathfrak{U}_{\mathrm{ECA}}
+\]
+に対して
+\[
+\mathcal{R}^*\subseteq\operatorname{Ax}(U)
+\]
+となる宇宙が存在するかを調べる。
+
+その上で、
+\[
+\mathcal{R}^*\subseteq\Ax
+\]
+への包含、各選択の許容性、
+さらにZFCを表現するSolverの構成可能性を個別に検証する。
+
+したがって、以降では
+\[
+\boxed{
+\mathfrak{U}_{\mathrm{ECA}}
+\rightarrow
+\operatorname{Ax}(U)
+\rightarrow
+\Ax
+\rightarrow
+I
+\rightarrow
+\Solver_I
+\rightarrow
+\mathcal{Z}
+}
+\]
+の順で進めていく。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{ECA_14\\数学的宇宙と公理候補集合の対応}
+
+\section{目的}
+ECA_13で導入した
+\[
+\mathfrak{U}_{\mathrm{ECA}}
+\]
+を基礎として、数学的宇宙と公理候補集合の対応を一段具体化する。
+
+本稿では特に
+\[
+U\longmapsto\operatorname{Ax}(U)
+\]
+をについて焦点を当てる。
+
+\section{数学的宇宙の対象型}
+まず、ECAにおける数学的宇宙を
+\[
+U\in\mathfrak{U}_{\mathrm{ECA}}
+\]
+とする。
+
+ここで数学的宇宙そのもの、そこを記述する数学的構造、数学的構造のモデルは別の対象として扱う。
+
+したがって
+\[
+M\models T
+\]
+はモデルと数学的構造の間の関係であり、任意の数学的宇宙について自動的に成立する記法とはしない。
+
+\section{宇宙別公理候補集合}
+\begin{definition}
+各数学的宇宙 $U$ に対し、ECAがその宇宙に関係する公理的構成要素として取り扱う候補の集合を
+\[
+\operatorname{Ax}(U)
+\]
+とする。
+\end{definition}
+
+ここで $a\in\operatorname{Ax}(U)$ は、$a$ が $U$ に関係する公理候補であることを表すが、これだけから $U\models a$ や「$a$ が $U$ で真」を導かない。
+
+\section{公理候補と採用公理集合}
+ある $U$ に対して採用される公理集合を
+\[
+A_U\subseteq\operatorname{Ax}(U)
+\]
+とする。公理集合から宇宙が一意に決定されることは仮定しない。したがって、異なる宇宙が同じ公理集合を共有することや、一つの宇宙が異なる記述を持つことを排除しない。
+
+\section{ECA全体の公理候補集合}
+ECA全体で扱う公理候補集合を $\Ax$ とする。概念的には
+\[
+\boxed{\Ax=\bigcup_{U\in\mathfrak{U}_{\mathrm{ECA}}}\operatorname{Ax}(U)}
+\]
+と表す。ただし、現在のECAで $I\subseteq\mathcal{P}(\Ax)$ を用いるため、$\Ax$ は基本構造では集合として扱う。$\mathfrak{U}_{\mathrm{ECA}}$ を無制限な全数学的宇宙の集合とすることは本稿では要求しない。
+
+\section{宇宙から公理候補集合への対応}
+対応を
+\[
+\operatorname{Ax}_{\mathrm{map}}:\mathfrak{U}_{\mathrm{ECA}}\to\mathcal{P}(\Ax),
+\qquad
+\operatorname{Ax}_{\mathrm{map}}(U)=\operatorname{Ax}(U)
+\]
+として形式化できる場合、各 $U$ について $\operatorname{Ax}(U)\subseteq\Ax$ となる。
+
+ただし $U \ne V$ から $\operatorname{Ax}(U)\ne\operatorname{Ax}(V)$ は従わない。
+逆に公理候補集合が異なることだけから数学的宇宙の同型性・非同型性を直接結論づけることはできない。
+
+\section{選択空間への接続}
+従来どおり
+\[
+I\subseteq\mathcal{P}(\Ax)
+\]
+とし、$i\in I$ は一つの許容された公理集合である。宇宙 $U$ に関係する選択可能集合の族を
+\[
+I(U)=\{i\in I\mid i\subseteq\operatorname{Ax}(U)\}
+\]
+とする。
+
+ここで $\operatorname{Ax}(U)$ は公理候補の集合、$I(U)$ はその候補だけからなる許容された選択集合の族であり、両者を同一視しない。
+
+\section{Solverへの接続}
+Solverを
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+とし、
+\[
+\Solver_I=\{s=(\mathcal{A}_s,\mathcal{R}_s)\mid\mathcal{A}_s\in I\}
+\]
+とする。公理選択写像は
+\[
+\mathfrak A:\Solver_I\to I,
+\qquad
+\mathfrak A(s)=\mathcal{A}_s
+\]
+である。
+
+宇宙 $U$ に関係するSolverを
+\[
+\Solver(U)=\{s\in\Solver_I\mid\mathcal{A}_s\in I(U)\}
+\]
+と定義できる。したがって概念的には
+\[
+U\longrightarrow\operatorname{Ax}(U)\longrightarrow I(U)\longrightarrow\Solver(U)
+\]
+という階層を記述できるが、各矢印を一意な写像として確定したわけではない。
+
+\section{数学的構造との関係}
+数学的構造写像を
+\[
+\mathcal{T}:\Solver_I\to\mathrm{Th}
+\]
+とする。$\mathcal{T}(s)$ はSolverが表現する数学的構造であり、数学的宇宙 $U$ そのものではない。したがって
+\[
+U,\qquad s,\qquad\mathcal{T}(s)
+\]
+は別の対象として扱う。また
+\[
+s=t,\qquad s\cong_{\mathrm{Sol}}t,\qquad \mathcal{T}(s)\cong_{\mathrm{Th}}\mathcal{T}(t)
+\]
+を区別する。
+
+\section{\mathcal{Z}との関係}
+ECA_7の定義
+\[
+\mathcal{Z}=\{s\in\Solver_I\mid\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}\}
+\]
+を維持する。宇宙 $U$ に関係するZFC表現Solverを
+\[
+\mathcal{Z}(U)=\mathcal{Z}\cap\Solver(U)
+\]
+とする。
+
+ただし、全ての $s\in\mathcal{Z}$ が何らかの $U$ に関係づけられることを本稿から自動的には導かない。したがって
+\[
+\mathcal{Z}=\bigcup_U\mathcal{Z}(U)
+\]
+も現時点では追加条件なしに定理とはしない。
+
+\section{AC分岐と対象型}
+ACについて
+\[
+\mathfrak{U}_{\mathrm{AC}}=\{U\in\mathfrak{U}_{\mathrm{ECA}}\mid U\models\mathrm{AC}\},
+\]
+\[
+\mathfrak{U}_{\neg\mathrm{AC}}=\{U\in\mathfrak{U}_{\mathrm{ECA}}\mid U\models\neg\mathrm{AC}\}
+\]
+を考える場合、まず $U\models A$ の意味をどの対象型の数学的宇宙に対して定義するかを確定する必要がある。
+
+したがってECA_13のAC分岐は維持しつつ、その意味論的形式化は別途行うものとし、ここでは論じない。
+
+\section{入れ子構造}
+ECA_13で示した
+\[
+U_{n+1}\in\mathfrak{U}_{\mathrm{ECA}}(U_n)
+\]
+という構造を採用する場合、各 $U_n$ に $\operatorname{Ax}(U_n)$ を対応させることが考えられる。
+
+しかし、
+\[
+\operatorname{Ax}(U_{n+1})\subseteq\operatorname{Ax}(U_n)
+\]
+などの包含関係は自動的には仮定しない。
+数学的宇宙の入れ子関係と公理候補集合の包含関係は別問題である。
+
+\section{\mathcal{R}^*への含意}
+ECA_11で検討した可算無限族
+\[
+\mathcal{R}^*=\{r_0,r_1,r_2,\ldots\}\subseteq\Ax
+\]
+を宇宙別に考えるなら、より具体的に
+\[
+\boxed{\mathcal{R}^*\subseteq\operatorname{Ax}(U)\subseteq\Ax}
+\]
+を検討することになる。
+
+ただし、これだけでは $\mathcal{R}^*$ の存在も、各部分集合に対応するZFC保存Solverの存在も導かれない。
+さらに、選択可能性、Solverの構成、ZFCとの数学的構造の同型性、異なる部分集合に対するSolverの非同一性を個別に確認する必要がある。
+
+\section{現段階での結論}
+本稿では、
+\[
+\boxed{\mathfrak{U}_{\mathrm{ECA}}\to\Ax\to I\to\Solver_I\to\mathcal{Z}}
+\]
+というECA全体の階層と、個別宇宙についての
+\[
+\boxed{U\to\operatorname{Ax}(U)\to I(U)\to\Solver(U)}
+\]
+という局所的な階層を整理した。
+
+そして次に必要なのは、数学的宇宙をECAでどの対象型として正式に扱うか、そして $\operatorname{Ax}(U)$ を実際のECA構造としてどのように定義するかである。
+
+
+
+
+
+
+
+
+\section{ECA\_15\\可算無限公理候補族 $\mathcal R^*$ の構成可能性}
+
+\section{目的}
+ECA\_14では、数学的宇宙 $U$ と、その宇宙に関係する公理候補集合 $\operatorname{Ax}(U)$ を区別し、
+$\mathcal R^*\subseteq\operatorname{Ax}(U)\subseteq\Ax$ という形で、可算無限公理候補族を再検討できる段階まで整理した。
+本稿では、ECAの既存構造から可算無限集合 $\mathcal R^*\subseteq\operatorname{Ax}(U)$ を構成できるかを検討する。存在を最初から仮定せず、$|\mathcal Z|\ge2^{\aleph_0}$ も先取りしない。
+
+\section{現在確定している構造}
+\[
+U\longrightarrow\operatorname{Ax}(U)\longrightarrow I(U)\longrightarrow\Solver(U)\longrightarrow\mathcal T(s)
+\]
+を考える。ECA全体では $\mathfrak U_{\mathrm{ECA}}\to\Ax\to I\to\Solver_I$ とする。
+\[
+I\subseteq\mathcal P(\Ax),\qquad s=(\mathcal A_s,\mathcal R_s),\qquad
+\Solver_I=\{s\mid\mathcal A_s\in I\},
+\]
+さらに
+\[
+\mathcal Z=\{s\in\Solver_I\mid\mathcal T(s)\cong_{\mathrm{Th}}\mathrm{ZFC}\}.
+\]
+
+\section{必要となる可算無限族}
+\[
+\mathcal R^*=\{r_0,r_1,r_2,\ldots\}
+\]
+について、$r_n\in\operatorname{Ax}(U)$ および $r_m\ne r_n$ ($m\ne n$) を要求する。この二条件から $|\mathcal R^*|=\aleph_0$ となる。したがって最初の問題は、$|\operatorname{Ax}(U)|\ge\aleph_0$ を既存定義から導けるか、である。
+
+\section{公理および公理スキームから可算性を導けるか}
+「公理および公理スキームを取り扱う」という記述だけから $|\Ax|\ge\aleph_0$ は導けない。公理スキームそのものを一つの対象として扱うなら、その存在だけでは可算無限性は保証されない。
+\[
+\boxed{\text{公理スキームの存在}\not\Rightarrow |\Ax|\ge\aleph_0}
+\]
+
+\section{公理スキームのインスタンスを候補とする場合}
+公理スキーム $\Sigma$ の相異なるインスタンスを
+\[
+\Sigma=\{\sigma_n\mid n\in\mathbb N\}
+\]
+として個別に $\operatorname{Ax}(U)$ に含める設計を採用すれば、$|\operatorname{Ax}(U)|\ge\aleph_0$ となる。この場合 $\mathcal R^*:=\Sigma$ とできる。
+ただし、スキームとそのインスタンスを $\Ax$ の対象としてどのように符号化するかは、現在のECA定義から自動的には確定していない。
+
+\section{ZFCを基準とした候補族}
+連続体濃度の議論に使うには、可算無限であるだけでは不十分である。基準公理集合 $\mathcal A_{\mathrm{ZFC}}$ と規則 $\mathcal R_0$ に対し、
+\[
+s_A=(\mathcal A_{\mathrm{ZFC}}\cup A,\mathcal R_0)
+\]
+を考え、各 $A\subseteq\mathcal R^*$ について
+\[
+\mathcal T(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+を必要とする。したがって $\mathcal R^*$ の存在、全部分集合の選択可能性、ZFC保存性は別条件である。
+
+\section{三段階の条件}
+\subsection*{第1段階：候補族の存在}
+\[
+\exists U\in\mathfrak U_{\mathrm{ECA}}\,\exists\mathcal R^*
+\left(\mathcal R^*\subseteq\operatorname{Ax}(U)\land|\mathcal R^*|=\aleph_0\right).
+\]
+\subsection*{第2段階：選択可能性}
+\[
+\forall A\subseteq\mathcal R^*,\qquad \mathcal A_{\mathrm{ZFC}}\cup A\in I.
+\]
+\subsection*{第3段階：ZFC保存性}
+\[
+\forall A\subseteq\mathcal R^*,\qquad \mathcal T(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}.
+\]
+第1段階だけでは $\mathcal Z$ の濃度議論には足りず、第2・第3段階まで必要である。
+
+\section{現在のECAから直接導ける範囲}
+現在の定義から $\mathcal R^*\subseteq\Ax$ を考えることはできるが、
+\[
+\exists\mathcal R^*\quad |\mathcal R^*|=\aleph_0
+\]
+は導出されていない。また、第2段階および第3段階も導出されていない。したがって
+\[
+\boxed{\mathcal R^*\text{ の存在は現時点ではECAの定理ではない。}}
+\]
+
+\section{追加条件を最小化する方向}
+無制限に新しい公理を追加するのではなく、既存の $\operatorname{Ax}(U)$ の構造から $\mathcal R^*$ を取り出せるかを検討する。その候補は、(1) 公理スキームのインスタンスを個別の候補として符号化する、(2) ZFCに関係する既存候補から可算無限族を指定する、(3) $\operatorname{Ax}(U)$ に可算無限部分集合が存在することを構造条件として明示する、の三方向である。ただし、ZFC保存性は別途確認する必要がある。
+
+\section{濃度議論への接続}
+第1～第3段階と単射性が成立するなら、
+\[
+\Phi:\mathcal P(\mathcal R^*)\to\mathcal Z,\qquad \Phi(A)=s_A
+\]
+を定義でき、相異なる $A$ が相異なるSolverを与えるなら単射となる。したがって
+\[
+|\mathcal Z|\ge|\mathcal P(\mathcal R^*)|=2^{\aleph_0}.
+\]
+これはあくまで条件付き帰結であり、現時点のECAの既成結果ではない。
+
+\section{結論}
+ECAから $\mathcal R^*$ を構成するには、少なくとも $\operatorname{Ax}(U)$ が可算無限個の相異なる候補を個別に保持できる構造であることを明示する必要がある。さらに、連続体濃度の下界へ接続するには、
+\[
+\boxed{\text{候補族の存在}\to\text{全部分集合の選択可能性}\to\text{ZFC保存性}\to\text{Solverの単射的構成}}
+\]
+の順に確認する必要がある。
+したがって次の問題は、公理スキームとその各インスタンスをECAにおいてどの対象階層で扱うかを確定することである。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% ECA_16.tex
+\title{ECA\_16\\$\mathcal R^*$ の全部分集合に対する選択可能性}
+
+\section{目的}
+
+ECA\_15では、可算無限公理候補族
+\[
+\mathcal R^*=\{r_n\mid n\in\mathbb N\}
+\]
+について、連続体濃度の議論へ進むためには、単に
+\[
+|\mathcal R^*|=\aleph_0
+\]
+であるだけでは不十分であり、その全部分集合をECAの選択空間 $I$ に接続する必要があることを整理した。
+
+本稿では、このうち第2段階、
+
+\[
+\boxed{
+\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal A_{\mathrm{ZFC}}\cup A\in I
+}
+\]
+
+を中心に検討する。
+
+ここでは、この条件が現在のECAの定義から導かれるのか、それとも追加条件として導入する必要があるのかを区別する。
+
+\section{既存の選択空間}
+
+ECAでは、
+\[
+I\subseteq\mathcal P(\Ax)
+\]
+とする。
+
+各
+\[
+i\in I
+\]
+はECAにおいて許容される一つの公理集合であり、
+\[
+i\subseteq\Ax
+\]
+を満たす。
+
+また、
+\[
+B(i)\subseteq i\subseteq\Ax
+\]
+を維持する。
+
+ここで注意すべきなのは、
+\[
+I\subseteq\mathcal P(\Ax)
+\]
+から
+\[
+I=\mathcal P(\Ax)
+\]
+は導かれないことである。
+
+したがって、
+\[
+A\subseteq\Ax
+\]
+であることだけから
+\[
+A\in I
+\]
+を結論することはできない。
+
+\section{宇宙別の選択可能性}
+
+ECA\_14で導入した
+\[
+\operatorname{Ax}(U)\subseteq\Ax
+\]
+に対して、
+\[
+I(U)
+=
+\{i\in I\mid i\subseteq\operatorname{Ax}(U)\}
+\]
+とする。
+
+したがって、
+\[
+I(U)\subseteq I.
+\]
+
+ここで、
+\[
+A\subseteq\operatorname{Ax}(U)
+\]
+であっても、
+\[
+A\in I(U)
+\]
+は自動的には成立しない。
+
+実際、
+\[
+A\in I(U)
+\iff
+A\in I
+\land
+A\subseteq\operatorname{Ax}(U)
+\]
+である。
+
+\section{$\mathcal R^*$ に対する選択可能性}
+
+可算無限族
+\[
+\mathcal R^*\subseteq\operatorname{Ax}(U)
+\]
+を固定する。
+
+ZFCの基準となる公理集合を
+\[
+\mathcal A_{\mathrm{ZFC}}\subseteq\operatorname{Ax}(U)
+\]
+とする。
+
+このとき、任意の
+\[
+A\subseteq\mathcal R^*
+\]
+に対して
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A
+\]
+は
+\[
+\operatorname{Ax}(U)
+\]
+の部分集合である。
+
+しかし、
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A
+\subseteq\operatorname{Ax}(U)
+\]
+だけでは
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A\in I
+\]
+を導けない。
+
+したがって、次の条件を独立に考える。
+
+\begin{definition}[$\mathcal R^*$ 選択閉包条件]
+\[
+\boxed{
+\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal A_{\mathrm{ZFC}}\cup A\in I
+}
+\]
+を、$\mathcal R^*$ に対する選択閉包条件と呼ぶ。
+\end{definition}
+
+この条件は、
+\[
+\mathcal P(\mathcal R^*)
+\]
+全体をECAの選択空間へ写すための条件である。
+
+\section{選択写像}
+
+選択閉包条件が成立すると、
+\[
+\Gamma:
+\mathcal P(\mathcal R^*)
+\longrightarrow I
+\]
+を
+\[
+\boxed{
+\Gamma(A)=\mathcal A_{\mathrm{ZFC}}\cup A
+}
+\]
+と定義できる。
+
+この写像は単射である。
+
+実際、
+\[
+A\neq A'
+\]
+ならば、
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A
+\neq
+\mathcal A_{\mathrm{ZFC}}\cup A'
+\]
+が必要になるためには、
+\[
+\mathcal R^*\cap\mathcal A_{\mathrm{ZFC}}=\varnothing
+\]
+という条件を置くのが安全である。
+
+この条件の下では、$r\in A\triangle A'$ を取れば、
+$r$ の所属によって両者が異なる。
+
+したがって、
+\[
+\boxed{
+\mathcal R^*\cap\mathcal A_{\mathrm{ZFC}}=\varnothing
+\Longrightarrow
+\Gamma\text{ は単射}
+}
+\]
+である。
+
+\section{重要な区別}
+
+ここで、
+\[
+\mathcal P(\mathcal R^*)\hookrightarrow I
+\]
+が成立したとしても、
+\[
+\mathcal P(\mathcal R^*)\hookrightarrow\mathcal Z
+\]
+はまだ導かれない。
+
+理由は、$I$ の要素は公理集合であり、
+$\mathcal Z$ の要素はSolverであるためである。
+
+したがって、
+\[
+\mathcal P(\mathcal R^*)
+\hookrightarrow I
+\]
+から
+\[
+\mathcal P(\mathcal R^*)
+\hookrightarrow\Solver_I
+\]
+へ進むには、各選択集合に対してSolverを構成する必要がある。
+
+さらに、
+\[
+\mathcal P(\mathcal R^*)
+\hookrightarrow\mathcal Z
+\]
+へ進むには、そのSolverがZFCを表現することを確認する必要がある。
+
+\section{選択空間の全冪集合性との比較}
+
+もし追加条件として
+\[
+I=\mathcal P(\Ax)
+\]
+を採用すれば、
+\[
+A\subseteq\Ax
+\Longrightarrow
+A\in I
+\]
+となる。
+
+この場合、
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A
+\subseteq\Ax
+\]
+から
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A\in I
+\]
+を直接得られる。
+
+しかし、現在のECAは
+\[
+I\subseteq\mathcal P(\Ax)
+\]
+としており、
+\[
+I=\mathcal P(\Ax)
+\]
+を要求していない。
+
+したがって、全冪集合性を新たに仮定することは、
+現在のECAより強い条件となる。
+
+\section{最小条件としての選択閉包}
+
+連続体濃度の議論だけを目的とするなら、
+\[
+I=\mathcal P(\Ax)
+\]
+まで要求する必要はない。
+
+必要なのは、少なくとも対象となる
+\[
+\mathcal P(\mathcal R^*)
+\]
+について、
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A\in I
+\]
+がすべての
+\[
+A\subseteq\mathcal R^*
+\]
+に対して成立することである。
+
+すなわち、
+\[
+\boxed{
+\mathcal P(\mathcal R^*)
+\text{ に対する局所的な選択閉包}
+}
+\]
+で十分である。
+
+これは、
+\[
+I=\mathcal P(\Ax)
+\]
+より弱い条件である。
+
+\section{ECAから導出できるか}
+
+現在の定義から、
+
+\[
+I\subseteq\mathcal P(\Ax)
+\]
+
+は与えられている。
+
+しかし、この包含関係から、
+
+\[
+\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal A_{\mathrm{ZFC}}\cup A\in I
+\]
+
+は導出できない。
+
+したがって、
+
+\[
+\boxed{
+\text{$\mathcal R^*$ 選択閉包条件は、現時点ではECAの定理ではない。}
+}
+\]
+
+これはECA\_15で確認した第1段階の
+\[
+|\mathcal R^*|=\aleph_0
+\]
+とは独立した問題である。
+
+\section{Solver構成との関係}
+
+選択閉包条件が成立した場合、
+各
+\[
+A\subseteq\mathcal R^*
+\]
+に対して
+\[
+i_A
+=
+\mathcal A_{\mathrm{ZFC}}\cup A
+\in I
+\]
+を得る。
+
+すると、
+\[
+\Solver_I
+=
+\{s=(\mathcal A_s,\mathcal R_s)\mid\mathcal A_s\in I\}
+\]
+において、
+\[
+\mathcal A_{s_A}=i_A
+\]
+を満たすSolver $s_A$ を構成することが次の課題となる。
+
+したがって、構造は
+
+\[
+A
+\longmapsto
+i_A
+\longmapsto
+s_A
+\longmapsto
+\mathcal T(s_A)
+\]
+
+となる。
+
+ここで各矢印は別々に検証する必要がある。
+
+\section{濃度に関する帰結}
+
+選択閉包条件と
+\[
+\mathcal R^*\cap\mathcal A_{\mathrm{ZFC}}=\varnothing
+\]
+が成立すれば、
+\[
+\mathcal P(\mathcal R^*)\hookrightarrow I
+\]
+を得る。
+
+さらに
+\[
+|\mathcal R^*|=\aleph_0
+\]
+ならば、
+\[
+|\mathcal P(\mathcal R^*)|
+=
+2^{\aleph_0}.
+\]
+
+したがって、
+\[
+\boxed{
+|I|\geq2^{\aleph_0}
+}
+\]
+が得られる。
+
+ただし、これは
+\[
+|\mathcal Z|\geq2^{\aleph_0}
+\]
+ではない。
+
+$\mathcal Z$ の下界を得るためには、次に
+\[
+A\longmapsto s_A
+\]
+を構成し、さらに
+\[
+s_A\in\mathcal Z
+\]
+を確認する必要がある。
+
+\section{結論}
+
+第2段階の本質は、
+
+\[
+\boxed{
+\mathcal P(\mathcal R^*)
+\text{ の各要素をECAの選択空間 }I\text{ に保持できるか}
+}
+\]
+
+という問題である。
+
+現在の
+\[
+I\subseteq\mathcal P(\Ax)
+\]
+という定義だけでは、この性質は保証されない。
+
+したがって、連続体濃度へ進むためには、
+
+\[
+\boxed{
+\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal A_{\mathrm{ZFC}}\cup A\in I
+}
+\]
+
+を追加条件として採用するか、
+あるいはECAの既存構造からこの条件を導出できることを示す必要がある。
+
+また、
+\[
+I
+\]
+に対して全冪集合性
+\[
+I=\mathcal P(\Ax)
+\]
+を要求する方法もあるが、これは必要以上に強い。
+
+したがって、現段階では
+\[
+\mathcal P(\mathcal R^*)\text{ に対する局所的な選択閉包}
+\]
+を最小条件として位置づける。
+
+次の段階では、この選択された公理集合
+\[
+i_A=\mathcal A_{\mathrm{ZFC}}\cup A
+\]
+から実際に
+\[
+s_A\in\mathcal Z
+\]
+を構成できるか、すなわち第3段階である
+\[
+\boxed{
+\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal T(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+}
+\]
+を検討する。
+
+
+
+
+
+
+% ECA_17.tex
+\section{ECA\_17 選択された公理集合から ZFC 表現 Solver への構成}
+
+
+\section{目的}
+
+ECA\_16では、可算無限族
+\[
+\mathcal R^*=\{r_n\mid n\in\mathbb N\}
+\]
+に対して、各
+\[
+A\subseteq\mathcal R^*
+\]
+から
+\[
+i_A=\mathcal A_{\mathrm{ZFC}}\cup A
+\]
+を構成し、それが
+\[
+i_A\in I
+\]
+となることを第2段階の条件として整理した。
+
+本稿では第3段階として、
+\[
+i_A\in I
+\]
+から実際に
+\[
+s_A\in\mathcal Z
+\]
+を構成できる条件を検討する。
+
+中心となる問いは、
+
+\[
+\boxed{
+\text{選択された公理集合 }i_A
+\text{ から、ZFCを表現するSolver }s_A\text{ を構成できるか。}
+}
+\]
+
+である。
+
+\section{Solverの既存定義}
+
+ECA\_6およびECA\_7の定義を引き継ぎ、
+\[
+s=(\mathcal A_s,\mathcal R_s)
+\]
+とする。
+
+ECAのSolver集合は
+\[
+\Solver_I
+=
+\{s=(\mathcal A_s,\mathcal R_s)\mid
+\mathcal A_s\in I\}.
+\]
+
+また数学的構造写像は
+\[
+\mathcal T:\Solver_I\to\mathrm{Th}
+\]
+であり、
+\[
+\mathcal T(s)
+\]
+はSolver $s$ が表現する数学的構造である。
+
+さらに、
+\[
+\mathcal Z
+=
+\{s\in\Solver_I\mid
+\mathcal T(s)\cong_{\mathrm{Th}}\mathrm{ZFC}\}.
+\]
+
+したがって、ある
+\[
+i_A\in I
+\]
+からSolver $s_A$ を作るには、
+少なくとも
+\[
+\mathcal A_{s_A}=i_A
+\]
+を満たすSolverを構成する必要がある。
+
+\section{Solver規則の役割}
+
+Solverは
+\[
+s_A=(i_A,\mathcal R_A)
+\]
+という形で考えることができる。
+
+ここで、
+\[
+\mathcal R_A
+\]
+は推論規則または構成上の制約を表す。
+
+このとき、
+\[
+\mathcal T(s_A)
+\]
+は単に
+\[
+i_A
+\]
+だけから決まるとは限らない。
+
+したがって、
+\[
+i_A
+\]
+がZFCに対応する公理集合であることと、
+\[
+\mathcal T(i_A,\mathcal R_A)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+であることは別々に確認する必要がある。
+
+\section{固定されたSolver規則による構成}
+
+最も単純な構成として、
+一つの固定されたSolver規則
+\[
+\mathcal R_0
+\]
+を考える。
+
+各
+\[
+A\subseteq\mathcal R^*
+\]
+について、
+\[
+\boxed{
+s_A=(i_A,\mathcal R_0)
+}
+\]
+と定義する。
+
+このとき、
+\[
+\mathcal A_{s_A}=i_A
+\]
+であるため、
+第2段階の条件
+\[
+i_A\in I
+\]
+から
+\[
+s_A\in\Solver_I
+\]
+が得られる。
+
+ただし、
+\[
+s_A\in\mathcal Z
+\]
+を得るにはさらに
+\[
+\mathcal T(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+が必要である。
+
+\section{ZFC保存条件}
+
+\begin{definition}[ZFC保存条件]
+固定された
+\[
+\mathcal A_{\mathrm{ZFC}},
+\qquad
+\mathcal R_0
+\]
+および
+\[
+\mathcal R^*
+\]
+に対し、
+\[
+\boxed{
+\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal T(\mathcal A_{\mathrm{ZFC}}\cup A,\mathcal R_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+}
+\]
+をZFC保存条件と呼ぶ。
+\end{definition}
+
+この条件は、
+\[
+\mathcal R^*
+\]
+の各部分集合を追加しても、対応するSolverの数学的構造がZFCと数学的構造的に同型であり続けることを要求する。
+
+ここで重要なのは、
+\[
+\mathcal R^*
+\]
+が単に「ZFCと無関係な候補」であることではない。
+
+必要なのは、任意の
+\[
+A\subseteq\mathcal R^*
+\]
+について、
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A
+\]
+から構成されたSolverの数学的構造がZFCを保存することである。
+
+\section{ZFC保存条件と冗長性}
+
+もし各
+\[
+r\in\mathcal R^*
+\]
+が、固定された理論体系の内部ですでに得られる内容を表す候補として扱われ、
+その追加が数学的構造を拡張しないことを保証できるなら、
+ZFC保存条件を満たす候補族を構成できる可能性がある。
+
+ただし、
+\[
+r\in\operatorname{Ax}(U)
+\]
+であることだけから、
+\[
+\mathrm{ZFC}\vdash r
+\]
+や
+\[
+\mathrm{ZFC}\cup\{r\}\equiv\mathrm{ZFC}
+\]
+は導かれない。
+
+したがって、
+「公理候補として存在すること」と
+「ZFCに対して冗長であること」は明確に分離する必要がある。
+
+\section{各部分集合についての保存性}
+
+単一の候補について
+\[
+\mathcal T(\mathcal A_{\mathrm{ZFC}}\cup\{r\},\mathcal R_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+が成立するだけでは十分ではない。
+
+必要なのは、
+\[
+\forall A\subseteq\mathcal R^*
+\]
+について
+\[
+\mathcal T(\mathcal A_{\mathrm{ZFC}}\cup A,\mathcal R_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+である。
+
+したがって、
+個々の候補のZFC保存性と、
+族全体の任意部分集合に対するZFC保存性を区別する。
+
+\section{Solver構成写像}
+
+第2段階と第3段階を同時に満たすと仮定する。
+
+すなわち、
+\[
+\forall A\subseteq\mathcal R^*,
+\quad
+i_A=\mathcal A_{\mathrm{ZFC}}\cup A\in I
+\]
+および
+\[
+\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal T(i_A,\mathcal R_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}.
+\]
+
+このとき、
+\[
+\boxed{
+\Phi:
+\mathcal P(\mathcal R^*)
+\longrightarrow
+\mathcal Z,
+\qquad
+\Phi(A)=(i_A,\mathcal R_0)
+}
+\]
+を定義できる。
+
+さらに、
+\[
+\mathcal R^*\cap\mathcal A_{\mathrm{ZFC}}=\varnothing
+\]
+ならば、
+\[
+A\neq A'
+\Longrightarrow
+i_A\neq i_{A'}
+\]
+である。
+
+したがって、
+\[
+\boxed{
+\Phi\text{ は単射}
+}
+\]
+となる。
+
+\section{連続体濃度への帰結}
+
+もし
+\[
+|\mathcal R^*|=\aleph_0
+\]
+であれば、
+\[
+|\mathcal P(\mathcal R^*)|
+=
+2^{\aleph_0}.
+\]
+
+したがって、
+\[
+\Phi:\mathcal P(\mathcal R^*)\hookrightarrow\mathcal Z
+\]
+が構成できれば、
+\[
+\boxed{
+|\mathcal Z|\geq2^{\aleph_0}
+}
+\]
+を得る。
+
+ここで初めて、ECA\_9およびECA\_10で条件付きに扱っていた
+$\mathcal Z$ の連続体濃度下界が成立する。
+
+ただし、この結論は
+\[
+\mathcal R^*\text{ の存在},
+\]
+選択閉包条件、
+ZFC保存条件、
+およびSolver構成条件がすべて成立した場合の条件付き帰結である。
+
+\section{ECAの既存定義から導出できるか}
+
+現在までの定義から、
+\[
+\mathcal T:\Solver_I\to\mathrm{Th}
+\]
+が存在することは設定されている。
+
+しかし、
+\[
+i\in I
+\]
+ごとに
+\[
+s=(i,\mathcal R)
+\]
+が存在することや、
+固定した
+\[
+\mathcal R_0
+\]
+を用いて常にSolverを構成できることは、現在の定義だけでは保証されていない。
+
+さらに、
+\[
+\mathcal T(i,\mathcal R_0)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+というZFC保存性も自動的には導かれない。
+
+したがって、
+
+\[
+\boxed{
+\text{第3段階も、現時点ではECAの定理ではない。}
+}
+\]
+
+\section{第3段階に必要な条件の整理}
+
+第3段階を成立させるためには、少なくとも次を確認する必要がある。
+
+\begin{enumerate}
+    \item 各 $A\subseteq\mathcal R^*$ に対して
+    \[
+    i_A=\mathcal A_{\mathrm{ZFC}}\cup A\in I
+    \]
+    が成立する。
+
+    \item 各 $i_A$ に対してSolver
+    \[
+    s_A=(i_A,\mathcal R_A)
+    \]
+    が存在する。
+
+    \item 各 $s_A$ が
+    \[
+    \mathcal T(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+    \]
+    を満たす。
+
+    \item 異なる $A$ が異なるSolverを与える。
+\end{enumerate}
+
+このうち第1項はECA\_16で扱った選択可能性、
+第2項と第3項が本稿の中心である。
+第4項は濃度下界を得るための単射性に関する条件である。
+
+\section{「ZFCを表現する」の意味}
+
+本稿では、
+\[
+\mathcal T(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+をZFC表現の基準として維持する。
+
+したがって、
+\[
+M\models\mathcal T(s)
+\]
+というモデルの存在や、
+\[
+M\models\mathrm{CH}
+\]
+などのモデルレベルの性質は、本稿のZFC保存条件とは別である。
+
+これはECA\_8で整理した
+\[
+\text{Solver}
+\quad\longleftrightarrow\quad
+\text{数学的構造}
+\quad\longleftrightarrow\quad
+\text{モデル}
+\]
+の区別を維持するためである。
+
+\section{結論}
+
+第3段階では、
+\[
+i_A\in I
+\]
+という選択可能性から、
+\[
+s_A\in\mathcal Z
+\]
+というZFC表現Solverの存在へ進むための条件を明確化した。
+
+基本的な構成は、
+\[
+A
+\longmapsto
+i_A
+=
+\mathcal A_{\mathrm{ZFC}}\cup A
+\longmapsto
+s_A
+=
+(i_A,\mathcal R_0)
+\longmapsto
+\mathcal T(s_A)
+\]
+である。
+
+そして、
+\[
+\forall A\subseteq\mathcal R^*,
+\quad
+\mathcal T(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+が成立すれば、
+\[
+\Phi:\mathcal P(\mathcal R^*)\hookrightarrow\mathcal Z
+\]
+へ接続できる。
+
+したがって、
+\[
+|\mathcal R^*|=\aleph_0
+\]
+ならば、
+\[
+|\mathcal Z|\geq2^{\aleph_0}
+\]
+が条件付きで得られる。
+
+なお、以下の点については言及している箇所を確認すること。
+
+\begin{enumerate}
+  \item $\mathcal R^*$ の存在
+  \item 選択閉包
+  \item ZFC保存性
+  \item Solver構成可能性
+\end{enumerate}
+
+
+
+したがって次に必要なのは、
+\[
+\boxed{
+\mathcal R^*
+\text{ の各候補を、どのような数学的構造として
+「ZFC保存的」とみなせるのか}
+}
+\]
+を具体化することである。
+
+特に、
+\[
+\mathcal A_{\mathrm{ZFC}}\cup A
+\]
+と
+\[
+\mathcal A_{\mathrm{ZFC}}
+\]
+が同じ数学的構造を表すための条件を、
+「公理候補の性質」と「Solver規則の性質」に分けて検討する必要がある。
+
+
 
 \end{document}

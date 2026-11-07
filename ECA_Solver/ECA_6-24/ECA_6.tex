@@ -1,4 +1,4 @@
-\documentclass[a4paper,11pt]{jsarticle}
+\documentclass[a4paper,11pt]{article}
 
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage{bm}
@@ -8,16 +8,23 @@
 \geometry{margin=25mm}
 
 \newtheorem{definition}{定義}[section]
+\newtheorem{theorem}[definition]{定理}
 \newtheorem{proposition}[definition]{命題}
 \newtheorem{remark}[definition]{注意}
 \newtheorem{example}[definition]{例}
+\newtheorem{conclusion}[definition]{結論}
 
 \newcommand{\Solver}{\mathcal{S}}
 \newcommand{\Ax}{S_{\mathrm{ax}}}
 \newcommand{\Sel}{I}
 \newcommand{\Th}{\mathrm{Th}}
+\newcommand{\Zset}{\mathcal{Z}}
+\newcommand{\Model}{\mathrm{Mod}}
+\newcommand{\Mod}{\mathrm{Mod}}
+\newcommand{\Pow}{\mathcal{P}}
 
-\title{ECA_6\\公理候補集合と Solver 構造の再定義}
+% ECA_6～11
+\title{ECA_6 公理候補集合と Solver 構造の再定義}
 \author{}
 \date{}
 
@@ -26,13 +33,8 @@
 \maketitle
 
 \begin{abstract}
-本稿では、ECA_5 までに用いられてきた「全公理集合」$S$、「公理選択空間」$I$、および Solver 集合 $\mathcal{S}$ の関係を整理し、後続する $\mathcal{Z}$ の再定義に必要となる基礎構造を定める。
-
-従来の文書では、同一の記号 $S$ が「公理または公理スキームの全体」と Solver の表現の双方に用いられる場合があり、また $I$ についても公理選択空間と評価写像の双方の記法が現れていた。
-本稿では、特に公理候補の全体と Solver を別の数学的対象として扱う。
-
-本稿の目的は ZFC の再定義、$\mathcal{Z}$ の濃度決定、連続体濃度 $2^{\aleph_0}$ の導出、または CH のモデル分岐を行うことではない。
-それらに先立って、何を一つの Solver とし、どのような構造の違いを Solver の違いとして扱うかを明確にすることを目的とする。
+本稿では、ECA_1からECA_5 までに用いられてきた「全公理集合」$S$、「公理選択空間」$I$、および Solver 集合 $\mathcal{S}$ の関係を整理し、後続する $\mathcal{Z}$ の再定義に必要となる基礎構造を定める。
+本稿の目的は「何を一つの Solver とし、どのような構造の違いを Solver の違いとして扱うか」を明確にすること、また「同一の記号 $S$ が「公理または公理スキームの全体」と Solver の表現の双方に用いられることによる混同の回避」、および「$I$ の公理選択空間と評価写像の記法」を分離し、公理候補の全体と Solver を別の数学的対象として扱うために必要となる数学的概念を提供するものである。
 \end{abstract}
 
 \section{本稿の位置付け}
@@ -60,7 +62,7 @@ ECA_1 では、$S$ を「Solver集合（全公理集合）」とし、各元を�
 \subsection{定義}
 
 \begin{definition}[公理候補全体]
-ECA が取り扱う公理および公理スキームの全体を
+まず ECA が取り扱う公理および公理スキームの全体を
 \[
 \boxed{\Ax}
 \]
@@ -69,38 +71,25 @@ ECA が取り扱う公理および公理スキームの全体を
 すなわち、$a\in\Ax$ は一つの公理または公理スキームを表す。
 \end{definition}
 
-ここで $\Ax$ は Solver そのものではない。
+ここで $\Ax$ は Solver そのものではないことに留意する。
 $\Ax$ は、ECA において公理選択の対象となる候補の全体を表す。
 ECA_1 における「全公理集合 $S$」は、本稿ではこの $\Ax$ に対応するものとして整理する。
 
 \subsection{記号分離の理由}
-
-従来の記述では、$S$ が公理候補の全体を表す一方、後続の Solver 集合では
+$S$ が公理候補の全体を表す一方、後続の Solver 集合では
 \[
 S=(\mathcal{A}_S,\mathcal{R}_S)
 \]
-という形も現れていた。
+という数式を用いていた。
 
-この二つを同じ記号 $S$ で表すと、対象の型の混同を生じさせる可能性がある。
+しかし、この二つを同じ記号 $S$ で表すと、解釈において予期せぬ混同を生じさせる可能性がある。
 
-したがって、本稿以降では原則として
-\[
-\Ax
-\]
-を公理候補全体に、
-\[
-s,\ t,\ldots
-\]
-を個々の Solver に、
-\[
-\Solver
-\]
-を Solver 全体に用いる。
+したがって、本稿以降では原則として $\Ax$ を公理候補全体に、$s,\ t,\ldots$ を個々の Solver に、$\Solver$ を Solver 全体に用いる。
 
 \begin{remark}
-ここで $\Ax$ を「公理基底集合」とは呼ばない。
-本稿で扱うのは、特定の理論の基底となる最小集合ではなく、ECA において選択対象となり得る公理および公理スキームの全体だからである。
-したがって「公理候補全体」または「公理・公理スキームの全体」という名称を用いる。
+ここで $\Ax$ は「公理基底集合」とは呼ばないものとする。
+本稿で扱うのは、特定の数学的構造の基底となる最小集合ではなく、ECA において選択対象となり得る公理および公理スキームの全体だからである。
+したがって $\Ax$ では「公理候補全体」または「公理・公理スキームの全体」という名称を用いる。
 \end{remark}
 
 \section{公理選択空間}
@@ -114,11 +103,7 @@ s,\ t,\ldots
 \]
 と定める。
 
-各
-\[
-i\in\Sel
-\]
-は、ECA において採用され得る公理集合を表す。
+各 $i\in\Sel$ は、ECA において採用され得る公理集合を表す。
 \end{definition}
 
 これは従来文書の $I\subseteq\mathcal{P}(S)$ を公理候補全体と Solver の記号を分離した形で書き直したものである。
@@ -185,7 +170,7 @@ s=(\mathcal{A}_s,\mathcal{R}_s)
 
 \subsection{ECA に適合する Solver}
 
-\begin{definition}[Solver--ECA 適合条件]
+\begin{definition}[適合の条件]
 Solver
 \[
 s=(\mathcal{A}_s,\mathcal{R}_s)
@@ -213,7 +198,7 @@ s=(\mathcal{A}_s,\mathcal{R}_s)
 \]
 と定義する。
 
-以後、文脈上 ECA に適合する Solver のみを扱う場合は $\Solver_{\Sel}$ を単に $\Solver$ と記す。
+以後、この文書の文脈上において ECA に適合する Solver のみを扱う場合は $\Solver_{\Sel}$ を単に $\Solver$ と記す。
 
 \section{Solver の構成要素を取り出す写像}
 
@@ -266,14 +251,8 @@ s=(\mathcal{A}_s,\mathcal{R}_s)
 であることから、少なくとも次の二つの構造を区別する。
 
 \begin{enumerate}
-\item 公理選択構造
-\[
-\mathcal{A}_s=\mathfrak{A}(s),
-\]
-\item 推論・構成構造
-\[
-\mathcal{R}_s.
-\]
+\item 公理選択構造 $\mathcal{A}_s=\mathfrak{A}(s)$
+\item 推論・構成構造 $\mathcal{R}_s$
 \end{enumerate}
 
 したがって、二つの Solver $s,t$ に対して、
@@ -324,8 +303,7 @@ s=t
 
 \subsection{Solver 同型}
 
-一方、既存の ECA 文書では Solver 同型について、
-単なる集合論的全単射ではなく、Solver に付随する構造を保存する写像として
+一方、既存の ECA 文書では Solver 同型について、単なる集合論的全単射ではなく、Solver に付随する構造を保存する写像として
 \[
 T:\Solver_1\overset{\sim}{\longrightarrow}\Solver_2
 \]
@@ -353,7 +331,7 @@ s\cong_{\mathrm{Sol}}t
 
 \begin{remark}
 本稿では、Solver 同型を単なる「同類型の集合」とは表現しない。
-これは「同類型」は集合論的な同一性や構造保存写像の存在を特定しないためである。
+これは「同類型」は集合論的な同一性や構造を保存する写像の存在を特定しないためである。
 また、Solver 同型の完全な形式化には $\mathcal{R}_s$ がどのような数学的構造として定義されるか、およびその構造に対して何を「保存する」とするかを明示する必要がある。
 この詳細は、後続文書で必要になった段階で定式化する。
 \end{remark}
@@ -454,9 +432,9 @@ s=(\mathcal{A}_s,\mathcal{R}_s)
 \]
 という複合的な構造を持つ。
 
-\section{理論との接続に関する予備的整理}
+\section{Solver が表現する数学的構造との接続に関する予備的整理}
 
-後続文書では Solver が表現する理論を
+後続文書では Solver が表現する数学的構造を
 \[
 \mathcal{T}:\Solver\longrightarrow\Th
 \]
@@ -480,7 +458,7 @@ s=(\mathcal{A}_s,\mathcal{R}_s)
 \mathcal{T}(\mathcal{A}_s,\mathcal{R}_s)
 }
 \]
-として、Solver の公理選択および推論規則・構成制約によって表現される理論を対応させる。
+として、Solver の公理選択および推論規則・構成制約によって表現される数学的構造を対応させる。
 
 したがって、少なくとも概念上は
 \[
@@ -498,7 +476,7 @@ s
 
 この区別によって
 \[
-\text{公理選択} \qquad \text{と} \qquad \text{Solver が表現する理論}
+\text{公理選択} \qquad \text{と} \qquad \text{Solver が表現する数学的構造}
 \]
 を同一視することを避ける。
 
@@ -507,56 +485,21 @@ s
 本稿では、以後の $\mathcal{Z}$ の再定義に先立ち、次の構造を確定した。
 
 \begin{enumerate}
-\item ECA が扱う公理および公理スキームの全体を
-\[
-\Ax
-\]
-とする。
-
-\item 公理選択空間を
-\[
-\Sel\subseteq\mathcal{P}(\Ax)
-\]
-とする。
-
-\item 各公理選択
-\[
-i\in\Sel
-\]
-は採用され得る公理集合を表す。
-
-\item Solver を
-\[
-s=(\mathcal{A}_s,\mathcal{R}_s)
-\]
-とする。
-
-\item ECA に適合する Solver は
-\[
-\mathcal{A}_s\in\Sel
-\]
-を満たす。
-
-\item ECA に適合する Solver 全体を
-\[
-\Solver_{\Sel}
-=
-\{s=(\mathcal{A}_s,\mathcal{R}_s)\mid
-\mathcal{A}_s\in\Sel\}
-\]
-とする。
-
-\item Solver の公理選択成分を $\mathfrak{A}(s)=\mathcal{A}_s$ によって取り出す。
-\item Solver の同一性 $s=t$ と Solver 同型 $s\cong_{\mathrm{Sol}}t$ を区別する。
-\item Solver の構造差について公理選択、推論・構成構造、および表現上の差を区別して扱う。
-\item Solver が表現する $\mathcal{T}(s)$ は公理選択 $\mathcal{A}_s$ そのものとは同一視せず、Solver の構造から得られるものとして後続文書で扱う。
+\item ECA が扱う公理および公理スキームの全体を $\Ax$ とする
+\item 公理選択空間を $\Sel\subseteq\mathcal{P}(\Ax)$ とする
+\item 各公理選択 $i\in\Sel$ は採用され得る公理集合を表す
+\item Solver を $s=(\mathcal{A}_s,\mathcal{R}_s)$ とする
+\item ECA に適合する Solver は $\mathcal{A}_s\in\Sel$ を満たす
+\item ECA に適合する Solver 全体を $\Solver_{\Sel} = \{s=(\mathcal{A}_s,\mathcal{R}_s) \mid \mathcal{A}_s\in\Sel\}$ とする
+\item Solver の公理選択成分を $\mathfrak{A}(s)=\mathcal{A}_s$ によって取り出す
+\item Solver の同一性 $s=t$ と Solver 同型 $s\cong_{\mathrm{Sol}}t$ を区別する
+\item Solver の構造差について公理選択、推論・構成構造、および表現上の差を区別して扱う
+\item Solver が表現する $\mathcal{T}(s)$ は公理選択 $\mathcal{A}_s$ そのものとは同一視せず、Solver の構造から得られるものとして扱う (これは後続の内容で扱う)
 \end{enumerate}
 
 \section{後続する $\mathcal{Z}$ の再定義に向けた注意}
 
-本稿では、まだ $\mathcal{Z}$ そのものを定義していない。
-
-その理由は、$\mathcal{Z}$ を定義するためには少なくとも
+ここまでの段階では、まだ $\mathcal{Z}$ そのものを定義していないが、その理由は $\mathcal{Z}$ を定義するためには少なくとも
 \[
 \Ax,\qquad
 \Sel,\qquad
@@ -565,11 +508,7 @@ s=(\mathcal{A}_s,\mathcal{R}_s)
 \]
 の関係を先に確定しておく必要があるためである。
 
-特に、
-\[
-\mathcal{T}(s)\cong\mathrm{ZFC}
-\]
-という条件を用いる場合には「Solver が ZFC そのものである」という意味ではなく 「Solver $s$ が表現する数学的構造 $\mathcal{T}(s)$ と ZFC との間にどのような同型関係を要求するのかを明示する必要がある。
+特に、$\mathcal{T}(s)\cong\mathrm{ZFC}$ という条件を用いる場合には「Solver $s$ が表現する数学的構造 $\mathcal{T}(s)$ と ZFC との間にどのような同型関係を要求するのか」を明示する必要がある。
 
 また、後続する濃度の議論では
 \[
@@ -584,18 +523,2192 @@ s=(\mathcal{A}_s,\mathcal{R}_s)
 したがって $\mathcal{Z}$ の定義および $2^{\aleph_0}$ との関係は、本稿で確定した構造を前提として別途定式化する。
 
 \section*{既存 ECA 文書との対応}
-
 本稿において示された構造は、既存の ECA 文書に現れる以下の記述を $\mathcal{Z}$ の定義に伴い改めて整理したものである。
 
 \begin{itemize}
 \item ECA_1 における「全公理集合」と公理・公理スキームの記述
 \item ECA_1 における $I\subseteq\mathcal{P}(S)$ という公理選択空間
-\item 後続文書における $s=(\mathcal{A}_s,\mathcal{R}_s)$という Solver 構造
+\item $s=(\mathcal{A}_s,\mathcal{R}_s)$という Solver 構造
 \item Solver--ECA 適合条件 $\mathcal{A}_s\in I$
 \item 公理選択写像 $\mathfrak{A}(s)=\mathcal{A}_s$
 \item Solver 同型および Representation Independence に関する既存の構造
 \end{itemize}
 
-本稿では、これらを記号の衝突を避けながら一つの文書として整理したものである。
+%----------------------------------------------------------------------------------
+
+\section{ECA_7 $\mathcal{Z}$ の再定義と ZFC 表現 Solver の構造}
+
+\begin{abstract}
+前章において整理された公理候補全体 $\Ax$、公理選択空間 $I$、Solver 集合 $\Solver$、公理選択写像 $\mathfrak{A}$、および数学的構造写像 $\mathcal{T}$ を前提として、ECA における $\mathcal{Z}$ の位置付けを改めて定義する。
+ここでの目的は「Solver の同一性」と「Solver 同型」、「数学的構造の同型」と「数学的構造のモデル」を区別し、$\mathcal{Z}$ を「ECA に適合する Solver のうち、それが表現する数学的構造が ZFC と所定の意味で同型となるものを取り出した部分集合として扱う」ために必要な概念を提供することである。
+
+\end{abstract}
+
+\section{本稿の位置付け}
+
+前章では公理候補全体と Solver を分離し、
+\[
+\Ax,\qquad I\subseteq\mathcal{P}(\Ax),\qquad s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+という数学的関係として整理した。
+
+ECA_6 における ECA 適合 Solver の集合を
+\[
+\Solver_I
+=
+\left\{
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\;\middle|\;
+\mathcal{A}_s\in I
+\right\}
+\]
+とする。
+
+また、公理選択写像
+\[
+\mathfrak{A}:\Solver_I\longrightarrow I,
+\qquad
+\mathfrak{A}(s)=\mathcal{A}_s
+\]
+を用いる。
+
+本稿では、この $\Solver_I$ の中から ZFC を表現する Solver を
+取り出すために $\mathcal{Z}$ を定義する。
+
+\section{Solver が表現する数学的構造の明確化}
+
+\begin{definition}[数学的構造写像]
+ECA に適合する Solver から、それによって表現される数学的構造を
+\[
+\boxed{
+\mathcal{T}:\Solver_I\longrightarrow\Th
+}
+\]
+とする。
+
+各 $s\in\Solver_I$ に対して、
+\[
+\mathcal{T}(s)
+\]
+は Solver
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+の公理選択および推論規則・構成制約によって表現される数学的構造を表す。
+\end{definition}
+
+したがって、
+\[
+\mathcal{T}(s)
+\neq
+\mathcal{A}_s
+\]
+を原則として区別する。
+
+\begin{remark}
+ここで $\mathcal{T}(s)$ を公理集合そのものと同一視しない。
+Solver は
+\[
+(\mathcal{A}_s,\mathcal{R}_s)
+\]
+という構造から表現されるためである。
+
+したがって、後続する $\mathcal{Z}$ の定義では「ZFC と同じ公理集合を持つ Solver」という条件ではなく「Solver が表現する数学的構造と ZFC の関係」を条件として用いる。
+\end{remark}
+
+\section{Solver が表現する数学的構造の同型}
+
+\subsection{Solver が表現する数学的構造間の同型}
+
+\begin{definition}[Solver が表現する数学的構造における同型]
+Solver が表現する二つの数学的構造 $T_1,T_2\in\Th$ について、
+\[
+T_1\cong_{\mathrm{Th}}T_2
+\]
+とは、Solver が表現する双方の数学的構造において、その言語および構造を対応させる適切な構造を保存する数学的構造が存在することを表す。
+
+特に $\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}$ は、Solver $s$ が表現する数学的構造と ZFC が採用する数学的構造を保つ形で同型であることを表す。
+\end{definition}
+
+ここで必要なのは、$\cong_{\mathrm{Th}}$ を単なる「同じ種類」「同類型」という意味で用いないことである。
+Solver が表現する数学的構造の同型を厳密に扱うには、数学的構造の言語、論理体系、および何を構造として保存するかを別途明示する必要がある。
+本稿では、その詳細な形式化を後続文書に委ね $\cong_{\mathrm{Th}}$ を「Solver が表現する数学的構造の同型としての構造同型」を表す数式として定義する。
+
+\section{$\mathcal{Z}$ の定義}
+
+\begin{definition}[$\mathcal{Z}$]
+ECA における ZFC 表現 Solver の集合を
+\[
+\boxed{
+\mathcal{Z}
+:=
+\left\{
+s\in\Solver_I
+\;\middle|\;
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\right\}
+}
+\]
+と定義する。
+\end{definition}
+
+すなわち、
+\[
+\boxed{
+\mathcal{Z}\subseteq\Solver_I
+}
+\]
+である。
+
+$\mathcal{Z}$ の元は ZFC そのものではなく、
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+という Solver である。
+
+そして各
+\[
+s\in\mathcal{Z}
+\]
+について、
+\[
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+が成立する。
+
+\subsection{定義の意味}
+
+この定義により、
+\[
+\mathcal{Z}
+\]
+は次の三つの対象のいずれとも同一ではない。
+
+\begin{enumerate}
+\item ZFC という数学的構造そのもの：
+\[
+\mathcal{Z}\neq\mathrm{ZFC}.
+\]
+
+\item ZFC と同型な数学的構造の集合：
+\[
+\mathcal{Z}
+\neq
+\left\{
+T\in\Th\mid T\cong_{\mathrm{Th}}\mathrm{ZFC}
+\right\}.
+\]
+
+\item 連続体濃度：
+\[
+|\mathcal{Z}|
+\neq
+2^{\aleph_0}
+\]
+は、この定義だけからは導かれない。
+\end{enumerate}
+
+特に第3点は重要である。
+$\mathcal{Z}$ の定義は、その濃度を指定する定義ではない。
+$|\mathcal{Z}|$ が可算なのか、連続体濃度以上なのか、その他の濃度なのかは $\mathcal{Z}$ を構成する Solver の集合について別途調べる必要がある。
+
+\section{$\mathcal{Z}$ における Solver の区別}
+
+\subsection{Solver の同一性}
+
+ECA_6 の定義より、
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s),
+\qquad
+t=(\mathcal{A}_t,\mathcal{R}_t)
+\]
+について、
+\[
+s=t
+\]
+は
+\[
+\mathcal{A}_s=\mathcal{A}_t
+\quad\land\quad
+\mathcal{R}_s=\mathcal{R}_t
+\]
+によって決まる。
+
+したがって、
+\[
+s\neq t
+\]
+であっても、
+\[
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathcal{T}(t)
+\]
+であることは排除されない。
+
+つまり、異なる Solver が同型な数学的構造を表現することは、
+$\mathcal{Z}$ の定義と矛盾しない。
+
+\subsection{Solver 同型との関係}
+
+さらに、
+\[
+s\cong_{\mathrm{Sol}}t
+\]
+という Solver 同型と
+\[
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathcal{T}(t)
+\]
+という数学的構造の同型も区別する。
+
+Solver 同型は Solver 自体の構造に関する関係であり、数学的構造の同型は Solver によって表現される数学的構造に関する関係である。
+
+したがって、
+\[
+\boxed{
+s\cong_{\mathrm{Sol}}t
+\quad\text{と}\quad
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathcal{T}(t)
+}
+\]
+は、一般には同じ命題ではない。
+
+後続文書で両者の間に追加の対応関係を導入する場合にはその対応を明示的に定義する。
+
+\section{$\mathcal{Z}$ と公理選択の関係}
+
+各
+\[
+s\in\mathcal{Z}
+\]
+について、
+\[
+\mathfrak{A}(s)=\mathcal{A}_s\in I
+\]
+である。
+
+したがって、
+\[
+\mathfrak{A}\restriction_{\mathcal{Z}}
+:
+\mathcal{Z}\longrightarrow I
+\]
+を考えることができる。
+
+ここで注意すべきなのは、
+\[
+s\neq t
+\]
+から必ず
+\[
+\mathcal{A}_s\neq\mathcal{A}_t
+\]
+が従うわけではないことである。
+
+同一の公理選択
+\[
+\mathcal{A}_s=\mathcal{A}_t
+\]
+を持ちながら、
+\[
+\mathcal{R}_s\neq\mathcal{R}_t
+\]
+によって異なる Solver が構成される可能性がある。
+
+逆に、
+\[
+\mathcal{A}_s\neq\mathcal{A}_t
+\]
+であっても、
+\[
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathcal{T}(t)
+\]
+となる可能性は、数学的構造の同型の定義次第で排除されない。
+
+したがって、
+\[
+\boxed{
+\text{公理選択}
+\;\neq\;
+\text{Solver}
+\;\neq\;
+\text{表現される数学的構造}
+}
+\]
+として扱う。
+
+\section{$\mathcal{Z}$ とモデルの区別}
+
+本稿では、
+\[
+\mathcal{T}(s)
+\]
+は数学的構造でありモデルではない。
+
+したがって
+\[
+M\models\mathcal{T}(s)
+\]
+という関係を導入する場合、$M$ は
+$\mathcal{T}(s)$ のモデルとして別個に扱う。
+
+モデルの集合を、必要に応じて
+\[
+\boxed{
+\mathrm{Mod}(\mathcal{T}(s))
+}
+\]
+と表す。
+
+このとき、
+\[
+s\in\mathcal{Z}
+\]
+は
+\[
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+という数学的構造レベルの条件であり、
+\[
+M\models\mathcal{T}(s)
+\]
+はモデルレベルの条件である。
+
+この二つを同一視してはならない。
+
+\begin{remark}
+特に CH については、
+\[
+\mathcal{T}(s)\models\mathrm{CH}
+\]
+という数学的構造の論理的帰結と、
+\[
+M\models\mathcal{T}(s)+\mathrm{CH}
+\]
+というモデルの存在を区別する必要がある。
+
+本稿では CH の分岐そのものを定式化せず、後者のようなモデルを導入できるように数学的構造とモデルの型を分離するところまでを行う。
+\end{remark}
+
+\section{$\mathcal{Z}$ の濃度に関する位置付け}
+
+$\mathcal{Z}$ は Solver の部分集合であるため、その濃度は
+\[
+|\mathcal{Z}|
+\]
+として通常の集合論的濃度によって扱う。
+
+ただし、
+\[
+\mathcal{Z}
+\subseteq
+\Solver_I
+\]
+から直ちに
+\[
+|\mathcal{Z}|=|\Solver_I|
+\]
+が従うわけではない。
+
+また、
+\[
+I\subseteq\mathcal{P}(\Ax)
+\]
+であることから、
+\[
+|\mathcal{P}(\Ax)|
+\]
+の濃度が大きいとしても、
+それだけで
+\[
+|\mathcal{Z}|
+\]
+が同じ濃度になるわけではない。
+
+したがって、後続する連続体濃度の議論では
+\[
+|\Ax|,
+\qquad
+|I|,
+\qquad
+|\Solver_I|,
+\qquad
+|\mathcal{Z}|
+\]
+をそれぞれ独立した対象として追跡する必要がある。
+
+\section{本稿で確定した定義}
+
+本稿ではECA_6 の構造を基礎として、次を確定した。
+
+\begin{enumerate}
+\item ECA に適合する Solver 全体を
+\[
+\Solver_I
+=
+\left\{
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\mid
+\mathcal{A}_s\in I
+\right\}
+\]
+とすること
+
+\item Solver から表現される数学的構造への写像を
+\[
+\mathcal{T}:\Solver_I\to\Th
+\]
+とすること
+
+\item 数学的構造の同型を
+\[
+\cong_{\mathrm{Th}}
+\]
+として、Solver 同型
+\[
+\cong_{\mathrm{Sol}}
+\]
+と区別すること
+
+\item $\mathcal{Z}$ を
+\[
+\boxed{
+\mathcal{Z}
+=
+\left\{
+s\in\Solver_I
+\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\right\}
+}
+\]
+と定義すること
+
+\item $\mathcal{Z}$ の元は ZFC そのものではなく、ZFC と数学的構造として同型な構造を表現する Solver である
+\item Solver、数学的構造、モデルをそれぞれ別の数学的対象として扱う
+\item $\mathcal{Z}$ の濃度はこの定義だけから決定せず $|\Ax|,\ |I|,\ |\Solver_I|,\ |\mathcal{Z}|$ を分離して後続文書で検討する
+\item CH の議論では、数学的構造レベルの関係とモデルレベルの関係を分離する
+\end{enumerate}
+
+\section{後続する議論}
+
+本稿で定義した $\mathcal{Z}$ を基礎として、後続文書では次の問題を扱うことができる。
+
+\begin{enumerate}
+\item $\mathcal{Z}$ に含まれる Solver の構成方法
+\item 異なる Solver が $\mathcal{Z}$ の異なる元となる条件
+\item $\mathfrak{A}\restriction_{\mathcal{Z}}$ と $\mathcal{T}\restriction_{\mathcal{Z}}$ の関係
+\item $\mathcal{Z}$ の濃度と $2^{\aleph_0}$ との比較
+\item ZFC のモデルにおける CH と $\neg\mathrm{CH}$ の分岐をSolver、数学的構造、モデルの三層に分けて記述すること
+\end{enumerate}
+
+\section{ECA_8 $\mathcal{Z}$ におけるモデル分岐と連続体仮説}
+
+
+\begin{abstract}
+本稿では、ECA_7 において再定義した
+\[
+\mathcal{Z}=
+\left\{s\in\Solver_I\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}\right\}
+\]
+を前提として、ECA_5 で記述されていた連続体仮説（CH）の「Solver に依存する」という記述を、数学的構造レベルとモデルレベルに分離して再構成する。
+
+特に、異なる Solver が ZFC と同型な数学的構造を表現することと、それらの数学的構造について CH または $\neg\mathrm{CH}$ を満たすモデルを考えることを区別する。
+
+本稿の目的は CH の独立性そのものを新たに証明することではない。
+また、$\mathcal{Z}$ の濃度や連続体濃度 $2^{\aleph_0}$ を
+本稿のモデル分岐から導出するものでもない。
+\end{abstract}
+
+\section{本稿の位置付け}
+
+ECA_7 では、ECA に適合する Solver 全体を
+\[
+\Solver_I=
+\left\{s=(\mathcal{A}_s,\mathcal{R}_s)\mid
+\mathcal{A}_s\in I\right\}
+\]
+とし、数学的構造写像を
+\[
+\mathcal{T}:\Solver_I\longrightarrow\Th
+\]
+とした。
+
+さらに、
+\[
+\mathcal{Z}=
+\left\{s\in\Solver_I\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}\right\}
+\]
+を定義した。
+
+したがって、$s\in\mathcal{Z}$ は「Solver $s$ 自体が ZFC である」
+という意味ではなく、Solver $s$ が表現する数学的構造
+$\mathcal{T}(s)$ が ZFC と同型であることを意味する。
+
+\section{ECA_5 における従来の CH 記述}
+
+ECA_5 では、
+\[
+\exists S_1,S_2\in\mathcal{Z}\quad
+\left(
+\mathcal{T}(S_1)\models\mathrm{CH}
+\land
+\mathcal{T}(S_2)\models\neg\mathrm{CH}
+\right)
+\]
+という形で CH の分岐を記述していた。
+
+しかし、ECA_7 で数学的構造とモデルを明確に区別したため、
+この式は数学的構造レベルの主張として読まれる可能性がある。
+本稿では、ECA_5 の意図していた分岐をモデルを明示した形へ改める。
+
+\section{モデルの導入}
+
+\begin{definition}[モデル]
+各数学的構造 $T\in\Th$ に対して、そのモデル全体を
+\[
+\Mod(T)
+\]
+と表す。
+
+\[
+M\in\Mod(T)
+\]
+とは、
+\[
+M\models T
+\]
+を満たす構造 $M$ であることを表す。
+\end{definition}
+
+したがって Solver $s$ に対しては、
+\[
+M\in\Mod(\mathcal{T}(s))
+\]
+によって $\mathcal{T}(s)$ のモデルを表す。
+
+\subsection{数学的構造とモデルの論理関係}
+
+\[
+\mathcal{T}(s)\models\mathrm{CH}
+\]
+と
+\[
+\exists M\in\Mod(\mathcal{T}(s))\quad
+M\models\mathrm{CH}
+\]
+は異なる主張である。
+
+前者は CH が数学的構造 $\mathcal{T}(s)$ の論理的帰結であることを表す。
+後者は $\mathcal{T}(s)$ のモデルのうち CH を満たすものが存在する
+ことを表す。
+
+同様に、
+\[
+\exists M\in\Mod(\mathcal{T}(s))\quad
+M\models\neg\mathrm{CH}
+\]
+は $\neg\mathrm{CH}$ を満たすモデルの存在を表す。
+
+\section{CH と $\neg$CH のモデル分岐}
+
+\begin{definition}[CH モデル]
+$s\in\mathcal{Z}$ に対して、
+\[
+M_{\mathrm{CH}}\in\Mod(\mathcal{T}(s)),
+\qquad
+M_{\mathrm{CH}}\models\mathrm{CH}
+\]
+を満たすモデルを CH モデルと呼ぶ。
+\end{definition}
+
+\begin{definition}[$\neg$CH モデル]
+$s\in\mathcal{Z}$ に対して、
+\[
+M_{\neg\mathrm{CH}}\in\Mod(\mathcal{T}(s)),
+\qquad
+M_{\neg\mathrm{CH}}\models\neg\mathrm{CH}
+\]
+を満たすモデルを $\neg$CH モデルと呼ぶ。
+\end{definition}
+
+異なる Solver を明示したモデル分岐は、次のように記述できる。
+\[
+\boxed{
+\begin{aligned}
+\exists s_1,s_2\in\mathcal{Z},\;
+\exists M_1,M_2\quad
+&
+\bigl(
+M_1\in\Mod(\mathcal{T}(s_1))
+\land M_1\models\mathrm{CH}
+\\
+&{}\land
+M_2\in\Mod(\mathcal{T}(s_2))
+\land M_2\models\neg\mathrm{CH}
+\bigr).
+\end{aligned}}
+\]
+
+ただし、これは「異なる Solver を用いたモデル分岐」を表す条件であり、
+ECA の定義から自動的に導かれるものではない。
+
+\section{同一 Solver におけるモデル分岐}
+
+モデル分岐と Solver の分岐は同一ではない。
+
+一つの Solver $s\in\mathcal{Z}$ に対して
+\[
+M_1,M_2\in\Mod(\mathcal{T}(s))
+\]
+かつ
+\[
+M_1\models\mathrm{CH},
+\qquad
+M_2\models\neg\mathrm{CH}
+\]
+という状況を考えることも形式上は可能である。
+
+この場合、
+\[
+\boxed{\text{Solver の分岐}\neq\text{モデルの分岐}}
+\]
+となる。
+
+すなわち、モデルの違いを表すために
+\[
+s_1\neq s_2
+\]
+を必ずしも要求しない。
+
+\section{異なる Solver を用いた分岐}
+
+一方、ECA の Solver 構造そのものの違いを併せて記述する場合には、
+\[
+s_1,s_2\in\mathcal{Z},
+\qquad s_1\neq s_2
+\]
+を考え、
+\[
+M_1\in\Mod(\mathcal{T}(s_1)),
+\qquad
+M_2\in\Mod(\mathcal{T}(s_2))
+\]
+とする。
+
+さらに、
+\[
+M_1\models\mathrm{CH},
+\qquad
+M_2\models\neg\mathrm{CH}
+\]
+を追加条件として置く。
+
+ここで重要なのは、
+\[
+s_1\neq s_2
+\]
+だけから CH と $\neg$CH の違いが導かれるわけではないことである。
+
+また、
+\[
+\mathcal{T}(s_1)\cong_{\mathrm{Th}}\mathcal{T}(s_2)
+\]
+だけから、二つのモデルにおける CH の真偽が異なるとも限らない。
+
+したがって、モデル分岐は明示的な追加条件として扱う。
+
+\section{ZFC の数学的構造の同型と CH}
+
+$\mathcal{Z}$ の定義から、
+\[
+s\in\mathcal{Z}
+\Longrightarrow
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+である。
+
+しかし、この条件から
+\[
+\mathcal{T}(s)\models\mathrm{CH}
+\]
+または
+\[
+\mathcal{T}(s)\models\neg\mathrm{CH}
+\]
+のいずれかが直ちに導かれるわけではない。
+
+数学的構造の同型は数学的構造として対応させる条件であり、
+特定のモデルを一つ選択する条件ではない。
+
+したがって、
+\[
+\boxed{
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+}
+\]
+と
+\[
+\boxed{
+M\models\mathrm{CH}
+}
+\]
+は異なる層の条件である。
+
+\section{ECA_5 の CH 記述の再構成}
+
+ECA_5 の記述を ECA_7 の定義に合わせるなら、
+「CH の真偽は Solver 集合の選択に依存する」と直接断定するのではなく、
+まず
+\[
+s\in\mathcal{Z}
+\]
+を ZFC と同型な数学的構造を表現する Solver とし、
+そのモデル
+\[
+M\in\Mod(\mathcal{T}(s))
+\]
+を考える。
+
+その上で、
+\[
+M\models\mathrm{CH}
+\]
+または
+\[
+M\models\neg\mathrm{CH}
+\]
+というモデルレベルの分岐を記述する。
+
+異なる Solver を比較する場合には、
+\[
+s_1,s_2\in\mathcal{Z}
+\]
+に対して
+\[
+M_1\in\Mod(\mathcal{T}(s_1)),
+\qquad
+M_2\in\Mod(\mathcal{T}(s_2))
+\]
+を取り、
+\[
+M_1\models\mathrm{CH},
+\qquad
+M_2\models\neg\mathrm{CH}
+\]
+という関係を明示する。
+
+これにより、
+\[
+\mathcal{Z}
+\]
+の定義と、その元に対するモデルの分岐を混同しない。
+
+\section{モデル分岐と $\mathcal{Z}$ の濃度}
+
+本稿で導入したモデル分岐から、
+\[
+|\mathcal{Z}|
+\]
+の値を決定することはできない。
+
+特に、
+\[
+\exists s_1,s_2\in\mathcal{Z}
+\]
+という存在条件が成立したとしても、
+それだけから
+\[
+|\mathcal{Z}|\geq2^{\aleph_0}
+\]
+は導かれない。
+
+同様に、二つのモデルについて
+\[
+M_1\models\mathrm{CH},
+\qquad
+M_2\models\neg\mathrm{CH}
+\]
+が成立しても、
+\[
+|\mathcal{Z}|=2^{\aleph_0}
+\]
+は導かれない。
+
+したがって、$\mathcal{Z}$ の濃度については、
+モデル分岐とは独立に、Solver の構成と写像を用いて別途検討する。
+
+\section{本稿で確定した関係}
+
+以上により、ECA における関係を
+\[
+\boxed{
+s
+\longrightarrow
+\mathcal{T}(s)
+\longrightarrow
+M
+}
+\]
+と整理する。
+
+ここで、
+\[
+s\in\Solver_I,\qquad
+\mathcal{T}(s)\in\Th,\qquad
+M\in\Mod(\mathcal{T}(s))
+\]
+である。
+
+また、
+\[
+s\in\mathcal{Z}
+\iff
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+は数学的構造レベルの条件であり、
+\[
+M\models\mathrm{CH}
+\quad\text{または}\quad
+M\models\neg\mathrm{CH}
+\]
+はモデルレベルの条件である。
+
+したがって、
+\[
+\boxed{
+\begin{array}{c}
+\text{Solver}\\
+\downarrow\\
+\text{数学的構造}\\
+\downarrow\\
+\text{モデル}\\
+\downarrow\\
+\mathrm{CH}/\neg\mathrm{CH}
+\end{array}}
+\]
+という階層を維持する。
+
+\section{後続する議論}
+
+本稿を基礎として、後続文書では次を個別に検討できる。
+
+\begin{enumerate}
+\item $\mathcal{Z}$ に含まれる Solver の具体的構成。
+\item 異なる Solver が $\mathcal{Z}$ の異なる元となる条件。
+\item $\mathfrak{A}\restriction_{\mathcal{Z}}$ と
+$\mathcal{T}\restriction_{\mathcal{Z}}$ の関係。
+\item $\mathcal{Z}$ の濃度と $2^{\aleph_0}$ との関係。
+\item 必要に応じて CH/$\neg$CH を満たすモデルの構成条件。
+\end{enumerate}
+
+これらは本稿の定義から自動的に導かれるものではなく、
+それぞれ追加の構成または証明を必要とする。
+
+\section{ECA_9 $\mathcal{Z}$ の濃度追跡と連続体濃度の下界}
+
+\begin{abstract}
+本稿では、ECA_6 および ECA_7 で確定した Solver、公理選択空間、数学的構造写像、$\mathcal{Z}$ の定義を前提として、
+$|\mathcal{Z}|\geq 2^{\aleph_0}$ をどのような条件の下で導出できるかを整理する。
+これまでの検証では、$\mathcal{P}(\mathbb{N})\hookrightarrow\mathcal{P}(\mathcal{A}_0)$ は構成できる一方、
+$\mathcal{P}(\mathbb{N})\hookrightarrow I$ や $\mathcal{P}(\mathbb{N})\hookrightarrow\mathcal{Z}$ は現行定義だけからは導出できないことを確認している。
+そこで本稿では、$\mathcal{Z}$ 内に連続体濃度の異なる Solver を実際に構成するための条件を明示し、その条件から得られる濃度下界を定理として記述する。
+CH の証明は本稿の目的としない。
+\end{abstract}
+
+\section{出発点となる ECA の構造}
+ECA_6 により、公理候補全体を $\Ax$ とし、公理選択空間を
+\[
+\Sel=I\subseteq\Pow(\Ax)
+\]
+とする。Solver は
+\[
+\boxed{s=(\mathcal{A}_s,\mathcal{R}_s)}
+\]
+であり、$\mathcal{A}_s\in I$ を満たすものを ECA に適合する Solver とする。したがって、
+\[
+\Solver_I=\{s=(\mathcal{A}_s,\mathcal{R}_s)\mid\mathcal{A}_s\in I\}.
+\]
+また、$\mathfrak{A}:\Solver_I\to I$ を $\mathfrak{A}(s)=\mathcal{A}_s$ とする。
+ECA_7 では
+\[
+\boxed{\mathcal{Z}=\{s\in\Solver_I\mid\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}\}}
+\]
+と定義した。したがって $\mathcal{Z}\subseteq\Solver_I$ である。
+
+\section{これまでに得られている濃度関係}
+可算な公理候補集合 $\mathcal{A}_0=\{a_1,a_2,a_3,\ldots\}$ を固定する。
+任意の $A\subseteq\mathbb{N}$ に対して
+\[
+\mathcal{A}_A=\{a_n\in\mathcal{A}_0\mid n\in A\}
+\]
+を定義すると、
+\[
+\Gamma:\Pow(\mathbb{N})\to\Pow(\mathcal{A}_0),\qquad \Gamma(A)=\mathcal{A}_A
+\]
+は単射である。したがって
+\[
+|\Pow(\mathcal{A}_0)|=2^{\aleph_0}.
+\]
+しかし、$\Pow(\mathcal{A}_0)\subseteq\Pow(\Ax)$ や $I\subseteq\Pow(\Ax)$ だけから $\Pow(\mathbb{N})\hookrightarrow I$ は導かれない。さらに $\mathcal{Z}\subseteq\Solver_I$ であるため、$\Pow(\mathbb{N})\hookrightarrow\mathcal{Z}$ を得るには、$\mathcal{Z}$ 内で連続体濃度の族を実現する追加条件が必要である。
+
+\section{$\mathfrak{A}|_{\mathcal{Z}}$ による濃度追跡}
+\[
+\boxed{\mathfrak{A}|_{\mathcal{Z}}:\mathcal{Z}\to I}
+\]
+を考え、その像を
+\[
+\operatorname{Im}(\mathfrak{A}|_{\mathcal{Z}})=\{\mathcal{A}_s\mid s\in\mathcal{Z}\}
+\]
+とする。任意の写像について
+\[
+|\operatorname{Im}(\mathfrak{A}|_{\mathcal{Z}})|\leq|\mathcal{Z}|
+\]
+が成立する。したがって、像の濃度が $2^{\aleph_0}$ 以上であることを示せれば、$|\mathcal{Z}|\geq2^{\aleph_0}$ が得られる。
+ただし $\mathfrak{A}|_{\mathcal{Z}}$ は一般には単射ではない。$\mathcal{A}_s=\mathcal{A}_t$ でも $\mathcal{R}_s\neq\mathcal{R}_t$ ならば $s\neq t$ であり得るからである。
+
+\section{連続体濃度の族を $\mathcal{Z}$ 内に構成する条件}
+可算な $\mathcal{A}_0$ と固定された推論規則・構成制約 $\mathcal{R}_0$ を考える。任意の $A\subseteq\mathcal{A}_0$ に対して
+\[
+s_A=(A,\mathcal{R}_0)
+\]
+という Solver 候補を考える。
+この候補が $\mathcal{Z}$ に属するには、少なくとも $A\in I$ および
+\[
+\mathcal{T}(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+が必要である。
+
+\begin{definition}[$\mathcal{Z}$ 内連続体実現条件]
+可算な $\mathcal{A}_0$ と固定された $\mathcal{R}_0$ に対して
+\[
+\boxed{\forall A\subseteq\mathcal{A}_0,\quad (A,\mathcal{R}_0)\in\mathcal{Z}}
+\]
+が成立するとき、これを $\mathcal{Z}$ 内連続体実現条件と呼ぶ。
+\end{definition}
+この条件は、単に $A\subseteq\mathcal{A}_0$ を構成できることではなく、すべての $A$ について ECA 適合性と ZFC との数学的構造の同型を同時に要求する。
+\section{連続体濃度下界の定理}
+\begin{theorem}
+$\mathcal{A}_0$ が可算無限集合であり、$\mathcal{Z}$ 内連続体実現条件が成立すると仮定する。このとき
+\[
+\boxed{|\mathcal{Z}|\geq2^{\aleph_0}}
+\]
+が成立する。
+\end{theorem}
+\begin{proof}
+\[
+\Phi:\Pow(\mathcal{A}_0)\to\mathcal{Z},\qquad \Phi(A)=(A,\mathcal{R}_0)
+\]
+と定義する。実現条件により $\Phi(A)\in\mathcal{Z}$ である。
+$A\neq B$ ならば第一成分が異なるため
+\[
+(A,\mathcal{R}_0)\neq(B,\mathcal{R}_0),
+\]
+したがって $\Phi$ は単射である。可算無限集合 $\mathcal{A}_0$ に対して $|\Pow(\mathcal{A}_0)|=2^{\aleph_0}$ なので、
+\[
+2^{\aleph_0}=|\Pow(\mathcal{A}_0)|\leq|\mathcal{Z}|.
+\]
+\end{proof}
+
+\section{この定理が示していること}
+核心は、単なる
+\[
+\Pow(\mathbb{N})\hookrightarrow\Pow(\mathcal{A}_0)
+\]
+ではなく、
+\[
+\Pow(\mathcal{A}_0)\hookrightarrow\mathcal{Z}
+\]
+という新たな単射を構成することである。すなわち、
+\[
+\Pow(\mathbb{N})\cong\Pow(\mathcal{A}_0)\hookrightarrow\mathcal{Z}
+\]
+という連鎖を成立させる必要がある。
+
+\section{現行 ECA 定義から自動的に導かれるか}
+現行の定義からは
+\[
+\mathcal{Z}=\{s\in\Solver_I\mid\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}\}
+\]
+しか与えられていない。したがって
+\[
+\forall A\subseteq\mathcal{A}_0,\quad(A,\mathcal{R}_0)\in\mathcal{Z}
+\]
+は、この定義だけからは導出されない。
+特に、
+\[
+\forall A\subseteq\mathcal{A}_0,\ A\subseteq\Ax
+\]
+と
+\[
+\forall A\subseteq\mathcal{A}_0,\ (A,\mathcal{R}_0)\in\mathcal{Z}
+\]
+は別の条件である。前者は公理候補としての集合論的構成を表すだけであり、後者は各選択から ZFC と数学的構造において同型な Solver が実現されることまで要求する。
+したがって現段階で確定できるのは、
+\[
+\boxed{\text{$\mathcal{Z}$ 内連続体実現条件}\Longrightarrow |\mathcal{Z}|\geq2^{\aleph_0}}
+\]
+という条件付き結果である。
+
+\section{より一般的な単射条件}
+
+\begin{proposition}
+$\mathcal{A}_0$ が可算無限であり、
+\[
+\Phi:\Pow(\mathcal{A}_0)\hookrightarrow\mathcal{Z}
+\]
+が単射であるならば、
+\[
+\boxed{|\mathcal{Z}|\geq2^{\aleph_0}}
+\]
+である。
+\end{proposition}
+
+\begin{proof}
+$|\Pow(\mathcal{A}_0)|=2^{\aleph_0}$ であり、$\Phi$ が単射なので
+\[
+2^{\aleph_0}=|\Pow(\mathcal{A}_0)|\leq|\mathcal{Z}|.
+\]
+\end{proof}
+
+\section{濃度追跡の現在位置}
+\[
+\mathcal{A}_0\cong\mathbb{N}
+\]
+から
+\[
+\boxed{|\Pow(\mathcal{A}_0)|=2^{\aleph_0}}
+\]
+までは通常の集合論として確定する。一方、
+\[
+\Pow(\mathcal{A}_0)\hookrightarrow I
+\]
+および
+\[
+\Pow(\mathcal{A}_0)\hookrightarrow\mathcal{Z}
+\]
+は現行 ECA 定義だけからは未確定である。
+ただし、後者を構成できれば
+\[
+\boxed{|\mathcal{Z}|\geq2^{\aleph_0}}
+\]
+が直ちに得られる。
+したがって現在の核心は、ECA の既存定義から $\mathcal{Z}$ 内の連続体濃度の Solver 族を構成できるか、という問題である。
+
+\section{CH との切り分け}
+本稿の結果
+\[
+|\mathcal{Z}|\geq2^{\aleph_0}
+\]
+は CH
+\[
+2^{\aleph_0}=\aleph_1
+\]
+を意味しない。また、そこから
+\[
+2^{\aleph_0}\leq\aleph_1
+\]
+を導くこともできない。
+したがって、連続体濃度以上の $\mathcal{Z}$ の構成と CH の成立は別問題として扱う。
+
+\section{次段階}
+次に検証すべきなのは、
+\[
+s_A=(A,\mathcal{R}_A)
+\]
+をどのように定めれば
+\[
+\mathcal{A}_{s_A}=A,
+\qquad
+\mathcal{T}(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+を同時に保証できるかである。
+ここでは、単に公理選択を増やすのではなく、
+\[
+\mathcal{Z}=\mathcal{T}^{-1}([\mathrm{ZFC}]_{\mathrm{Th}})
+\]
+という $\mathcal{Z}$ の構造そのものに対して、連続体濃度の族を実現できるかを調べる。
+
+
+%----------------------------------------------------------------------------------
+
+
+\section{ECA_10 $\mathcal{Z}$ 内における連続体濃度の Solver 族の構成条件}
+
+\begin{abstract}
+ECA_9 では、可算無限な公理候補集合 $\mathcal{A}_0$ に対して
+\[
+\mathcal{P}(\mathcal{A}_0)\hookrightarrow\mathcal{Z}
+\]
+を構成できれば
+\[
+|\mathcal{Z}|\geq2^{\aleph_0}
+\]
+が得られることを示した。
+
+本稿では、その単射を実際に構成するために必要となる条件を、
+ECA_6 および ECA_7 の Solver 構造に沿って具体化する。
+特に、公理選択を変化させながらも表現される数学的構造を ZFC と
+数学的構造同型に保つためには、単に公理候補を増やすだけでは不十分で
+あることを確認する。その上で、ZFC と両立する可算無限の冗長な
+公理候補族を仮定した条件付き構成を与える。
+
+本稿の構成は現行 ECA の定義だけから自動的に得られる定理ではない。
+「既存 ECA から確定する結果」と「追加条件の下で成立する構成」を
+明確に分離する。
+\end{abstract}
+
+\section{出発点}
+
+ECA_6 および ECA_7 により、
+\[
+\Ax
+\]
+を ECA が取り扱う公理および公理スキームの全体、
+\[
+I\subseteq\mathcal{P}(\Ax)
+\]
+を公理選択空間とする。
+
+Solver は
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+であり、
+\[
+\mathcal{A}_s\in I
+\]
+を満たす Solver 全体を
+\[
+\Solver_I=
+\left\{
+s=(\mathcal{A}_s,\mathcal{R}_s)\mid
+\mathcal{A}_s\in I
+\right\}
+\]
+とする。
+
+数学的構造写像は
+\[
+\mathcal{T}:\Solver_I\to\Th
+\]
+であり、
+\[
+\mathcal{Z}=
+\left\{
+s\in\Solver_I\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\right\}
+\]
+である。
+
+ECA_7 では、$\mathcal{Z}$ の元を ZFC そのものや
+ZFC と同型な数学的構造そのものではなく、実際の Solver として扱うことを
+確定している。
+
+\section{単射構成に必要な条件}
+
+ECA_9 で中心となった条件は
+\[
+\mathcal{P}(\mathcal{A}_0)\hookrightarrow\mathcal{Z}
+\]
+である。
+
+しかし、
+\[
+\mathcal{A}_0\subseteq\Ax
+\]
+を満たす可算無限集合を取っただけでは、
+各
+\[
+A\subseteq\mathcal{A}_0
+\]
+について
+\[
+(A,\mathcal{R}_0)\in\mathcal{Z}
+\]
+を保証できない。
+
+$\mathcal{Z}$ の所属条件は
+\[
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+だからである。
+
+したがって必要なのは、多数の公理選択を作ることそのものではなく、
+多数の異なる公理選択から ZFC と数学的構造として同型な構造を表現できることである。
+
+\section{ZFCにおける冗長な公理候補族}
+
+可算無限の公理候補族
+\[
+\mathcal{R}^*=\{r_0,r_1,r_2,\ldots\}\subseteq\Ax
+\]
+を考える。
+
+ここで各 $r_n$ を ZFC に対して冗長な公理候補として扱うためには、
+任意の部分集合を選択しても ZFC の数学的構造を失わないことが必要である。
+
+\begin{definition}[連続体実現用 ZFC 保存族]
+可算無限集合
+\[
+\mathcal{R}^*=\{r_n\mid n\in\mathbb{N}\}\subseteq\Ax
+\]
+と推論・構成規則 $\mathcal{R}_0$ が与えられているとする。
+
+$\mathcal{A}_{\mathrm{ZFC}}$ を $\mathcal{R}_0$ とともに ZFC を表現する
+基礎公理選択とし、任意の
+\[
+A\subseteq\mathcal{R}^*
+\]
+に対して
+\[
+s_A=
+\left(
+\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0
+\right)
+\]
+を定める。
+
+次の条件
+\[
+\boxed{
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\quad\land\quad
+\mathcal{T}(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+}
+\]
+を満たすとき、$\mathcal{R}^*$ を連続体実現用 ZFC 保存族と呼ぶ。
+\end{definition}
+
+この条件では、$A$ の選択によって Solver の公理選択成分は変化するが、
+表現される数学的構造は ZFC と同型なものとして保たれる。
+
+\section{連続体濃度の単射}
+
+\begin{theorem}
+$\mathcal{R}^*$ が連続体実現用 ZFC 保存族であるとする。
+
+このとき
+\[
+\Phi:\mathcal{P}(\mathcal{R}^*)\to\mathcal{Z}
+\]
+を
+\[
+\boxed{
+\Phi(A)=
+\left(
+\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0
+\right)
+}
+\]
+によって定義でき、$\Phi$ は単射である。
+
+したがって
+\[
+\boxed{
+|\mathcal{Z}|\geq2^{\aleph_0}
+}
+\]
+が成立する。
+\end{theorem}
+
+\begin{proof}
+定義により、任意の
+\[
+A\subseteq\mathcal{R}^*
+\]
+について
+\[
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\]
+であるから、
+\[
+\Phi(A)\in\Solver_I.
+\]
+さらに
+\[
+\mathcal{T}(\Phi(A))
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+なので
+\[
+\Phi(A)\in\mathcal{Z}.
+\]
+
+$A\neq B$ ならば
+\[
+\mathcal{A}_{\mathrm{ZFC}}\cup A
+\neq
+\mathcal{A}_{\mathrm{ZFC}}\cup B
+\]
+であり、Solver の第一成分が異なる。したがって
+\[
+\Phi(A)\neq\Phi(B).
+\]
+よって $\Phi$ は単射である。
+
+$\mathcal{R}^*$ は可算無限なので
+\[
+|\mathcal{P}(\mathcal{R}^*)|=2^{\aleph_0}.
+\]
+したがって
+\[
+2^{\aleph_0}\leq|\mathcal{Z}|.
+\]
+\end{proof}
+
+\section{この構成で確認できること}
+
+重要なのは、下界が
+\[
+|\mathcal{P}(\Ax)|
+\]
+の大きさから直接得られたものではないことである。
+
+実際の構成は
+\[
+\mathcal{P}(\mathcal{R}^*)
+\overset{\Phi}{\hookrightarrow}
+\mathcal{Z}
+\subseteq\Solver_I
+\]
+である。
+
+したがって核心は、$\mathcal{P}(\mathcal{R}^*)$ の各元を
+互いに異なる $\mathcal{Z}$ の Solver に対応させることにある。
+
+\section{公理選択の違いと Solver の違い}
+
+この構成では
+\[
+A\neq B
+\]
+ならば
+\[
+\mathcal{A}_{\mathrm{ZFC}}\cup A
+\neq
+\mathcal{A}_{\mathrm{ZFC}}\cup B
+\]
+である。
+
+したがって
+\[
+\Phi(A)\neq\Phi(B)
+\]
+が保証される。
+
+推論・構成規則を
+\[
+\mathcal{R}_0
+\]
+に固定しているため、ここでの Solver の違いは第一成分
+$\mathcal{A}_s$ の違いによって実現される。
+
+これは ECA_6 の
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+という Solver 構造と整合する。
+
+\section{現行 ECA から確定する部分と追加条件}
+
+現行 ECA の定義から確定するのは
+\[
+\mathcal{Z}=
+\left\{
+s\in\Solver_I\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\right\}
+\]
+という構造である。
+
+一方、
+\[
+\mathcal{P}(\mathcal{R}^*)\hookrightarrow\mathcal{Z}
+\]
+を得るには、
+\[
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in I
+\]
+および
+\[
+\forall A\subseteq\mathcal{R}^*,
+\quad
+\mathcal{T}(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+が必要である。
+
+これは現行 ECA の定義だけから自動的には導かれない。
+
+したがって、本稿の結果は
+\[
+\boxed{
+\text{ZFC 保存族の存在}
+\Longrightarrow
+|\mathcal{Z}|\geq2^{\aleph_0}
+}
+\]
+という条件付き結果である。
+
+\section{上界について}
+
+本稿では、$|\mathcal{Z}|$ の上界を確定しない。
+
+一般に
+\[
+\mathcal{Z}\subseteq\Solver_I
+\]
+から
+\[
+|\mathcal{Z}|\leq|\Solver_I|
+\]
+は得られる。
+
+しかし、現行定義から $|\Solver_I|$ 自体の濃度が確定していないため、
+\[
+|\mathcal{Z}|\leq2^{\aleph_0}
+\]
+をここで主張する根拠はない。
+
+したがって、現段階では
+\[
+\boxed{
+2^{\aleph_0}\leq|\mathcal{Z}|\leq|\Solver_I|
+}
+\]
+を、左側の条件付き下界と一般的上界として区別して扱う。
+
+\section{次段階}
+
+次に検討すべきなのは、
+\[
+\mathcal{R}^*\subseteq\Ax
+\]
+を現行 ECA の「公理および公理スキーム」という範囲内で
+実際に構成できるかどうかである。
+
+特に、
+\[
+\mathcal{T}
+\left(
+\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0
+\right)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+をすべての
+\[
+A\subseteq\mathcal{R}^*
+\]
+について保証できる具体的な公理候補族を与えられるかを確認する必要がある。
+
+ここが成立すれば、ECA_9 で条件として置いた
+\[
+\mathcal{P}(\mathcal{A}_0)\hookrightarrow\mathcal{Z}
+\]
+を、ECA の具体的な構造へ接続する段階に進むことができる。
+
+
+
+
+\section{ECA_11 $\mathcal{Z}$ における ZFC 保存族の構成可能性}
+
+\begin{abstract}
+ECA_10 では、可算無限な公理候補族
+\[
+\mathcal{R}^{*}=\{r_0,r_1,r_2,\ldots\}\subseteq\Ax
+\]
+を用いて、任意の部分集合 $A\subseteq\mathcal{R}^{*}$ から
+\[
+s_A=
+\left(
+\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0
+\right)
+\]
+を構成し、すべての $s_A$ が $\mathcal{Z}$ に属するならば
+\[
+\mathcal{P}(\mathcal{R}^{*})\hookrightarrow\mathcal{Z}
+\]
+が得られることを示した。
+
+本稿では、この「ZFC 保存族」が現行 ECA の既存の公理候補全体
+$\Ax$ から実際に構成できるかを検討する。特に、現行 ECA において
+$\Ax$ が「公理および公理スキームの全体」と定義されていること、および
+Solver が
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+として構成されることを前提とし、候補となる構成方法を区別する。
+
+結論として、現行 ECA の定義だけから可算無限の ZFC 保存族
+$\mathcal{R}^{*}\subseteq\Ax$ の存在を導くことはできない。
+特に、ZFC から証明可能な文を任意に「公理候補」として $\Ax$ に加える構成、
+あるいは同値な公理の無限族を $\Ax$ に含める構成は、現行定義には明示されていない。
+したがって、$\mathcal{P}(\mathcal{R}^{*})\hookrightarrow\mathcal{Z}$ を公理選択の差から
+構成するためには、追加の公理・構成条件が必要である。
+
+一方、Solver の推論・構成規則 $\mathcal{R}_s$ を変えることで、同一の公理選択から
+異なる Solver を得る可能性は、現行構造と矛盾しない。ただし、この方法は
+$\mathfrak{A}$ の像を増やす方法ではなく、$\mathcal{Z}$ の同一公理選択上の
+ファイバーを増やす方法として扱う必要がある。
+\end{abstract}
+
+\section{出発点}
+
+ECA_6 および ECA_7 により、ECA が取り扱う公理および公理スキームの全体を
+\[
+\Ax
+\]
+とし、公理選択空間を一般に
+\[
+\Sel\subseteq\mathcal{P}(\Ax)
+\]
+として扱う。
+
+Solver は
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+であり、ECA に適合する条件は
+\[
+\mathcal{A}_s\in\Sel
+\]
+である。したがって
+\[
+\Solver_{\Sel}
+=
+\left\{
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\mid
+\mathcal{A}_s\in\Sel
+\right\}
+\]
+とする。
+
+また、
+\[
+\mathfrak{A}:\Solver_{\Sel}\longrightarrow\Sel,
+\qquad
+\mathfrak{A}(s)=\mathcal{A}_s
+\]
+および
+\[
+\mathcal{T}:\Solver_{\Sel}\longrightarrow\Th
+\]
+を考える。
+
+ECA_7 における $\mathcal{Z}$ は
+\[
+\boxed{
+\mathcal{Z}
+=
+\left\{
+s\in\Solver_{\Sel}
+\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\right\}
+}
+\]
+である。
+
+したがって、本稿で検証すべき対象は
+\[
+\mathcal{R}^{*}\subseteq\Ax
+\]
+を実際に構成できるかどうかである。
+
+\section{ECA_10 の ZFC 保存族条件}
+
+ECA_10 では、可算無限集合
+\[
+\mathcal{R}^{*}=\{r_n\mid n\in\mathbb{N}\}\subseteq\Ax
+\]
+を考え、基礎公理選択 $\mathcal{A}_{\mathrm{ZFC}}$ および推論・構成規則
+$\mathcal{R}_0$ を固定した。
+
+任意の
+\[
+A\subseteq\mathcal{R}^{*}
+\]
+について
+\[
+s_A=
+\left(
+\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0
+\right)
+\]
+と定める。
+
+このとき必要な条件は
+\[
+\boxed{
+\forall A\subseteq\mathcal{R}^{*},
+\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in\Sel
+\quad\land\quad
+\mathcal{T}(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+}
+\]
+である。
+
+この条件が成立すれば、
+\[
+\Phi:\mathcal{P}(\mathcal{R}^{*})\longrightarrow\mathcal{Z},
+\qquad
+\Phi(A)=s_A
+\]
+を定めることができる。
+
+さらに
+\[
+A\neq A'
+\quad\Longrightarrow\quad
+\mathcal{A}_{\mathrm{ZFC}}\cup A
+\neq
+\mathcal{A}_{\mathrm{ZFC}}\cup A'
+\]
+であるから
+\[
+s_A\neq s_{A'}
+\]
+となり、$\Phi$ は単射である。
+
+したがって
+\[
+|\mathcal{R}^{*}|=\aleph_0
+\]
+ならば
+\[
+|\mathcal{Z}|
+\ge
+|\mathcal{P}(\mathcal{R}^{*})|
+=
+2^{\aleph_0}
+\]
+を得る。
+
+ただし、ここまでの議論は $\mathcal{R}^{*}$ の存在を仮定した条件付き構成であり、
+$\mathcal{R}^{*}\subseteq\Ax$ の存在そのものは示していない。
+
+\section{現行 ECA における $\Ax$ の内容}
+
+ECA_6 では
+\[
+a\in\Ax
+\]
+を「一つの公理または公理スキーム」としている。
+
+したがって、現在の定義から直接確認できるのは、
+$\Ax$ が公理および公理スキームを収容する集合であるということまでである。
+
+ここで重要なのは、
+\[
+\text{公理スキームの各インスタンス}
+\]
+と
+\[
+\text{公理スキームそのもの}
+\]
+を同一の要素として扱ってはいないことである。
+
+ある公理スキームが無限個の具体的インスタンスを生成するとしても、
+現行 ECA の定義だけから、それら個々のインスタンスが
+$\Ax$ の別々の元であるとはいえない。
+
+すなわち、
+\[
+\mathsf{AxSchema}\in\Ax
+\]
+から
+\[
+\{\varphi_n:n\in\mathbb{N}\}\subseteq\Ax
+\]
+は従わない。
+
+この点は、可算無限な $\mathcal{R}^{*}$ を既存の公理スキームから
+自動的に取り出せると考える場合の重要な障害である。
+
+\section{候補構成 I：ZFC の定理を冗長な公理として採用する場合}
+
+最も直接的な候補は、ZFC から証明可能な文を
+「追加しても数学的構造が ZFC と変わらない公理」として利用する方法である。
+
+ある文 $\rho$ に対して
+\[
+\mathrm{ZFC}\vdash\rho
+\]
+が成立するなら、通常の論理的な意味では
+$\rho$ を明示的な公理として追加しても ZFC の定理体系を拡張することにはならない。
+
+しかし、ECA の型が問題となる。
+
+現行定義では
+\[
+\Ax
+=
+\{\text{ECA が取り扱う公理および公理スキーム}\}
+\]
+であって、
+\[
+\Ax
+=
+\{\text{ZFC から証明可能なすべての文}\}
+\]
+とは定義されていない。
+
+したがって、
+\[
+\mathrm{ZFC}\vdash\rho
+\]
+から
+\[
+\rho\in\Ax
+\]
+を導くことはできない。
+
+よって、この方法によって
+\[
+\mathcal{R}^{*}\subseteq\Ax
+\]
+を構成するには、少なくとも
+\[
+\boxed{
+\text{ZFC から証明可能な文を公理候補として $\Ax$ に含める}
+}
+\]
+という追加条件が必要になる。
+
+\begin{remark}
+この追加条件を導入する場合、$\Ax$ の意味は
+「公理および公理スキームの全体」から、
+「公理として採用可能な文・公理スキームを含む候補全体」
+へ拡張される。したがって、これは単なる証明ではなく
+ECA の構造定義の変更または拡張として扱う必要がある。
+\end{remark}
+
+\section{候補構成 II：ZFC と同値な公理の無限族}
+
+次に、ZFC の各公理について異なる形式の同値な公理を多数用意する方法を考える。
+
+一つの数学的構造を同じ数学的構造として表現する公理化には複数の形式が存在し得る。
+したがって、数学的構造を変えない異なる公理化を構成すること自体は数学的に自然である。
+
+しかし、ECA における問題は、
+\[
+\Ax
+\]
+の要素としてそれらを採用することが明示されているかどうかである。
+
+現行 ECA では、
+\[
+\text{ZFC と同値な公理化}
+\subseteq
+\Ax
+\]
+という包含関係は定義されていない。
+
+したがって、
+\[
+\{r_0,r_1,r_2,\ldots\}\subseteq\Ax
+\]
+を「ZFC と同値な公理の異なる表現」から構成することも、
+現行定義だけでは保証されない。
+
+よって、この方法についても、
+\[
+\boxed{
+\text{ZFC と数学的構造同値な公理・公理スキームの族を $\Ax$ に含める}
+}
+\]
+という追加の構成条件が必要となる。
+
+\section{候補構成 III：既存の巨大基数公理を利用する場合}
+
+ECA_4 では巨大基数に関する公理群が扱われている。
+しかし、巨大基数公理を
+\[
+r_n\in\Ax
+\]
+として採用するだけでは、一般に
+\[
+\mathcal{T}(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+を保証する理由にはならない。
+
+巨大基数公理は、少なくとも現行 ECA の記述では、
+ZFC に対して追加される公理として扱われており、
+「ZFC に対して冗長である」という性質は与えられていない。
+
+したがって、
+\[
+\text{巨大基数公理}
+\quad\not\Rightarrow\quad
+\text{ZFC 保存族}
+\]
+である。
+
+この方法は、ECA の $\Ax$ に候補が存在することを示す材料にはなるが、
+$\mathcal{Z}$ の連続体濃度下界を与えるための
+$\mathcal{R}^{*}$ の構成には直接使用できない。
+
+\section{候補構成 IV：$\mathcal{R}_s$ を変化させる場合}
+
+Solver は
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+であるから、同一の公理選択
+\[
+\mathcal{A}_s=A
+\]
+に対して異なる
+\[
+\mathcal{R}_s
+\]
+を持つ Solver を考えることは、現行構造と矛盾しない。
+
+例えば
+\[
+s_1=(A,\mathcal{R}_1),
+\qquad
+s_2=(A,\mathcal{R}_2)
+\]
+で
+\[
+\mathcal{R}_1\neq\mathcal{R}_2
+\]
+ならば、Solver の同一性の定義から
+\[
+s_1\neq s_2
+\]
+である。
+
+一方で、
+\[
+\mathcal{T}(s_1)\cong_{\mathrm{Th}}\mathrm{ZFC},
+\qquad
+\mathcal{T}(s_2)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+を満たすような $\mathcal{R}_1,\mathcal{R}_2$ を構成できれば、
+同一の公理選択から複数の $\mathcal{Z}$ の元を得られる。
+
+ただし、この方法では
+\[
+\mathfrak{A}(s_1)=\mathfrak{A}(s_2)=A
+\]
+である。
+
+したがって、この構成は
+\[
+\mathcal{P}(\mathcal{R}^{*})\hookrightarrow\mathcal{Z}
+\]
+を公理選択の差によって作る ECA_10 の方法とは異なる。
+
+これはむしろ、
+\[
+\mathfrak{A}|_{\mathcal{Z}}
+\]
+の各ファイバーに複数の Solver が存在するという構造を与える。
+
+\section{公理選択による増加と Solver 表現による増加の分離}
+
+$\mathcal{Z}$ 上で
+\[
+\mathfrak{A}|_{\mathcal{Z}}:
+\mathcal{Z}\longrightarrow\Sel
+\]
+を考える。
+
+任意の
+\[
+A\in\operatorname{Im}(\mathfrak{A}|_{\mathcal{Z}})
+\]
+について
+\[
+\mathcal{Z}_A
+:=
+\left\{
+s\in\mathcal{Z}
+\mid
+\mathfrak{A}(s)=A
+\right\}
+\]
+を定める。
+
+すると
+\[
+\mathcal{Z}
+=
+\bigcup_{A\in\operatorname{Im}(\mathfrak{A}|_{\mathcal{Z}})}
+\mathcal{Z}_A
+\]
+である。
+
+ここで、
+\[
+|\operatorname{Im}(\mathfrak{A}|_{\mathcal{Z}})|
+\]
+は「ZFC を表現する Solver が使用する異なる公理選択の数」を表し、
+各
+\[
+|\mathcal{Z}_A|
+\]
+は「同一の公理選択から得られる異なる Solver の数」に対応する。
+
+したがって、$\mathcal{Z}$ の濃度を調べる際には、
+
+\begin{enumerate}
+\item 公理選択そのものを多数構成できるか、
+\item 一つの公理選択から多数の Solver 表現を構成できるか、
+\item その両方を構成できるか、
+\end{enumerate}
+
+を分離して調べる必要がある。
+
+特に ECA_10 の
+\[
+\mathcal{P}(\mathcal{R}^{*})\hookrightarrow\mathcal{Z}
+\]
+は第1の方法であり、
+$\mathcal{R}_s$ の変化による構成は第2の方法である。
+
+\section{現行 ECA から導けることと導けないこと}
+
+ここまでの検討から、現行 ECA の定義について次を区別できる。
+
+\subsection{導けること}
+
+現行 ECA からは、少なくとも次が確定している。
+
+\begin{enumerate}
+\item
+公理候補全体 $\Ax$ があり、
+\[
+a\in\Ax
+\]
+が公理または公理スキームを表す。
+
+\item
+公理選択は
+\[
+\Sel\subseteq\mathcal{P}(\Ax)
+\]
+として扱われる。
+
+\item
+Solver は
+\[
+s=(\mathcal{A}_s,\mathcal{R}_s)
+\]
+であり、
+\[
+\mathcal{A}_s\in\Sel
+\]
+を満たす。
+
+\item
+$\mathcal{T}(s)$ は $\mathcal{A}_s$ だけではなく、
+$\mathcal{R}_s$ を含む Solver の構造から得られる。
+
+\item
+\[
+\mathcal{Z}
+=
+\{s\in\Solver_{\Sel}\mid
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}\}
+\]
+と定義できる。
+
+\item
+$\mathfrak{A}|_{\mathcal{Z}}$ の異なる元は、
+必ずしも異なる公理選択を持つ必要はない。
+\end{enumerate}
+
+\subsection{現行 ECA だけでは導けないこと}
+
+一方、次は現行定義からは導けない。
+
+\begin{enumerate}
+\item
+$\Ax$ が可算無限かつZFCにおける冗長な公理族
+\[
+\mathcal{R}^{*}\subseteq\Ax
+\]
+を含むこと。
+
+\item
+任意の
+\[
+A\subseteq\mathcal{R}^{*}
+\]
+について
+\[
+\mathcal{A}_{\mathrm{ZFC}}\cup A\in\Sel
+\]
+となること。
+
+\item
+任意の
+\[
+A\subseteq\mathcal{R}^{*}
+\]
+について
+\[
+\mathcal{T}
+\left(
+\mathcal{A}_{\mathrm{ZFC}}\cup A,\mathcal{R}_0
+\right)
+\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+となること。
+
+\item
+したがって、
+\[
+\mathcal{P}(\mathcal{R}^{*})\hookrightarrow\mathcal{Z}
+\]
+が現行 ECA だけから成立すること。
+
+\item
+さらに、
+\[
+|\mathcal{Z}|\ge2^{\aleph_0}
+\]
+が現行 ECA だけから成立すること。
+\end{enumerate}
+
+\section{追加条件として何を導入すべきか}
+
+ECA_10 の構成を実際に ECA の体系へ組み込む場合、最低限、次のいずれかを明示する必要がある。
+
+\subsection{案 A：公理候補の閉包条件}
+
+ZFC から証明可能な文の一部または全部を、
+公理候補として $\Ax$ に含める条件を導入する。
+
+例えば、ある集合 $\mathrm{Thm}(\mathrm{ZFC})$ に対して
+\[
+\mathrm{Thm}(\mathrm{ZFC})\subseteq\Ax
+\]
+を要求する。
+
+ただし、この条件を採用すると、
+$\Ax$ の定義そのものを拡張する必要がある。
+
+\subsection{案 B：ZFC 同値公理化族の包含条件}
+
+可算無限集合
+\[
+\mathcal{R}^{*}
+=
+\{r_n\mid n\in\mathbb{N}\}
+\]
+を直接導入し、
+\[
+\mathcal{R}^{*}\subseteq\Ax
+\]
+および
+\[
+\forall A\subseteq\mathcal{R}^{*},
+\quad
+\mathcal{T}(s_A)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+を構成条件として要求する。
+
+この場合、ECA_10 の議論をそのまま継続できる。
+
+\subsection{案 C：Solver 構造側の保存条件}
+
+公理選択を増やす代わりに、
+\[
+\mathcal{R}_s
+\]
+の変更に対して
+\[
+\mathcal{T}(s)\cong_{\mathrm{Th}}\mathrm{ZFC}
+\]
+を保存する条件を導入する。
+
+この場合、$\mathcal{Z}$ のファイバー
+\[
+\mathcal{Z}_A
+\]
+を研究する方向へ進むことになる。
+
+ただし、これは ECA_10 の
+「公理選択によって連続体濃度を実現する」
+構成とは別の問題である。
+
+\section{本稿の結論}
+
+\begin{conclusion}
+現行 ECA の既存構造だけから、可算無限の
+ZFC 保存族
+\[
+\mathcal{R}^{*}\subseteq\Ax
+\]
+の存在を導くことはできない。
+\end{conclusion}
+
+その理由は、
+\[
+\Ax
+=
+\{\text{公理および公理スキーム}\}
+\]
+という定義からは、
+
+\begin{enumerate}
+\item ZFC から証明可能な文をすべて公理候補として含むこと
+\item ZFC と同値な公理化をすべて含むこと
+\item それらの中から可算無限な冗長な公理族を選択できること
+\end{enumerate}
+がいずれも保証されないためである。
+
+したがって、ECA_10 の
+\[
+\mathcal{P}(\mathcal{R}^{*})\hookrightarrow\mathcal{Z}
+\]
+を無条件の ECA の結果にするには、
+「ZFC 保存族」の存在を別途構成するための明示的な公理または構成条件が必要である。
+
+一方、Solver が
+\[
+(\mathcal{A}_s,\mathcal{R}_s)
+\]
+という二成分構造を持つことから、
+同一の公理選択に対する複数の Solver を調べる方向は、
+現行 ECA の構造内にすでに存在している。
+
+したがって、次の段階では、
+
+\[
+\boxed{
+\text{公理選択による $\mathcal{Z}$ の増加}
+\quad\text{と}\quad
+\text{Solver 構造による $\mathcal{Z}$ の増加}
+}
+\]
+
+を分離した上で、
+
+\[
+\boxed{
+\text{現行 ECA のままで構成できる部分}
+\quad\text{と}\quad
+\text{追加条件を必要とする部分}
+}
+\]
+
+をさらに明確化する必要がある。
+
+
+
+
+
 
 \end{document}
